@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist
+package com.pppp.travelchecklist.main
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

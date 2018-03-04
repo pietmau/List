@@ -13,14 +13,17 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.SimpleObserver
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_blank.*
 import javax.inject.Inject
 
 class TestFragment : Fragment(), TravelListView {
     @Inject lateinit var presenter: MainPresenter
 
-    override fun render(viewStatus: TravelListView.ViewStatus) {
-        recycler.setItems(viewStatus.items)
+    val actions = PublishSubject.create<TravelListView.Action>()
+
+    override fun render(viewConfiguration: TravelListView.ViewConfiguration) {
+        recycler.setItems(viewConfiguration.items)
     }
 
     private val callback = object : CheckListCard.Callback {
@@ -52,11 +55,12 @@ class TestFragment : Fragment(), TravelListView {
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenter.subscribe(object : SimpleObserver<TravelListView.ViewStatus>() {
-            override fun onNext(viewStatus: TravelListView.ViewStatus) {
-                render(viewStatus)
+        presenter.subscribe(object : SimpleObserver<TravelListView.ViewConfiguration>() {
+            override fun onNext(viewConfiguration: TravelListView.ViewConfiguration) {
+                render(viewConfiguration)
             }
         })
+
     }
 
     companion object {

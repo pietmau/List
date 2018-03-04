@@ -4,12 +4,17 @@ import com.pppp.travelchecklist.model.CardItemData
 
 interface TravelListView {
 
-    fun render(viewStatus: ViewStatus)
+    fun render(viewConfiguration: ViewConfiguration)
 
-    data class ViewStatus(val status: Status, val items: List<CardItemData>) {
+    data class ViewConfiguration(val status: Status, val items: List<CardItemData>) {
 
         enum class Status {
-            NONE
+            START
         }
     }
+
+    sealed class Action {
+
+    }
+
 }

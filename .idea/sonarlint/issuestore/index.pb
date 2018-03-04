@@ -30,8 +30,6 @@ u
 Eapp/src/main/java/com/pppp/travelchecklist/model/CheckListItemData.kt,3/f/3f893565c2932c2757a1fe5460dc07f3a8cabc2e
 r
 Bapp/src/main/java/com/pppp/travelchecklist/model/SimpleObserver.kt,a/0/a07fc6b17bed7770da391dacd0bd99f3ea150a9f
-i
-9app/src/main/java/com/pppp/travelchecklist/model/Model.kt,9/b/9bdb6e99acf37ed726a343c6b5cc12cbf5ece3d6
 u
 Eapp/src/main/java/com/pppp/travelchecklist/main/MyFragmentActivity.kt,4/0/40f059e841480a2194731bb72a4db5aba9a7304e
 p
@@ -52,3 +50,7 @@ p
 @app/src/main/java/com/pppp/travelchecklist/model/CardItemData.kt,f/a/fae1fd5fc4397ba67f1554df2c58eb6b9b027a58
 v
 Fapp/src/main/java/com/pppp/travelchecklist/main/view/TravelListView.kt,4/f/4fe32a30f6c81384f007a31700b25f580a0b8803
+r
+Bapp/src/main/java/com/pppp/travelchecklist/main/model/ModelImpl.kt,2/7/279eb6878a830227b0228688fe4a702dc9a17272
+n
+>app/src/main/java/com/pppp/travelchecklist/main/model/Model.kt,8/2/82c618e82a07387fc6cf233373246ad367db98a2

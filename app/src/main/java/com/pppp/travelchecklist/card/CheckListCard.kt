@@ -9,24 +9,44 @@ import com.pppp.travelchecklist.card.carditem.CardItem
 import com.pppp.travelchecklist.model.CheckListItemData
 import kotlinx.android.synthetic.main.custom_check_list_card.view.*
 
-class CheckListCard @JvmOverloads constructor(
+class CheckListCard(
         context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
-) : CardView(context, attrs, defStyleAttr) {
+        attrs: AttributeSet?
+) : CardView(context) {
     private val ELEVATION = 8F
     private val RADIUS = 10F
+    private var position: Int? = null
+    private var callback: Callback? = null
+
+    private val cardItemCallback = object : CardItem.Callback {
+        override fun onDeleteRequested(position: Int) {
+            callback?.onItemDeleteRequested(this@CheckListCard.position!!, position)
+        }
+
+        override fun onSettingsRequested(position: Int) {
+            callback?.onItemSettingsRequested(this@CheckListCard.position!!, position)
+        }
+    }
 
     init {
-        //TODO use custom attributes
         elevation = ELEVATION
         radius = RADIUS
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card, this, true)
     }
 
-    fun setItems(data: List<CheckListItemData>) {
+    fun bind(data: List<CheckListItemData>, position: Int, callback: Callback?) {
+        this.position = position
+        this.callback = callback
         content.removeAllViews()
-        data.map { content.addView(CardItem(context, data = it)) }
+        for ((index, value) in data.withIndex()) {
+            content.addView(CardItem(context, value, index, cardItemCallback))
+        }
     }
+
+    interface Callback {
+        fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int)
+        fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int)
+    }
+
 }

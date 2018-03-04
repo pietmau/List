@@ -7,13 +7,12 @@ import android.widget.RelativeLayout
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.model.CheckListItemData
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.yesButton
 
 class CardItem(
         context: Context,
-        private var data: CheckListItemData
+        val data: CheckListItemData,
+        val position: Int,
+        val callback: Callback
 ) : RelativeLayout(context) {
     private val activity = context as Activity
 
@@ -27,15 +26,20 @@ class CardItem(
     }
 
     private fun showDelete() {
-        activity.alert(context.getString(R.string.delete) + " " + data.title, context.getString(R.string.confirm_delete) + " " + data.title) {
+        callback.onDeleteRequested(position)
+        /*activity.alert(context.getString(R.string.delete) + " " + data.title, context.getString(R.string.confirm_delete) + " " + data.title) {
             noButton { }
             yesButton { }
-        }.show()
+        }.show()*/
     }
 
     private fun showSettings() {
-        CustomAlertDialogBuilder(context,data).create().show()
+        callback.onSettingsRequested(position)
+        //CustomAlertDialogBuilder(context, data).create().show()
     }
 
-
+    interface Callback {
+        fun onDeleteRequested(position: Int)
+        fun onSettingsRequested(position: Int)
+    }
 }

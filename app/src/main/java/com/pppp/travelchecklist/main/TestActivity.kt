@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
-import kotlinx.android.synthetic.main.test_layout.*
 
 class TestActivity : AppCompatActivity() {
 
@@ -20,6 +19,6 @@ class TestActivity : AppCompatActivity() {
             val itme = CheckListItemData("ggggggg $i", false, Priority(5))
             list.add(itme)
         }
-        test_card.setItems(list)
+        //test_card.bind(list, position, callback)
     }
 }

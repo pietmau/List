@@ -7,14 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.travelchecklist.model.CardItemData
-import com.pppp.travelchecklist.model.Model
+import com.pppp.travelchecklist.main.di.MainModule
+import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.SimpleObserver
 import kotlinx.android.synthetic.main.fragment_blank.*
+import javax.inject.Inject
 
-class TestFragment : Fragment() {
-    private var model: Model? = null
+class TestFragment : Fragment(), TravelListView {
+    @Inject lateinit var presenter: MainPresenter
+
+    override fun render(viewStatus: TravelListView.ViewStatus) {
+        recycler.setItems(viewStatus.items)
+    }
 
     private val callback = object : CheckListCard.Callback {
         override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
@@ -28,7 +35,7 @@ class TestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model = Model()
+        (activity?.application as? App)?.appComponent?.with(MainModule())?.inject(this@TestFragment)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,21 +46,21 @@ class TestFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         recycler.callback = null
+        presenter.unsubscribe()
     }
 
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        model?.subscribe(object : SimpleObserver<List<CardItemData>>() {
-            override fun onNext(itemData: List<CardItemData>) {
-                recycler.setItems(itemData)
+        presenter.subscribe(object : SimpleObserver<TravelListView.ViewStatus>() {
+            override fun onNext(viewStatus: TravelListView.ViewStatus) {
+                render(viewStatus)
             }
         })
     }
 
     companion object {
         val TAG = TestFragment::class.simpleName
-
         fun newInstance(): TestFragment {
             val fragment = TestFragment()
             return fragment

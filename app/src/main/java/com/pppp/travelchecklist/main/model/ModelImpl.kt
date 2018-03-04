@@ -1,12 +1,17 @@
-package com.pppp.travelchecklist.model
+package com.pppp.travelchecklist.main.model
 
+import com.pppp.travelchecklist.model.CardItemData
+import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.travelchecklist.model.Priority
 import io.reactivex.Observable
 import io.reactivex.Observer
 
 
-class Model {
+class ModelImpl : Model {
 
-    fun subscribe(observer: Observer<List<CardItemData>>) {
+    override fun getCards(): Observable<List<CardItemData>> = Observable.just(createList())
+
+    override fun subscribe(observer: Observer<List<CardItemData>>) {
         val list = createList()
         Observable.just(list).subscribe(observer)
     }

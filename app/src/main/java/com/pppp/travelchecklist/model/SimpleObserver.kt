@@ -1,10 +1,9 @@
 package com.pppp.travelchecklist.model
 
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import io.reactivex.observers.DisposableObserver
 
 
-open class SimpleObserver<T>:Observer<T> {
+open class SimpleObserver<T>: DisposableObserver<T>() {
     override fun onError(e: Throwable) {
 
     }
@@ -17,7 +16,4 @@ open class SimpleObserver<T>:Observer<T> {
 
     }
 
-    override fun onSubscribe(d: Disposable) {
-
-    }
 }

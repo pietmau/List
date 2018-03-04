@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,8 @@ class TestFragment : Fragment(), TravelListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity?.application as? App)?.appComponent?.with(MainModule())?.inject(this@TestFragment)
+        val activity = this@TestFragment.activity as AppCompatActivity
+        (activity?.application as? App)?.appComponent?.with(MainModule(activity))?.inject(this@TestFragment)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

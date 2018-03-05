@@ -1,42 +1,39 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.travelchecklist.main.model.Model
+import com.pppp.travelchecklist.main.model.Reducer
 import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.SimpleObserver
+import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.subjects.ReplaySubject
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 
 
-class MainPresenter(private val model: Model) {
-    private var subscription: DisposableObserver<TravelListView.ViewConfiguration>? = null
+class MainPresenter(
+        private val reducer: Reducer
+) {
 
-    private val viewConfigurations = ReplaySubject.create<TravelListView.ViewConfiguration>()
+    private val viewConfigurations = BehaviorSubject.create<TravelListView.ViewConfiguration>()
 
-    val commandsFromView = object : SimpleObserver<TravelListView.Action>() {
-        override fun onNext(action: TravelListView.Action) {
-            processAction(action)
-        }
-    }
+    fun observe() = viewConfigurations
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe { emitStartIfneeded() }
 
-    private fun processAction(action: TravelListView.Action) {}
-
-    fun subscribe(observer: DisposableObserver<TravelListView.ViewConfiguration>) {
-        subscription = viewConfigurations.subscribeWith(observer)
+    private fun emitStartIfneeded() {
         if (viewConfigurations.values == null || viewConfigurations.values.isEmpty()) {
-            onStart()
+            reduce(TravelListView.Action.StartRequest())
         }
     }
 
-    private fun onStart() {
-        model.getCards()
-                .map { TravelListView.ViewConfiguration(TravelListView.ViewConfiguration.Status.START, it) }
-                .subscribeWith(viewConfigurations)
+    private fun reduce(request: TravelListView.Action) {
+        viewConfigurations.onNext(reducer.reduce(request))
     }
 
-    fun unsubscribe() {
-        if (subscription?.isDisposed == false) {
-            subscription?.dispose()
-        }
+    fun subscribe(observable: Observable<TravelListView.Action>): DisposableObserver<TravelListView.Action> {
+        return observable.observeOn(Schedulers.io()).subscribeWith(object : SimpleObserver<TravelListView.Action>() {
+            override fun onNext(action: TravelListView.Action) {
+                reduce(action)
+            }
+        })
     }
-
 }

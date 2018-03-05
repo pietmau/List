@@ -8,8 +8,9 @@ import io.reactivex.Observer
 
 
 class ModelImpl : Model {
+    override fun getCards(): List<CardItemData> = createList()
 
-    override fun getCards(): Observable<List<CardItemData>> = Observable.just(createList())
+    override fun getCardsAsObservable(): Observable<List<CardItemData>> = Observable.just(createList())
 
     override fun subscribe(observer: Observer<List<CardItemData>>) {
         val list = createList()

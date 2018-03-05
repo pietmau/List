@@ -8,5 +8,7 @@ import io.reactivex.Observer
 interface Model {
     fun subscribe(observer: Observer<List<CardItemData>>)
 
-    fun getCards(): Observable<List<CardItemData>>
+    fun getCardsAsObservable(): Observable<List<CardItemData>>
+    fun getCards(): List<CardItemData>
+
 }

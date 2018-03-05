@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.pppp.travelchecklist.main.model.Model
 import com.pppp.travelchecklist.main.model.ModelImpl
+import com.pppp.travelchecklist.main.model.Reducer
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import dagger.Module
 import dagger.Provides
@@ -14,19 +15,21 @@ import dagger.Provides
 class MainModule(private val activity: AppCompatActivity) {
 
     @Provides
-    fun providePresenter(model: Model): MainPresenter = getPresenter(model)
-
+    fun providePresenter(model: Model, reducer: Reducer): MainPresenter = getPresenter(reducer)
 
     @Provides
     fun provideModel(): Model = ModelImpl()
 
-    private fun getPresenter(model: Model): MainPresenter {
+    @Provides
+    fun provideReducer(model: Model) = Reducer(model)
+
+    private fun getPresenter(reducer: Reducer): MainPresenter {
         val supportFragmentManager = activity.supportFragmentManager
         var frag: RetainedFragment? = supportFragmentManager.findFragmentByTag(RetainedFragment.TAG) as? RetainedFragment
         if (frag == null) {
             frag = RetainedFragment()
             supportFragmentManager.beginTransaction().add(frag, RetainedFragment.TAG).commit()
-            frag.data = MainPresenter(model)
+            frag.data = MainPresenter(reducer)
         }
         return frag.data!!
     }

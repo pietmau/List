@@ -14,6 +14,9 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.SimpleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_blank.*
 import javax.inject.Inject
@@ -21,7 +24,9 @@ import javax.inject.Inject
 class TestFragment : Fragment(), TravelListView {
     @Inject lateinit var presenter: MainPresenter
 
-    val actions = PublishSubject.create<TravelListView.Action>()
+    private var disposable = CompositeDisposable()
+
+    private val actions = PublishSubject.create<TravelListView.Action>()
 
     override fun render(viewConfiguration: TravelListView.ViewConfiguration) {
         recycler.setItems(viewConfiguration.items)
@@ -29,11 +34,11 @@ class TestFragment : Fragment(), TravelListView {
 
     private val callback = object : CheckListCard.Callback {
         override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
-
+            actions.onNext(TravelListView.Action.DeleteRequest(TravelListView.Action.Position(cardPosition, itemPosition)))
         }
 
-        override fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int) {
-
+        override fun onItemEditRequested(cardPosition: Int, itemPosition: Int) {
+            actions.onNext(TravelListView.Action.EditRequest(TravelListView.Action.Position(cardPosition, itemPosition)))
         }
     }
 
@@ -51,26 +56,26 @@ class TestFragment : Fragment(), TravelListView {
     override fun onPause() {
         super.onPause()
         recycler.callback = null
-        presenter.unsubscribe()
+        if (disposable?.isDisposed == false) {
+            disposable?.dispose()
+        }
     }
 
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenter.subscribe(object : SimpleObserver<TravelListView.ViewConfiguration>() {
-            override fun onNext(viewConfiguration: TravelListView.ViewConfiguration) {
-                render(viewConfiguration)
-            }
-        })
-
+        disposable.add(presenter.observe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith<SimpleObserver<TravelListView.ViewConfiguration>>(object : SimpleObserver<TravelListView.ViewConfiguration>() {
+                    override fun onNext(viewConfiguration: TravelListView.ViewConfiguration) {
+                        render(viewConfiguration)
+                    }
+                }))
+        disposable.add(presenter.subscribe(actions.subscribeOn(Schedulers.io())))
     }
 
     companion object {
         val TAG = TestFragment::class.simpleName
-        fun newInstance(): TestFragment {
-            val fragment = TestFragment()
-            return fragment
-        }
+        fun newInstance(): TestFragment = TestFragment()
     }
-
 }

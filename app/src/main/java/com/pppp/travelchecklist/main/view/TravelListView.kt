@@ -6,15 +6,20 @@ interface TravelListView {
 
     fun render(viewConfiguration: ViewConfiguration)
 
-    data class ViewConfiguration(val status: Status, val items: List<CardItemData>) {
+    abstract sealed class ViewConfiguration(val items: List<CardItemData>) {
 
-        enum class Status {
-            START
-        }
+        class Start(items: List<CardItemData>) : ViewConfiguration(items) {}
+
+        class DeleteRequest(items: List<CardItemData>) : ViewConfiguration(items) {}
     }
 
-    sealed class Action {
+    abstract sealed class Action {
 
+        class StartRequest() : Action()
+        class DeleteRequest(val position: Position) : Action()
+        class EditRequest(val position: Position) : Action()
+
+        class Position(val cardIndex: Int, val itemIndex: Int)
     }
 
 }

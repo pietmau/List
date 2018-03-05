@@ -24,7 +24,7 @@ class CheckListCard(
         }
 
         override fun onSettingsRequested(position: Int) {
-            callback?.onItemSettingsRequested(this@CheckListCard.position!!, position)
+            callback?.onItemEditRequested(this@CheckListCard.position!!, position)
         }
     }
 
@@ -46,7 +46,7 @@ class CheckListCard(
 
     interface Callback {
         fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int)
-        fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int)
+        fun onItemEditRequested(cardPosition: Int, itemPosition: Int)
     }
 
 }

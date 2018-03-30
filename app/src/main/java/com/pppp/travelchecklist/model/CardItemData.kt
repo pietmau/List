@@ -1,4 +1,8 @@
 package com.pppp.travelchecklist.model
 
 
-data class CardItemData(val title: String, val items: List<CheckListItemData>)
+data class CardItemData(
+        var title: String,
+        var items: List<CheckListItemData>,
+        val id: Long
+)

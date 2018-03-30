@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.list
 
 import android.content.Context
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
@@ -15,7 +16,12 @@ class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(c
         layoutManager = LinearLayoutManager(context)
     }
 
-    fun setItems(data: List<CardItemData>) {
-        adapter = CheckListAdapter(data, callback)
+    fun setItems(new: List<CardItemData>) {
+        if (adapter == null) {
+            adapter = CheckListAdapter(new, callback)
+            return
+        }
+        val old = (adapter as CheckListAdapter).items
+        DiffUtil.calculateDiff(DiffCallback(old, new)).dispatchUpdatesTo(adapter)
     }
 }

@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main.presenter
 
 import com.pppp.travelchecklist.main.model.Reducer
 import com.pppp.travelchecklist.main.view.TravelListView
+import com.pppp.travelchecklist.model.CardItemData
 import com.pppp.travelchecklist.model.SimpleObserver
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
@@ -35,5 +36,9 @@ class MainPresenter(
                 reduce(action)
             }
         })
+    }
+
+    fun deleteItem(item: CardItemData) {
+
     }
 }

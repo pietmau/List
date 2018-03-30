@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.main.model
 
+import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.CardItemData
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
@@ -8,6 +9,8 @@ import io.reactivex.Observer
 
 
 class ModelImpl : Model {
+    override fun getItem(position: TravelListView.Action.Position): CardItemData = CardItemData("", emptyList())
+
     override fun getCards(): List<CardItemData> = createList()
 
     override fun getCardsAsObservable(): Observable<List<CardItemData>> = Observable.just(createList())

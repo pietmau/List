@@ -19,6 +19,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_blank.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.appcompat.v7.Appcompat
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.yesButton
 import javax.inject.Inject
 
 class TestFragment : Fragment(), TravelListView {
@@ -30,6 +34,18 @@ class TestFragment : Fragment(), TravelListView {
 
     override fun render(viewConfiguration: TravelListView.ViewConfiguration) {
         recycler.setItems(viewConfiguration.items)
+        when (viewConfiguration) {
+            is TravelListView.ViewConfiguration.DeleteRequest -> delete(viewConfiguration)
+        }
+    }
+
+    private fun delete(viewConfiguration: TravelListView.ViewConfiguration.DeleteRequest) {
+        activity?.alert(Appcompat,
+                getString(R.string.delete),
+                getString(R.string.delete) + " " + viewConfiguration.item.title + "?") {
+            noButton { }
+            yesButton { presenter.deleteItem(viewConfiguration.item) }
+        }?.show()
     }
 
     private val callback = object : CheckListCard.Callback {

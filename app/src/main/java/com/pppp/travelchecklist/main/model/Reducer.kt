@@ -10,15 +10,13 @@ class Reducer(private val model: Model) {
 
     fun reduce(action: TravelListView.Action): TravelListView.ViewConfiguration {
         when (action) {
-            is TravelListView.Action.DeleteRequest -> {
-                return createDeleteRequestConfiguration()
-            }
+            is TravelListView.Action.DeleteRequest -> return createDeleteRequestConfiguration(action)
         }
         return createStartConfiguration()
     }
 
-    private fun createDeleteRequestConfiguration(): TravelListView.ViewConfiguration.DeleteRequest {
-        return TravelListView.ViewConfiguration.DeleteRequest(model.getCards())
+    private fun createDeleteRequestConfiguration(action: TravelListView.Action.DeleteRequest): TravelListView.ViewConfiguration.DeleteRequest {
+        return TravelListView.ViewConfiguration.DeleteRequest(model.getCards(), action.position, model.getItem(action.position))
     }
 
 

@@ -58,6 +58,7 @@ dependencies {
     implementation "com.android.support:cardview-v7:$support_version"
 
     implementation "org.jetbrains.anko:anko-commons:$anko_version"//TODO remove
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"//TODO remove
 
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-database:$firebase_version"

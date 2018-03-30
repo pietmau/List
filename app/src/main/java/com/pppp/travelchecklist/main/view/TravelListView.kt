@@ -8,9 +8,8 @@ interface TravelListView {
 
     abstract sealed class ViewConfiguration(val items: List<CardItemData>) {
 
-        class Start(items: List<CardItemData>) : ViewConfiguration(items) {}
-
-        class DeleteRequest(items: List<CardItemData>) : ViewConfiguration(items) {}
+        class Start(items: List<CardItemData>) : ViewConfiguration(items)
+        class DeleteRequest(items: List<CardItemData>, val position: Action.Position, val item: CardItemData) : ViewConfiguration(items)
     }
 
     abstract sealed class Action {

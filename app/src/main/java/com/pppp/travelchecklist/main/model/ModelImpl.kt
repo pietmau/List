@@ -4,34 +4,43 @@ import com.pppp.travelchecklist.model.CardItemData
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
 import io.reactivex.Observable
-import io.reactivex.Observer
+import io.reactivex.subjects.BehaviorSubject
 
 
 class ModelImpl : Model {
-
-    override fun getCards(): Observable<List<CardItemData>> = Observable.just(createList())
-
-    override fun subscribe(observer: Observer<List<CardItemData>>) {
-        val list = createList()
-        Observable.just(list).subscribe(observer)
+    private var items: MutableList<CheckListItemData> = createItems()
+    private var cards: MutableList<CardItemData> = createCards()
+    private val subject by lazy {
+        val subject = BehaviorSubject.create<List<CardItemData>>()
+        subject.onNext(cards)
+        subject
     }
 
-    private fun createList(): List<CardItemData> {
-        val list = mutableListOf<CardItemData>()
-        for (i in 0..10) {
-            val items = createItems()
-            val card = CardItemData("Card $i", items)
-            list.add(card)
-        }
-        return list// TODO to immutable???
-    }
-
-    private fun createItems(): List<CheckListItemData> {
-        val list = mutableListOf<CheckListItemData>()
+    private fun createItems(): MutableList<CheckListItemData> {
+        var list = mutableListOf<CheckListItemData>()
         for (i in 0..10) {
             val data = CheckListItemData("Item $i", false, Priority(5))
             list.add(data)
         }
         return list
     }
+
+    private fun createCards(): MutableList<CardItemData> {
+        val list = mutableListOf<CardItemData>()
+        for (i in 0..10) {
+            val card = CardItemData("Card $i", items)
+            list.add(card)
+        }
+        return list
+    }
+
+
+    override fun getCards(): Observable<List<CardItemData>> = subject
+
+    override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
+        items.removeAt(itemPosition)
+        cards = createCards()
+        subject.onNext(cards)
+    }
+
 }

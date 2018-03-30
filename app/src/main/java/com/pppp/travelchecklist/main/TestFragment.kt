@@ -12,6 +12,7 @@ import com.pppp.travelchecklist.card.CheckListCard
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
+import com.pppp.travelchecklist.model.CardItemData
 import com.pppp.travelchecklist.model.SimpleObserver
 import kotlinx.android.synthetic.main.fragment_blank.*
 import javax.inject.Inject
@@ -19,13 +20,9 @@ import javax.inject.Inject
 class TestFragment : Fragment(), TravelListView {
     @Inject lateinit var presenter: MainPresenter
 
-    override fun render(viewStatus: TravelListView.ViewStatus) {
-        recycler.setItems(viewStatus.items)
-    }
-
     private val callback = object : CheckListCard.Callback {
         override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
-
+            presenter.onItemDeleteRequested(cardPosition, itemPosition)
         }
 
         override fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int) {
@@ -35,7 +32,7 @@ class TestFragment : Fragment(), TravelListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity?.application as? App)?.appComponent?.with(MainModule())?.inject(this@TestFragment)
+        (activity?.application as? App)?.appComponent?.with(MainModule(activity))?.inject(this@TestFragment)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -52,9 +49,9 @@ class TestFragment : Fragment(), TravelListView {
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenter.subscribe(object : SimpleObserver<TravelListView.ViewStatus>() {
-            override fun onNext(viewStatus: TravelListView.ViewStatus) {
-                render(viewStatus)
+        presenter.subscribe(this, object : SimpleObserver<List<CardItemData>>() {
+            override fun onNext(items: List<CardItemData>) {
+                recycler.setItems(items)
             }
         })
     }

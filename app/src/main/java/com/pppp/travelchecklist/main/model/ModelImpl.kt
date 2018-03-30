@@ -8,6 +8,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 class ModelImpl : Model {
+
     private var items: MutableList<CheckListItemData> = createItems()
     private var cards: MutableList<CardItemData> = createCards()
 
@@ -35,14 +36,15 @@ class ModelImpl : Model {
         return list
     }
 
-
     override fun getCards(): Observable<List<CardItemData>> = subject
 
-    override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
+    override fun deleteItem(cardPosition: Int, itemPosition: Int) {
         items = createItems()
         items.removeAt(itemPosition)
         cards = createCards()
         subject.onNext(cards)
     }
+
+    override fun getItem(cardPosition: Int, itemPosition: Int): CheckListItemData = cards[cardPosition].items[itemPosition]
 
 }

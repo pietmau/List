@@ -26,7 +26,7 @@ class CardItem(
     }
 
     private fun showDelete() {
-        callback.onDeleteRequested(position)
+        callback.onDeleteRequested(position, data)
         /*activity.alert(context.getString(R.string.delete) + " " + data.title, context.getString(R.string.confirm_delete) + " " + data.title) {
             noButton { }
             yesButton { }
@@ -39,7 +39,7 @@ class CardItem(
     }
 
     interface Callback {
-        fun onDeleteRequested(position: Int)
+        fun onDeleteRequested(position: Int, data: CheckListItemData)
         fun onSettingsRequested(position: Int)
     }
 }

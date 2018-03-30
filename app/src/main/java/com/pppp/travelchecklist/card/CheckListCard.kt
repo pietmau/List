@@ -19,8 +19,8 @@ class CheckListCard(
     private var callback: Callback? = null
 
     private val cardItemCallback = object : CardItem.Callback {
-        override fun onDeleteRequested(position: Int) {
-            callback?.onItemDeleteRequested(this@CheckListCard.position!!, position)
+        override fun onDeleteRequested(position: Int, data: CheckListItemData) {
+            callback?.onItemDeleteRequested(this@CheckListCard.position!!, position, data)
         }
 
         override fun onSettingsRequested(position: Int) {
@@ -45,7 +45,7 @@ class CheckListCard(
     }
 
     interface Callback {
-        fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int)
+        fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData)
         fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int)
     }
 

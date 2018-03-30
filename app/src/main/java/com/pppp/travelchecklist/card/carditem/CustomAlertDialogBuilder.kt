@@ -23,6 +23,6 @@ class CustomAlertDialogBuilder(
         setPositiveButton(context.getString(R.string.update), ok)
         setNegativeButton(context.getString(R.string.cancel), cancel)
         itemTitle = view.findViewById<EditText>(R.id.item_title)
-        itemTitle?.setText(data.title.toCharArray(),0,data.title.length)
+        itemTitle?.setText(data.title.toCharArray(), 0, data.title.length)
     }
 }

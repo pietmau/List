@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.main.view
 
 import com.pppp.travelchecklist.model.CardItemData
+import com.pppp.travelchecklist.model.CheckListItemData
 
 interface TravelListView {
 
@@ -9,7 +10,7 @@ interface TravelListView {
     abstract sealed class ViewConfiguration(val items: List<CardItemData>) {
 
         class Start(items: List<CardItemData>) : ViewConfiguration(items)
-        class DeleteRequest(items: List<CardItemData>, val position: Action.Position, val item: CardItemData) : ViewConfiguration(items)
+        class DeleteRequest(items: List<CardItemData>, val position: Action.Position, val item: CheckListItemData) : ViewConfiguration(items)
     }
 
     abstract sealed class Action {

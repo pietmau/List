@@ -15,21 +15,22 @@ import dagger.Provides
 class MainModule(private val activity: AppCompatActivity) {
 
     @Provides
-    fun providePresenter(model: Model, reducer: Reducer): MainPresenter = getPresenter(reducer)
+    fun providePresenter(model: Model, reducer: Reducer): MainPresenter = getPresenter(reducer, model)
 
     @Provides
     fun provideModel(): Model = ModelImpl()
 
+    //TODO singleton
     @Provides
     fun provideReducer(model: Model) = Reducer(model)
 
-    private fun getPresenter(reducer: Reducer): MainPresenter {
+    private fun getPresenter(reducer: Reducer, model: Model): MainPresenter {
         val supportFragmentManager = activity.supportFragmentManager
         var frag: RetainedFragment? = supportFragmentManager.findFragmentByTag(RetainedFragment.TAG) as? RetainedFragment
         if (frag == null) {
             frag = RetainedFragment()
             supportFragmentManager.beginTransaction().add(frag, RetainedFragment.TAG).commit()
-            frag.data = MainPresenter(reducer)
+            frag.data = MainPresenter(model, reducer)
         }
         return frag.data!!
     }

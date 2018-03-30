@@ -32,6 +32,16 @@ class TestFragment : Fragment(), TravelListView {
 
     private val actions = PublishSubject.create<TravelListView.Action>()
 
+    private val callback = object : CheckListCard.Callback {
+        override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
+            actions.onNext(TravelListView.Action.DeleteRequest(TravelListView.Action.Position(cardPosition, itemPosition)))
+        }
+
+        override fun onItemEditRequested(cardPosition: Int, itemPosition: Int) {
+            actions.onNext(TravelListView.Action.EditRequest(TravelListView.Action.Position(cardPosition, itemPosition)))
+        }
+    }
+
     override fun render(viewConfiguration: TravelListView.ViewConfiguration) {
         recycler.setItems(viewConfiguration.items)
         when (viewConfiguration) {
@@ -44,18 +54,8 @@ class TestFragment : Fragment(), TravelListView {
                 getString(R.string.delete),
                 getString(R.string.delete) + " " + viewConfiguration.item.title + "?") {
             noButton { }
-            yesButton { presenter.deleteItem(viewConfiguration.item) }
+            yesButton { presenter.deleteItem(viewConfiguration.position) }
         }?.show()
-    }
-
-    private val callback = object : CheckListCard.Callback {
-        override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int) {
-            actions.onNext(TravelListView.Action.DeleteRequest(TravelListView.Action.Position(cardPosition, itemPosition)))
-        }
-
-        override fun onItemEditRequested(cardPosition: Int, itemPosition: Int) {
-            actions.onNext(TravelListView.Action.EditRequest(TravelListView.Action.Position(cardPosition, itemPosition)))
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

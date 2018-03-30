@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.main.presenter
 
+import com.pppp.travelchecklist.main.model.Model
 import com.pppp.travelchecklist.main.model.Reducer
 import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.travelchecklist.model.CardItemData
 import com.pppp.travelchecklist.model.SimpleObserver
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
@@ -11,6 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 class MainPresenter(
+        private val model:Model,
         private val reducer: Reducer
 ) {
 
@@ -38,7 +39,7 @@ class MainPresenter(
         })
     }
 
-    fun deleteItem(item: CardItemData) {
-
+    fun deleteItem(position: TravelListView.Action.Position) {
+        model.deleteItemAtPosition(position)
     }
 }

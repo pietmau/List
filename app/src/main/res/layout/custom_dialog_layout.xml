@@ -24,7 +24,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/item_description"
+            android:id="@+id/itemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/description_additional_info"
@@ -46,6 +46,7 @@
         android:textSize="12sp"/>
 
     <SeekBar
+        android:id="@+id/seekbar"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

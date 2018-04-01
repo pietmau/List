@@ -26,4 +26,8 @@ class MainPresenter(private val model: Model) {
     }
 
     fun getItem(cardPosition: Int, itemPosition: Int): CheckListItemData = model.getItem(cardPosition, itemPosition)
+
+    fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+        model.onItemEdited(item, cardPosition, itemPosition)
+    }
 }

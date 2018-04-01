@@ -8,7 +8,6 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 class ModelImpl : Model {
-
     private var items: MutableList<CheckListItemData> = createItems()
     private var cards: MutableList<CardItemData> = createCards()
 
@@ -21,7 +20,7 @@ class ModelImpl : Model {
     private fun createItems(): MutableList<CheckListItemData> {
         var list = mutableListOf<CheckListItemData>()
         for (i in 0..5) {
-            val data = CheckListItemData("Item $i", false, Priority(5))
+            val data = CheckListItemData("Title $i",false, Priority(5),"Description $i")
             list.add(data)
         }
         return list
@@ -47,4 +46,7 @@ class ModelImpl : Model {
 
     override fun getItem(cardPosition: Int, itemPosition: Int): CheckListItemData = cards[cardPosition].items[itemPosition]
 
+    override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+        TODO("not implemented")
+    }
 }

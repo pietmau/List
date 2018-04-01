@@ -9,4 +9,5 @@ interface Model {
     fun getCards(): Observable<List<CardItemData>>
     fun deleteItem(cardPosition: Int, itemPosition: Int)
     fun getItem(cardPosition: Int, itemPosition: Int): CheckListItemData
+    fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int)
 }

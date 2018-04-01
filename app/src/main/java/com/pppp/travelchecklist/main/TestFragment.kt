@@ -23,7 +23,7 @@ import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
 import javax.inject.Inject
 
-class TestFragment : Fragment(), TravelListView {
+class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callback {
     @Inject lateinit var presenter: MainPresenter
 
     private val callback = object : CheckListCard.Callback {
@@ -37,7 +37,7 @@ class TestFragment : Fragment(), TravelListView {
     }
 
     private fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int) {
-        context?.let { CustomAlertDialogBuilder(it, presenter.getItem(cardPosition, itemPosition)).create().show() }
+        context?.let { CustomAlertDialogBuilder(it, presenter.getItem(cardPosition, itemPosition), cardPosition, itemPosition, this).create().show() }
     }
 
     private fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData) {
@@ -61,6 +61,10 @@ class TestFragment : Fragment(), TravelListView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_blank, container, false)
+    }
+
+    override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+        presenter.onItemEdited(item, cardPosition, itemPosition)
     }
 
     override fun onPause() {

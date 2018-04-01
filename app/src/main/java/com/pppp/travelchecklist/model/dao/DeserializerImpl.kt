@@ -12,6 +12,22 @@ import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
 
 class DeserializerImpl : Deserializer {
 
+    override fun getEmptyCheckList(listsCursor: Cursor?): CheckList? {
+        var result: CheckList? = null
+        try {
+            if (listsCursor?.moveToFirst() == true) {
+                val title = listsCursor.getString(listsCursor.getColumnIndexOrThrow(ListContract.List.COLUMN_NAME_TITLE))
+                val id = listsCursor.getLong(listsCursor.getColumnIndexOrThrow(BaseColumns._ID))
+                if (title != null && id != null) {
+                    result = CheckList(title, emptyList(), id)
+                }
+            }
+        } finally {
+            listsCursor?.close();
+        }
+        return result
+    }
+
     override fun getEmptyCheckLists(listsCursor: Cursor?): List<CheckList> {
         var result = mutableListOf<CheckList>()
         try {

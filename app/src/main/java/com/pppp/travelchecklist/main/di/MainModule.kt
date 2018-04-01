@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import com.pppp.travelchecklist.main.model.BetterModelImpl
 import com.pppp.travelchecklist.main.model.Model
-import com.pppp.travelchecklist.main.model.ModelImpl
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.model.dao.DeserializerImpl
 import com.pppp.travelchecklist.model.dao.ListDao
@@ -25,7 +25,7 @@ class MainModule(private val activity: FragmentActivity) {
         if (fragment == null) {
             fragment = RetainedFragment()
             fragmentManager?.beginTransaction()?.add(fragment, RetainedFragment.TAG)?.commit()
-            fragment?.model = ModelImpl(getDao(activity.applicationContext))
+            fragment?.model = BetterModelImpl(getDao(activity.applicationContext))
         }
         fragment!!
     }

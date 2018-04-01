@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.card.carditem.CustomAlertDialogBuilder
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.SimpleObserver
 import kotlinx.android.synthetic.main.fragment_blank.*
@@ -76,9 +76,9 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenter.subscribe(this, object : SimpleObserver<List<Card>>() {
-            override fun onNext(items: List<Card>) {
-                recycler.setItems(items)
+        presenter.subscribe(this, object : SimpleObserver<CheckList>() {
+            override fun onNext(checkList: CheckList) {
+                recycler.setItems(checkList.cards)
             }
         })
     }

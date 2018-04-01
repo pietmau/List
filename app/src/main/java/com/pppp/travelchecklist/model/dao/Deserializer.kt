@@ -10,4 +10,5 @@ interface Deserializer {
     fun getEmptyCheckLists(listsCursor: Cursor?): List<CheckList>
     fun getEmptyCards(cardsCursor: Cursor?): List<Card>
     fun getItems(itemsCursor: Cursor?): Collection<CheckListItemData>
+    fun getEmptyCheckList(listsCursor: Cursor?): CheckList?
 }

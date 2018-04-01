@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
 import com.pppp.travelchecklist.model.dao.ListDao
@@ -9,6 +10,14 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 class ModelImpl(private val dao: ListDao) : Model {
+    override fun getItem(cardPosition: Int, itemPosition: Int): Observable<CheckListItemData> {
+        TODO("not implemented")
+    }
+
+    override fun getCards(checklistId: Long): Observable<CheckList> {
+        TODO("not implemented")
+    }
+
     private var items: MutableList<CheckListItemData> = createItems()
     private var cards: MutableList<Card> = createCards()
 
@@ -37,7 +46,6 @@ class ModelImpl(private val dao: ListDao) : Model {
         return list
     }
 
-    override fun getCards(): Observable<List<Card>> = subject
 
     override fun deleteItem(cardPosition: Int, itemPosition: Int) {
         items = createItems()
@@ -45,8 +53,6 @@ class ModelImpl(private val dao: ListDao) : Model {
         cards = createCards()
         subject.onNext(cards)
     }
-
-    override fun getItem(cardPosition: Int, itemPosition: Int): CheckListItemData = cards[cardPosition].items[itemPosition]
 
     override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
         TODO("not implemented")

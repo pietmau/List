@@ -11,8 +11,14 @@ class ListDaoSqlite(
         private val deserializer: Deserializer
 ) : ListDao {
 
-    companion object {
-        val TAG = ListDaoSqlite::class.simpleName
+    override fun getCheckListById(checklistId: Long): CheckList {
+        val listsCursor = db.rawQuery(queryMaker.getListQuery(checklistId), emptyArray())
+        val emptyChecklist = deserializer.getEmptyCheckList(listsCursor)
+        var result: CheckList = CheckList("", emptyList(), -1)
+        if (emptyChecklist != null) {
+            result = CheckList(emptyChecklist.title, getCards(emptyChecklist.id), emptyChecklist.id)
+        }
+        return result
     }
 
     override fun getCheckLists(): List<CheckList> {

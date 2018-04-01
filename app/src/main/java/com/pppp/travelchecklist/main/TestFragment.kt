@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.card.carditem.CustomAlertDialogBuilder
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.travelchecklist.model.CardItemData
+import com.pppp.travelchecklist.model.Card
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.SimpleObserver
 import kotlinx.android.synthetic.main.fragment_blank.*
@@ -55,7 +55,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity?.application as? App)?.appComponent?.with(MainModule(activity))?.inject(this@TestFragment)
+        (activity?.application as? App)?.appComponent?.with(MainModule(activity!!))?.inject(this@TestFragment)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -76,8 +76,8 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenter.subscribe(this, object : SimpleObserver<List<CardItemData>>() {
-            override fun onNext(items: List<CardItemData>) {
+        presenter.subscribe(this, object : SimpleObserver<List<Card>>() {
+            override fun onNext(items: List<Card>) {
                 recycler.setItems(items)
             }
         })

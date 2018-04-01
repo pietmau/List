@@ -8,13 +8,17 @@ data class CheckListItemData(
         val title: String,
         val checked: Boolean = false,
         val priority: Priority = Priority(5),
-        val description: String?
+        val description: String?,
+        val id: Long,
+        val cardId: Long
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readByte() != 0.toByte(),
             parcel.readParcelable(Priority::class.java.classLoader),
-            parcel.readString()) {
+            parcel.readString(),
+            parcel.readLong(),
+            parcel.readLong()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -22,6 +26,8 @@ data class CheckListItemData(
         parcel.writeByte(if (checked) 1 else 0)
         parcel.writeParcelable(priority, flags)
         parcel.writeString(description)
+        parcel.writeLong(id)
+        parcel.writeLong(cardId)
     }
 
     override fun describeContents(): Int {
@@ -37,6 +43,4 @@ data class CheckListItemData(
             return arrayOfNulls(size)
         }
     }
-
-
 }

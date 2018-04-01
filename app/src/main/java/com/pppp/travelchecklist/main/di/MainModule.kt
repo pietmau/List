@@ -27,7 +27,7 @@ class MainModule(private val activity: FragmentActivity) {
         if (fragment == null) {
             fragment = RetainedFragment()
             fragmentManager?.beginTransaction()?.add(fragment, RetainedFragment.TAG)?.commit()
-            fragment?.model = BetterModelImpl(getDao(activity.applicationContext))
+            fragment?.model = BetterModelImpl(getDao(activity.applicationContext), Schedulers.io(), AndroidSchedulers.mainThread())
         }
         fragment!!
     }

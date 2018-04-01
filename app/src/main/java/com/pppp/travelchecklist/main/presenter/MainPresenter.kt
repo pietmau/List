@@ -5,6 +5,7 @@ import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
@@ -33,9 +34,8 @@ class MainPresenter(
                 .subscribeWith(observer)
     }
 
-    fun getItem(cardPosition: Int, itemPosition: Int): CheckListItemData {
-        model.getItem(cardPosition, itemPosition)
-        TODO()
+    fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
+        return model.getItem(cardPosition, itemPosition)
     }
 
     fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {

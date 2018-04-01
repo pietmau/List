@@ -6,11 +6,12 @@ import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
 import com.pppp.travelchecklist.model.dao.ListDao
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 
 
 class ModelImpl(private val dao: ListDao) : Model {
-    override fun getItem(cardPosition: Int, itemPosition: Int): Observable<CheckListItemData> {
+    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
         TODO("not implemented")
     }
 

@@ -29,6 +29,18 @@ class OpenHelper private constructor(context: Context) : SQLiteOpenHelper(contex
         insertSomeStuff(db)
     }
 
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL(CardContract.SQL_DELETE_ENTRIES)
+        db.execSQL(TravelChecklistItemContract.SQL_DELETE_ENTRIES)
+        db.execSQL(ListContract.SQL_DELETE_ENTRIES)
+        onCreate(db)
+    }
+
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        onUpgrade(db, oldVersion, newVersion)
+    }
+
+
     private fun insertSomeStuff(db: SQLiteDatabase) {
         val listValues = ContentValues()
         listValues.put(ListContract.List.COLUMN_NAME_TITLE, "First list")
@@ -75,17 +87,172 @@ class OpenHelper private constructor(context: Context) : SQLiteOpenHelper(contex
         itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "third Item")
         itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
         db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
-    }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL(CardContract.SQL_DELETE_ENTRIES)
-        db.execSQL(TravelChecklistItemContract.SQL_DELETE_ENTRIES)
-        db.execSQL(ListContract.SQL_DELETE_ENTRIES)
-        onCreate(db)
-    }
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "Fourth Item description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "Fourth Item")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
 
-    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        onUpgrade(db, oldVersion, newVersion)
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "Fifth Item description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "Fifth Item")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+
+        cardvalues = ContentValues()
+        cardvalues.put(CardContract.Card.COLUMN_NAME_TITLE, "Third card")
+        cardvalues.put(CardContract.Card.COLUMN_NAME_LIST_ID, listId)
+        cardId = db.insert(CardContract.Card.TABLE_NAME, null, cardvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        cardvalues = ContentValues()
+        cardvalues.put(CardContract.Card.COLUMN_NAME_TITLE, "Fourth card")
+        cardvalues.put(CardContract.Card.COLUMN_NAME_LIST_ID, listId)
+        cardId = db.insert(CardContract.Card.TABLE_NAME, null, cardvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        cardvalues = ContentValues()
+        cardvalues.put(CardContract.Card.COLUMN_NAME_TITLE, "Fifth card")
+        cardvalues.put(CardContract.Card.COLUMN_NAME_LIST_ID, listId)
+        cardId = db.insert(CardContract.Card.TABLE_NAME, null, cardvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        cardvalues = ContentValues()
+        cardvalues.put(CardContract.Card.COLUMN_NAME_TITLE, "Sixth card")
+        cardvalues.put(CardContract.Card.COLUMN_NAME_LIST_ID, listId)
+        cardId = db.insert(CardContract.Card.TABLE_NAME, null, cardvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
+        itemvalues = ContentValues()
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, cardId)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, 0)
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, "description")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, "title")
+        itemvalues.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, 0)
+        db.insert(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, null, itemvalues)
+
     }
 
 

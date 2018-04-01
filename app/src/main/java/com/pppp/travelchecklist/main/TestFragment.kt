@@ -16,6 +16,7 @@ import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.SimpleObserver
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_blank.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callback {
     @Inject lateinit var presenter: MainPresenter
+    private var disposable: Disposable? = null
 
     private val callback = object : CheckListCard.Callback {
         override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData) {
@@ -37,7 +39,9 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     }
 
     private fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int) {
-        context?.let { CustomAlertDialogBuilder(it, presenter.getItem(cardPosition, itemPosition), cardPosition, itemPosition, this).create().show() }
+        disposable = presenter.getItem(cardPosition, itemPosition).subscribe({ item ->
+            context?.let { CustomAlertDialogBuilder(it, item, cardPosition, itemPosition, this).create().show() }
+        }, {})
     }
 
     private fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData) {
@@ -71,6 +75,9 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
         super.onPause()
         recycler.callback = null
         presenter.unsubscribe()
+        if (disposable?.isDisposed == false) {
+            disposable?.dispose()
+        }
     }
 
     override fun onResume() {

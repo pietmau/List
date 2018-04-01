@@ -41,7 +41,7 @@ class CustomAlertDialogBuilder(
         val title = itemTitle?.text?.toString() ?: ""
         val description = itemDescription?.text?.toString()
         val progress = seekbar?.progress ?: 0
-        val newData = CheckListItemData(title, data.checked, Priority(progress), description, 0, 0)
+        val newData = CheckListItemData(title, data.checked, Priority(progress), description, data.id, data.cardId)
         callback.onItemEdited(newData, cardPosition, itemPosition)
     }
 

@@ -1,9 +1,12 @@
 package com.pppp.travelchecklist.model.dao
 
+import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.provider.BaseColumns
 import com.pppp.travelchecklist.model.Card
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
 
 class ListDaoSqlite(
         private val db: SQLiteDatabase,
@@ -48,6 +51,20 @@ class ListDaoSqlite(
         var result = mutableListOf<CheckListItemData>()
         result.addAll(deserializer.getItems(db.rawQuery(queryMaker.getitemsQuery(id), emptyArray())))
         return result.toList()
+    }
+
+    override fun editItem(item: CheckListItemData): Int {
+        val values = ContentValues()
+        values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, item.title)
+        values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, if (item.checked) 1 else 0)
+        values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_PRIORITY, item.priority.value)
+        values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION, item.description)
+        values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID, item.cardId)
+        return db.update(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, values, "${BaseColumns._ID} = ?", arrayOf(item.id.toString()))
+    }
+
+    override fun deleteItem(item: CheckListItemData): Int {
+        return db.delete(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, "${BaseColumns._ID} = ?", arrayOf(item.id.toString()))
     }
 
 }

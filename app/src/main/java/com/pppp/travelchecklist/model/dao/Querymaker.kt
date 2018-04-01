@@ -14,4 +14,5 @@ class Querymaker {
     fun getitemsQuery(cardId: Long): String = "SELECT * FROM " + TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME + " WHERE " + TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CARD_ID + "=" + cardId
 
     fun getListQuery(checklistId: Long): String = "SELECT * FROM " + ListContract.List.TABLE_NAME + " WHERE " + BaseColumns._ID + " = " + checklistId
+
 }

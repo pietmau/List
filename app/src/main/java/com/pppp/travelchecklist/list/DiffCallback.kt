@@ -2,13 +2,13 @@ package com.pppp.travelchecklist.list
 
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import com.pppp.travelchecklist.model.CardItemData
+import com.pppp.travelchecklist.model.Card
 import com.pppp.travelchecklist.model.CheckListItemData
 
 
 class DiffCallback(
-        private val old: List<CardItemData>,
-        private val new: List<CardItemData>)
+        private val old: List<Card>,
+        private val new: List<Card>)
     : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean

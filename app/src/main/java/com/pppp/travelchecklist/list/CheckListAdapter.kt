@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.travelchecklist.model.CardItemData
+import com.pppp.travelchecklist.model.Card
 import com.pppp.travelchecklist.model.CheckListItemData
 
 
 class CheckListAdapter(
-        var items: List<CardItemData>,
+        var items: List<Card>,
         private val callback: CheckListCard.Callback?
 
 ) : RecyclerView.Adapter<CheckListHolder>() {

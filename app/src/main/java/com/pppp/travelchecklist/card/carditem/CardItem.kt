@@ -20,7 +20,7 @@ class CardItem(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card_item, this, true)
         check.text = data.title
-        check.isChecked = data.checked
+        check.isChecked = if (data?.checked == true) true else false
         settings.setOnClickListener { showSettings() }
         delete.setOnClickListener { showDelete() }
     }

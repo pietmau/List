@@ -7,4 +7,7 @@
     <color name="iconColor">#FF000000</color>
     <color name="buttonDefault">#FFFFFFFF</color>
     <color name="buttonSelected">#FFAAAAAA</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="blue_sky">#3799f4</color>
+    <color name="grey">#FFAAAAAA</color>
 </resources>

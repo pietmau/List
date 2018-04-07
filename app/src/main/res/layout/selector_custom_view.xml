@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ViewFlipper
+    <com.pppp.travelchecklist.selector.view.EnhancedFlipper
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/holo_green_light">
-    </ViewFlipper>
+    </com.pppp.travelchecklist.selector.view.EnhancedFlipper>
 
     <RelativeLayout
         android:layout_width="match_parent"

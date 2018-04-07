@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.selector
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.pppp.travelchecklist.selector.view.SelectorController
 import dagger.Module
 import dagger.Provides
 

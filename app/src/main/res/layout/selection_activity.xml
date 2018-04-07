@@ -2,7 +2,7 @@
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/selectorfragment"
-    android:name="com.pppp.travelchecklist.selector.SelectorFragment"
+    android:name="com.pppp.travelchecklist.selector.view.SelectorFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">

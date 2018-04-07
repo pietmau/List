@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector
+package com.pppp.travelchecklist.selector.view
 
 import android.content.Context
 import android.support.annotation.AnimRes
@@ -16,6 +16,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.selector.SelectorModule
 import javax.inject.Inject
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector
+package com.pppp.travelchecklist.selector.view
 
 class SelectorController {
 

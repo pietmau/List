@@ -21,16 +21,15 @@
         android:orientation="horizontal">
 
         <ToggleButton
-            android:background="@drawable/selector_bg_radio_button"
-            android:textColor="@color/selector_text_radio_button"
             android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textOff="@string/male"
             android:textOn="@string/male"
-            />
+            style="@style/custom_toggleButton"/>
 
         <ToggleButton
+            style="@style/custom_toggleButton"
             android:id="@+id/fermale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,6 +37,7 @@
             android:textOn="@string/fermale"/>
 
         <ToggleButton
+            style="@style/custom_toggleButton"
             android:id="@+id/babies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,6 +45,7 @@
             android:textOn="@string/babies"/>
 
         <ToggleButton
+            style="@style/custom_toggleButton"
             android:id="@+id/toddlers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

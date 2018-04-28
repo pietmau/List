@@ -7,7 +7,7 @@ import com.pppp.travelchecklist.selector.view.SelectorController
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module//TODO clean al this!!!!!!!!!!!!
 class SelectorModule(private val activity: AppCompatActivity) {
     private val fragmentManager = activity.supportFragmentManager
 

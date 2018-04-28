@@ -2,13 +2,14 @@ package com.pppp.travelchecklist.selector.view.viewpager
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
 
 
-class ViewViewPager @JvmOverloads constructor(
+class SelectorViewPager @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null)
     : ViewPager(context, attrs) {
@@ -19,7 +20,8 @@ class ViewViewPager @JvmOverloads constructor(
         get() = currentItem > 0
 
     init {
-        adapter = ViewViewPagerAdapter(context)
+        val fragmentManager = (context as FragmentActivity).supportFragmentManager
+        adapter = ViewViewPagerAdapter(fragmentManager)
         offscreenPageLimit = adapter!!.count
         if (isMarshmallowOrAbove) {
             setScrollListener()

@@ -13,10 +13,10 @@ import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
-import com.pppp.travelchecklist.selector.view.viewpager.ViewViewPager
+import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    @BindView(R.id.flipper) lateinit var flipper: ViewViewPager
+    @BindView(R.id.flipper) lateinit var flipper: SelectorViewPager
     @BindView(R.id.next) lateinit var next: View
     @BindView(R.id.previous) lateinit var previous: View
 

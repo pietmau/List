@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
+import com.pppp.travelchecklist.selector.view.Selection
 
 
 class SelectorViewPager @JvmOverloads constructor(
@@ -21,7 +22,7 @@ class SelectorViewPager @JvmOverloads constructor(
 
     init {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
-        adapter = ViewViewPagerAdapter(fragmentManager)
+        adapter = SelectionViewPagerAdapter(fragmentManager)
         offscreenPageLimit = adapter!!.count
         if (isMarshmallowOrAbove) {
             setScrollListener()
@@ -40,4 +41,6 @@ class SelectorViewPager @JvmOverloads constructor(
     fun showNext() {
         currentItem = currentItem + 1
     }
+
+    fun getSelection(): Selection = (adapter as SelectionViewPagerAdapter).getSelection()
 }

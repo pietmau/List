@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.selector.view.Selection
 
 
 class ExpectedWeatherFragment : Fragment() {
@@ -16,5 +17,9 @@ class ExpectedWeatherFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.expected_weather, container, false)
+    }
+
+    fun getSelection(): Selection.SelectionItem.ExpectedWeatherSelectionItem? {
+        TODO("not implemented")
     }
 }

@@ -25,4 +25,6 @@
     <string name="where_are_you_flying">Where are you flying?</string>
     <string name="expected_weather">Expected weather</string>
     <string name="accomodation">Accomodation</string>
+    <string name="planned_activities">Planned activities</string>
+    <string name="long_or_short">Is it going to be a long trip?</string>
 </resources>

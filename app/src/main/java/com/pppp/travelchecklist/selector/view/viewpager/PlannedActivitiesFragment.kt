@@ -9,17 +9,17 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.Selection
 
 
-class AccomodationFragment : Fragment() {
+class PlannedActivitiesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AccomodationFragment()
+        fun newInstance() = PlannedActivitiesFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.accomodation, container, false)
+        return inflater.inflate(R.layout.planned_acctivites, container, false)
     }
 
-    fun getSelection(): Selection.SelectionItem.AccommodationSelectionItem? {
+    fun getSelection(): List<Selection.SelectionItem.PlannedActivitiesSelectionItem> {
         TODO("not implemented")
     }
 }

@@ -16,6 +16,7 @@ import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+    var callaback: Callback? = null
     @BindView(R.id.flipper) lateinit var flipper: SelectorViewPager
     @BindView(R.id.next) lateinit var next: View
     @BindView(R.id.previous) lateinit var previous: View
@@ -31,10 +32,10 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     private fun setUp() {
         flipper.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
-                onPageChanged()
+                onPageChanged(position)
             }
         })
-        onPageChanged()
+        onPageChanged(0)
     }
 
     @OnClick(R.id.previous)
@@ -42,13 +43,21 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         flipper.showPrevious()
     }
 
-    private fun onPageChanged() {
+    private fun onPageChanged(position: Int) {
         next.visibility = if (flipper.canGoToNext) VISIBLE else GONE
         previous.visibility = if (flipper.canGoToPrevious) VISIBLE else GONE
+        callaback?.onPageChanged(position)
     }
 
     @OnClick(R.id.next)
     fun onNextClicked() {
         flipper.showNext()
     }
+
+    fun getSelection() = flipper.getSelection()
+
+    interface Callback {
+        fun onPageChanged(position: Int)
+    }
+
 }

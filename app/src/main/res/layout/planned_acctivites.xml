@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/planned_activities"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/yellow"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/male"
+            android:textOn="@string/male"
+            style="@style/custom_toggleButton"/>
+
+        <ToggleButton
+            style="@style/custom_toggleButton"
+            android:id="@+id/fermale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/fermale"
+            android:textOn="@string/fermale"/>
+
+        <ToggleButton
+            style="@style/custom_toggleButton"
+            android:id="@+id/babies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/babies"
+            android:textOn="@string/babies"/>
+
+        <ToggleButton
+            style="@style/custom_toggleButton"
+            android:id="@+id/toddlers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/toddlers"
+            android:textOn="@string/toddlers"/>
+
+    </LinearLayout>
+</LinearLayout>

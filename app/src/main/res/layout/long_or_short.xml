@@ -1,56 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_light"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/long_or_short"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/yellow"
-        android:textStyle="bold"/>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ToggleButton
-            android:id="@+id/male"
+        <TextView
+            style="@style/selction_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/male"
-            android:textOn="@string/male"
-            style="@style/custom_toggleButton"/>
+            android:layout_marginBottom="32dp"
+            android:text="@string/long_or_short"/>
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/fermale"
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/fermale"
-            android:textOn="@string/fermale"/>
+            app:flexWrap="wrap">
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/babies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/babies"
-            android:textOn="@string/babies"/>
+            <ToggleButton
+                android:id="@+id/yes"
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/yes"
+                android:textOn="@string/yes"/>
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/toddlers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/toddlers"
-            android:textOn="@string/toddlers"/>
+            <ToggleButton
+                android:id="@+id/no"
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/no"
+                android:textOn="@string/no"/>
 
+        </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 </LinearLayout>

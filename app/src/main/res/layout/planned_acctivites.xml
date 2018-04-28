@@ -1,56 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_light"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/planned_activities"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/yellow"
-        android:textStyle="bold"/>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ToggleButton
-            android:id="@+id/male"
+        <TextView
+            style="@style/selction_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/male"
-            android:textOn="@string/male"
-            style="@style/custom_toggleButton"/>
+            android:layout_marginBottom="32dp"
+            android:text="@string/planned_activities"
+            />
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/fermale"
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/fermale"
-            android:textOn="@string/fermale"/>
+            app:flexWrap="wrap">
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/babies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/babies"
-            android:textOn="@string/babies"/>
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textOff="@string/backpacking"
+                android:textOn="@string/backpacking"/>
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/toddlers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/toddlers"
-            android:textOn="@string/toddlers"/>
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/fishing"
+                android:textOn="@string/fishing"/>
 
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/diving"
+                android:textOn="@string/diving"/>
+
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textOff="@string/beach"
+                android:textOn="@string/beach"/>
+
+            <ToggleButton
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/work"
+                android:textOn="@string/work"/>
+
+
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/goingout"
+                android:textOn="@string/goingout"/>
+
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/babies"
+                android:textOn="@string/babies"/>
+
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/hiking"
+                android:textOn="@string/hiking"/>
+
+            <ToggleButton
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/skiing"
+                android:textOn="@string/skiing"/>
+
+        </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 </LinearLayout>

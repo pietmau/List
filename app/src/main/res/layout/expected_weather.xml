@@ -4,53 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_light"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/expected_weather"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/yellow"
-        android:textStyle="bold"/>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ToggleButton
-            android:id="@+id/male"
+        <TextView
+            style="@style/selction_title"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_height="wrap_content"
+            android:text="@string/expected_weather"
+            />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/male"
-            android:textOn="@string/male"
-            style="@style/custom_toggleButton"/>
+            android:orientation="horizontal">
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/fermale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/fermale"
-            android:textOn="@string/fermale"/>
+            <ToggleButton
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:id="@+id/hot"
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/hot"
+                android:textOn="@string/hot"/>
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/babies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/babies"
-            android:textOn="@string/babies"/>
+            <ToggleButton
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:id="@+id/cold"
+                style="@style/custom_toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/cold"
+                android:textOn="@string/cold"/>
 
-        <ToggleButton
-            style="@style/custom_toggleButton"
-            android:id="@+id/toddlers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/toddlers"
-            android:textOn="@string/toddlers"/>
-
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

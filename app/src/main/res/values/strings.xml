@@ -27,4 +27,19 @@
     <string name="accomodation">Accomodation</string>
     <string name="planned_activities">Planned activities</string>
     <string name="long_or_short">Is it going to be a long trip?</string>
+    <string name="hot">Hot/sunny</string>
+    <string name="cold">Cold/rainy</string>
+    <string name="hotel">Hotel</string>
+    <string name="hostel">Hostel/Guesthouse</string>
+    <string name="camping">Camping</string>
+    <string name="backpacking">Backpacking</string>
+    <string name="fishing">Fishing</string>
+    <string name="diving">Diving</string>
+    <string name="beach">Beach/sea/cruise</string>
+    <string name="work">Business/work</string>
+    <string name="goingout">Going out</string>
+    <string name="hiking">Hiking</string>
+    <string name="skiing">Skiing</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

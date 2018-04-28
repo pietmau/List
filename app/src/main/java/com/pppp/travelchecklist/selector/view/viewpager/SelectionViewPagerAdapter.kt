@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.selector.view.viewpager
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.pppp.travelchecklist.selector.view.Selection
+import com.pppp.travelchecklist.selector.view.model.Selection
 
 class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 

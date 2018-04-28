@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
-import com.pppp.travelchecklist.selector.view.Selection
+import com.pppp.travelchecklist.selector.view.model.Selection
 
 
 class SelectorViewPager @JvmOverloads constructor(

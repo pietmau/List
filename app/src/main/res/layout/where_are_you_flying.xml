@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/where_are_you_flying"/>
 
-        <org.angmarch.views.NiceSpinner
+        <org.angmarch.views.BetterSpinner
             android:id="@+id/nice_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

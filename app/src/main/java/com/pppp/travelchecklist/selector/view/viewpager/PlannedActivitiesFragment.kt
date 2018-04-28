@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.Selection
+import com.pppp.travelchecklist.selector.view.model.Selection
 
 
 class PlannedActivitiesFragment : Fragment() {

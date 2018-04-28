@@ -22,4 +22,7 @@
     <string name="fermale">Fermale</string>
     <string name="babies">Babies</string>
     <string name="toddlers">Toddlers</string>
+    <string name="where_are_you_flying">Where are you flying?</string>
+    <string name="expected_weather">Expected weather</string>
+    <string name="accomodation">Accomodation</string>
 </resources>

@@ -4,22 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.pppp.travelchecklist.selector.view.viewpager.ViewViewPager
+    <com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/holo_green_light">
-    </com.pppp.travelchecklist.selector.view.viewpager.ViewViewPager>
+    </com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-        android:background="#88FF0000"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <android.support.design.widget.FloatingActionButton
+            android:scaleType="center"
+            android:src="@drawable/ic_chevron_left_white_24dp"
             android:id="@+id/previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,6 +28,8 @@
             android:layout_centerVertical="true"/>
 
         <android.support.design.widget.FloatingActionButton
+            android:scaleType="center"
+            android:src="@drawable/ic_chevron_right_white_24dp"
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -13,22 +13,17 @@ import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
-import com.pppp.travelchecklist.selector.view.viewpager.ViewViewPager
+import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    @BindView(R.id.flipper) lateinit var flipper: ViewViewPager
+    @BindView(R.id.flipper) lateinit var flipper: SelectorViewPager
     @BindView(R.id.next) lateinit var next: View
     @BindView(R.id.previous) lateinit var previous: View
 
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
-        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-            R.layout.selector_custom_view,
-            this,
-            true
-        )
-        (context.applicationContext as? App)?.appComponent?.with(SelectorModule(context as AppCompatActivity))
-            ?.inject(this)
+        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.selector_custom_view, this, true)
+        (context.applicationContext as? App)?.appComponent?.with(SelectorModule(context as AppCompatActivity))?.inject(this)
         ButterKnife.bind(this)
         setUp()
     }
@@ -48,8 +43,8 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     }
 
     private fun onPageChanged() {
-        next.visibility = if (flipper.canGoToNext) VISIBLE else View.GONE
-        previous.visibility = if (flipper.canGoToPrevious) VISIBLE else View.GONE
+        next.visibility = if (flipper.canGoToNext) VISIBLE else GONE
+        previous.visibility = if (flipper.canGoToPrevious) VISIBLE else GONE
     }
 
     @OnClick(R.id.next)

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager
+package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,17 +9,19 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.model.Selection
 
 
-class WhoIsTravellingFragment : Fragment() {
+class PlannedActivitiesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = WhoIsTravellingFragment()
+        fun newInstance() =
+            PlannedActivitiesFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.who_is_travelling, container, false)
+        val view = inflater.inflate(R.layout.planned_acctivites, container, false)
+        return view
     }
 
-    fun getSelection(): List<Selection.SelectionItem.WhoIsTravellingSelectionItem> {
+    fun getSelection(): List<Selection.SelectionItem.PlannedActivitiesSelectionItem> {
         TODO("not implemented")
     }
 }

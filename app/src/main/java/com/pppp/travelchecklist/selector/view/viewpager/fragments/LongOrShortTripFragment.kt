@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager
+package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,17 +9,18 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.model.Selection
 
 
-class AccomodationFragment : Fragment() {
+class LongOrShortTripFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AccomodationFragment()
+        fun newInstance() =
+            LongOrShortTripFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.accomodation, container, false)
+        return inflater.inflate(R.layout.long_or_short, container, false)
     }
 
-    fun getSelection(): Selection.SelectionItem.AccommodationSelectionItem? {
+    fun getSelection(): Selection.SelectionItem.LongOrShortTripSelectionItem? {
         TODO("not implemented")
     }
 }

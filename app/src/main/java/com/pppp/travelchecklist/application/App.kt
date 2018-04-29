@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.application
 
 import android.app.Application
 import android.os.StrictMode
+import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.BuildConfig
 import com.pppp.travelchecklist.application.di.AppComponent
 import com.pppp.travelchecklist.application.di.DaggerAppComponent
@@ -29,6 +30,7 @@ class App : Application() {
             return;
         }
         LeakCanary.install(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         appComponent = DaggerAppComponent.create()
     }
 }

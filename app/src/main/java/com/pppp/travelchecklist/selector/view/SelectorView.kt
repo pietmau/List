@@ -1,6 +1,8 @@
 package com.pppp.travelchecklist.selector.view
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.AttributeSet
@@ -18,7 +20,7 @@ import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     var callaback: Callback? = null
     @BindView(R.id.flipper) lateinit var flipper: SelectorViewPager
-    @BindView(R.id.next) lateinit var next: View
+    @BindView(R.id.next) lateinit var next: FloatingActionButton
     @BindView(R.id.previous) lateinit var previous: View
 
     init {
@@ -44,9 +46,19 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     }
 
     private fun onPageChanged(position: Int) {
-        next.visibility = if (flipper.canGoToNext) VISIBLE else GONE
         previous.visibility = if (flipper.canGoToPrevious) VISIBLE else GONE
         callaback?.onPageChanged(position)
+        setUpNextButton()
+    }
+
+    private fun setUpNextButton() {
+        if (flipper.canGoToNext) {
+            next.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
+            next.setImageDrawable(resources.getDrawable(R.drawable.ic_chevron_right_white_24dp, context.theme))
+        } else {
+            next.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
+            next.setImageDrawable(resources.getDrawable(R.drawable.ic_check_white_24dp, context.theme))
+        }
     }
 
     @OnClick(R.id.next)

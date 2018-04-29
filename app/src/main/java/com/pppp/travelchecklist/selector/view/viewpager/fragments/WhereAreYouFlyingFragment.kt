@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager
+package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -26,7 +26,8 @@ class WhereAreYouFlyingFragment : Fragment() {
     @BindView(R.id.nice_spinner) lateinit var spinner: BetterSpinner
 
     companion object {
-        fun newInstance() = WhereAreYouFlyingFragment()
+        fun newInstance() =
+            WhereAreYouFlyingFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager
+package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,17 +9,18 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.model.Selection
 
 
-class LongOrShortTripFragment : Fragment() {
+class WhoIsTravellingFragment : Fragment() {
 
     companion object {
-        fun newInstance() = LongOrShortTripFragment()
+        fun newInstance() =
+            WhoIsTravellingFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.long_or_short, container, false)
+        return inflater.inflate(R.layout.who_is_travelling, container, false)
     }
 
-    fun getSelection(): Selection.SelectionItem.LongOrShortTripSelectionItem? {
+    fun getSelection(): List<Selection.SelectionItem.WhoIsTravellingSelectionItem> {
         TODO("not implemented")
     }
 }

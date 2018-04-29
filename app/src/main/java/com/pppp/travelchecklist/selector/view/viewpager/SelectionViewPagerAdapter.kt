@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.pppp.travelchecklist.selector.view.model.Selection
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.*
 
 class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 

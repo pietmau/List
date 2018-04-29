@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager
+package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,17 +9,18 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.model.Selection
 
 
-class PlannedActivitiesFragment : Fragment() {
+class ExpectedWeatherFragment : Fragment() {
 
     companion object {
-        fun newInstance() = PlannedActivitiesFragment()
+        fun newInstance() =
+            ExpectedWeatherFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.planned_acctivites, container, false)
+        return inflater.inflate(R.layout.expected_weather, container, false)
     }
 
-    fun getSelection(): List<Selection.SelectionItem.PlannedActivitiesSelectionItem> {
+    fun getSelection(): Selection.SelectionItem.ExpectedWeatherSelectionItem? {
         TODO("not implemented")
     }
 }

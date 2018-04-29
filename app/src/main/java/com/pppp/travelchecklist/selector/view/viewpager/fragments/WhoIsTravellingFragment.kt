@@ -21,6 +21,11 @@ class WhoIsTravellingFragment : Fragment() {
     }
 
     fun getSelection(): List<Selection.SelectionItem.WhoIsTravellingSelectionItem> {
-        TODO("not implemented")
+        val list = mutableListOf<Selection.SelectionItem.WhoIsTravellingSelectionItem>()
+        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Male())
+        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Fermale())
+        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Babies())
+        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Toddlers())
+        return list.toList()
     }
 }

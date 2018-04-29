@@ -71,7 +71,5 @@ class WhereAreYouFlyingFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    fun getSelection(): Selection.SelectionItem.WereAreYouFlyingSelectionItem {
-        TODO("not implemented")
-    }
+    fun getSelection() = Selection.SelectionItem.WereAreYouFlyingSelectionItem("")
 }

@@ -15,6 +15,7 @@ import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
+import com.pppp.travelchecklist.selector.view.model.Selection
 import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -22,6 +23,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     @BindView(R.id.flipper) lateinit var flipper: SelectorViewPager
     @BindView(R.id.next) lateinit var next: FloatingActionButton
     @BindView(R.id.previous) lateinit var previous: View
+    val canGoNext get() = flipper.canGoToNext
 
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
@@ -52,7 +54,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     }
 
     private fun setUpNextButton() {
-        if (flipper.canGoToNext) {
+        if (canGoNext) {
             next.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
             next.setImageDrawable(resources.getDrawable(R.drawable.ic_chevron_right_white_24dp, context.theme))
         } else {
@@ -63,13 +65,18 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.next)
     fun onNextClicked() {
-        flipper.showNext()
+        if (canGoNext) {
+            flipper.showNext()
+        } else {
+            callaback?.onFinishClicked(getSelection())
+        }
     }
 
     fun getSelection() = flipper.getSelection()
 
     interface Callback {
         fun onPageChanged(position: Int)
-    }
 
+        fun onFinishClicked(selection: Selection)
+    }
 }

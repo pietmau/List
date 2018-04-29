@@ -43,8 +43,8 @@ class Selection(
         }
 
         sealed class LongOrShortTripSelectionItem : SelectionItem() {
-            class short : LongOrShortTripSelectionItem()
-            class long : LongOrShortTripSelectionItem()
+            class Short : LongOrShortTripSelectionItem()
+            class Long : LongOrShortTripSelectionItem()
         }
     }
 }

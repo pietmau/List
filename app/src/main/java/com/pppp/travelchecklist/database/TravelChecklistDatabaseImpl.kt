@@ -15,7 +15,6 @@ class TravelChecklistDatabaseImpl(
 ) : TravelChecklistDatabase {
     companion object {
         const val COUNTRIES = "countries"
-        const val COUNTRY = "country"
     }
 
     private val databaseReference = firebaseDatabase.getReference(COUNTRIES)

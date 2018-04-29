@@ -20,7 +20,5 @@ class LongOrShortTripFragment : Fragment() {
         return inflater.inflate(R.layout.long_or_short, container, false)
     }
 
-    fun getSelection(): Selection.SelectionItem.LongOrShortTripSelectionItem? {
-        TODO("not implemented")
-    }
+    fun getSelection() = Selection.SelectionItem.LongOrShortTripSelectionItem.Long()
 }

@@ -20,7 +20,5 @@ class ExpectedWeatherFragment : Fragment() {
         return inflater.inflate(R.layout.expected_weather, container, false)
     }
 
-    fun getSelection(): Selection.SelectionItem.ExpectedWeatherSelectionItem? {
-        TODO("not implemented")
-    }
+    fun getSelection() = Selection.SelectionItem.ExpectedWeatherSelectionItem.Cold()
 }

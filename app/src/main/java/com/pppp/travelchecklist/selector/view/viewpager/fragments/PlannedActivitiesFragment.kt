@@ -21,7 +21,5 @@ class PlannedActivitiesFragment : Fragment() {
         return view
     }
 
-    fun getSelection(): List<Selection.SelectionItem.PlannedActivitiesSelectionItem> {
-        TODO("not implemented")
-    }
+    fun getSelection() = mutableListOf<Selection.SelectionItem.PlannedActivitiesSelectionItem>()
 }

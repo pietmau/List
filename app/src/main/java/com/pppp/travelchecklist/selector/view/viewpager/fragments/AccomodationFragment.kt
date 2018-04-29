@@ -20,7 +20,5 @@ class AccomodationFragment : Fragment() {
         return inflater.inflate(R.layout.accomodation, container, false)
     }
 
-    fun getSelection(): Selection.SelectionItem.AccommodationSelectionItem? {
-        TODO("not implemented")
-    }
+    fun getSelection() = Selection.SelectionItem.AccommodationSelectionItem.Hotel()
 }

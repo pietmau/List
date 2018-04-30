@@ -10,7 +10,7 @@ import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 
 
-class ModelImpl(private val dao: ListDao) : Model {
+class OldModelImpl(private val dao: ListDao) : OldModel {
     override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
         TODO("not implemented")
     }

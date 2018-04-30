@@ -13,6 +13,7 @@ class App : Application() {
     var appComponent: AppComponent? = null
 
     override fun onCreate() {
+        super.onCreate()
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectAll()
@@ -25,7 +26,7 @@ class App : Application() {
                 .penaltyDeath()
                 .build())
         }
-        super.onCreate()
+
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }

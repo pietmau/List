@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.model.Selection
-
+import kotlinx.android.synthetic.main.long_or_short.*
 
 class LongOrShortTripFragment : Fragment() {
 
@@ -18,6 +18,18 @@ class LongOrShortTripFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.long_or_short, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        yes.setOnCheckedChangeListener { button, isChecked ->
+            no.isChecked = false
+            yes.isChecked = isChecked
+        }
+        no.setOnCheckedChangeListener { button, isChecked ->
+            yes.isChecked = false
+            no.isChecked = isChecked
+        }
     }
 
     fun getSelection() = Selection.SelectionItem.LongOrShortTripSelectionItem.Long()

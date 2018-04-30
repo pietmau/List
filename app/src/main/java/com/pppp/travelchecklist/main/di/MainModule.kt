@@ -4,9 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import com.pppp.travelchecklist.main.model.BetterModelImpl
-import com.pppp.travelchecklist.main.model.Model
+import com.pppp.travelchecklist.main.model.BetterOldModelImpl
+import com.pppp.travelchecklist.main.model.OldModel
 import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.presenter.OldMainPresenter
 import com.pppp.travelchecklist.model.dao.DeserializerImpl
 import com.pppp.travelchecklist.model.dao.ListDao
 import com.pppp.travelchecklist.model.dao.ListDaoSqlite
@@ -27,26 +28,32 @@ class MainModule(private val activity: FragmentActivity) {
         if (fragment == null) {
             fragment = RetainedFragment()
             fragmentManager?.beginTransaction()?.add(fragment, RetainedFragment.TAG)?.commit()
-            fragment?.model = BetterModelImpl(getDao(activity.applicationContext), Schedulers.io(), AndroidSchedulers.mainThread())
+            fragment?.oldModel = BetterOldModelImpl(getDao(activity.applicationContext), Schedulers.io(), AndroidSchedulers.mainThread())
         }
         fragment!!
     }
 
-    private fun getDao(context: Context): ListDao = ListDaoSqlite(OpenHelper.DATABASE(context), Querymaker(), DeserializerImpl())
+    private fun getDao(context: Context): ListDao =
+        ListDaoSqlite(OpenHelper.DATABASE(context), Querymaker(), DeserializerImpl())
 
     @Provides
-    fun providePresenter(model: Model) = MainPresenter(model, Schedulers.io(), AndroidSchedulers.mainThread())
+    fun providePresenter() = MainPresenter()
+
 
     @Provides
-    fun provideModel(): Model = getModel()
+    fun provideOldPresenter(oldModel: OldModel) =
+        OldMainPresenter(oldModel, Schedulers.io(), AndroidSchedulers.mainThread())
 
-    private fun getModel(): Model = fragment.model
+    @Provides
+    fun provideOldModel(): OldModel = getOldModel()
+
+    private fun getOldModel(): OldModel = fragment.oldModel
 
 }
 
 
 class RetainedFragment : Fragment() {
-    lateinit var model: Model
+    lateinit var oldModel: OldModel
 
     companion object {
         val TAG = RetainedFragment::class.simpleName

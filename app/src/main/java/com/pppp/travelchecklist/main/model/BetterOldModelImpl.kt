@@ -10,10 +10,10 @@ import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 
 
-class BetterModelImpl(
+class BetterOldModelImpl(
         private val dao: ListDao,
         val io: Scheduler,
-        val ui: Scheduler) : Model {
+        val ui: Scheduler) : OldModel {
 
     private val subject = BehaviorSubject.create<CheckList>()
     private var checklistId: Long? = null

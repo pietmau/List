@@ -1,44 +1,25 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.travelchecklist.main.model.Model
-import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
-import io.reactivex.Scheduler
-import io.reactivex.Single
-import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableObserver
+import com.pppp.travelchecklist.selector.view.SelectorView
+import com.pppp.travelchecklist.selector.view.model.Selection
 
 
-class MainPresenter(
-        private val model: Model,
-        val worker: Scheduler,
-        val ui: Scheduler) {
+class MainPresenter : SelectorView.Callback {
+    private var mainActivity: MainView? = null
 
-    var view: TravelListView? = null
-    private var subscription: Disposable? = null
+    override fun onPageChanged(position: Int) {
 
-    fun unsubscribe() {
-        if (subscription?.isDisposed == false) {
-            subscription?.dispose()
-        }
     }
 
-    fun deleteChecklistItem(cardPosition: Int, itemPosition: Int) = model.deleteItem(cardPosition, itemPosition)
-
-    fun subscribe(view: TravelListView, observer: DisposableObserver<CheckList>) {
-        this.view = view
-        subscription = model.getCards(1)
-                .subscribeOn(worker)
-                .observeOn(ui)
-                .subscribeWith(observer)
+    override fun onFinishClicked(selection: Selection) {
+        mainActivity?.navigateToNewList(selection)
     }
 
-    fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
-        return model.getItem(cardPosition, itemPosition)
+    fun bind(mainActivity: MainView) {
+        this.mainActivity = mainActivity
     }
 
-    fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
-        model.onItemEdited(item, cardPosition, itemPosition)
+    fun unbind() {
+        mainActivity = null
     }
 }

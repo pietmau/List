@@ -28,7 +28,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
         (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.selector_custom_view, this, true)
-        (context.applicationContext as? App)?.appComponent?.with(SelectorModule(context as AppCompatActivity))?.inject(this)
+        (context.applicationContext as? App)?.appComponent?.with(SelectorModule(context))?.inject(this)
         ButterKnife.bind(this)
         setUp()
     }

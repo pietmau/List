@@ -11,7 +11,7 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.card.CheckListCard
 import com.pppp.travelchecklist.card.carditem.CustomAlertDialogBuilder
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.presenter.OldMainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
@@ -25,7 +25,7 @@ import org.jetbrains.anko.yesButton
 import javax.inject.Inject
 
 class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callback {
-    @Inject lateinit var presenter: MainPresenter
+    @Inject lateinit var presenterOld: OldMainPresenter
     private var disposable: Disposable? = null
 
     private val callback = object : CheckListCard.Callback {
@@ -39,7 +39,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     }
 
     private fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int) {
-        disposable = presenter.getItem(cardPosition, itemPosition).subscribe({ item ->
+        disposable = presenterOld.getItem(cardPosition, itemPosition).subscribe({ item ->
             context?.let { CustomAlertDialogBuilder(it, item, cardPosition, itemPosition, this).create().show() }
         }, {})
     }
@@ -54,7 +54,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     }
 
     private fun deleteChecklistItem(cardPosition: Int, itemPosition: Int) {
-        presenter.deleteChecklistItem(cardPosition, itemPosition)
+        presenterOld.deleteChecklistItem(cardPosition, itemPosition)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,13 +68,13 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     }
 
     override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
-        presenter.onItemEdited(item, cardPosition, itemPosition)
+        presenterOld.onItemEdited(item, cardPosition, itemPosition)
     }
 
     override fun onPause() {
         super.onPause()
         recycler.callback = null
-        presenter.unsubscribe()
+        presenterOld.unsubscribe()
         if (disposable?.isDisposed == false) {
             disposable?.dispose()
         }
@@ -83,7 +83,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenter.subscribe(this, object : SimpleObserver<CheckList>() {
+        presenterOld.subscribe(this, object : SimpleObserver<CheckList>() {
             override fun onNext(checkList: CheckList) {
                 recycler.setItems(checkList.cards)
             }

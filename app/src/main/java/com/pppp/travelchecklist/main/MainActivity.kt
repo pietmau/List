@@ -5,12 +5,20 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
+import com.pppp.travelchecklist.NewListFragment
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.main.di.MainModule
+import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.selector.view.SelectorFragment
+import com.pppp.travelchecklist.selector.view.model.Selection
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainView {
+    @Inject lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +28,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
+        setUpSelectionFragment(savedInstanceState)
+        (applicationContext as App).appComponent?.with(MainModule(this))?.inject(this)
     }
+
+    private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            var fragment = getSelectorFragment() ?: SelectorFragment.newInstance()
+            supportFragmentManager.beginTransaction().replace(R.id.container, fragment, SelectorFragment.TAG).commit()
+        }
+        getSelectorFragment()?.setCallback(presenter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.bind(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.unbind()
+    }
+
+    override fun navigateToNewList(selection: Selection) {
+        var fragment = getNewlistFragment() ?: NewListFragment.newInstance(selection)
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, NewListFragment.TAG).commit()
+    }
+
+    private fun getNewlistFragment() =
+        supportFragmentManager.findFragmentByTag(NewListFragment.TAG) as? NewListFragment
+
+    private fun getSelectorFragment() =
+        supportFragmentManager.findFragmentByTag(SelectorFragment.TAG) as? SelectorFragment
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -30,28 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_camera -> {
-
-            }
-            R.id.nav_gallery -> {
-
-            }
-        }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

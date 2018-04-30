@@ -14,7 +14,6 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.TravelChecklistDatabase
 import com.pppp.travelchecklist.model.SimpleObserver
-import com.pppp.travelchecklist.selector.SelectionActivity
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.model.Selection
 import org.angmarch.views.BetterSpinner
@@ -45,7 +44,7 @@ class WhereAreYouFlyingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ((activity as? SelectionActivity)?.applicationContext as? App)?.appComponent?.with(SelectorModule(activity as AppCompatActivity))?.inject(this)
+        (activity?.applicationContext as? App)?.appComponent?.with(SelectorModule(activity as AppCompatActivity))?.inject(this)
     }
 
     override fun onResume() {

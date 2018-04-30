@@ -6,7 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 
-interface Model {
+interface OldModel {
     fun getCards(checklistId: Long): Observable<CheckList>
     fun deleteItem(cardPosition: Int, itemPosition: Int)
     fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData>

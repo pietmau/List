@@ -1,8 +1,6 @@
 package com.pppp.travelchecklist.selector.view
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.AttributeSet
@@ -20,15 +18,21 @@ import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     var callaback: Callback? = null
-    @BindView(R.id.flipper) lateinit var flipper: SelectorViewPager
-    @BindView(R.id.next) lateinit var next: FloatingActionButton
-    @BindView(R.id.previous) lateinit var previous: View
+    @BindView(R.id.flipper)
+    lateinit var flipper: SelectorViewPager
+    @BindView(R.id.next)
+    lateinit var next: TwoStatesFab
+    @BindView(R.id.previous)
+    lateinit var previous: View
     val canGoNext get() = flipper.canGoToNext
 
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
-        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.selector_custom_view, this, true)
-        (context.applicationContext as? App)?.appComponent?.with(SelectorModule(context))?.inject(this)
+        val inflater = LayoutInflater.from(context)
+        inflater.inflate(R.layout.selector_custom_view, this, true)
+        val appComponent = (context.applicationContext as? App)?.appComponent
+        val selectorComponent = appComponent?.with(SelectorModule(context))
+        selectorComponent?.inject(this)
         ButterKnife.bind(this)
         setUp()
     }
@@ -54,13 +58,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     }
 
     private fun setUpNextButton() {
-        if (canGoNext) {
-            next.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
-            next.setImageDrawable(resources.getDrawable(R.drawable.ic_chevron_right_white_24dp, context.theme))
-        } else {
-            next.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
-            next.setImageDrawable(resources.getDrawable(R.drawable.ic_check_white_24dp, context.theme))
-        }
+        next.canGoNext = canGoNext
     }
 
     @OnClick(R.id.next)

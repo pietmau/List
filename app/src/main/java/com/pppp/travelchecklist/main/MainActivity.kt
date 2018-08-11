@@ -17,14 +17,22 @@ import com.pppp.travelchecklist.selector.view.model.Selection
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, MainView {
-    @Inject lateinit var presenter: MainPresenter
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    MainView {
+    @Inject
+    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawer_layout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
@@ -34,10 +42,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            var fragment = getSelectorFragment() ?: SelectorFragment.newInstance()
-            supportFragmentManager.beginTransaction().replace(R.id.container, fragment, SelectorFragment.TAG).commit()
+            var fragment = getSelectorFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, fragment, SelectorFragment.TAG).commit()
         }
-        getSelectorFragment()?.setCallback(presenter)
+        getSelectorFragment().setCallback(presenter)
     }
 
     override fun onResume() {
@@ -60,6 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getSelectorFragment() =
         supportFragmentManager.findFragmentByTag(SelectorFragment.TAG) as? SelectorFragment
+                ?: SelectorFragment.newInstance()
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

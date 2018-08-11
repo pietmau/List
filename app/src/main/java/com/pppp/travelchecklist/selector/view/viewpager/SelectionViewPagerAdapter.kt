@@ -3,10 +3,10 @@ package com.pppp.travelchecklist.selector.view.viewpager
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.pppp.travelchecklist.selector.view.model.Selection
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.*
 
-class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) :
+    FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment =
         when (position) {
@@ -20,21 +20,5 @@ class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) : Fragment
         }
 
     override fun getCount() = 6
-
-    fun getSelection(): Selection {
-        val whoIsTravelling = (getItem(0) as WhoIsTravellingFragment).getSelection()
-        val wereAreYouFlying = (getItem(1) as WhereAreYouFlyingFragment).getSelection()
-        val expectedWeatherSelectionItem = (getItem(2) as ExpectedWeatherFragment).getSelection()
-        val accommodationSelectionItem = (getItem(3) as AccomodationFragment).getSelection()
-        val plannedActivitiesSelectionItem = (getItem(4) as PlannedActivitiesFragment).getSelection()
-        val longOrShortTripSelectionItem = (getItem(4) as LongOrShortTripFragment).getSelection()
-
-        return Selection(whoIsTravelling,
-            wereAreYouFlying,
-            expectedWeatherSelectionItem,
-            accommodationSelectionItem,
-            plannedActivitiesSelectionItem,
-            longOrShortTripSelectionItem)
-    }
 
 }

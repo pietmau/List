@@ -7,13 +7,9 @@ import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
-import com.pppp.travelchecklist.selector.view.model.Selection
 
-
-class SelectorViewPager @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null)
-    : ViewPager(context, attrs) {
+class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    ViewPager(context, attrs) {
 
     val canGoToNext
         get() = currentItem < (adapter!!.count - 1)
@@ -41,6 +37,4 @@ class SelectorViewPager @JvmOverloads constructor(
     fun showNext() {
         currentItem = currentItem + 1
     }
-
-    fun getSelection(): Selection = (adapter as SelectionViewPagerAdapter).getSelection()
 }

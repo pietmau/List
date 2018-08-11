@@ -13,11 +13,11 @@ import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
-import com.pppp.travelchecklist.selector.view.model.Selection
 import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    var callaback: Callback? = null
+    var callaback: SelectorCallback? = null
+
     @BindView(R.id.flipper)
     lateinit var flipper: SelectorViewPager
     @BindView(R.id.next)
@@ -25,6 +25,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     @BindView(R.id.previous)
     lateinit var previous: View
     val canGoNext get() = flipper.canGoToNext
+    private var clickTime = System.currentTimeMillis()
 
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
@@ -37,7 +38,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         setUp()
     }
 
-    private fun setUp() {
+    private fun setUp() {//TODO still needed?
         flipper.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 onPageChanged(position)
@@ -48,12 +49,14 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.previous)
     fun onPreviousClicked() {
+        if (clickedTooSoon()) {
+            return
+        }
         flipper.showPrevious()
     }
 
     private fun onPageChanged(position: Int) {
         previous.visibility = if (flipper.canGoToPrevious) VISIBLE else GONE
-        callaback?.onPageChanged(position)
         setUpNextButton()
     }
 
@@ -63,18 +66,25 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.next)
     fun onNextClicked() {
+        if (clickedTooSoon()) {
+            return
+        }
         if (canGoNext) {
             flipper.showNext()
         } else {
-            callaback?.onFinishClicked(getSelection())
+            callaback?.onFinishClicked()
         }
     }
 
-    fun getSelection() = flipper.getSelection()
+    private fun clickedTooSoon() =
+        if (System.currentTimeMillis() - clickTime < THRESHOLD) {
+            true
+        } else {
+            clickTime = System.currentTimeMillis()
+            false
+        }
 
-    interface Callback {
-        fun onPageChanged(position: Int)
-
-        fun onFinishClicked(selection: Selection)
+    companion object {
+        private const val THRESHOLD = 50L
     }
 }

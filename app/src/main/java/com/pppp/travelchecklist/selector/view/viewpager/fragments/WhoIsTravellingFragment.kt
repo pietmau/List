@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.model.Selection
 
 
 class WhoIsTravellingFragment : Fragment() {
@@ -16,16 +15,12 @@ class WhoIsTravellingFragment : Fragment() {
             WhoIsTravellingFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.who_is_travelling, container, false)
     }
 
-    fun getSelection(): List<Selection.SelectionItem.WhoIsTravellingSelectionItem> {
-        val list = mutableListOf<Selection.SelectionItem.WhoIsTravellingSelectionItem>()
-        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Male())
-        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Fermale())
-        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Babies())
-        list.add(Selection.SelectionItem.WhoIsTravellingSelectionItem.Toddlers())
-        return list.toList()
-    }
 }

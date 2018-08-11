@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment, SelectorFragment.TAG).commit()
         }
-        getSelectorFragment().setCallback(presenter)
+        //getSelectorFragment().setCallback(presenter)
     }
 
     override fun onResume() {

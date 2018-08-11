@@ -1,18 +1,12 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.travelchecklist.selector.view.SelectorView
-import com.pppp.travelchecklist.selector.view.model.Selection
+import com.pppp.travelchecklist.selector.view.SelectorCallback
 
 
-class MainPresenter : SelectorView.Callback {
+class MainPresenter : SelectorCallback {
     private var mainActivity: MainView? = null
 
-    override fun onPageChanged(position: Int) {
-
-    }
-
-    override fun onFinishClicked(selection: Selection) {
-        mainActivity?.navigateToNewList(selection)
+    override fun onFinishClicked() {
     }
 
     fun bind(mainActivity: MainView) {

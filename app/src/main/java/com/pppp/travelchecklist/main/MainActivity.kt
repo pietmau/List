@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun navigateToNewList(selection: Selection) {
-        var fragment = getNewlistFragment() ?: NewListFragment.newInstance(selection)
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, NewListFragment.TAG).commit()
+//        var fragment = getNewlistFragment() ?: NewListFragment.newInstance(selection)
+//        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, NewListFragment.TAG).commit()
     }
 
     private fun getNewlistFragment() =

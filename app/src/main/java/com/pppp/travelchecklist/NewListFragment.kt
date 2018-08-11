@@ -10,7 +10,7 @@ class NewListFragment : Fragment() {
         val TAG = NewListFragment::class.java.simpleName
         fun newInstance(selection: Selection): NewListFragment {
             val frag = NewListFragment()
-            frag.arguments = selection
+            //frag.arguments = selection
             return frag
         }
     }

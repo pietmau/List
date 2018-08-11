@@ -21,7 +21,7 @@ class App : Application() {
                 .penaltyDeath()
                 .build())
             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectAll()
+                .detectActivityLeaks()
                 .penaltyLog()
                 .penaltyDeath()
                 .build())

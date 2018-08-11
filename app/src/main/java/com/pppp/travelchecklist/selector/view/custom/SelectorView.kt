@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view
+package com.pppp.travelchecklist.selector.view.custom
 
 import android.content.Context
 import android.support.v4.view.ViewPager
@@ -13,6 +13,7 @@ import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
+import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -25,7 +26,6 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     @BindView(R.id.previous)
     lateinit var previous: View
     val canGoNext get() = flipper.canGoToNext
-    private var clickTime = System.currentTimeMillis()
 
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
@@ -49,9 +49,6 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.previous)
     fun onPreviousClicked() {
-        if (clickedTooSoon()) {
-            return
-        }
         flipper.showPrevious()
     }
 
@@ -66,23 +63,12 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.next)
     fun onNextClicked() {
-        if (clickedTooSoon()) {
-            return
-        }
         if (canGoNext) {
             flipper.showNext()
         } else {
             callaback?.onFinishClicked()
         }
     }
-
-    private fun clickedTooSoon() =
-        if (System.currentTimeMillis() - clickTime < THRESHOLD) {
-            true
-        } else {
-            clickTime = System.currentTimeMillis()
-            false
-        }
 
     companion object {
         private const val THRESHOLD = 50L

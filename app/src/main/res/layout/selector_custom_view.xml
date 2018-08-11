@@ -27,7 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"/>
 
-        <com.pppp.travelchecklist.selector.view.TwoStatesFab
+        <com.pppp.travelchecklist.selector.view.custom.TwoStatesFab
             android:scaleType="center"
             android:src="@drawable/ic_chevron_right_white_24dp"
             android:id="@+id/next"

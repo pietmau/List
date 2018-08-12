@@ -25,6 +25,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     @BindView(R.id.previous)
     lateinit var previous: View
     val canGoNext get() = flipper.canGoToNext
+    private var time = 0L
 
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
@@ -48,6 +49,9 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.previous)
     fun onPreviousClicked() {
+        if (clickedTooSoon()) {
+            return
+        }
         flipper.showPrevious()
     }
 
@@ -62,6 +66,9 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     @OnClick(R.id.next)
     fun onNextClicked() {
+        if (clickedTooSoon()) {
+            return
+        }
         if (canGoNext) {
             flipper.showNext()
         } else {
@@ -69,7 +76,16 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         }
     }
 
+    private fun clickedTooSoon(): Boolean {
+        if (System.currentTimeMillis() - time < THRESHOLD) {
+            return true
+        } else {
+            time = System.currentTimeMillis()
+            return false
+        }
+    }
+
     companion object {
-        private const val THRESHOLD = 50L
+        private const val THRESHOLD = 300L
     }
 }

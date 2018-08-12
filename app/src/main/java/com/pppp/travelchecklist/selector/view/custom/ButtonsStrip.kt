@@ -9,6 +9,8 @@ import android.widget.LinearLayout
 import android.widget.ToggleButton
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
+import org.jetbrains.anko.collections.forEachWithIndex
+
 
 class ButtonsStrip @JvmOverloads constructor(
     context: Context,
@@ -38,25 +40,12 @@ class ButtonsStrip @JvmOverloads constructor(
     fun setItems(items: List<Item>) {
         this.items.clear()
         this.items.addAll(items)
-        for ((index, item) in items.withIndex()) {
-            when (index) {
-                0 -> addItem(item)
-                (items.size - 1) -> addItem(item)
-                else -> addMiddleItem(item)
-            }
-        }
+        items.forEachWithIndex { index, item -> addItem(item, index) }
     }
 
-    private fun addMiddleItem(item: Item) {
+    private fun addItem(item: Item, index: Int) {
         val button = createButton(item)
-        button.tag = item
-        val padding = resources.getDimensionPixelOffset(R.dimen.button_strip_element_padding);
-        button.setPadding(padding, 0, padding, 0)
-        box.addView(button)
-    }
-
-    private fun addItem(item: Item) {
-        val button = createButton(item)
+        button.id = index
         button.tag = item
         box.addView(button)
     }
@@ -72,7 +61,6 @@ class ButtonsStrip @JvmOverloads constructor(
 
     override fun onClick(v: View?) {
         ((v as ToggleButton)?.getTag() as? Item)?.let { callback?.onItemSelected(it) }
-
     }
 
     data class Item(val description: String)

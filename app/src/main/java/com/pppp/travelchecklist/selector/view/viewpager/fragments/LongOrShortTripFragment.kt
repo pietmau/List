@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.SelectorCallback
+import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+import com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
+
 import kotlinx.android.synthetic.main.long_or_short.*
 
-class LongOrShortTripFragment : Fragment() {
+class LongOrShortTripFragment : Fragment(), ButtonsStripGroup.Listener {
     private val callback
         get() = activity as? SelectorCallback
 
@@ -22,15 +25,23 @@ class LongOrShortTripFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        yes.setOnCheckedChangeListener { button, isChecked ->
-            no.isChecked = false
-            yes.isChecked = isChecked
-        }
-        no.setOnCheckedChangeListener { button, isChecked ->
-            yes.isChecked = false
-            no.isChecked = isChecked
-        }
+        strip.title = resources.getString(R.string.long_or_short)
+        strip.listener = this
+        strip.setItems(getItems())
+    }
+
+    private fun getItems(): List<ButtonsStrip.Item> {
+        return listOf(
+            ButtonsStrip.Item(resources.getString(R.string.yes)),
+            ButtonsStrip.Item(resources.getString(R.string.no))
+        )
+    }
+
+    override fun onItemSelected(item: ButtonsStrip.Item) {
+
+    }
+
+    override fun onItemDeselected(item: ButtonsStrip.Item) {
     }
 
     companion object {

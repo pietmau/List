@@ -1,5 +1,7 @@
 package com.pppp.travelchecklist.selector.model
 
+import com.pppp.travelchecklist.selector.view.model.Weather
+
 
 class SelectorModel {
     var destination: Destination? = null

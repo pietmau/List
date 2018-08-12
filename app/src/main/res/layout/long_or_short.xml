@@ -8,40 +8,9 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
+        android:id="@+id/strip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/selction_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/long_or_short"/>
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:flexWrap="wrap">
-
-            <ToggleButton
-                android:id="@+id/yes"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/yes"
-                android:textOn="@string/yes"/>
-
-            <ToggleButton
-                android:id="@+id/no"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/no"
-                android:textOn="@string/no"/>
-
-        </com.google.android.flexbox.FlexboxLayout>
-    </LinearLayout>
+        android:layout_height="wrap_content">
+    </com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup>
 </LinearLayout>

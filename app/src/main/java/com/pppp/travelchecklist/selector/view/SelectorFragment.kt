@@ -9,10 +9,19 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
-import kotlinx.android.synthetic.main.selector_fragment.*
+import com.pppp.travelchecklist.selector.view.model.Accomodation
+import com.pppp.travelchecklist.selector.view.model.Weather
 import javax.inject.Inject
 
 class SelectorFragment : Fragment(), SelectorCallback {
+    override fun onAccomadationSelected(accomodation: Accomodation) {
+
+    }
+
+    override fun onWeatherSelected(weather: Weather) {
+
+    }
+
     @Inject
     lateinit var presenter: SelectorPresenter
 
@@ -30,15 +39,6 @@ class SelectorFragment : Fragment(), SelectorCallback {
         return inflater.inflate(R.layout.selector_fragment, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        selector.callaback = presenter
-    }
-
-    override fun onPause() {
-        super.onPause()
-        selector.callaback = null
-    }
 
     companion object {
         fun newInstance() = SelectorFragment()

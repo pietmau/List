@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex
 
 
-class ButtonsStrip @JvmOverloads constructor(
+open class ButtonsStrip @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -28,7 +28,7 @@ class ButtonsStrip @JvmOverloads constructor(
         }
         get() = text.text?.toString()
 
-    private val layoutInflater
+    protected val layoutInflater
         get() = LayoutInflater.from(context)
 
     init {
@@ -50,7 +50,7 @@ class ButtonsStrip @JvmOverloads constructor(
         box.addView(button)
     }
 
-    private fun createButton(item: Item) =
+    protected open fun createButton(item: Item) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.description

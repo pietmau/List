@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+import com.pppp.travelchecklist.selector.view.model.Accomodation
 import kotlinx.android.synthetic.main.accomodation.*
 
 class AccomodationFragment : ItemSelectorFragment() {
@@ -33,7 +34,7 @@ class AccomodationFragment : ItemSelectorFragment() {
     }
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-
+        callback?.onAccomadationSelected(Accomodation(item))
     }
 
     companion object {

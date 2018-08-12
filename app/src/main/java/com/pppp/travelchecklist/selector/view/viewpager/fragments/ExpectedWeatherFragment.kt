@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+import com.pppp.travelchecklist.selector.view.model.Weather
 import kotlinx.android.synthetic.main.expected_weather.*
 
 
@@ -32,7 +33,7 @@ class ExpectedWeatherFragment : ItemSelectorFragment() {
     }
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-
+        callback?.onWeatherSelected(Weather(item))
     }
 
     companion object {

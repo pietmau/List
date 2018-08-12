@@ -5,9 +5,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 
 abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
+    protected val callback
+        get() = activity as? SelectorCallback
+
     override abstract fun onViewCreated(view: View, savedInstanceState: Bundle?)
 
     override abstract fun onCreateView(

@@ -7,45 +7,10 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+        android:id="@+id/strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/selction_title"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:layout_height="wrap_content"
-            android:text="@string/expected_weather"
-            />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ToggleButton
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:id="@+id/hot"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/hot"
-                android:textOn="@string/hot"/>
-
-            <ToggleButton
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:id="@+id/cold"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/cold"
-                android:textOn="@string/cold"/>
-
-        </LinearLayout>
-    </LinearLayout>
+        >
+    </com.pppp.travelchecklist.selector.view.custom.ButtonsStrip>
 </LinearLayout>

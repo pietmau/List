@@ -1,104 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_light"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/container"
+    <com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+        android:id="@+id/strip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/selction_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/planned_activities"
-            />
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:flexWrap="wrap">
-
-            <ToggleButton
-                android:id="@+id/backpacking"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textOff="@string/backpacking"
-                android:textOn="@string/backpacking"/>
-
-            <ToggleButton
-                android:id="@+id/fishing"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/fishing"
-                android:textOn="@string/fishing"/>
-
-            <ToggleButton
-                android:id="@+id/diving"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/diving"
-                android:textOn="@string/diving"/>
-
-            <ToggleButton
-                android:id="@+id/beach"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textOff="@string/beach"
-                android:textOn="@string/beach"/>
-
-            <ToggleButton
-                android:id="@+id/work"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/work"
-                android:textOn="@string/work"/>
-
-            <ToggleButton
-                android:id="@+id/goingout"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/goingout"
-                android:textOn="@string/goingout"/>
-
-            <ToggleButton
-                android:id="@+id/hiking"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/hiking"
-                android:textOn="@string/hiking"/>
-
-            <ToggleButton
-                android:id="@+id/skiing"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/skiing"
-                android:textOn="@string/skiing"/>
-
-        </com.google.android.flexbox.FlexboxLayout>
-    </LinearLayout>
+    </com.pppp.travelchecklist.selector.view.custom.ButtonsStrip>
 </LinearLayout>

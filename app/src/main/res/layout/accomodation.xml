@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,51 +7,10 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+        android:id="@+id/strip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/selction_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/accomodation"/>
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:flexWrap="wrap">
-
-            <ToggleButton
-                android:id="@+id/male"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/hotel"
-                android:textOn="@string/hotel"/>
-
-            <ToggleButton
-                android:id="@+id/fermale"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textOff="@string/hostel"
-                android:textOn="@string/hostel"/>
-
-            <ToggleButton
-                android:id="@+id/babies"
-                style="@style/custom_toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/camping"
-                android:textOn="@string/camping"/>
-
-        </com.google.android.flexbox.FlexboxLayout>
-
-    </LinearLayout>
+    </com.pppp.travelchecklist.selector.view.custom.ButtonsStrip>
 </LinearLayout>

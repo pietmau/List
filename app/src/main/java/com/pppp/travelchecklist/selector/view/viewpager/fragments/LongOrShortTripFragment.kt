@@ -6,17 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.model.Selection
 import kotlinx.android.synthetic.main.long_or_short.*
 
 class LongOrShortTripFragment : Fragment() {
 
-    companion object {
-        fun newInstance() =
-            LongOrShortTripFragment()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.long_or_short, container, false)
     }
 
@@ -32,5 +30,8 @@ class LongOrShortTripFragment : Fragment() {
         }
     }
 
-    fun getSelection() = Selection.SelectionItem.LongOrShortTripSelectionItem.Long()
+
+    companion object {
+        fun newInstance() = LongOrShortTripFragment()
+    }
 }

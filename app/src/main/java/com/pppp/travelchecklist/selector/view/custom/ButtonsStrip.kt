@@ -41,8 +41,8 @@ class ButtonsStrip @JvmOverloads constructor(
         for ((index, item) in items.withIndex()) {
             when (index) {
                 0 -> addItem(item)
-                (items.size - 1) -> addMiddleItem(item)
-                else -> addItem(item)
+                (items.size - 1) -> addItem(item)
+                else -> addMiddleItem(item)
             }
         }
     }

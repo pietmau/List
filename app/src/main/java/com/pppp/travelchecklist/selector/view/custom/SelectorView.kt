@@ -18,7 +18,6 @@ import com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     var callaback: SelectorCallback? = null
-
     @BindView(R.id.flipper)
     lateinit var flipper: SelectorViewPager
     @BindView(R.id.next)

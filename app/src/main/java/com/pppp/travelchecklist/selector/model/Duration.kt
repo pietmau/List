@@ -1,5 +1,5 @@
 package com.pppp.travelchecklist.selector.model
 
-
-class Activities {
+enum class Duration {
+    LONG, SHORT
 }

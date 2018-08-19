@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist
 
 import android.support.v4.app.Fragment
-import com.pppp.travelchecklist.selector.view.model.Selection
+import com.pppp.travelchecklist.selector.model.Selection
 
 
 class NewListFragment : Fragment() {

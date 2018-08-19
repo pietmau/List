@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
+import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
 import com.pppp.travelchecklist.R
@@ -17,7 +17,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), View.OnClickListener {
+) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private var items = mutableListOf<Item>()
     var callback: Callback? = null
@@ -56,16 +56,25 @@ open class ButtonsStrip @JvmOverloads constructor(
                 text = item.description
                 textOff = item.description
                 textOn = item.description
-                setOnClickListener(this@ButtonsStrip)
+                setOnCheckedChangeListener { view, checked ->
+                    OnCheckedChange(view, checked)
+                }
             }
 
-    override fun onClick(v: View?) {
-        ((v as ToggleButton)?.getTag() as? Item)?.let { callback?.onItemSelected(it) }
+    private fun OnCheckedChange(view: CompoundButton?, checked: Boolean) {
+        val item = (view as ToggleButton)?.getTag() as? Item
+        item ?: return
+        if (checked) {
+            callback?.onItemSelected(item)
+        } else {
+            callback?.onItemDeSelected(item)
+        }
     }
 
     data class Item(val description: String)
 
     interface Callback {
         fun onItemSelected(item: Item)
+        fun onItemDeSelected(item: Item)
     }
 }

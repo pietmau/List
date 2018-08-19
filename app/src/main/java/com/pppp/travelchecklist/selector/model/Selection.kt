@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.model
+package com.pppp.travelchecklist.selector.model
 
 class Selection(
     val whoIsTravelling: List<SelectionItem.WhoIsTravellingSelectionItem>,

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import kotlinx.android.synthetic.main.who_is_travelling.*
 
 class WhoIsTravellingFragment : ItemSelectorFragment() {
@@ -22,14 +23,12 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
         strip.setItems(getItems())
     }
 
-    override fun getItems(): List<ButtonsStrip.Item> {
-        return listOf(
-            ButtonsStrip.Item(resources.getString(R.string.male)),
-            ButtonsStrip.Item(resources.getString(R.string.fermale)),
-            ButtonsStrip.Item(resources.getString(R.string.babies)),
-            ButtonsStrip.Item(resources.getString(R.string.toddlers))
-        )
-    }
+    override fun getItems() = listOf(
+        ButtonsStrip.Item(resources.getString(R.string.male)),
+        ButtonsStrip.Item(resources.getString(R.string.fermale)),
+        ButtonsStrip.Item(resources.getString(R.string.babies)),
+        ButtonsStrip.Item(resources.getString(R.string.toddlers))
+    )
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
 

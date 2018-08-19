@@ -8,11 +8,11 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.subjects.PublishSubject
 
-class TravelChecklistDatabaseImpl(
+class DestinationPresenterImpl(
     firebaseDatabase: FirebaseDatabase,
     val mainThreadScheduler: Scheduler,
     val differentThreadScheduler: Scheduler
-) : TravelChecklistDatabase {
+) : DestinationPresenter {
     companion object {
         const val COUNTRIES = "countries"
     }

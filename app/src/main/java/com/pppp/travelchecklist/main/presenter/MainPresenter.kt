@@ -1,12 +1,16 @@
 package com.pppp.travelchecklist.main.presenter
 
 import com.pppp.travelchecklist.selector.view.SelectorCallback
-import com.pppp.travelchecklist.selector.view.model.Accomodation
-import com.pppp.travelchecklist.selector.view.model.Weather
+import com.pppp.travelchecklist.selector.model.Weather
+import com.pppp.travelchecklist.selector.model.Duration
 
 
 class MainPresenter : SelectorCallback {
-    override fun onAccomadationSelected(accomodation: Accomodation) {
+    override fun onLengthSelected(duration: Duration) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onAccomodationSelected(accomodation: Accomodation) {
 
     }
 

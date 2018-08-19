@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.selector.view.SelectorFragment
-import com.pppp.travelchecklist.selector.view.model.Selection
+import com.pppp.travelchecklist.selector.model.Selection
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment, SelectorFragment.TAG).commit()
         }
-        //getSelectorFragment().setCallback(presenter)
+        //getSelectorFragment().setCallback(mapper)
     }
 
     override fun onResume() {

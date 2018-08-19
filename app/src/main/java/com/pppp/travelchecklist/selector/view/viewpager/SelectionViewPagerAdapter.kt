@@ -11,7 +11,7 @@ class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) :
     override fun getItem(position: Int): Fragment =
         when (position) {
             0 -> WhoIsTravellingFragment.newInstance()
-            1 -> WhereAreYouFlyingFragment.newInstance()
+            1 -> DestinationFragment.newInstance()
             2 -> ExpectedWeatherFragment.newInstance()
             3 -> AccomodationFragment.newInstance()
             4 -> PlannedActivitiesFragment.newInstance()

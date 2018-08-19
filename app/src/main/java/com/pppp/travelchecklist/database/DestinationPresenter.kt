@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.database
 import io.reactivex.observers.DisposableObserver
 
 
-interface TravelChecklistDatabase {
+interface DestinationPresenter {
 
     fun unsubscribe()
 

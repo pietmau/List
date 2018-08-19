@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.selector
 
 import com.pppp.travelchecklist.selector.view.SelectorFragment
 import com.pppp.travelchecklist.selector.view.custom.SelectorView
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.LongOrShortTripFragment
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhereAreYouFlyingFragment
 import dagger.Subcomponent
 
@@ -13,4 +14,6 @@ interface SelectorComponent {
     fun inject(selectorView: SelectorFragment)
 
     fun inject(whereAreYouFlyingFragment: WhereAreYouFlyingFragment)
+
+    fun inject(longOrShortTripFragment: LongOrShortTripFragment)
 }

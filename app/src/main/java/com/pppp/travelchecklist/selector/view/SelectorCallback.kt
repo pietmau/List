@@ -10,4 +10,10 @@ interface SelectorCallback {
     fun onAccomadationSelected(accomodation: Accomodation)
 
     fun onWeatherSelected(weather: Weather)
+    
+    fun onLengthSelected(duration: Duration)
+
+    enum class Duration {
+        LONG, SHORT
+    }
 }

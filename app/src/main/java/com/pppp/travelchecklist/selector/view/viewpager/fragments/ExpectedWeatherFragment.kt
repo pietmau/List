@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.WeatherMapper
 import kotlinx.android.synthetic.main.expected_weather.*
 import javax.inject.Inject
 
-class ExpectedWeatherFragment : ItemSelectorFragment() {
+class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
     @Inject
     lateinit var mapper: WeatherMapper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.expected_weather)
-        strip.callback = this
+        strip.listener = this
         strip.setItems(getItems())
     }
 
@@ -38,7 +38,7 @@ class ExpectedWeatherFragment : ItemSelectorFragment() {
     )
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-        callback?.onWeatherSelected(mapper.map(item))
+        callback.onWeatherSelected(mapper.map(item))
     }
 
     companion object {

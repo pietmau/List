@@ -29,7 +29,7 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        component?.inject(this)
+        component.inject(this)
     }
 
     override fun getItems() = listOf(
@@ -38,7 +38,7 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
     )
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-        callback?.onLengthSelected(mapper.map(item))
+        callback.onDurationSelected(mapper.map(item))
     }
 
     companion object {

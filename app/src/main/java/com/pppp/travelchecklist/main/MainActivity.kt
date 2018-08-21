@@ -9,16 +9,20 @@ import android.view.MenuItem
 import com.pppp.travelchecklist.NewListFragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.findFragmentByTag
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.selector.view.SelectorFragment
 import com.pppp.travelchecklist.selector.model.Selection
+import com.pppp.travelchecklist.selector.view.SelectorCallback
+import com.pppp.travelchecklist.selector.view.SelectorFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     MainView {
+    override val selectionCallback: SelectorCallback
+        get() = (supportFragmentManager.findFragmentById(R.id.container) as SelectorCallback)
     @Inject
     lateinit var presenter: MainPresenter
 
@@ -42,9 +46,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            var fragment = getSelectorFragment()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment, SelectorFragment.TAG).commit()
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, getSelectorFragment(), SelectorFragment.TAG)
+                .commit()
         }
         //getSelectorFragment().setCallback(mapper)
     }
@@ -65,11 +69,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun getNewlistFragment() =
-        supportFragmentManager.findFragmentByTag(NewListFragment.TAG) as? NewListFragment
+        findFragmentByTag<NewListFragment>(NewListFragment.TAG)
 
     private fun getSelectorFragment() =
-        supportFragmentManager.findFragmentByTag(SelectorFragment.TAG) as? SelectorFragment
-                ?: SelectorFragment.newInstance()
+        findFragmentByTag<NewListFragment>(SelectorFragment.TAG) ?: SelectorFragment.newInstance()
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

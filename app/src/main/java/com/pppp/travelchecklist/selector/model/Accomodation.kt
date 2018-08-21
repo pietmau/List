@@ -1,5 +1,4 @@
 package com.pppp.travelchecklist.selector.model
 
 
-class Accomodation(description: String) {
-}
+data class Accomodation(private val description: String)

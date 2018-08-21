@@ -11,7 +11,6 @@ import com.pppp.travelchecklist.selector.view.viewpager.mappers.PlannedActivitie
 import kotlinx.android.synthetic.main.planned_acctivites.*
 import javax.inject.Inject
 
-
 class PlannedActivitiesFragment : ItemSelectorFragment() {
     @Inject
     lateinit var mapper: PlannedActivitiesMapper
@@ -20,13 +19,17 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) =
-        inflater.inflate(R.layout.planned_acctivites, container, false)
+    ) = inflater.inflate(R.layout.planned_acctivites, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.planned_activities)
         strip.callback = this
         strip.setItems(getItems())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        component.inject(this)
     }
 
     override fun getItems() = listOf(
@@ -41,11 +44,11 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
     )
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-        callback?.onPlannedActivitySelected(mapper.map(item))
+        callback.onPlannedActivitySelected(mapper.map(item))
     }
 
     override fun onItemDeSelected(item: ButtonsStrip.Item) {
-        callback?.onPlannedActivityDeselected(mapper.map(item))
+        callback.onPlannedActivityDeselected(mapper.map(item))
     }
 
     companion object {

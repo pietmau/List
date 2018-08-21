@@ -1,13 +1,12 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.arch.lifecycle.ViewModel
-import com.pppp.travelchecklist.selector.model.Duration
+import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.view.SelectorCallback
-import com.pppp.travelchecklist.selector.model.Weather
 
 class SelectorPresenter : ViewModel(), SelectorCallback {
-    override fun onLengthSelected(duration: Duration) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onFinishClicked() {
+
     }
 
     override fun onAccomodationSelected(accomodation: Accomodation) {
@@ -18,7 +17,24 @@ class SelectorPresenter : ViewModel(), SelectorCallback {
 
     }
 
-    override fun onFinishClicked() {
+    override fun onDurationSelected(duration: Duration) {
 
     }
+
+    override fun onPlannedActivitySelected(plannedActivity: PlannedActivity) {
+
+    }
+
+    override fun onPlannedActivityDeselected(plannedActivity: PlannedActivity) {
+
+    }
+
+    override fun onWhoisTravellingSelected(traveller: Traveller) {
+
+    }
+
+    override fun onWhoisTravellingDeSelected(traveller: Traveller) {
+
+    }
+
 }

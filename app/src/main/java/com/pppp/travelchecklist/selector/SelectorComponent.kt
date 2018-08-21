@@ -2,10 +2,7 @@ package com.pppp.travelchecklist.selector
 
 import com.pppp.travelchecklist.selector.view.SelectorFragment
 import com.pppp.travelchecklist.selector.view.custom.SelectorView
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.AccomodationFragment
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.ExpectedWeatherFragment
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.LongOrShortTripFragment
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.DestinationFragment
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.*
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(SelectorModule::class))
@@ -22,4 +19,8 @@ interface SelectorComponent {
     fun inject(expectedWeatherFragment: ExpectedWeatherFragment)
 
     fun inject(accomodationFragment: AccomodationFragment)
+
+    fun inject(plannedActivitiesFragment: PlannedActivitiesFragment)
+
+    fun inject(whoIsTravellingFragment: WhoIsTravellingFragment)
 }

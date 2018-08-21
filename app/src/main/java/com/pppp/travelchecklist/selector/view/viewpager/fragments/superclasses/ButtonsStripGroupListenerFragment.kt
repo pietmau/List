@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.selector.SelectorComponent
 import com.pppp.travelchecklist.selector.SelectorModule
-import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
 
 abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup.Listener {
     protected val callback
-        get() = activity as? SelectorCallback
+        get() = (requireActivity() as MainView).selectionCallback
 
     protected lateinit var component: SelectorComponent
 

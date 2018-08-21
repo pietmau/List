@@ -1,9 +1,6 @@
 package com.pppp.travelchecklist.selector.view
 
-import com.pppp.travelchecklist.selector.model.Accomodation
-import com.pppp.travelchecklist.selector.model.PlannedActivity
-import com.pppp.travelchecklist.selector.model.Weather
-import com.pppp.travelchecklist.selector.model.Duration
+import com.pppp.travelchecklist.selector.model.*
 
 interface SelectorCallback {
 
@@ -13,10 +10,14 @@ interface SelectorCallback {
 
     fun onWeatherSelected(weather: Weather)
 
-    fun onLengthSelected(duration: Duration)
+    fun onDurationSelected(duration: Duration)
 
-    fun onPlannedActivitySelected(map: PlannedActivity)
+    fun onPlannedActivitySelected(plannedActivity: PlannedActivity)
 
-    fun onPlannedActivityDeselected(map: PlannedActivity)
+    fun onPlannedActivityDeselected(plannedActivity: PlannedActivity)
+
+    fun onWhoisTravellingSelected(traveller: Traveller)
+
+    fun onWhoisTravellingDeSelected(traveller: Traveller)
 
 }

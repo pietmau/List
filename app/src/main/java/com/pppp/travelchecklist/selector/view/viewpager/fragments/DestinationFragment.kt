@@ -13,16 +13,16 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
+import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.model.SimpleObserver
 import com.pppp.travelchecklist.selector.SelectorModule
-import com.pppp.travelchecklist.selector.view.SelectorCallback
 import org.angmarch.views.BetterSpinner
 import javax.inject.Inject
 
 
 class DestinationFragment : Fragment() {
     protected val callback
-        get() = activity as? SelectorCallback
+        get() = (requireActivity() as MainView).selectionCallback
 
     @Inject
     lateinit var presenter: DestinationPresenter

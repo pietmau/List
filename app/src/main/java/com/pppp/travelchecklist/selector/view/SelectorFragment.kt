@@ -3,29 +3,15 @@ package com.pppp.travelchecklist.selector.view
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
+import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
-import com.pppp.travelchecklist.selector.model.Weather
-import com.pppp.travelchecklist.selector.model.Duration
 import javax.inject.Inject
 
 class SelectorFragment : Fragment(), SelectorCallback {
-    override fun onLengthSelected(duration: Duration) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onAccomodationSelected(accomodation: Accomodation) {
-
-    }
-
-    override fun onWeatherSelected(weather: Weather) {
-
-    }
-
     @Inject
     lateinit var presenter: SelectorPresenter
 
@@ -39,18 +25,42 @@ class SelectorFragment : Fragment(), SelectorCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.selector_fragment, container, false)
+    ) = inflater.inflate(R.layout.selector_fragment, container, false)
+
+    override fun onPlannedActivitySelected(plannedActivity: PlannedActivity) {
+        presenter.onPlannedActivitySelected(plannedActivity)
     }
 
+    override fun onPlannedActivityDeselected(plannedActivity: PlannedActivity) {
+        presenter.onPlannedActivityDeselected(plannedActivity)
+    }
+
+    override fun onWhoisTravellingSelected(traveller: Traveller) {
+        presenter.onWhoisTravellingDeSelected(traveller)
+    }
+
+    override fun onWhoisTravellingDeSelected(traveller: Traveller) {
+        presenter.onWhoisTravellingSelected(traveller)
+    }
+
+    override fun onDurationSelected(duration: Duration) {
+        presenter.onDurationSelected(duration)
+    }
+
+    override fun onAccomodationSelected(accomodation: Accomodation) {
+        presenter.onAccomodationSelected(accomodation)
+    }
+
+    override fun onWeatherSelected(weather: Weather) {
+        presenter.onWeatherSelected(weather)
+    }
+
+    override fun onFinishClicked() {
+        presenter.onFinishClicked()
+    }
 
     companion object {
         fun newInstance() = SelectorFragment()
         val TAG = SelectorFragment::class.java.simpleName
     }
-
-    override fun onFinishClicked() {
-
-    }
-
 }

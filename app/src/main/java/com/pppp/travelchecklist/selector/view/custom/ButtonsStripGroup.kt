@@ -40,9 +40,12 @@ class ButtonsStripGroup @JvmOverloads constructor(
     }
 
     private fun deselectAll() {
-        for (i in 0 until childCount) {
+        for (i in 0 .. childCount) {
             (box.getChildAt(i) as? ToggleButton)?.isChecked = false
         }
+    }
+
+    override fun onClick(v: View?) {/*NoOp*/
     }
 
     interface Listener {

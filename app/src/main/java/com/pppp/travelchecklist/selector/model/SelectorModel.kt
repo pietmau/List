@@ -6,5 +6,5 @@ class SelectorModel {
     var weather: Weather? = null
     var accomodation: Accomodation? = null
     var activities: PlannedActivity? = null
-    var length: Length? = null
+    var length: Duration? = null
 }

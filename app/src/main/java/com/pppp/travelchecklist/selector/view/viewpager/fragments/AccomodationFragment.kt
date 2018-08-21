@@ -39,7 +39,7 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
     )
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-        callback?.onAccomodationSelected(mapper.map(item))
+        callback.onAccomodationSelected(mapper.map(item))
     }
 
     companion object {

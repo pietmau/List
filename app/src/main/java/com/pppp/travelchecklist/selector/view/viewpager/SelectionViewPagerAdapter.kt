@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.*
 
-class SelectionViewPagerAdapter(val fragmentManager: FragmentManager) :
+class SelectionViewPagerAdapter(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment =

@@ -43,6 +43,10 @@ android {
             dimension "stage"
         }
     }
+
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {

@@ -3,15 +3,17 @@ package com.pppp.travelchecklist.selector.view
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
+import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
-class SelectorFragment : Fragment(), SelectorCallback {
+class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
     @Inject
     lateinit var presenter: SelectorPresenter
 
@@ -26,6 +28,10 @@ class SelectorFragment : Fragment(), SelectorCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = inflater.inflate(R.layout.selector_fragment, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        selector.callaback = this
+    }
 
     override fun onPlannedActivitySelected(plannedActivity: PlannedActivity) {
         presenter.onPlannedActivitySelected(plannedActivity)

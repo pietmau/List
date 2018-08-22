@@ -24,15 +24,19 @@ class DestinationPresenterImpl(
 
     override fun getCountries(observer: DisposableObserver<List<Country>>) {
         subject = PublishSubject.create()
-        eventListener = databaseReference.addValueEventListener(object : SimpleValueEventListener() {
-            override fun onDataChange(dataSnapshot: DataSnapshot?) {
-                dataSnapshot
-                    ?.children
-                    ?.map { it.getValue(Country::class.java) }
-                    ?.filterNotNull()
-                    ?.let { subject?.onNext(it) }
-            }
-        })
+        eventListener =
+                databaseReference.addValueEventListener(object : SimpleValueEventListener() {
+                    override fun onDataChange(dataSnapshot: DataSnapshot?) {
+                        dataSnapshot ?: return
+                        val list = dataSnapshot
+                            .children
+                            .map { it.getValue(Country::class.java) }
+                            .filterNotNull()
+                            .toMutableList()
+                        list.add(0, Country())
+                        subject?.onNext(list.toList())
+                    }
+                })
         subscription = subject
             ?.cache()
             ?.subscribeOn(differentThreadScheduler)

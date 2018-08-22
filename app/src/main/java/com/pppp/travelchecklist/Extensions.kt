@@ -10,3 +10,12 @@ inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String
     }
     return null
 }
+
+
+inline fun <reified T : Fragment> FragmentActivity.findFragmentById(id: Int): T? {
+    val fragment = supportFragmentManager.findFragmentById(id)
+    if (fragment is T) {
+        return fragment
+    }
+    return null
+}

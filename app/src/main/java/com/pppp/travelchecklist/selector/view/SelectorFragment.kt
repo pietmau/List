@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.main.MainActivity
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.presenter.SelectionData
@@ -29,6 +30,16 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = inflater.inflate(R.layout.selector_fragment, container, false)
+
+    override fun onResume() {
+        super.onResume()
+        presenter.view = this
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.view = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         selector.callaback = this
@@ -71,7 +82,7 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
     }
 
     override fun generateAndViewList(selection: SelectionData) {
-
+        (activity as? MainActivity)?.navigateToNewList(selection)
     }
 
     override fun onDestinationSelected(destination: Destination) {

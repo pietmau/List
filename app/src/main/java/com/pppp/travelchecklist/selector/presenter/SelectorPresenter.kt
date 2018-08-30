@@ -11,13 +11,13 @@ class SelectorPresenter(
     private val selection: SelectionData,
     private val resourcesWrapper: ResourcesWrapper
 ) : ViewModel(), SelectorCallback {
-    lateinit var view: ISelectorView
+    var view: ISelectorView? = null
 
     override fun onFinishClicked() {
         if (selection.isEmpty) {
-            view.onError(resourcesWrapper.getString(R.string.must_make_selection))
+            view?.onError(resourcesWrapper.getString(R.string.must_make_selection))
         } else {
-            view.generateAndViewList(selection)
+            view?.generateAndViewList(selection)
         }
     }
 

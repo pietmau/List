@@ -5,15 +5,16 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.text.Selection
 import android.view.MenuItem
-import com.pppp.travelchecklist.NewListFragment
+import com.pppp.travelchecklist.ListFragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.findFragmentByTag
+import com.pppp.travelchecklist.fragmentTransaction
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.selector.view.SelectorFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     MainView {
     override val selectionCallback: SelectorCallback
         get() = (supportFragmentManager.findFragmentById(R.id.container) as SelectorCallback)
+
     @Inject
     lateinit var presenter: MainPresenter
 
@@ -46,11 +48,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, getSelectorFragment(), SelectorFragment.TAG)
-                .commit()
+            fragmentTransaction.replace(R.id.container, getSelectorFragment(), SelectorFragment.TAG).commit()
         }
-        //getSelectorFragment().setCallback(mapper)
     }
 
     override fun onResume() {
@@ -63,16 +62,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         presenter.unbind()
     }
 
-    override fun navigateToNewList(selection: Selection) {
-//        var fragment = getNewlistFragment() ?: NewListFragment.newInstance(selection)
-//        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, NewListFragment.TAG).commit()
+    override fun navigateToNewList(selection: SelectionData) {
+        fragmentTransaction.replace(R.id.container, ListFragment.fromSelection(selection), ListFragment.TAG).commit()
     }
 
-    private fun getNewlistFragment() =
-        findFragmentByTag<NewListFragment>(NewListFragment.TAG)
-
     private fun getSelectorFragment() =
-        findFragmentByTag<NewListFragment>(SelectorFragment.TAG) ?: SelectorFragment.newInstance()
+        findFragmentByTag<ListFragment>(SelectorFragment.TAG) ?: SelectorFragment.newInstance()
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

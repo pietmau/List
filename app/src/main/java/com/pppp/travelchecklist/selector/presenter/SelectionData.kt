@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class SelectionData() : Parcelable {
+
     var accomodation: Accomodation? = null
     var weather: Weather? = null
     var duration: Duration? = null
@@ -50,4 +51,7 @@ class SelectionData() : Parcelable {
             accomodation == null && weather == null && duration == null && destination == null
                     && plannedActivities.isEmpty() && travellers.isEmpty()
 
+    companion object {
+        val TAG = SelectionData::class.simpleName
+    }
 }

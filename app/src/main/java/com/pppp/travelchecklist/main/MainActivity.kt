@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.Selection
 import android.view.MenuItem
 import com.pppp.travelchecklist.NewListFragment
 import com.pppp.travelchecklist.R
@@ -13,7 +14,6 @@ import com.pppp.travelchecklist.findFragmentByTag
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.selector.model.Selection
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.selector.view.SelectorFragment
 import kotlinx.android.synthetic.main.activity_main.*

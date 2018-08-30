@@ -20,4 +20,6 @@ interface SelectorCallback {
 
     fun onWhoisTravellingDeSelected(traveller: Traveller)
 
+    fun onDestinationSelected(destination: Destination)
+
 }

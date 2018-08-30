@@ -9,6 +9,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.model.*
+import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
@@ -63,6 +64,18 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
 
     override fun onFinishClicked() {
         presenter.onFinishClicked()
+    }
+
+    override fun onError(string: String?) {
+        TODO("not implemented")
+    }
+
+    override fun generateAndViewList(selection: SelectionData) {
+
+    }
+
+    override fun onDestinationSelected(destination: Destination) {
+        presenter.onDestinationSelected(destination)
     }
 
     companion object {

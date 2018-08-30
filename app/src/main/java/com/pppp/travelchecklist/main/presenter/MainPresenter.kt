@@ -5,6 +5,11 @@ import com.pppp.travelchecklist.selector.view.SelectorCallback
 
 
 class MainPresenter : SelectorCallback {
+
+    override fun onDestinationSelected(destination: Destination) {
+
+    }
+
     override fun onAccomodationSelected(accomodation: Accomodation) {
 
     }

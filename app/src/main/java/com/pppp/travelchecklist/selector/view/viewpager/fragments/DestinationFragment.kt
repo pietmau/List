@@ -16,6 +16,7 @@ import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.model.SimpleObserver
 import com.pppp.travelchecklist.selector.SelectorModule
+import com.pppp.travelchecklist.selector.model.Destination
 import org.angmarch.views.BetterSpinner
 import javax.inject.Inject
 
@@ -43,8 +44,9 @@ class DestinationFragment : Fragment() {
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+            override fun onItemSelected(adapterView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                val country = (adapterView?.adapter?.getItem(position) as? Country) ?: return
+                callback.onDestinationSelected(Destination(country.country))
             }
         })
         return view

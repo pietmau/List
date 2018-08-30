@@ -49,4 +49,7 @@ class SelectorPresenter(
         selection.onWhoisTravellingDeSelected(traveller)
     }
 
+    override fun onDestinationSelected(destination: Destination) {
+        selection.onDestinationSelected(destination)
+    }
 }

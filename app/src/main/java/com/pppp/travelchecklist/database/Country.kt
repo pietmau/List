@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.database
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Country(var country: String) : Parcelable {
+data class Country(public var country: String) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString())
 
     constructor() : this("")//Firebase needs it

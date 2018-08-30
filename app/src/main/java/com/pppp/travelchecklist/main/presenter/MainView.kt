@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.travelchecklist.selector.model.Selection
+import android.text.Selection
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 
 interface MainView {

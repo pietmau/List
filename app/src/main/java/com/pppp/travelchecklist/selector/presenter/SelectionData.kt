@@ -11,6 +11,7 @@ class SelectionData() : Parcelable {
     var duration: Duration? = null
     val plannedActivities = mutableListOf<PlannedActivity>()
     val travellers = mutableListOf<Traveller>()
+    var destination: Destination? = null
 
     fun onAccomodationSelected(accomodation: Accomodation) {
         this.accomodation = accomodation
@@ -40,8 +41,13 @@ class SelectionData() : Parcelable {
         travellers.remove(traveller)
     }
 
+    fun onDestinationSelected(destination: Destination) {
+        this.destination = destination
+    }
+
     val isEmpty: Boolean
         get() =
-            accomodation == null && weather == null && duration == null && plannedActivities.isEmpty() && travellers.isEmpty()
+            accomodation == null && weather == null && duration == null && destination == null
+                    && plannedActivities.isEmpty() && travellers.isEmpty()
 
 }

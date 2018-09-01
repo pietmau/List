@@ -33,12 +33,12 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
 
     override fun onResume() {
         super.onResume()
-        presenter.view = this
+        presenter.subscribe(this)
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.view = null
+        presenter.unsubscribe()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,11 +54,11 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
     }
 
     override fun onWhoisTravellingSelected(traveller: Traveller) {
-        presenter.onWhoisTravellingDeSelected(traveller)
+        presenter.onWhoisTravellingSelected(traveller)
     }
 
     override fun onWhoisTravellingDeSelected(traveller: Traveller) {
-        presenter.onWhoisTravellingSelected(traveller)
+        presenter.onWhoisTravellingDeSelected(traveller)
     }
 
     override fun onDurationSelected(duration: Duration) {
@@ -78,7 +78,7 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
     }
 
     override fun onError(string: String?) {
-        TODO("not implemented")
+
     }
 
     override fun generateAndViewList(selection: SelectionData) {

@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.model.dao
 
 import android.database.Cursor
 import android.provider.BaseColumns
-import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.Category
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
@@ -45,8 +45,8 @@ class DeserializerImpl : Deserializer {
         return result.toList()
     }
 
-    override fun getEmptyCards(cardsCursor: Cursor?): List<Card> {
-        var result = mutableListOf<Card>()
+    override fun getEmptyCards(cardsCursor: Cursor?): List<Category> {
+        var result = mutableListOf<Category>()
         try {
             while (cardsCursor?.moveToNext() == true) {
                 val title = cardsCursor.getString(cardsCursor.getColumnIndexOrThrow(CardContract.Card.COLUMN_NAME_TITLE))
@@ -54,7 +54,7 @@ class DeserializerImpl : Deserializer {
                 val listId = cardsCursor.getLong(cardsCursor.getColumnIndexOrThrow(CardContract.Card.COLUMN_NAME_LIST_ID))
                 if (title != null && id != null && listId != null) {
                     val items = emptyList<CheckListItemData>()
-                    val card = Card(title, items, id, listId)
+                    val card = Category(title, items, id, listId)
                     result.add(card)
                 }
             }

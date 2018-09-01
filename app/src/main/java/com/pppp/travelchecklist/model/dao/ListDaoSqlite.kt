@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.model.dao
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
-import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.Category
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
@@ -38,11 +38,11 @@ class ListDaoSqlite(
         return deserializer.getEmptyCheckLists(listsCursor)
     }
 
-    private fun getCards(listId: Long): List<Card> {
-        var result = mutableListOf<Card>()
-        val emptyCards: List<Card> = deserializer.getEmptyCards(db.rawQuery(queryMaker.getCardsQuery(listId), emptyArray()))
-        for (emptycard in emptyCards) {
-            result.add(Card(emptycard.title, getItems(emptycard.id), emptycard.id, emptycard.listId))
+    private fun getCards(listId: Long): List<Category> {
+        var result = mutableListOf<Category>()
+        val emptyCategories: List<Category> = deserializer.getEmptyCards(db.rawQuery(queryMaker.getCardsQuery(listId), emptyArray()))
+        for (emptycard in emptyCategories) {
+            result.add(Category(emptycard.title, getItems(emptycard.id), emptycard.id, emptycard.listId))
         }
         return result.toList()
     }

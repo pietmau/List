@@ -85,7 +85,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
         recycler.callback = callback
         presenterOld.subscribe(this, object : SimpleObserver<CheckList>() {
             override fun onNext(checkList: CheckList) {
-                recycler.setItems(checkList.cards)
+                recycler.setItems(checkList.categories)
             }
         })
     }

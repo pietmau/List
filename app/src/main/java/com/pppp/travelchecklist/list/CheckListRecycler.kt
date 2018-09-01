@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.Category
 
 
 class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(context, attrs) {
@@ -21,13 +21,13 @@ class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(c
         addItemDecoration(dividerItemDecoration)
     }
 
-    fun setItems(new: List<Card>) {
+    fun setItems(aNew: List<Category>) {
         if (adapter == null) {
-            adapter = CheckListAdapter(new, callback)
+            adapter = CheckListAdapter(aNew, callback)
             return
         }
         val old = (adapter as CheckListAdapter).items
-        DiffUtil.calculateDiff(DiffCallback(old, new)).dispatchUpdatesTo(adapter)
+        DiffUtil.calculateDiff(DiffCallback(old, aNew)).dispatchUpdatesTo(adapter)
     }
 }
 

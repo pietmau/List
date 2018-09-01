@@ -26,7 +26,7 @@ class BetterOldModelImpl(
 
     override fun deleteItem(cardPosition: Int, itemPosition: Int) {
         subject
-                .map { it.cards }
+                .map { it.categories }
                 .map { it.get(cardPosition) }
                 .map { it.items.get(itemPosition) }
                 .firstOrError()
@@ -39,7 +39,7 @@ class BetterOldModelImpl(
 
     override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
         return subject
-                .map { it.cards }
+                .map { it.categories }
                 .map { it.get(cardPosition) }
                 .map { it.items.get(itemPosition) }
                 .firstOrError()

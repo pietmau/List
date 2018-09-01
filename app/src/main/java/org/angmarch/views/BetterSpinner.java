@@ -55,8 +55,10 @@ public class BetterSpinner extends AppCompatTextView {
     private int displayHeight;
     private int parentVerticalOffset;
     private int dropDownListPaddingBottom;
-    private @DrawableRes int arrowDrawableResId;
+    private @DrawableRes
+    int arrowDrawableResId;
     private SpinnerTextFormatter spinnerTextFormatter = new SimpleSpinnerTextFormatter();
+
     private SpinnerTextFormatter selectedTextFormatter = new SimpleSpinnerTextFormatter();
 
     public BetterSpinner(Context context) {
@@ -151,7 +153,7 @@ public class BetterSpinner extends AppCompatTextView {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick (AdapterView < ? > parent, View view,int position, long id){
                 if (position >= selectedIndex && position < adapter.getCount()) {
                     position++;
                 }
@@ -188,7 +190,7 @@ public class BetterSpinner extends AppCompatTextView {
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
-            public void onDismiss() {
+            public void onDismiss () {
                 if (!isArrowHidden) {
                     animateArrow(false);
                 }
@@ -249,7 +251,9 @@ public class BetterSpinner extends AppCompatTextView {
         context.getTheme()
                 .resolveAttribute(android.R.attr.textColorPrimary, typedValue, true);
         TypedArray typedArray = context.obtainStyledAttributes(typedValue.data,
-                new int[]{android.R.attr.textColorPrimary});
+                new int[] {
+            android.R.attr.textColorPrimary
+        });
         int defaultTextColor = typedArray.getColor(0, Color.BLACK);
         typedArray.recycle();
         return defaultTextColor;
@@ -305,7 +309,8 @@ public class BetterSpinner extends AppCompatTextView {
 
     public <T extends Parcelable> void attachDataSource(List<T> list) {
         if (adapter == null) {
-            adapter = new BetterSpinnerAdapter<T>(getContext(), list, textColor, backgroundSelector,
+            adapter = new BetterSpinnerAdapter<T>
+            (getContext(), list, textColor, backgroundSelector,
                     spinnerTextFormatter);
             setAdapterInternal(adapter);
         }

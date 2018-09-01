@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.database.DestinationPresenterImpl
+import com.pppp.travelchecklist.listgenerator.ListGenerator
+import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,5 +27,8 @@ class AppModule(private val context: Context) {
 
     @Provides
     fun provideContext() = context
+
+    @Provides
+    fun provideListGenarator(): ListGenerator = ListGeneratorImpl()
 
 }

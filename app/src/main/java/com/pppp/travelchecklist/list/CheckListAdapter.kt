@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.Category
 import com.pppp.travelchecklist.model.CheckListItemData
 
 
 class CheckListAdapter(
-        var items: List<Card>,
-        private val callback: CheckListCard.Callback?
+    var items: List<Category>,
+    private val callback: CheckListCard.Callback?
 
 ) : RecyclerView.Adapter<CheckListHolder>() {
 
@@ -25,7 +25,7 @@ class CheckListAdapter(
         return CheckListHolder(view)
     }
 
-    override fun getItemCount(): Int = items.count()
+    override fun getItemCount()= items.count()
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {

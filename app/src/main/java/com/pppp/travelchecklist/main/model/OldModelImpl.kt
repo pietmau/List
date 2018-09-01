@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.model
 
-import com.pppp.travelchecklist.model.Card
+import com.pppp.travelchecklist.model.Category
 import com.pppp.travelchecklist.model.CheckList
 import com.pppp.travelchecklist.model.CheckListItemData
 import com.pppp.travelchecklist.model.Priority
@@ -20,11 +20,11 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
     }
 
     private var items: MutableList<CheckListItemData> = createItems()
-    private var cards: MutableList<Card> = createCards()
+    private var categories: MutableList<Category> = createCards()
 
     private val subject by lazy {
-        val subject = BehaviorSubject.create<List<Card>>()
-        subject.onNext(cards)
+        val subject = BehaviorSubject.create<List<Category>>()
+        subject.onNext(categories)
         subject
     }
 
@@ -38,10 +38,10 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
         return list
     }
 
-    private fun createCards(): MutableList<Card> {
-        val list = mutableListOf<Card>()
+    private fun createCards(): MutableList<Category> {
+        val list = mutableListOf<Category>()
         for (i in 0..5) {
-            val card = Card("Card $i", items, i.toLong(), 0)
+            val card = Category("Category $i", items, i.toLong(), 0)
             list.add(card)
         }
         return list
@@ -51,8 +51,8 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
     override fun deleteItem(cardPosition: Int, itemPosition: Int) {
         items = createItems()
         items.removeAt(itemPosition)
-        cards = createCards()
-        subject.onNext(cards)
+        categories = createCards()
+        subject.onNext(categories)
     }
 
     override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {

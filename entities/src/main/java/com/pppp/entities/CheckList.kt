@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.model
+package com.pppp.entities
 
 
 data class CheckList(

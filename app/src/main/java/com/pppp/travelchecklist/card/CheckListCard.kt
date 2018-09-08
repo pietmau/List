@@ -4,9 +4,9 @@ import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import com.pppp.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.carditem.CardItem
-import com.pppp.travelchecklist.model.CheckListItemData
 import kotlinx.android.synthetic.main.custom_check_list_card.view.*
 
 class CheckListCard(
@@ -19,7 +19,7 @@ class CheckListCard(
     private var callback: Callback? = null
 
     private val cardItemCallback = object : CardItem.Callback {
-        override fun onDeleteRequested(position: Int, data: CheckListItemData) {
+        override fun onDeleteRequested(position: Int, data: CheckListItem) {
             callback?.onItemDeleteRequested(this@CheckListCard.position!!, position, data)
         }
 
@@ -35,7 +35,7 @@ class CheckListCard(
         inflater.inflate(R.layout.custom_check_list_card, this, true)
     }
 
-    fun bind(data: List<CheckListItemData>, position: Int, callback: Callback?) {
+    fun bind(data: List<CheckListItem>, position: Int, callback: Callback?) {
         this.position = position
         this.callback = callback
         content.removeAllViews()
@@ -45,7 +45,7 @@ class CheckListCard(
     }
 
     interface Callback {
-        fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData)
+        fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem)
         fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int)
     }
 

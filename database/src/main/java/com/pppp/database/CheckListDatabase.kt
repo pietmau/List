@@ -9,4 +9,7 @@ interface CheckListDatabase {
     companion object {
         const val TAGS = "tags"
     }
+
+    fun start()
+    fun stop()
 }

@@ -1,3 +1,3 @@
 package com.pppp.entities
 
-data class Tag(val title: String, val id: Long)
+data class Tag(var title: String, var key: String)

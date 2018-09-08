@@ -7,16 +7,26 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var checkListDatabase: CheckListDatabase
+    lateinit var database: CheckListDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         DaggerUploaderComponent.create().inject(this)
-        checkListDatabase.getTags().subscribe({
+    }
+
+    override fun onResume() {
+        super.onResume()
+        database.start()
+        database.getTags().subscribe({
 
         }, {
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        database.stop()
     }
 }

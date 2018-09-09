@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         }, {
 
         })
+        database.getItems().subscribe()
     }
 
     override fun onPause() {

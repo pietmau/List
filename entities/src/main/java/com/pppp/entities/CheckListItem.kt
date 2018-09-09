@@ -1,13 +1,12 @@
 package com.pppp.entities
 
-
-data class CheckListItem(
-    val title: String,
-    val checked: Boolean = false,
-    val priority: Priority = Priority(5),
-    val description: String,
-    val id: Long,
-    val categoryId: Long,
-    val tags: List<Tag>
-)
+class CheckListItem() {
+    lateinit var title: String
+    var checked: Boolean = false
+    var priority: Int = 5
+    lateinit var description: String
+    lateinit var key: String
+    lateinit var category: String
+    lateinit var tags: List<String>
+}
 

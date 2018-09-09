@@ -1,3 +1,6 @@
 package com.pppp.entities
 
-data class Tag(var title: String, var key: String)
+class Tag() {
+    lateinit var title: String
+    lateinit var key: String
+}

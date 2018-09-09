@@ -1,9 +1,9 @@
 package com.pppp.database
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import com.pppp.database.CheckListDatabase.Companion.TAGS
+import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
@@ -11,28 +11,48 @@ import javax.inject.Inject
 
 class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase {
     private val db = FirebaseFirestore.getInstance();
-    private var registration: ListenerRegistration? = null
-    private val subject: SingleSubject<List<Tag>> = SingleSubject.create()
+    private val tags: SingleSubject<List<Tag>> = SingleSubject.create()
+    private val items: SingleSubject<List<CheckListItem>> = SingleSubject.create()
 
-    override fun getTags(): Single<List<Tag>> = subject
+    override fun getTags(): Single<List<Tag>> {
+        db.collection(TAGS).get()
+            .addOnSuccessListener { querySnapshot -> onTagsAvailable(querySnapshot) }
+        return tags
+    }
 
-    override fun start() {
-        registration = db.collection(TAGS)
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                onDataAvailable(querySnapshot)
+    override fun getItems(): Single<List<CheckListItem>> {
+        db.collection(CheckListDatabase.ITEMS).get()
+            .addOnSuccessListener { querySnapshot ->
+                onItemsAvailable(querySnapshot)
             }
+        return items
     }
 
-    private fun onDataAvailable(querySnapshot: QuerySnapshot?) {
+    override fun start() {/*NoOp*/
+    }
+
+    private fun onItemsAvailable(querySnapshot: QuerySnapshot?) {
         querySnapshot ?: return
-        subject
-            .onSuccess(querySnapshot.documents
-                .map { document -> Tag(document[TITLE] as String, document.id) }
-                .toList())
+        val items = querySnapshot.documents
+            .map { doument ->
+                val item = doument.toObject(CheckListItem::class.java)
+                item.key = doument.id
+                item
+            }
+        this.items.onSuccess(items)
     }
 
-    override fun stop() {
-        registration?.remove()
+    private fun onTagsAvailable(querySnapshot: QuerySnapshot?) {
+        querySnapshot ?: return
+        val tags = querySnapshot.documents.map { doument ->
+            val tag = doument.toObject(Tag::class.java)
+            tag.key = doument.id
+            tag
+        }.toList()
+        this.tags.onSuccess(tags)
+    }
+
+    override fun stop() {/*NoOp*/
     }
 
     companion object {

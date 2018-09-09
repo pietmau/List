@@ -13,17 +13,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         DaggerUploaderComponent.create().inject(this)
+
     }
 
     override fun onResume() {
         super.onResume()
         database.start()
-        database.getTags().subscribe({
-
-        }, {
-
-        })
+        database.getTags().subscribe({}, {})
         database.getItems().subscribe()
+        database.getCategories().subscribe({
+
+        }, {})
     }
 
     override fun onPause() {

@@ -1,9 +1,9 @@
 package com.pppp.entities
 
 
-data class Category(
-    var title: String,
-    var items: List<CheckListItem>,
-    val id: Long,
-    val checkListId: Long
-)
+class Category() {
+    lateinit var title: String
+    lateinit var items: List<CheckListItem>
+    lateinit var key: String
+    lateinit var checkListKey: String
+}

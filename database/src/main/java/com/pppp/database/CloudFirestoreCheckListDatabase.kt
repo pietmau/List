@@ -10,10 +10,10 @@ import javax.inject.Inject
 
 class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase {
     private val db = FirebaseFirestore.getInstance();
-    
+
     override fun getTags(): Single<List<Tag>> {
         return Single.create<List<Tag>> { emitter ->
-            db.collection(CheckListDatabase.ITEMS).get()
+            db.collection(CheckListDatabase.TAGS).get()
                 .addOnSuccessListener { querySnapshot ->
                     val result = onTagsAvailable(querySnapshot)
                     emitter.onSuccess(result)
@@ -39,7 +39,7 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
 
     override fun getCategories(): Single<List<Category>> {
         return Single.create<List<Category>> { emitter ->
-            db.collection(CheckListDatabase.ITEMS).get()
+            db.collection(CheckListDatabase.CATEGORIES).get()
                 .addOnSuccessListener { querySnapshot ->
                     val result = onCategoriesAvailable(querySnapshot)
                     emitter.onSuccess(result)
@@ -58,9 +58,6 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
                 item.key = doument.id
                 item
             }.toList()
-    }
-
-    override fun start() {/*NoOp*/
     }
 
     private fun onItemsAvailable(querySnapshot: QuerySnapshot?): List<CheckListItem> {
@@ -82,9 +79,6 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
         }.toList()
     }
 
-    override fun stop() {/*NoOp*/
-    }
-
     override fun saveExaple() {
         val item = CheckListItem()
         item.key = "this is a key"
@@ -96,7 +90,6 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
         item.tags = listOf("this is a tag", "this is another tag")
         db.collection(CheckListDatabase.ITEMS).add(item)
     }
-
 
     companion object {
         private const val TITLE = "title"

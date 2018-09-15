@@ -1,11 +1,15 @@
 package com.pppp.entities
 
-class CheckListItem() {
-    lateinit var title: String
-    var checked: Boolean = false
-    var priority: Int = 5
-    lateinit var description: String
-    lateinit var category: Category
-    lateinit var tags: List<Tag>
+import java.util.Collections.emptyList
+
+data class CheckListItem(
+    var title: String,
+    var checked: Boolean = false,
+    var priority: Int = 5,
+    var description: String?,
+    var category: Category,
+    var tags: List<Tag>
+) {
+    constructor() : this("", false, 5, null, Category(), emptyList())
 }
 

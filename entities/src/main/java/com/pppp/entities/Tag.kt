@@ -1,5 +1,7 @@
 package com.pppp.entities
 
-class Tag() {
-    lateinit var title: String
+data class Tag(
+    var title: String
+) {
+    constructor() : this("")
 }

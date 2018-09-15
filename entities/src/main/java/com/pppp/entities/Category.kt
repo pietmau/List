@@ -1,7 +1,11 @@
 package com.pppp.entities
 
+import java.util.Collections.emptyList
 
-class Category() {
-    lateinit var title: String
-    lateinit var items: List<CheckListItem>
+
+data class Category(
+    var title: String,
+    var items: List<CheckListItem>
+) {
+    constructor() : this("", emptyList())
 }

@@ -50,45 +50,18 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
         }
     }
 
-    private fun onCategoriesAvailable(querySnapshot: QuerySnapshot?): List<Category> {
-        querySnapshot ?: return emptyList()
-        return querySnapshot.documents
-            .map { doument ->
-                val item = doument.toObject(Category::class.java)
-                item.key = doument.id
-                item
-            }.toList()
-    }
+    private fun onCategoriesAvailable(querySnapshot: QuerySnapshot?) =
+        querySnapshot?.toObjects(Category::class.java) ?: emptyList()
 
-    private fun onItemsAvailable(querySnapshot: QuerySnapshot?): List<CheckListItem> {
-        querySnapshot ?: return emptyList()
-        return querySnapshot.documents
-            .map { doument ->
-                val item = doument.toObject(CheckListItem::class.java)
-                item.key = doument.id
-                item
-            }
-    }
+    private fun onItemsAvailable(querySnapshot: QuerySnapshot?) =
+        querySnapshot?.toObjects(CheckListItem::class.java) ?: emptyList()
 
-    private fun onTagsAvailable(querySnapshot: QuerySnapshot?): List<Tag> {
-        querySnapshot ?: return emptyList()
-        return querySnapshot.documents.map { doument ->
-            val tag = doument.toObject(Tag::class.java)
-            tag.key = doument.id
-            tag
-        }.toList()
-    }
+    private fun onTagsAvailable(querySnapshot: QuerySnapshot?) =
+        querySnapshot?.toObjects(Tag::class.java) ?: emptyList()
+
 
     override fun saveExaple() {
-        val item = CheckListItem()
-        item.key = "this is a key"
-        item.category = "this is a categlry"
-        item.description = "thsi is a description"
-        item.checked = true
-        item.priority = 10
-        item.title = "this is a title"
-        item.tags = listOf("this is a tag", "this is another tag")
-        db.collection(CheckListDatabase.ITEMS).add(item)
+
     }
 
     companion object {

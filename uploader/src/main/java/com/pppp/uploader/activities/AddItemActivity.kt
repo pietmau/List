@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.widget.TextView
+import android.widget.Toast
 import com.pppp.database.CloudFirestoreCheckListDatabase
 import com.pppp.entities.Category
 import com.pppp.entities.Tag
@@ -20,14 +21,36 @@ class AddItemActivity : AppCompatActivity(), CategoryAdapter.Listener, TagsAdapt
     private val tagSelected =
         TreeSet<Tag>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     private val db = CloudFirestoreCheckListDatabase()
+    private val itemsOnDb: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_items)
         db.getCategories().subscribe({ onCategoriesAvailable(it) }, {})
         db.getTags().subscribe({ onTagsAvailable(it) }, {})
-        db.getItems().subscribe({}, {})
+        db.subscribeToItemsAndUpdates().subscribe({ items ->
+            itemsOnDb.clear()
+            itemsOnDb.addAll(items.map { it.title }.toHashSet())
+        }, {})
+        button.setOnClickListener { save() }
     }
+
+    private fun save() {
+        val name = name.text?.toString()
+        val priorty = getPriority()
+        val description = description.text?.toString()
+        if (itemsOnDb.contains(name)) {
+            Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
+            return
+        }
+    }
+
+    private fun getPriority() =
+        try {
+            priorty?.text?.toString()?.toInt() ?: 5
+        } catch (exception: NumberFormatException) {
+            5
+        }
 
     private fun onTagsAvailable(taglist: List<Tag>?) {
         taglist ?: return

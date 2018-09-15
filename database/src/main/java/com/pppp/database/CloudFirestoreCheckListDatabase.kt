@@ -5,50 +5,58 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.pppp.entities.Category
 import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
 class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase {
+
     private val db = FirebaseFirestore.getInstance();
 
-    override fun getTags(): Single<List<Tag>> {
-        return Single.create<List<Tag>> { emitter ->
-            db.collection(CheckListDatabase.TAGS).get()
+    override fun getTags() = Single.create<List<Tag>> { emitter ->
+        db.collection(CheckListDatabase.TAGS).get()
+            .addOnSuccessListener { querySnapshot ->
+                emitter.onSuccess(onTagsAvailable(querySnapshot))
+            }
+            .addOnFailureListener { exception ->
+                emitter.onError(exception)
+            }
+    }
+
+    override fun getItems() =
+        Single.create<List<CheckListItem>> { emitter ->
+            getItremsReference().get()
                 .addOnSuccessListener { querySnapshot ->
-                    val result = onTagsAvailable(querySnapshot)
-                    emitter.onSuccess(result)
+                    emitter.onSuccess(onItemsAvailable(querySnapshot))
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
                 }
         }
-    }
 
-    override fun getItems(): Single<List<CheckListItem>> {
-        return Single.create<List<CheckListItem>> { emitter ->
-            db.collection(CheckListDatabase.ITEMS).get()
-                .addOnSuccessListener { querySnapshot ->
-                    val result = onItemsAvailable(querySnapshot)
-                    emitter.onSuccess(result)
-                }
-                .addOnFailureListener { exception ->
-                    emitter.onError(exception)
-                }
-        }
-    }
-
-    override fun getCategories(): Single<List<Category>> {
-        return Single.create<List<Category>> { emitter ->
+    override fun getCategories() =
+        Single.create<List<Category>> { emitter ->
             db.collection(CheckListDatabase.CATEGORIES).get()
                 .addOnSuccessListener { querySnapshot ->
-                    val result = onCategoriesAvailable(querySnapshot)
-                    emitter.onSuccess(result)
+                    emitter.onSuccess(onCategoriesAvailable(querySnapshot))
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
                 }
         }
-    }
+
+    override fun subscribeToItemsAndUpdates() =
+        Observable.create<List<CheckListItem>> { emitter ->
+            getItremsReference().addSnapshotListener { snapshot, exception ->
+                if (exception == null) {
+                    emitter.onNext(onItemsAvailable(snapshot))
+                } else {
+                    emitter.onError(exception)
+                }
+            }
+        }
+
+    private fun getItremsReference() = db.collection(CheckListDatabase.ITEMS)
 
     private fun onCategoriesAvailable(querySnapshot: QuerySnapshot?) =
         querySnapshot?.toObjects(Category::class.java) ?: emptyList()

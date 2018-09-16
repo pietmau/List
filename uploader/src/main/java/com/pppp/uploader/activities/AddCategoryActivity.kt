@@ -24,12 +24,12 @@ class AddCategoryActivity : AppCompatActivity() {
     }
 
     private fun save() {
-        val title = name.text?.toString()
+        val title = name.text?.toString()?.capitalize()
         if (title == null) {
             Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
             return
         }
-        val descriptionTxt = description.text?.toString()
+        val descriptionTxt = description.text?.toString()?.capitalize()
         if (itemsOnDb.contains(title)) {
             Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
             return

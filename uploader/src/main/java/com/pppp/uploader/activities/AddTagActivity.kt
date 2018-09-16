@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.pppp.database.CloudFirestoreCheckListDatabase
-import com.pppp.entities.Category
 import com.pppp.entities.Tag
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_category_activity.*
@@ -27,7 +26,7 @@ class AddTagActivity : AppCompatActivity() {
     }
 
     private fun save() {
-        val title = name.text?.toString()
+        val title = name.text?.toString()?.capitalize()
         if (title == null) {
             Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
             return

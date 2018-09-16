@@ -17,10 +17,10 @@ import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
 
-class AddItemActivity : AppCompatActivity() {
-    private val categoriesSelected =
+open class AddItemActivity : AppCompatActivity() {
+    val categoriesSelected =
         TreeSet<Category>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
-    private val tagSelected =
+    val tagSelected =
         TreeSet<Tag>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     private val db = CloudFirestoreCheckListDatabase()
     private val itemsOnDb: MutableSet<String> = mutableSetOf()
@@ -38,17 +38,21 @@ class AddItemActivity : AppCompatActivity() {
         itemsOnDb.clear()
         itemsOnDb.addAll(items.map { it.title }.toHashSet())
         itemsrv.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-        itemsrv.adapter = ItemsAdapter(items.map { it.title }.sorted())
+        itemsrv.adapter = ItemsAdapter(items.sortedBy { it.title }, ::onItemClicked)
+    }
+
+    open fun onItemClicked(checkListItem: CheckListItem) {
+        /* NoOp */
     }
 
     private fun save() {
-        val title = name.text?.toString()
+        val title = name.text?.toString()?.capitalize()
         if (title == null) {
             Toast.makeText(this, "No title", Toast.LENGTH_LONG).show()
             return
         }
         val priorityTxt = getPriority()
-        val descriptionTxt = description.text?.toString()
+        val descriptionTxt = description.text?.toString()?.capitalize()
         if (itemsOnDb.contains(title)) {
             Toast.makeText(this, "Already existing", Toast.LENGTH_LONG).show()
             return
@@ -61,24 +65,27 @@ class AddItemActivity : AppCompatActivity() {
             Toast.makeText(this, "No Category", Toast.LENGTH_LONG).show()
             return
         }
+        val optional = check.isChecked
         val item = CheckListItem(
             title,
             false,
             priorityTxt,
             descriptionTxt,
             categoriesSelected.first(),
-            tagSelected.toList()
+            tagSelected.toList(),
+            optional
         )
         db.saveItem(item).subscribe({}, {})
         clearAll()
     }
 
-    private fun clearAll() {
+    fun clearAll() {
         name.text.clear()
         priorty.text.clear()
         description.text.clear()
         categoriesSelected.clear()
         tagSelected.clear()
+        check.isChecked = false
         renderTags()
         rendercategories()
     }
@@ -89,13 +96,13 @@ class AddItemActivity : AppCompatActivity() {
         5
     }
 
-    private fun onTagsAvailable(taglist: List<Tag>?) {
+    fun onTagsAvailable(taglist: List<Tag>?) {
         taglist ?: return
         tags.layoutManager = LinearLayoutManager(this)
         tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, ::onTagSelecged)
     }
 
-    private fun onCategoriesAvailable(catgs: List<Category>?) {
+    fun onCategoriesAvailable(catgs: List<Category>?) {
         catgs ?: return
         categories.layoutManager = LinearLayoutManager(this)
         categories.adapter = CategoryAdapter(catgs.sortedBy { it.title }, ::onCategoryClicked)
@@ -119,7 +126,7 @@ class AddItemActivity : AppCompatActivity() {
         renderTags()
     }
 
-    private fun renderTags() {
+    protected fun renderTags() {
         selected_tags.removeAllViews()
         tagSelected.forEach {
             val tv = getView(it.title)
@@ -127,7 +134,7 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun rendercategories() {
+    protected fun rendercategories() {
         selected_categories.removeAllViews()
         categoriesSelected.forEach {
             val tv = getView(it.title)

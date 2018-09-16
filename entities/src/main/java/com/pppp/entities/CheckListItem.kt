@@ -12,5 +12,7 @@ data class CheckListItem(
     var optional: Boolean = false
 ) {
     constructor() : this("", false, 5, null, Category(), emptyList())
+
+    val key: String get() = title.toKey()
 }
 

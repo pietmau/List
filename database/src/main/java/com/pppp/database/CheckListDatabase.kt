@@ -16,7 +16,15 @@ interface CheckListDatabase {
 
     fun subscribeToItemsAndUpdates(): Observable<List<CheckListItem>>
 
-    fun saveItem(item: CheckListItem): Completable?
+    fun saveItem(item: CheckListItem, key: String): Completable?
+
+    fun saveCategory(category: Category, key: String): Completable?
+
+    fun subscribeToCategoriesAndUpdates(): Observable<List<Category>>?
+
+    fun subscribeToTagsAndUpdates(): Observable<List<Tag>>?
+
+    fun saveTag(tag: Tag, key: String): Completable?
 
     companion object {
         const val TAGS = "tags"
@@ -24,9 +32,4 @@ interface CheckListDatabase {
         const val CATEGORIES = "categories"
     }
 
-
-    fun saveCategory(category: Category): Completable?
-    fun subscribeToCategoriesAndUpdates(): Observable<List<Category>>?
-    fun subscribeToTagsAndUpdates(): Observable<List<Tag>>?
-    fun saveTag(tag: Tag): Completable?
 }

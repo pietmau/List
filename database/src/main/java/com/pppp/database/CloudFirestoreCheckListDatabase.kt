@@ -79,7 +79,7 @@ class CloudFirestoreCheckListDatabase
             }
         }
 
-    override fun saveItem(item: CheckListItem) =
+    override fun saveItem(item: CheckListItem, key: String) =
         Completable.create { emitter ->
             getItemsReference().document(item.title).set(item).addOnSuccessListener {
                 emitter.onComplete()
@@ -88,18 +88,18 @@ class CloudFirestoreCheckListDatabase
             }
         }
 
-    override fun saveCategory(category: Category) =
+    override fun saveCategory(category: Category, key: String) =
         Completable.create { emitter ->
-            getCollectionReference().document(category.title).set(category).addOnSuccessListener {
+            getCollectionReference().document(key).set(category).addOnSuccessListener {
                 emitter.onComplete()
             }.addOnFailureListener { error ->
                 emitter.onError(error)
             }
         }
 
-    override fun saveTag(tag: Tag) =
+    override fun saveTag(tag: Tag, key: String) =
         Completable.create { emitter ->
-            getTagsReference().document(tag.title).set(tag).addOnSuccessListener {
+            getTagsReference().document(key).set(tag).addOnSuccessListener {
                 emitter.onComplete()
             }.addOnFailureListener { error ->
                 emitter.onError(error)

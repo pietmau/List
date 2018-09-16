@@ -9,4 +9,6 @@ data class Category(
     var items: List<CheckListItem> = emptyList()
 ) {
     constructor() : this("", null, emptyList())
+
+    val key: String get() = title.toKey()
 }

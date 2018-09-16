@@ -15,7 +15,7 @@ class CloudFirestoreCheckListDatabase
     CheckListDatabase {
 
     override fun getTags() = Single.create<List<Tag>> { emitter ->
-        db.collection(CheckListDatabase.TAGS).get()
+        getTagsReference().get()
             .addOnSuccessListener { querySnapshot ->
                 emitter.onSuccess(onTagsAvailable(querySnapshot))
             }
@@ -68,6 +68,17 @@ class CloudFirestoreCheckListDatabase
             }
         }
 
+    override fun subscribeToTagsAndUpdates() =
+        Observable.create<List<Tag>> { emitter ->
+            getTagsReference().addSnapshotListener { snapshot, exception ->
+                if (exception == null) {
+                    emitter.onNext(onTagsAvailable(snapshot))
+                } else {
+                    emitter.onError(exception)
+                }
+            }
+        }
+
     override fun saveItem(item: CheckListItem) =
         Completable.create { emitter ->
             getItemsReference().add(item).addOnSuccessListener {
@@ -85,6 +96,17 @@ class CloudFirestoreCheckListDatabase
                 emitter.onError(error)
             }
         }
+
+    override fun saveTag(tag: Tag) =
+        Completable.create { emitter ->
+            getTagsReference().add(tag).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener { error ->
+                emitter.onError(error)
+            }
+        }
+
+    private fun getTagsReference() = db.collection(CheckListDatabase.TAGS)
 
     private fun getItemsReference() = db.collection(CheckListDatabase.ITEMS)
 

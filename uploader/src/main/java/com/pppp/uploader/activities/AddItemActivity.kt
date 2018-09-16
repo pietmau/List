@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
@@ -16,7 +17,7 @@ import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
 
-class AddItemActivity : AppCompatActivity(), TagsAdapter.Listener {
+class AddItemActivity : AppCompatActivity() {
     private val categoriesSelected =
         TreeSet<Category>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     private val tagSelected =
@@ -30,22 +31,36 @@ class AddItemActivity : AppCompatActivity(), TagsAdapter.Listener {
         db.getCategories().subscribe({ onCategoriesAvailable(it) }, {})
         db.getTags().subscribe({ onTagsAvailable(it) }, {})
         db.subscribeToItemsAndUpdates().subscribe({ items ->
-            itemsOnDb.clear()
-            itemsOnDb.addAll(items.map { it.title }.toHashSet())
+            onItemsAvailable(items)
         }, {})
         button.setOnClickListener { save() }
+    }
+
+    private fun onItemsAvailable(items: List<CheckListItem>) {
+        itemsOnDb.clear()
+        itemsOnDb.addAll(items.map { it.title }.toHashSet())
+        itemsrv.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+        itemsrv.adapter = ItemsAdapter(items.map { it.title }.sorted())
     }
 
     private fun save() {
         val title = name.text?.toString()
         if (title == null) {
-            Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "No title", Toast.LENGTH_LONG).show()
             return
         }
         val priorityTxt = getPriority()
         val descriptionTxt = description.text?.toString()
         if (itemsOnDb.contains(title)) {
-            Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Already existing", Toast.LENGTH_LONG).show()
+            return
+        }
+        if (tagSelected.isEmpty()) {
+            Toast.makeText(this, "No Tags", Toast.LENGTH_LONG).show()
+            return
+        }
+        if (categoriesSelected.isEmpty()) {
+            Toast.makeText(this, "No Category", Toast.LENGTH_LONG).show()
             return
         }
         val item = CheckListItem(
@@ -79,7 +94,7 @@ class AddItemActivity : AppCompatActivity(), TagsAdapter.Listener {
     private fun onTagsAvailable(taglist: List<Tag>?) {
         taglist ?: return
         tags.layoutManager = LinearLayoutManager(this)
-        tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, this)
+        tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, ::onTagSelecged)
     }
 
     private fun onCategoriesAvailable(catgs: List<Category>?) {
@@ -97,7 +112,7 @@ class AddItemActivity : AppCompatActivity(), TagsAdapter.Listener {
         rendercategories()
     }
 
-    override fun onTagSelecged(tag: Tag) {
+    fun onTagSelecged(tag: Tag) {
         if (tagSelected.contains(tag)) {
             tagSelected.remove(tag)
         } else {

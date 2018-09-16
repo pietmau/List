@@ -27,4 +27,6 @@ interface CheckListDatabase {
 
     fun saveCategory(category: Category): Completable?
     fun subscribeToCategoriesAndUpdates(): Observable<List<Category>>?
+    fun subscribeToTagsAndUpdates(): Observable<List<Tag>>?
+    fun saveTag(tag: Tag): Completable?
 }

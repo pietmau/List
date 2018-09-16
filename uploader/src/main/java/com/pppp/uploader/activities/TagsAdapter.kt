@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.pppp.entities.Tag
 import com.pppp.uploader.R
 
-class TagsAdapter(private val tags: List<Tag>, private val listener: Listener) :
+class TagsAdapter(private val tags: List<Tag>, private val listener: (Tag) -> Unit) :
     RecyclerView.Adapter<TagsAdapter.TagsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagsHolder {
@@ -25,15 +25,10 @@ class TagsAdapter(private val tags: List<Tag>, private val listener: Listener) :
     class TagsHolder(val v: View) : RecyclerView.ViewHolder(v) {
         private val tv = v.findViewById<TextView>(R.id.text)
 
-        fun bind(tag: Tag, listener: Listener) {
+        fun bind(tag: Tag, listener: (Tag) -> Unit) {
             v.tag = tag
             tv.text = tag.title
-            v.setOnClickListener { view -> listener.onTagSelecged(view.tag as Tag) }
+            v.setOnClickListener { view -> listener.invoke(view.tag as Tag) }
         }
-    }
-
-
-    interface Listener {
-        fun onTagSelecged(tag: Tag)
     }
 }

@@ -8,7 +8,8 @@ data class CheckListItem(
     var priority: Int = 5,
     var description: String?,
     var category: Category,
-    var tags: List<Tag>
+    var tags: List<Tag>,
+    var optional: Boolean = false
 ) {
     constructor() : this("", false, 5, null, Category(), emptyList())
 }

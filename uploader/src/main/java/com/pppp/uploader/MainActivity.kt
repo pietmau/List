@@ -16,5 +16,6 @@ class MainActivity : AppCompatActivity() {
         edit_category.setOnClickListener { AddCategoryActivity.start(this) }
         edit_items.setOnClickListener { AddItemActivity.start(this) }
         edit_tags.setOnClickListener { AddTagActivity.start(this) }
+        add_tags.setOnClickListener { AddTagActivity.start(this) }
     }
 }

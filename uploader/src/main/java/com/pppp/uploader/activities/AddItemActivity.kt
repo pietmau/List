@@ -30,9 +30,7 @@ class AddItemActivity : AppCompatActivity() {
         setContentView(R.layout.add_items)
         db.getCategories().subscribe({ onCategoriesAvailable(it) }, {})
         db.getTags().subscribe({ onTagsAvailable(it) }, {})
-        db.subscribeToItemsAndUpdates().subscribe({ items ->
-            onItemsAvailable(items)
-        }, {})
+        db.subscribeToItemsAndUpdates().subscribe({ items -> onItemsAvailable(items) }, {})
         button.setOnClickListener { save() }
     }
 

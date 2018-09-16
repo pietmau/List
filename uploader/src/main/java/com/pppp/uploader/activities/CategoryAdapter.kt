@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.pppp.entities.Category
 import com.pppp.uploader.R
 
-class CategoryAdapter(var items: List<Category>, private val listener: Listener) :
+class CategoryAdapter(var items: List<Category>, private val listener: (Category) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -29,14 +29,10 @@ class CategoryAdapter(var items: List<Category>, private val listener: Listener)
             textView = v.findViewById<TextView>(R.id.text)
         }
 
-        fun bind(category: Category, listener: Listener) {
+        fun bind(category: Category, listener: (Category) -> Unit) {
             textView.tag = category
             textView.setText(category.title)
-            textView.setOnClickListener { listener.onCategoryClicked(textView.tag as Category) }
+            textView.setOnClickListener { listener.invoke(textView.tag as Category) }
         }
-    }
-
-    interface Listener {
-        fun onCategoryClicked(category: Category)
     }
 }

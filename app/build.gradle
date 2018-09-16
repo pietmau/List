@@ -70,7 +70,6 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.14.1'
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-database:$firebase_version"
-    implementation "com.google.firebase:firebase-firestore:$firebase_version"
     implementation 'com.google.android:flexbox:0.3.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
     kapt 'com.jakewharton:butterknife-compiler:8.8.1'

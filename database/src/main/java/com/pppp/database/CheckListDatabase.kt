@@ -3,8 +3,8 @@ package com.pppp.database
 import com.pppp.entities.Category
 import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
+import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
 import io.reactivex.Single
 
 interface CheckListDatabase {
@@ -12,11 +12,11 @@ interface CheckListDatabase {
 
     fun getItems(): Single<List<CheckListItem>>
 
-    fun saveExaple()
-
     fun getCategories(): Single<List<Category>>
 
     fun subscribeToItemsAndUpdates(): Observable<List<CheckListItem>>
+
+    fun saveItem(item: CheckListItem): Completable?
 
     companion object {
         const val TAGS = "tags"
@@ -25,4 +25,6 @@ interface CheckListDatabase {
     }
 
 
+    fun saveCategory(category: Category): Completable?
+    fun subscribeToCategoriesAndUpdates(): Observable<List<Category>>?
 }

@@ -10,12 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.pppp.database.CloudFirestoreCheckListDatabase
 import com.pppp.entities.Category
+import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
 
-class AddItemActivity : AppCompatActivity(), CategoryAdapter.Listener, TagsAdapter.Listener {
+class AddItemActivity : AppCompatActivity(), TagsAdapter.Listener {
     private val categoriesSelected =
         TreeSet<Category>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     private val tagSelected =
@@ -36,21 +37,44 @@ class AddItemActivity : AppCompatActivity(), CategoryAdapter.Listener, TagsAdapt
     }
 
     private fun save() {
-        val name = name.text?.toString()
-        val priorty = getPriority()
-        val description = description.text?.toString()
-        if (itemsOnDb.contains(name)) {
+        val title = name.text?.toString()
+        if (title == null) {
             Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
             return
         }
+        val priorityTxt = getPriority()
+        val descriptionTxt = description.text?.toString()
+        if (itemsOnDb.contains(title)) {
+            Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
+            return
+        }
+        val item = CheckListItem(
+            title,
+            false,
+            priorityTxt,
+            descriptionTxt,
+            categoriesSelected.first(),
+            tagSelected.toList()
+        )
+        db.saveItem(item).subscribe({}, {})
+        clearAll()
     }
 
-    private fun getPriority() =
-        try {
-            priorty?.text?.toString()?.toInt() ?: 5
-        } catch (exception: NumberFormatException) {
-            5
-        }
+    private fun clearAll() {
+        name.text.clear()
+        priorty.text.clear()
+        description.text.clear()
+        categoriesSelected.clear()
+        tagSelected.clear()
+        renderTags()
+        rendercategories()
+    }
+
+    private fun getPriority() = try {
+        priorty?.text?.toString()?.toInt() ?: 5
+    } catch (exception: NumberFormatException) {
+        5
+    }
 
     private fun onTagsAvailable(taglist: List<Tag>?) {
         taglist ?: return
@@ -61,10 +85,10 @@ class AddItemActivity : AppCompatActivity(), CategoryAdapter.Listener, TagsAdapt
     private fun onCategoriesAvailable(catgs: List<Category>?) {
         catgs ?: return
         categories.layoutManager = LinearLayoutManager(this)
-        categories.adapter = CategoryAdapter(catgs.sortedBy { it.title }, this)
+        categories.adapter = CategoryAdapter(catgs.sortedBy { it.title }, ::onCategoryClicked)
     }
 
-    override fun onCategoryClicked(category: Category) {
+    fun onCategoryClicked(category: Category) {
         if (categoriesSelected.contains(category)) {
             categoriesSelected.remove(category)
         } else {

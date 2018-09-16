@@ -5,13 +5,14 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.pppp.entities.Category
 import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase {
-
-    private val db = FirebaseFirestore.getInstance();
+class CloudFirestoreCheckListDatabase
+@Inject constructor(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
+    CheckListDatabase {
 
     override fun getTags() = Single.create<List<Tag>> { emitter ->
         db.collection(CheckListDatabase.TAGS).get()
@@ -25,7 +26,7 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
 
     override fun getItems() =
         Single.create<List<CheckListItem>> { emitter ->
-            getItremsReference().get()
+            getItemsReference().get()
                 .addOnSuccessListener { querySnapshot ->
                     emitter.onSuccess(onItemsAvailable(querySnapshot))
                 }
@@ -36,7 +37,7 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
 
     override fun getCategories() =
         Single.create<List<Category>> { emitter ->
-            db.collection(CheckListDatabase.CATEGORIES).get()
+            getCollectionReference().get()
                 .addOnSuccessListener { querySnapshot ->
                     emitter.onSuccess(onCategoriesAvailable(querySnapshot))
                 }
@@ -47,7 +48,7 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
 
     override fun subscribeToItemsAndUpdates() =
         Observable.create<List<CheckListItem>> { emitter ->
-            getItremsReference().addSnapshotListener { snapshot, exception ->
+            getItemsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     emitter.onNext(onItemsAvailable(snapshot))
                 } else {
@@ -56,7 +57,38 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
             }
         }
 
-    private fun getItremsReference() = db.collection(CheckListDatabase.ITEMS)
+    override fun subscribeToCategoriesAndUpdates() =
+        Observable.create<List<Category>> { emitter ->
+            getCollectionReference().addSnapshotListener { snapshot, exception ->
+                if (exception == null) {
+                    emitter.onNext(onCategoriesAvailable(snapshot))
+                } else {
+                    emitter.onError(exception)
+                }
+            }
+        }
+
+    override fun saveItem(item: CheckListItem) =
+        Completable.create { emitter ->
+            getItemsReference().add(item).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener { error ->
+                emitter.onError(error)
+            }
+        }
+
+    override fun saveCategory(category: Category) =
+        Completable.create { emitter ->
+            getCollectionReference().add(category).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener { error ->
+                emitter.onError(error)
+            }
+        }
+
+    private fun getItemsReference() = db.collection(CheckListDatabase.ITEMS)
+
+    private fun getCollectionReference() = db.collection(CheckListDatabase.CATEGORIES)
 
     private fun onCategoriesAvailable(querySnapshot: QuerySnapshot?) =
         querySnapshot?.toObjects(Category::class.java) ?: emptyList()
@@ -67,12 +99,4 @@ class CloudFirestoreCheckListDatabase @Inject constructor() : CheckListDatabase 
     private fun onTagsAvailable(querySnapshot: QuerySnapshot?) =
         querySnapshot?.toObjects(Tag::class.java) ?: emptyList()
 
-
-    override fun saveExaple() {
-
-    }
-
-    companion object {
-        private const val TITLE = "title"
-    }
 }

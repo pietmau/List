@@ -1,7 +1,8 @@
 package com.pppp.entities
 
 data class Tag(
-    var title: String
+    var title: String,
+    var hidden: Boolean = false
 ) {
     constructor() : this("")
 

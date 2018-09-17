@@ -45,6 +45,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:id="@+id/categories_container"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
@@ -57,6 +58,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/selected_categories_container"
             android:background="@color/green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

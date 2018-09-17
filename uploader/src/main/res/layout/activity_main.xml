@@ -11,8 +11,7 @@
         android:id="@+id/add_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Categories"
-        />
+        android:text="Edit Categories" />
 
     <Button
         android:id="@+id/add_tags"
@@ -31,5 +30,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Edit Items" />
+
+    <Button
+        android:id="@+id/edit_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Groups" />
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.pppp.entities.Category
 import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
+import com.pppp.entities.TagsGroup
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -46,6 +47,17 @@ class CloudFirestoreCheckListDatabase
                 }
         }
 
+    override fun getTagGroups() =
+        Single.create<List<TagsGroup>> { emitter ->
+            getTagGroupsReference().get()
+                .addOnSuccessListener { querySnapshot ->
+                    emitter.onSuccess(onGroupsAvailable(querySnapshot))
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+
     override fun subscribeToItemsAndUpdates() =
         Observable.create<List<CheckListItem>> { emitter ->
             getItemsReference().addSnapshotListener { snapshot, exception ->
@@ -79,6 +91,17 @@ class CloudFirestoreCheckListDatabase
             }
         }
 
+    override fun subscribeToGroupsAndUpdates() =
+        Observable.create<List<TagsGroup>> { emitter ->
+            getTagsReference().addSnapshotListener { snapshot, exception ->
+                if (exception == null) {
+                    emitter.onNext(onGroupsAvailable(snapshot))
+                } else {
+                    emitter.onError(exception)
+                }
+            }
+        }
+
     override fun saveItem(item: CheckListItem, key: String) =
         Completable.create { emitter ->
             getItemsReference().document(item.title).set(item).addOnSuccessListener {
@@ -106,6 +129,17 @@ class CloudFirestoreCheckListDatabase
             }
         }
 
+    override fun saveTagGroup(group: TagsGroup, key: String) =
+        Completable.create { emitter ->
+            getTagGroupsReference().document(key).set(group).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener { error ->
+                emitter.onError(error)
+            }
+        }
+
+    private fun getTagGroupsReference() = db.collection(CheckListDatabase.GROUPS)
+
     private fun getTagsReference() = db.collection(CheckListDatabase.TAGS)
 
     private fun getItemsReference() = db.collection(CheckListDatabase.ITEMS)
@@ -120,5 +154,8 @@ class CloudFirestoreCheckListDatabase
 
     private fun onTagsAvailable(querySnapshot: QuerySnapshot?) =
         querySnapshot?.toObjects(Tag::class.java) ?: emptyList()
+
+    private fun onGroupsAvailable(querySnapshot: QuerySnapshot?) =
+        querySnapshot?.toObjects(TagsGroup::class.java) ?: emptyList()
 
 }

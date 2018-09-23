@@ -75,7 +75,7 @@ open class AddItemActivity : AppCompatActivity() {
             tagSelected.toList(),
             optional
         )
-        db.saveItem(item, item.key).subscribe({}, {})
+        db.saveItem(item, item.id).subscribe({}, {})
         clearAll()
     }
 

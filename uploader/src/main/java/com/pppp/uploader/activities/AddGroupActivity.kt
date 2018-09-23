@@ -48,7 +48,7 @@ open class AddGroupActivity : AppCompatActivity() {
         val exclusive = check.isChecked
         val item = TagsGroup(title, descriptionTxt, tagSelected.toList(), exclusive)
 
-        db.saveTagGroup(item, item.key).subscribe({}, {})
+        db.saveTagGroup(item, item.id).subscribe({}, {})
         clearAll()
     }
 

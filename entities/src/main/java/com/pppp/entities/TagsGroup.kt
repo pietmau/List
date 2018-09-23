@@ -7,5 +7,5 @@ data class TagsGroup(
     var exclusive: Boolean = false
 ) {
 
-    val key: String get() = title.toKey()
+    lateinit var id: String
 }

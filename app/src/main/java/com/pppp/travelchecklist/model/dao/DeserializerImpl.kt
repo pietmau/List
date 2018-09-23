@@ -2,10 +2,10 @@ package com.pppp.travelchecklist.model.dao
 
 import android.database.Cursor
 import android.provider.BaseColumns
-import com.pppp.travelchecklist.model.Category
+import com.pppp.entities.Category
 import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
-import com.pppp.travelchecklist.model.Priority
+import com.pppp.entities.CheckListItem
+
 import com.pppp.travelchecklist.model.database.CardContract
 import com.pppp.travelchecklist.model.database.ListContract
 import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
@@ -53,7 +53,7 @@ class DeserializerImpl : Deserializer {
                 val id = cardsCursor.getLong(cardsCursor.getColumnIndexOrThrow(BaseColumns._ID))
                 val listId = cardsCursor.getLong(cardsCursor.getColumnIndexOrThrow(CardContract.Card.COLUMN_NAME_LIST_ID))
                 if (title != null && id != null && listId != null) {
-                    val items = emptyList<CheckListItemData>()
+                    val items = emptyList<CheckListItem>()
                     val card = Category(title, items, id, listId)
                     result.add(card)
                 }
@@ -64,8 +64,8 @@ class DeserializerImpl : Deserializer {
         return result.toList()
     }
 
-    override fun getItems(itemsCursor: Cursor?): Collection<CheckListItemData> {
-        var result = mutableListOf<CheckListItemData>()
+    override fun getItems(itemsCursor: Cursor?): Collection<CheckListItem> {
+        var result = mutableListOf<CheckListItem>()
         try {
             while (itemsCursor?.moveToNext() == true) {
                 val title = itemsCursor.getString(itemsCursor.getColumnIndexOrThrow(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE))
@@ -77,7 +77,7 @@ class DeserializerImpl : Deserializer {
                 val priority = if (priorityValue != null) Priority(priorityValue) else null
                 val description = itemsCursor.getString(itemsCursor.getColumnIndexOrThrow(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION))
                 if (title != null && id != null && cardId != null && priority != null && checked != null) {
-                    val item = CheckListItemData(title, checked, priority, description, id, cardId)
+                    val item = CheckListItem(title, checked, priority, description, id, cardId)
                     result.add(item)
                 }
             }

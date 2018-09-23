@@ -2,8 +2,8 @@ package com.pppp.travelchecklist.list
 
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import com.pppp.travelchecklist.model.Category
-import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.entities.Category
+import com.pppp.entities.CheckListItem
 
 
 class DiffCallback(
@@ -34,8 +34,8 @@ class DiffCallback(
         return bundle
     }
 
-    private fun getArray(items: List<CheckListItemData>): ArrayList<CheckListItemData> {
-        var arr = ArrayList<CheckListItemData>()
+    private fun getArray(items: List<CheckListItem>): ArrayList<CheckListItem> {
+        var arr = ArrayList<CheckListItem>()
         for (item in items) {
             arr.add(item)
         }

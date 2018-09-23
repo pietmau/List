@@ -13,6 +13,6 @@ data class CheckListItem(
 ) {
     constructor() : this("", false, 5, null, Category(), emptyList())
 
-    val key: String get() = title.toKey()
+    lateinit var id: String
 }
 

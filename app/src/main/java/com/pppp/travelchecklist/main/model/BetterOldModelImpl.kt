@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.entities.CheckListItem
 import com.pppp.travelchecklist.model.SimpleObserver
 import com.pppp.travelchecklist.model.dao.ListDao
 import io.reactivex.Observable
@@ -37,7 +37,7 @@ class BetterOldModelImpl(
                 .subscribe({ notifyDatabaseChanged() }, {})
     }
 
-    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
+    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItem> {
         return subject
                 .map { it.categories }
                 .map { it.get(cardPosition) }
@@ -47,7 +47,7 @@ class BetterOldModelImpl(
                 .observeOn(ui)
     }
 
-    override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+    override fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
         Observable.fromCallable {
             dao.editItem(item)
         }.

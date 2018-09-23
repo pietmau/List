@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.main.presenter
 import com.pppp.travelchecklist.main.model.OldModel
 import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.entities.CheckListItem
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -34,11 +34,11 @@ class OldMainPresenter(
                 .subscribeWith(observer)
     }
 
-    fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
+    fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItem> {
         return oldModel.getItem(cardPosition, itemPosition)
     }
 
-    fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+    fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
         oldModel.onItemEdited(item, cardPosition, itemPosition)
     }
 }

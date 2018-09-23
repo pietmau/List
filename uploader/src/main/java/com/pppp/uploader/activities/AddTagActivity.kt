@@ -36,7 +36,7 @@ class AddTagActivity : AppCompatActivity() {
             return
         }
         val tag = Tag(title)
-        db.saveTag(tag, tag.key).subscribe({}, {})
+        db.saveTag(tag, tag.id).subscribe({}, {})
         name.text.clear()
         description.text.clear()
     }

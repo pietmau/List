@@ -3,9 +3,9 @@ package com.pppp.travelchecklist.model.dao
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
-import com.pppp.travelchecklist.model.Category
+import com.pppp.entities.Category
 import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.entities.CheckListItem
 import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
 
 class ListDaoSqlite(
@@ -47,13 +47,13 @@ class ListDaoSqlite(
         return result.toList()
     }
 
-    private fun getItems(id: Long): List<CheckListItemData> {
-        var result = mutableListOf<CheckListItemData>()
+    private fun getItems(id: Long): List<CheckListItem> {
+        var result = mutableListOf<CheckListItem>()
         result.addAll(deserializer.getItems(db.rawQuery(queryMaker.getitemsQuery(id), emptyArray())))
         return result.toList()
     }
 
-    override fun editItem(item: CheckListItemData): Int {
+    override fun editItem(item: CheckListItem): Int {
         val values = ContentValues()
         values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, item.title)
         values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_CHECKED, if (item.checked) 1 else 0)
@@ -63,7 +63,7 @@ class ListDaoSqlite(
         return db.update(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, values, "${BaseColumns._ID} = ?", arrayOf(item.id.toString()))
     }
 
-    override fun deleteItem(item: CheckListItemData): Int {
+    override fun deleteItem(item: CheckListItem): Int {
         return db.delete(TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME, "${BaseColumns._ID} = ?", arrayOf(item.id.toString()))
     }
 

@@ -6,5 +6,5 @@ data class Tag(
 ) {
     constructor() : this("")
 
-    val key: String get() = title.toKey()
+    lateinit var id: String
 }

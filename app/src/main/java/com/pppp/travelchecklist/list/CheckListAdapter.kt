@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.travelchecklist.model.Category
-import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.entities.Category
+import com.pppp.entities.CheckListItem
 
 
 class CheckListAdapter(
@@ -36,8 +36,8 @@ class CheckListAdapter(
         holder.bind(items.get(position), position, callback)
     }
 
-    private fun getItems(payloads: MutableList<Any>): List<CheckListItemData> {
-        (payloads[0] as? Bundle)?.getParcelableArrayList<CheckListItemData>(DiffCallback.ITEMS_KEY)?.let {
+    private fun getItems(payloads: MutableList<Any>): List<CheckListItem> {
+        (payloads[0] as? Bundle)?.getParcelableArrayList<CheckListItem>(DiffCallback.ITEMS_KEY)?.let {
             return it
         }
         return emptyList()

@@ -14,7 +14,7 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.OldMainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
 import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
+import com.pppp.entities.CheckListItem
 import com.pppp.travelchecklist.model.SimpleObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_blank.*
@@ -29,7 +29,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     private var disposable: Disposable? = null
 
     private val callback = object : CheckListCard.Callback {
-        override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData) {
+        override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
             this@TestFragment.onItemDeleteRequested(cardPosition, itemPosition, data)
         }
 
@@ -44,7 +44,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
         }, {})
     }
 
-    private fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemData) {
+    private fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
         activity?.alert(Appcompat,
                 resources.getString(R.string.delete) + " " + data.title + "?",
                 resources.getString(R.string.delete)) {
@@ -67,7 +67,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
 
-    override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+    override fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
         presenterOld.onItemEdited(item, cardPosition, itemPosition)
     }
 

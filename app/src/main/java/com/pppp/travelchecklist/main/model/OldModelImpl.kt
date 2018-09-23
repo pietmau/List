@@ -1,9 +1,9 @@
 package com.pppp.travelchecklist.main.model
 
-import com.pppp.travelchecklist.model.Category
+import com.pppp.entities.Category
 import com.pppp.travelchecklist.model.CheckList
-import com.pppp.travelchecklist.model.CheckListItemData
-import com.pppp.travelchecklist.model.Priority
+import com.pppp.entities.CheckListItem
+
 import com.pppp.travelchecklist.model.dao.ListDao
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -11,7 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 class OldModelImpl(private val dao: ListDao) : OldModel {
-    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemData> {
+    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItem> {
         TODO("not implemented")
     }
 
@@ -19,7 +19,7 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
         TODO("not implemented")
     }
 
-    private var items: MutableList<CheckListItemData> = createItems()
+    private var items: MutableList<CheckListItem> = createItems()
     private var categories: MutableList<Category> = createCards()
 
     private val subject by lazy {
@@ -28,11 +28,11 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
         subject
     }
 
-    private fun createItems(): MutableList<CheckListItemData> {
+    private fun createItems(): MutableList<CheckListItem> {
         dao.getCheckLists()
-        var list = mutableListOf<CheckListItemData>()
+        var list = mutableListOf<CheckListItem>()
         for (i in 0..5) {
-            val data = CheckListItemData("Title $i", false, Priority(5), "Description $i", 0, 0)
+            val data = CheckListItem("Title $i", false, Priority(5), "Description $i", 0, 0)
             list.add(data)
         }
         return list
@@ -55,7 +55,7 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
         subject.onNext(categories)
     }
 
-    override fun onItemEdited(item: CheckListItemData, cardPosition: Int, itemPosition: Int) {
+    override fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
         TODO("not implemented")
     }
 }

@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.travelchecklist.model.Category
+import com.pppp.entities.Category
 
 
 class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(context, attrs) {

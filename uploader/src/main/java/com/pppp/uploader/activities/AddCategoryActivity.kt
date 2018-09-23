@@ -35,7 +35,7 @@ class AddCategoryActivity : AppCompatActivity() {
             return
         }
         val category = Category(title, descriptionTxt)
-        db.saveCategory(category, category.key).subscribe({}, {})
+        db.saveCategory(category, category.id).subscribe({}, {})
         name.text.clear()
         description.text.clear()
     }

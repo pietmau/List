@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.selector.presenter
 import android.arch.lifecycle.ViewModel
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.travelchecklist.model.CheckList
+import com.pppp.entities.CheckList
 import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.view.ISelectorView
 import com.pppp.travelchecklist.selector.view.SelectorCallback

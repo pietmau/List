@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.model.dao
 
-import com.pppp.travelchecklist.model.CheckList
+import com.pppp.entities.CheckList
 import com.pppp.entities.CheckListItem
 
 

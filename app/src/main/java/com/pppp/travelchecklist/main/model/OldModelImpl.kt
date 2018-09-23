@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pppp.entities.Category
-import com.pppp.travelchecklist.model.CheckList
+import com.pppp.entities.CheckList
 import com.pppp.entities.CheckListItem
 
 import com.pppp.travelchecklist.model.dao.ListDao
@@ -32,7 +32,8 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
         dao.getCheckLists()
         var list = mutableListOf<CheckListItem>()
         for (i in 0..5) {
-            val data = CheckListItem("Title $i", false, Priority(5), "Description $i", 0, 0)
+            val data =
+                CheckListItem("Title $i", false, 5, "Description $i", Category(), emptyList())
             list.add(data)
         }
         return list
@@ -41,7 +42,7 @@ class OldModelImpl(private val dao: ListDao) : OldModel {
     private fun createCards(): MutableList<Category> {
         val list = mutableListOf<Category>()
         for (i in 0..5) {
-            val card = Category("Category $i", items, i.toLong(), 0)
+            val card = Category("Category $i", null, items = items)
             list.add(card)
         }
         return list

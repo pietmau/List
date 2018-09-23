@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.card.carditem.CustomAlertDialogBuilder
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.OldMainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.travelchecklist.model.CheckList
+import com.pppp.entities.CheckList
 import com.pppp.entities.CheckListItem
 import com.pppp.travelchecklist.model.SimpleObserver
 import io.reactivex.disposables.Disposable

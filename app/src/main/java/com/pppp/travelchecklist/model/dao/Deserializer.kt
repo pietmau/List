@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.model.dao
 
 import android.database.Cursor
 import com.pppp.entities.Category
-import com.pppp.travelchecklist.model.CheckList
+import com.pppp.entities.CheckList
 import com.pppp.entities.CheckListItem
 
 

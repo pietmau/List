@@ -7,5 +7,7 @@ data class TagsGroup(
     var exclusive: Boolean = false
 ) {
 
+    constructor() : this("", null, emptyList())
+
     lateinit var id: String
 }

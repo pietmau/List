@@ -6,9 +6,12 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Tag(
     var title: String,
+    var key: String,
     var hidden: Boolean = false
 ) : Parcelable {
-    constructor() : this("")
+    constructor() : this("", "")
 
-    lateinit var id: String
+    override fun equals(other: Any?) = key.equals((other as? Tag)?.key)
+
+    override fun hashCode() = key.hashCode()
 }

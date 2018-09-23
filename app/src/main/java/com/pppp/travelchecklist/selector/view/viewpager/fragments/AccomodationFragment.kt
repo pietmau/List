@@ -24,7 +24,7 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         accomodation.title = resources.getString(R.string.accomodation)
         accomodation.listener = this
-        accomodation.setItems(getItems())
+        //accomodation.setItems(getItems())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +32,7 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
         component.inject(this)
     }
 
-    override fun getItems() = listOf(
-        ButtonsStrip.Item(resources.getString(R.string.hotel)),
-        ButtonsStrip.Item(resources.getString(R.string.hostel)),
-        ButtonsStrip.Item(resources.getString(R.string.camping))
-    )
+    override fun getItems() = TODO()
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
         callback.onAccomodationSelected(mapper.map(item))

@@ -4,5 +4,5 @@ import com.pppp.travelchecklist.selector.model.PlannedActivity
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 
 class PlannedActivitiesMapper:Mapper<PlannedActivity> {
-    override fun map(item: ButtonsStrip.Item) = PlannedActivity(item.description)
+    override fun map(item: ButtonsStrip.Item) = PlannedActivity(item.title)
 }

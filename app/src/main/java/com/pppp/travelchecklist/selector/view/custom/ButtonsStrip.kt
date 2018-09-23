@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -19,7 +20,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var items = mutableListOf<Item>()
+    private var items = mutableListOf<Tag>()
     var callback: Callback? = null
 
     var title: String?
@@ -37,25 +38,25 @@ open class ButtonsStrip @JvmOverloads constructor(
         orientation = LinearLayout.VERTICAL
     }
 
-    fun setItems(items: List<Item>) {
+    fun setItems(items: List<Tag>) {
         this.items.clear()
         this.items.addAll(items)
         items.forEachWithIndex { index, item -> addItem(item, index) }
     }
 
-    private fun addItem(item: Item, index: Int) {
+    private fun addItem(item: Tag, index: Int) {
         val button = createButton(item)
         button.id = index
         button.tag = item
         box.addView(button)
     }
 
-    protected open fun createButton(item: Item) =
+    protected open fun createButton(item: Tag) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
-                text = item.description
-                textOff = item.description
-                textOn = item.description
+                text = item.title
+                textOff = item.title
+                textOn = item.title
                 setOnCheckedChangeListener { view, checked ->
                     OnCheckedChange(view, checked)
                 }
@@ -71,7 +72,7 @@ open class ButtonsStrip @JvmOverloads constructor(
         }
     }
 
-    data class Item(val description: String)
+    data class Item(val title: String, val id: String, val data: Any? = null)
 
     interface Callback {
         fun onItemSelected(item: Item)

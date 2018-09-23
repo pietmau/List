@@ -1,9 +1,10 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.arch.lifecycle.ViewModel
+import com.pppp.entities.CheckList
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.entities.CheckList
 import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.view.ISelectorView
 import com.pppp.travelchecklist.selector.view.SelectorCallback
@@ -71,8 +72,8 @@ class SelectorPresenter(
         selection.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: Traveller) {
-        selection.onWhoisTravellingSelected(traveller)
+    override fun onWhoisTravellingSelected(traveller: Tag?) {
+        //selection.onWhoisTravellingSelected(traveller)
     }
 
     override fun onWhoisTravellingDeSelected(traveller: Traveller) {

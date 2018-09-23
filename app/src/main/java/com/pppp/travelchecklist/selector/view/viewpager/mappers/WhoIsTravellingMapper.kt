@@ -8,10 +8,10 @@ import com.pppp.travelchecklist.utils.ResourcesWrapper
 class WhoIsTravellingMapper(private val wrapper: ResourcesWrapper) : Mapper<Traveller> {
 
     override fun map(item: ButtonsStrip.Item) = when {
-        item.description.equals(wrapper.getString(R.string.babies)) -> Traveller.BABIES
-        item.description.equals(wrapper.getString(R.string.male)) -> Traveller.MALE
-        item.description.equals(wrapper.getString(R.string.fermale)) -> Traveller.FERMALE
-        item.description.equals(wrapper.getString(R.string.kids_toddlers)) -> Traveller.KIDS_TODDLERS
+        item.title.equals(wrapper.getString(R.string.babies)) -> Traveller.BABIES
+        item.title.equals(wrapper.getString(R.string.male)) -> Traveller.MALE
+        item.title.equals(wrapper.getString(R.string.fermale)) -> Traveller.FERMALE
+        item.title.equals(wrapper.getString(R.string.kids_toddlers)) -> Traveller.KIDS_TODDLERS
         else -> throw UnsupportedOperationException()
     }
 }

@@ -24,7 +24,7 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.planned_activities)
         strip.callback = this
-        strip.setItems(getItems())
+        //strip.setItems(getItems())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,8 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         component.inject(this)
     }
 
-    override fun getItems() = listOf(
+    override fun getItems() = TODO()
+        /*listOf(
         ButtonsStrip.Item(resources.getString(R.string.backpacking)),
         ButtonsStrip.Item(resources.getString(R.string.fishing)),
         ButtonsStrip.Item(resources.getString(R.string.diving)),
@@ -41,7 +42,7 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         ButtonsStrip.Item(resources.getString(R.string.goingout)),
         ButtonsStrip.Item(resources.getString(R.string.hiking)),
         ButtonsStrip.Item(resources.getString(R.string.skiing))
-    )
+    )*/
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
         callback.onPlannedActivitySelected(mapper.map(item))

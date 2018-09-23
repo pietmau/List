@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.main.presenter
 
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.selector.model.*
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 
@@ -22,7 +23,7 @@ class MainPresenter : SelectorCallback {
 
     }
 
-    override fun onWhoisTravellingSelected(traveller: Traveller) {
+    override fun onWhoisTravellingSelected(traveller: Tag?) {
 
     }
 

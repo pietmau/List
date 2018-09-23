@@ -23,7 +23,7 @@ object TravelChecklistItemContract {
     object TravelChecklistItem : BaseColumns {
         const val TABLE_NAME = "check_list_item"
         const val COLUMN_NAME_TITLE = "title"
-        const val COLUMN_NAME_DESCRIPTION = "description"
+        const val COLUMN_NAME_DESCRIPTION = "title"
         const val COLUMN_NAME_PRIORITY = "priority"
         const val COLUMN_NAME_CHECKED = "checked"
         const val COLUMN_NAME_CARD_ID = "card_id"

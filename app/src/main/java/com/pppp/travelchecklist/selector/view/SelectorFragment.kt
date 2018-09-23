@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.MainActivity
@@ -53,7 +54,7 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
         presenter.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: Traveller) {
+    override fun onWhoisTravellingSelected(traveller: Tag?) {
         presenter.onWhoisTravellingSelected(traveller)
     }
 

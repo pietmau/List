@@ -9,10 +9,8 @@ import com.pppp.entities.TagsGroup
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import javax.inject.Inject
 
-class CloudFirestoreCheckListDatabase
-@Inject constructor(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
+class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
     CheckListDatabase {
 
     override fun getTags() = Single.create<List<Tag>> { emitter ->

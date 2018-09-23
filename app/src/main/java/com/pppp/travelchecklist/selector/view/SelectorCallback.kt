@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.selector.view
 
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.selector.model.*
 
 interface SelectorCallback {
@@ -16,7 +17,7 @@ interface SelectorCallback {
 
     fun onPlannedActivityDeselected(plannedActivity: PlannedActivity)
 
-    fun onWhoisTravellingSelected(traveller: Traveller)
+    fun onWhoisTravellingSelected(traveller: Tag?)
 
     fun onWhoisTravellingDeSelected(traveller: Traveller)
 

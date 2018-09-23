@@ -4,9 +4,12 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
+import com.pppp.database.CheckListDatabase
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModel
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModelImpl
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
@@ -37,7 +40,14 @@ class SelectorModule(private val activity: FragmentActivity) {
     fun provideWhoIsTravellingMapper(wrapper: ResourcesWrapper) = WhoIsTravellingMapper(wrapper)
 
     @Provides
-    fun provideFactory(
+    fun providesWhoIsTravellingModel(factory: WhoIsTravellingModelFactory): WhoIsTravellingModel =
+        ViewModelProviders.of(activity, factory).get(WhoIsTravellingModelImpl::class.java)
+
+    @Provides
+    fun provideWhoIsTravellingModelFactory(db: CheckListDatabase) = WhoIsTravellingModelFactory(db)
+
+    @Provides
+    fun provideSelectorPresenterFactory(
         wrapper: ResourcesWrapper,
         listGenerator: ListGenerator
     ) = SelectorPresenterFactory(wrapper, listGenerator)
@@ -45,8 +55,7 @@ class SelectorModule(private val activity: FragmentActivity) {
     class SelectorPresenterFactory(
         val resourcesWrapper: ResourcesWrapper,
         val listGenerator: ListGenerator
-    ) :
-        ViewModelProvider.Factory {
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             SelectorPresenter(
                 SelectionData(),
@@ -55,5 +64,10 @@ class SelectorModule(private val activity: FragmentActivity) {
                 AndroidSchedulers.mainThread(),
                 Schedulers.io()
             ) as T
+    }
+
+    class WhoIsTravellingModelFactory(val db: CheckListDatabase) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+            WhoIsTravellingModelImpl(db) as T
     }
 }

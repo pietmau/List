@@ -24,7 +24,7 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.long_or_short)
         strip.listener = this
-        strip.setItems(getItems())
+        //strip.setItems(getItems())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +32,7 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
         component.inject(this)
     }
 
-    override fun getItems() = listOf(
-        ButtonsStrip.Item(resources.getString(R.string.yes)),
-        ButtonsStrip.Item(resources.getString(R.string.no))
-    )
+    override fun getItems() = TODO()
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
         callback.onDurationSelected(mapper.map(item))

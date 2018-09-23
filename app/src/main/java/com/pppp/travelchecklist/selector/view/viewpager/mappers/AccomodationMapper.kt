@@ -6,5 +6,5 @@ import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 
 class AccomodationMapper : Mapper<Accomodation> {
 
-    override fun map(item: ButtonsStrip.Item) = Accomodation(item.description)
+    override fun map(item: ButtonsStrip.Item) = Accomodation(item.title)
 }

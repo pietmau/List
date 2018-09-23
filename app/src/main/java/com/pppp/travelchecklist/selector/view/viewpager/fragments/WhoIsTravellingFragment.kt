@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.WhoIsTravellingMapper
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.who_is_travelling.*
 import javax.inject.Inject
 
 class WhoIsTravellingFragment : ItemSelectorFragment() {
+    private val container = CompositeDisposable()
     @Inject
     lateinit var mapper: WhoIsTravellingMapper
+    @Inject
+    lateinit var model: WhoIsTravellingModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +29,6 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.who_is_travelling)
         strip.callback = this
-        strip.setItems(getItems())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,15 +36,27 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
         component.inject(this)
     }
 
-    override fun getItems() = listOf(
-        ButtonsStrip.Item(resources.getString(R.string.male)),
-        ButtonsStrip.Item(resources.getString(R.string.fermale)),
-        ButtonsStrip.Item(resources.getString(R.string.babies)),
-        ButtonsStrip.Item(resources.getString(R.string.kids_toddlers))
-    )
+    override fun onResume() {
+        super.onResume()
+        container.add(model.getWhoIsTravelling().subscribe({ setItems(it) }, {}))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        container.clear()
+    }
+
+    private fun setItems(group: List<Tag>) {
+        strip.setItems(group)
+    }
+
+    override fun getItems() = throw RuntimeException("Unused")
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
-        callback.onWhoisTravellingSelected(mapper.map(item))
+        val traveller = item.data as? Tag
+        traveller ?: return
+        model.onWhoisTravellingSelected(traveller)
+        callback.onWhoisTravellingSelected(traveller)
     }
 
     override fun onItemDeSelected(item: ButtonsStrip.Item) {

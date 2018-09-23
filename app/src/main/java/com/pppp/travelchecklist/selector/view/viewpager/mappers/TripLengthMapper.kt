@@ -10,11 +10,11 @@ class TripLengthMapper(private val resources: ResourcesWrapper) :
 
     override fun map(item: ButtonsStrip.Item) =
         when {
-            item.description.equals(
+            item.title.equals(
                 resources.getString(R.string.yes),
                 true
             ) -> Duration.LONG
-            item.description.equals(
+            item.title.equals(
                 resources.getString(R.string.no),
                 true
             ) -> Duration.SHORT

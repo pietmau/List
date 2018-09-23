@@ -18,7 +18,7 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.expected_weather)
         strip.listener = this
-        strip.setItems(getItems())
+        //strip.setItems(getItems())
     }
 
     override fun onCreateView(
@@ -32,10 +32,7 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
         component.inject(this)
     }
 
-    override fun getItems() = listOf(
-        ButtonsStrip.Item(resources.getString(R.string.hot)),
-        ButtonsStrip.Item(resources.getString(R.string.cold))
-    )
+    override fun getItems() = TODO()
 
     override fun onItemSelected(item: ButtonsStrip.Item) {
         callback.onWeatherSelected(mapper.map(item))

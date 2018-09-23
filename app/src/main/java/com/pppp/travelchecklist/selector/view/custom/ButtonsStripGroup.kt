@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ToggleButton
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 
@@ -18,12 +19,12 @@ class ButtonsStripGroup @JvmOverloads constructor(
 
     var listener: Listener? = null
 
-    override fun createButton(item: Item) =
+    override fun createButton(item: Tag) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
-                text = item.description
-                textOff = item.description
-                textOn = item.description
+                text = item.title
+                textOff = item.title
+                textOn = item.title
                 setOnCheckedChangeListener(this@ButtonsStripGroup)
             }
 

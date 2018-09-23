@@ -1,7 +1,10 @@
 package com.pppp.entities
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.Collections.emptyList
 
+@Parcelize
 data class CheckListItem(
     var title: String,
     var checked: Boolean = false,
@@ -10,7 +13,7 @@ data class CheckListItem(
     var category: Category,
     var tags: List<Tag>,
     var optional: Boolean = false
-) {
+) : Parcelable {
     constructor() : this("", false, 5, null, Category(), emptyList())
 
     lateinit var id: String

@@ -1,12 +1,5 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
-import com.pppp.entities.Tag
-import io.reactivex.Observable
+import com.pppp.database.CheckListDatabase
 
-interface WhoIsTravellingModel {
-
-    fun getWhoIsTravelling(): Observable<List<Tag>>
-
-    fun onWhoisTravellingSelected(traveller: Tag)
-
-}
+class WhoIsTravellingModel(db: CheckListDatabase, id: String) : TagSelectorModel(db, id)

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.WhoIsTravellingMapper
 import io.reactivex.disposables.CompositeDisposable
@@ -38,7 +37,7 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
 
     override fun onResume() {
         super.onResume()
-        container.add(model.getWhoIsTravelling().subscribe({ setItems(it) }, {}))
+        container.add(model.getTags().subscribe({ setItems(it) }, {}))
     }
 
     override fun onPause() {
@@ -46,21 +45,21 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
         container.clear()
     }
 
-    private fun setItems(group: List<Tag>) {
-        strip.setItems(group)
+    private fun setItems(group: List<Pair<Tag, Boolean>>) {
+        strip.setItems(group.map { it.first })
+        strip.setItemsSelected(group)
     }
 
     override fun getItems() = throw RuntimeException("Unused")
 
-    override fun onItemSelected(item: ButtonsStrip.Item) {
-        val traveller = item.data as? Tag
-        traveller ?: return
-        model.onWhoisTravellingSelected(traveller)
-        callback.onWhoisTravellingSelected(traveller)
+    override fun onItemSelected(item: Tag?) {
+        item ?: return
+        model.onTagSelected(item)
+        callback.onWhoisTravellingSelected(item)
     }
 
-    override fun onItemDeSelected(item: ButtonsStrip.Item) {
-        callback.onWhoisTravellingDeSelected(mapper.map(item))
+    override fun onItemDeSelected(item: Tag?) {
+        //callback.onWhoisTravellingDeSelected(mapper.map(item))
     }
 
     companion object {

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.PlannedActivitiesMapper
 import kotlinx.android.synthetic.main.planned_acctivites.*
@@ -44,12 +44,12 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         ButtonsStrip.Item(resources.getString(R.string.skiing))
     )*/
 
-    override fun onItemSelected(item: ButtonsStrip.Item) {
-        callback.onPlannedActivitySelected(mapper.map(item))
+    override fun onItemSelected(item: Tag?) {
+        //callback.onPlannedActivitySelected(mapper.map(item))
     }
 
-    override fun onItemDeSelected(item: ButtonsStrip.Item) {
-        callback.onPlannedActivityDeselected(mapper.map(item))
+    override fun onItemDeSelected(item: Tag?) {
+        //callback.onPlannedActivityDeselected(mapper.map(item))
     }
 
     companion object {

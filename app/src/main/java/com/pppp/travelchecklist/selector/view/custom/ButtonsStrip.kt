@@ -63,7 +63,7 @@ open class ButtonsStrip @JvmOverloads constructor(
             }
 
     private fun OnCheckedChange(view: CompoundButton?, checked: Boolean) {
-        val item = (view as ToggleButton)?.getTag() as? Item
+        val item = (view as ToggleButton).getTag() as? Tag
         item ?: return
         if (checked) {
             callback?.onItemSelected(item)
@@ -72,10 +72,20 @@ open class ButtonsStrip @JvmOverloads constructor(
         }
     }
 
+    fun setItemsSelected(tags: List<Pair<Tag, Boolean>>) {
+        val map = tags.toMap()
+        (0..box.childCount - 1)
+            .map { box.getChildAt(it) as CompoundButton }
+            .map {
+                val key = it.tag as? Tag
+                it.isChecked = map.get(key) ?: false
+            }
+    }
+
     data class Item(val title: String, val id: String, val data: Any? = null)
 
     interface Callback {
-        fun onItemSelected(item: Item)
-        fun onItemDeSelected(item: Item)
+        fun onItemSelected(item: Tag?)
+        fun onItemDeSelected(item: Tag?)
     }
 }

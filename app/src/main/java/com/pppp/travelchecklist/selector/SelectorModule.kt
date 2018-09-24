@@ -9,7 +9,6 @@ import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModel
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModelImpl
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
@@ -41,7 +40,7 @@ class SelectorModule(private val activity: FragmentActivity) {
 
     @Provides
     fun providesWhoIsTravellingModel(factory: WhoIsTravellingModelFactory): WhoIsTravellingModel =
-        ViewModelProviders.of(activity, factory).get(WhoIsTravellingModelImpl::class.java)
+        ViewModelProviders.of(activity, factory).get(WhoIsTravellingModel::class.java)
 
     @Provides
     fun provideWhoIsTravellingModelFactory(db: CheckListDatabase) = WhoIsTravellingModelFactory(db)
@@ -68,6 +67,6 @@ class SelectorModule(private val activity: FragmentActivity) {
 
     class WhoIsTravellingModelFactory(val db: CheckListDatabase) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            WhoIsTravellingModelImpl(db) as T
+            WhoIsTravellingModel(db, "who is travelling? ✈️") as T
     }
 }

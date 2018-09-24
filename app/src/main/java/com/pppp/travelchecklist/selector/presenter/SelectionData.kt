@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.os.Parcelable
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.selector.model.*
 import kotlinx.android.parcel.Parcelize
 
@@ -11,7 +12,7 @@ class SelectionData() : Parcelable {
     var weather: Weather? = null
     var duration: Duration? = null
     val plannedActivities = mutableListOf<PlannedActivity>()
-    val travellers = mutableListOf<Traveller>()
+    val travellers = mutableListOf<Tag>()
     var destination: Destination? = null
 
     fun onAccomodationSelected(accomodation: Accomodation) {
@@ -34,11 +35,11 @@ class SelectionData() : Parcelable {
         plannedActivities.remove(plannedActivity)
     }
 
-    fun onWhoisTravellingSelected(traveller: Traveller) {
+    fun onWhoisTravellingSelected(traveller: Tag) {
         travellers.add(traveller)
     }
 
-    fun onWhoisTravellingDeSelected(traveller: Traveller) {
+    fun onWhoisTravellingDeSelected(traveller: Tag?) {
         travellers.remove(traveller)
     }
 

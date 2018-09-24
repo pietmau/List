@@ -19,7 +19,7 @@ interface SelectorCallback {
 
     fun onWhoisTravellingSelected(traveller: Tag?)
 
-    fun onWhoisTravellingDeSelected(traveller: Traveller)
+    fun onWhoisTravellingDeSelected(traveller: Tag?)
 
     fun onDestinationSelected(destination: Destination)
 

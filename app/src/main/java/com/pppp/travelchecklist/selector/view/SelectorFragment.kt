@@ -58,7 +58,7 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
         presenter.onWhoisTravellingSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(traveller: Traveller) {
+    override fun onWhoisTravellingDeSelected(traveller: Tag?) {
         presenter.onWhoisTravellingDeSelected(traveller)
     }
 

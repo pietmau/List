@@ -76,8 +76,8 @@ class SelectorPresenter(
         //selection.onTagSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(traveller: Traveller) {
-        selection.onWhoisTravellingDeSelected(traveller)
+    override fun onWhoisTravellingDeSelected(tag: Tag?) {
+        selection.onWhoisTravellingDeSelected(tag)
     }
 
     override fun onDestinationSelected(destination: Destination) {

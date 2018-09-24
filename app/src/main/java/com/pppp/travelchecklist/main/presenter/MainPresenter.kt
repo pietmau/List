@@ -27,7 +27,7 @@ class MainPresenter : SelectorCallback {
 
     }
 
-    override fun onWhoisTravellingDeSelected(traveller: Traveller) {
+    override fun onWhoisTravellingDeSelected(traveller: Tag?) {
 
     }
 

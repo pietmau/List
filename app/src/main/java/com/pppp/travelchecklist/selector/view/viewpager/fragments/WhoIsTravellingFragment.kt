@@ -7,17 +7,10 @@ import android.view.ViewGroup
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
-import com.pppp.travelchecklist.selector.view.viewpager.mappers.WhoIsTravellingMapper
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.who_is_travelling.*
-import javax.inject.Inject
 
 class WhoIsTravellingFragment : ItemSelectorFragment() {
-    private val container = CompositeDisposable()
-    @Inject
-    lateinit var mapper: WhoIsTravellingMapper
-    @Inject
-    lateinit var model: WhoIsTravellingModel
+    override lateinit var model: TagSelectorModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,33 +26,24 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.inject(this)
+        model = component.whoIsTravellingModel()
     }
 
-    override fun onResume() {
-        super.onResume()
-        container.add(model.getTags().subscribe({ setItems(it) }, {}))
-    }
-
-    override fun onPause() {
-        super.onPause()
-        container.clear()
-    }
-
-    private fun setItems(group: List<Pair<Tag, Boolean>>) {
+    override fun setItems(group: List<Pair<Tag, Boolean>>) {
         strip.setItems(group.map { it.first })
         strip.setItemsSelected(group)
     }
 
-    override fun getItems() = throw RuntimeException("Unused")
-
-    override fun onItemSelected(item: Tag?) {
-        item ?: return
-        model.onTagSelected(item)
-        callback.onWhoisTravellingSelected(item)
+    override fun onItemSelected(tag: Tag?) {
+        tag ?: return
+        model.onTagSelected(tag)
+        callback.onWhoisTravellingSelected(tag)
     }
 
     override fun onItemDeSelected(item: Tag?) {
-        //callback.onWhoisTravellingDeSelected(mapper.map(item))
+        item ?: return
+        model.onTagDeSeleected(item)
+        callback.onWhoisTravellingDeSelected(item)
     }
 
     companion object {

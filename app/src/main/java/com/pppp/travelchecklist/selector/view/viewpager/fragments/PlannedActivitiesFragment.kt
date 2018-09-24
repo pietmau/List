@@ -10,8 +10,6 @@ import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.I
 import kotlinx.android.synthetic.main.planned_acctivites.*
 
 class PlannedActivitiesFragment : ItemSelectorFragment() {
-    override fun setItems(group: List<Pair<Tag, Boolean>>) {
-    }
 
     override lateinit var model: TagSelectorModel
 
@@ -24,22 +22,29 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = resources.getString(R.string.planned_activities)
         strip.callback = this
+    }
 
+    override fun setItems(group: List<Pair<Tag, Boolean>>) {
+        strip.setItems(group.map { it.first })
+        strip.setItemsSelected(group)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.inject(this)
-        model = component.whoIsTravellingModel()
+        model = component.plannedActivitesModel()
     }
 
     override fun onItemSelected(item: Tag?) {
-        //strip.setItems()
-        //callback.onPlannedActivitySelected(mapper.map(item))
+        item ?: return
+        model.onTagSelected(item)
+        callback.onPlannedActivitySelected(item)
     }
 
     override fun onItemDeSelected(item: Tag?) {
-        //callback.onPlannedActivityDeselected(mapper.map(item))
+        item ?: return
+        model.onTagDeSeleected(item)
+        callback.onPlannedActivityDeselected(item)
     }
 
     companion object {

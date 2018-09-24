@@ -13,9 +13,9 @@ interface SelectorCallback {
 
     fun onDurationSelected(duration: Duration)
 
-    fun onPlannedActivitySelected(plannedActivity: PlannedActivity)
+    fun onPlannedActivitySelected(plannedActivity: Tag?)
 
-    fun onPlannedActivityDeselected(plannedActivity: PlannedActivity)
+    fun onPlannedActivityDeselected(plannedActivity: Tag?)
 
     fun onWhoisTravellingSelected(traveller: Tag?)
 

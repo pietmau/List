@@ -8,6 +8,7 @@ import com.pppp.database.CheckListDatabase
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.PlannedActivitesModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModel
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
@@ -46,6 +47,13 @@ class SelectorModule(private val activity: FragmentActivity) {
     fun provideWhoIsTravellingModelFactory(db: CheckListDatabase) = WhoIsTravellingModelFactory(db)
 
     @Provides
+    fun providesPlannedActivitesModel(factory: PlannedActivitesModelFactory): PlannedActivitesModel =
+        ViewModelProviders.of(activity, factory).get(PlannedActivitesModel::class.java)
+
+    @Provides
+    fun providePlannedActivitesModelFactory(db: CheckListDatabase) = PlannedActivitesModelFactory(db)
+
+    @Provides
     fun provideSelectorPresenterFactory(
         wrapper: ResourcesWrapper,
         listGenerator: ListGenerator
@@ -66,7 +74,12 @@ class SelectorModule(private val activity: FragmentActivity) {
     }
 
     class WhoIsTravellingModelFactory(val db: CheckListDatabase) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        override fun <T : ViewModel?> create(modelClass: Class<T>) =
             WhoIsTravellingModel(db, "who is travelling? ✈️") as T
+    }
+
+    class PlannedActivitesModelFactory(val db: CheckListDatabase) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>) =
+            PlannedActivitesModel(db, "planned activities") as T
     }
 }

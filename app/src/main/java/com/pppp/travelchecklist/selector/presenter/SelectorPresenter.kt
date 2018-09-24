@@ -5,7 +5,10 @@ import com.pppp.entities.CheckList
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.travelchecklist.selector.model.*
+import com.pppp.travelchecklist.selector.model.Accomodation
+import com.pppp.travelchecklist.selector.model.Destination
+import com.pppp.travelchecklist.selector.model.Duration
+import com.pppp.travelchecklist.selector.model.Weather
 import com.pppp.travelchecklist.selector.view.ISelectorView
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.utils.ResourcesWrapper
@@ -64,11 +67,11 @@ class SelectorPresenter(
         selection.onDurationSelected(duration)
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: PlannedActivity) {
-        selection.onPlannedActivitySelected(plannedActivity)
+    override fun onPlannedActivitySelected(plannedActivity: Tag?) {
+        //selection.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: PlannedActivity) {
+    override fun onPlannedActivityDeselected(plannedActivity: Tag?) {
         selection.onPlannedActivityDeselected(plannedActivity)
     }
 

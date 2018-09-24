@@ -25,4 +25,6 @@ interface SelectorComponent {
     fun inject(whoIsTravellingFragment: WhoIsTravellingFragment)
 
     fun whoIsTravellingModel():WhoIsTravellingModel
+
+    fun plannedActivitesModel():PlannedActivitesModel
 }

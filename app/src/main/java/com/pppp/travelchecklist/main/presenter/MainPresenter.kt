@@ -15,11 +15,11 @@ class MainPresenter : SelectorCallback {
 
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: PlannedActivity) {
+    override fun onPlannedActivitySelected(plannedActivity: Tag?) {
 
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: PlannedActivity) {
+    override fun onPlannedActivityDeselected(plannedActivity: Tag?) {
 
     }
 

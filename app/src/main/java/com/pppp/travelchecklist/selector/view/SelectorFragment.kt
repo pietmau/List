@@ -46,11 +46,11 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
         selector.callaback = this
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: PlannedActivity) {
+    override fun onPlannedActivitySelected(plannedActivity: Tag?) {
         presenter.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: PlannedActivity) {
+    override fun onPlannedActivityDeselected(plannedActivity: Tag?) {
         presenter.onPlannedActivityDeselected(plannedActivity)
     }
 

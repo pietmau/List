@@ -1,12 +1,9 @@
 package com.pppp.travelchecklist.selector
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
 import com.pppp.database.CheckListDatabase
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.PlannedActivitesModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModel
@@ -14,8 +11,6 @@ import com.pppp.travelchecklist.selector.view.viewpager.mappers.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
 import dagger.Provides
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 @Module
 class SelectorModule(private val activity: FragmentActivity) {
@@ -44,42 +39,26 @@ class SelectorModule(private val activity: FragmentActivity) {
         ViewModelProviders.of(activity, factory).get(WhoIsTravellingModel::class.java)
 
     @Provides
-    fun provideWhoIsTravellingModelFactory(db: CheckListDatabase) = WhoIsTravellingModelFactory(db)
+    fun provideWhoIsTravellingModelFactory(db: CheckListDatabase) =
+        WhoIsTravellingModelFactory(db)
 
     @Provides
     fun providesPlannedActivitesModel(factory: PlannedActivitesModelFactory): PlannedActivitesModel =
         ViewModelProviders.of(activity, factory).get(PlannedActivitesModel::class.java)
 
     @Provides
-    fun providePlannedActivitesModelFactory(db: CheckListDatabase) = PlannedActivitesModelFactory(db)
+    fun providePlannedActivitesModelFactory(db: CheckListDatabase) =
+        PlannedActivitesModelFactory(db)
 
     @Provides
-    fun provideSelectorPresenterFactory(
-        wrapper: ResourcesWrapper,
-        listGenerator: ListGenerator
-    ) = SelectorPresenterFactory(wrapper, listGenerator)
+    fun provideSelectorPresenterFactory(wrapper: ResourcesWrapper, listGenerator: ListGenerator) =
+        SelectorPresenterFactory(wrapper, listGenerator)
 
-    class SelectorPresenterFactory(
-        val resourcesWrapper: ResourcesWrapper,
-        val listGenerator: ListGenerator
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            SelectorPresenter(
-                SelectionData(),
-                resourcesWrapper,
-                listGenerator,
-                AndroidSchedulers.mainThread(),
-                Schedulers.io()
-            ) as T
-    }
+    @Provides
+    fun providesExpectedWeatherModel(factory: PlannedActivitesModelFactory): PlannedActivitesModel =
+        ViewModelProviders.of(activity, factory).get(PlannedActivitesModel::class.java)
 
-    class WhoIsTravellingModelFactory(val db: CheckListDatabase) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>) =
-            WhoIsTravellingModel(db, "who is travelling? ✈️") as T
-    }
+    @Provides
+    fun provideExpectedWeatherModelFactory(db: CheckListDatabase) = ExpectedWeatherModelFactory(db)
 
-    class PlannedActivitesModelFactory(val db: CheckListDatabase) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>) =
-            PlannedActivitesModel(db, "planned activities") as T
-    }
 }

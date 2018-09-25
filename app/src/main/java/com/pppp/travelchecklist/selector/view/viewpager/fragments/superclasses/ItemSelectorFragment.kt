@@ -16,12 +16,9 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
     protected val container = CompositeDisposable()
-
     abstract protected var model: TagSelectorModel
-
     protected val callback
         get() = (requireActivity() as MainView).selectionCallback
-
     protected lateinit var component: SelectorComponent
 
     override abstract fun onViewCreated(view: View, savedInstanceState: Bundle?)

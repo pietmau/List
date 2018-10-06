@@ -30,10 +30,6 @@ class DestinationFragment : Fragment() {
     @BindView(R.id.nice_spinner)
     lateinit var spinner: BetterSpinner
 
-    companion object {
-        fun newInstance() = DestinationFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

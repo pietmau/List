@@ -7,7 +7,6 @@ import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.B
 
 
 class AccomodationFragment : ButtonsStripGroupListenerFragment() {
-    override fun getLayout() = R.layout.accomodation
 
     override fun getTitle() = resources.getString(R.string.accomodation)
 
@@ -19,9 +18,5 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
     override fun onItemSelected(tag: Tag) {
         super.onItemSelected(tag)
         callback.onAccomodationSelected(tag)
-    }
-
-    companion object {
-        fun newInstance() = AccomodationFragment()
     }
 }

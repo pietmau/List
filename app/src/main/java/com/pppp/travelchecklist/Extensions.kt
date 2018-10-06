@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String): T? {
     val fragment = supportFragmentManager.findFragmentByTag(tag)
@@ -31,4 +33,8 @@ fun View.getChildren(): List<View> {
         return emptyList()
     }
     return (0..this.childCount).map { this.getChildAt(it) }.filterNotNull()
+}
+
+operator fun CompositeDisposable.plusAssign(disposable: Disposable) {
+    add(disposable)
 }

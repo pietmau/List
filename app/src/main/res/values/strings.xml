@@ -43,4 +43,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="must_make_selection">Please select at least one criteria</string>
+
+    <string name="something_went_wrong">Oops, sorry, something went wrong... working on it!</string>
+
 </resources>

@@ -10,12 +10,12 @@ class SelectionViewPagerAdapter(fragmentManager: FragmentManager) :
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> WhoIsTravellingFragment.newInstance()
-            1 -> DestinationFragment.newInstance()
-            2 -> ExpectedWeatherFragment.newInstance()
-            3 -> AccomodationFragment.newInstance()
-            4 -> PlannedActivitiesFragment.newInstance()
-            5 -> LongOrShortTripFragment.newInstance()
+            0 -> WhoIsTravellingFragment()
+            1 -> DestinationFragment()
+            2 -> ExpectedWeatherFragment()
+            3 -> AccomodationFragment()
+            4 -> PlannedActivitiesFragment()
+            5 -> LongOrShortTripFragment()
             else -> throw UnsupportedOperationException("Invalid position")
         }
 

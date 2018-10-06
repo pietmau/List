@@ -6,7 +6,6 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
 class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
-    override fun getLayout() = R.layout.long_or_short
 
     override fun getTitle() = resources.getString(R.string.long_or_short)
 
@@ -20,7 +19,4 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
         callback.onDurationSelected(item)
     }
 
-    companion object {
-        fun newInstance() = LongOrShortTripFragment()
-    }
 }

@@ -1,28 +1,16 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
-import kotlinx.android.synthetic.main.who_is_travelling.*
+import kotlinx.android.synthetic.main.item_selector_fragment.*
 
 class WhoIsTravellingFragment : ItemSelectorFragment() {
     override lateinit var model: TagSelectorModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.who_is_travelling, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        strip.title = resources.getString(R.string.who_is_travelling)
-        strip.callback = this
-    }
+    override fun getTitle() = resources.getString(R.string.who_is_travelling)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +19,7 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
     }
 
     override fun setItems(group: List<Pair<Tag, Boolean>>) {
+        showProgress(false)
         strip.setItems(group.map { it.first })
         strip.setItemsSelected(group)
     }
@@ -43,9 +32,5 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
     override fun onItemDeSelected(item: Tag) {
         super.onItemDeSelected(item)
         callback.onWhoisTravellingDeSelected(item)
-    }
-
-    companion object {
-        fun newInstance() = WhoIsTravellingFragment()
     }
 }

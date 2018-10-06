@@ -8,8 +8,6 @@ import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.B
 class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
     override fun getTitle() = resources.getString(R.string.expected_weather)
 
-    override fun getLayout() = R.layout.expected_weather
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = component.expectedWeatherModel()
@@ -18,9 +16,5 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
     override fun onItemSelected(item: Tag) {
         super.onItemSelected(item)
         callback.onWeatherSelected(item)
-    }
-
-    companion object {
-        fun newInstance() = ExpectedWeatherFragment()
     }
 }

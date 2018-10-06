@@ -12,7 +12,6 @@ import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex
 
-
 open class ButtonsStrip @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -81,8 +80,6 @@ open class ButtonsStrip @JvmOverloads constructor(
                 it.isChecked = map.get(key) ?: false
             }
     }
-
-    data class Item(val title: String, val id: String, val data: Any? = null)
 
     interface Callback {
         fun onItemSelected(item: Tag)

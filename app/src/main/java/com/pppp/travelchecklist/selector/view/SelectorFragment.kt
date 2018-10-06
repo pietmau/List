@@ -10,7 +10,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.MainActivity
 import com.pppp.travelchecklist.selector.SelectorModule
-import com.pppp.travelchecklist.selector.model.*
+import com.pppp.travelchecklist.selector.model.Destination
 import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import kotlinx.android.synthetic.main.selector_fragment.*
@@ -46,31 +46,31 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
         selector.callaback = this
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: Tag?) {
+    override fun onPlannedActivitySelected(plannedActivity: Tag) {
         presenter.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: Tag?) {
+    override fun onPlannedActivityDeselected(plannedActivity: Tag) {
         presenter.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: Tag?) {
+    override fun onWhoisTravellingSelected(traveller: Tag) {
         presenter.onWhoisTravellingSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(traveller: Tag?) {
+    override fun onWhoisTravellingDeSelected(traveller: Tag) {
         presenter.onWhoisTravellingDeSelected(traveller)
     }
 
-    override fun onDurationSelected(duration: Duration) {
+    override fun onDurationSelected(duration: Tag) {
         presenter.onDurationSelected(duration)
     }
 
-    override fun onAccomodationSelected(accomodation: Accomodation) {
+    override fun onAccomodationSelected(accomodation: Tag) {
         presenter.onAccomodationSelected(accomodation)
     }
 
-    override fun onWeatherSelected(weather: Weather) {
+    override fun onWeatherSelected(weather: Tag) {
         presenter.onWeatherSelected(weather)
     }
 

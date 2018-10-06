@@ -32,7 +32,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         deselectAll()
         buttonView?.isChecked = isChecked
-        val item = buttonView?.tag as? Item
+        val item = buttonView?.tag as? Tag
         item ?: return
         if (isChecked) {
             listener?.onItemSelected(item)
@@ -52,7 +52,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     }
 
     interface Listener {
-        fun onItemSelected(item: Item)
-        fun onItemDeselected(item: Item)
+        fun onItemSelected(item: Tag)
+        fun onItemDeselected(item: Tag)
     }
 }

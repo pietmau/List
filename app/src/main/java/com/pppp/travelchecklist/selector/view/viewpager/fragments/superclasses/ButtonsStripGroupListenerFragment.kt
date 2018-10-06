@@ -60,11 +60,13 @@ abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStrip
         strip.setItemsSelected(group)
     }
 
-    abstract fun getItems(): List<ButtonsStrip.Item>
+    override fun onItemSelected(item: Tag) {
+        model.onTagSelected(item)
+    }
 
-    override fun onItemSelected(item: ButtonsStrip.Item) {}
-
-    override fun onItemDeselected(item: ButtonsStrip.Item) {}
+    override fun onItemDeselected(item: Tag) {
+        model.onTagDeSeleected(item)
+    }
 
     abstract fun getLayout(): Int
 

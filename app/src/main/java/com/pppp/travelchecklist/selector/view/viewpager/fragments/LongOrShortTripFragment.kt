@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
 class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
@@ -15,10 +15,9 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
         model = component.longOrShortTripModel()
     }
 
-    override fun getItems() = TODO()
-
-    override fun onItemSelected(item: ButtonsStrip.Item) {
-        //callback.onDurationSelected(mapper.map(item))
+    override fun onItemSelected(item: Tag) {
+        super.onItemSelected(item)
+        callback.onDurationSelected(item)
     }
 
     companion object {

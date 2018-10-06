@@ -47,9 +47,12 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
 
     abstract fun setItems(group: List<Pair<Tag, Boolean>>)
 
-    override abstract fun onItemSelected(item: Tag?)
+    override fun onItemSelected(item: Tag) {
+        model.onTagSelected(item)
+    }
 
-    override fun onItemDeSelected(item: Tag?) {/*NoOp*/
+    override fun onItemDeSelected(item: Tag) {
+        model.onTagDeSeleected(item)
     }
 
 

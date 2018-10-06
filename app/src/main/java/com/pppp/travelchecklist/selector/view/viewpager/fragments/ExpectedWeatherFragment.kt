@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
 class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
@@ -10,15 +10,14 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
 
     override fun getLayout() = R.layout.expected_weather
 
-    override fun getItems() = TODO("remove")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = component.expectedWeatherModel()
     }
 
-    override fun onItemSelected(item: ButtonsStrip.Item) {
-        //callback.onWeatherSelected(mapper.map(item))
+    override fun onItemSelected(item: Tag) {
+        super.onItemSelected(item)
+        callback.onWeatherSelected(item)
     }
 
     companion object {

@@ -37,15 +37,13 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         model = component.plannedActivitesModel()
     }
 
-    override fun onItemSelected(item: Tag?) {
-        item ?: return
-        model.onTagSelected(item)
+    override fun onItemSelected(item: Tag) {
+        super.onItemSelected(item)
         callback.onPlannedActivitySelected(item)
     }
 
-    override fun onItemDeSelected(item: Tag?) {
-        item ?: return
-        model.onTagDeSeleected(item)
+    override fun onItemDeSelected(item: Tag) {
+        super.onItemDeSelected(item)
         callback.onPlannedActivityDeselected(item)
     }
 

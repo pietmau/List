@@ -5,10 +5,7 @@ import com.pppp.entities.CheckList
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.travelchecklist.selector.model.Accomodation
 import com.pppp.travelchecklist.selector.model.Destination
-import com.pppp.travelchecklist.selector.model.Duration
-import com.pppp.travelchecklist.selector.model.Weather
 import com.pppp.travelchecklist.selector.view.ISelectorView
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.utils.ResourcesWrapper
@@ -55,31 +52,31 @@ class SelectorPresenter(
         subscription.dispose()
     }
 
-    override fun onAccomodationSelected(accomodation: Accomodation) {
+    override fun onAccomodationSelected(accomodation: Tag) {
         selection.onAccomodationSelected(accomodation)
     }
 
-    override fun onWeatherSelected(weather: Weather) {
+    override fun onWeatherSelected(weather: Tag) {
         selection.onWeatherSelected(weather)
     }
 
-    override fun onDurationSelected(duration: Duration) {
+    override fun onDurationSelected(duration: Tag) {
         selection.onDurationSelected(duration)
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: Tag?) {
-        //selection.onPlannedActivitySelected(plannedActivity)
+    override fun onPlannedActivitySelected(plannedActivity: Tag) {
+        selection.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: Tag?) {
+    override fun onPlannedActivityDeselected(plannedActivity: Tag) {
         selection.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: Tag?) {
-        //selection.onTagSelected(traveller)
+    override fun onWhoisTravellingSelected(traveller: Tag) {
+        selection.onWhoisTravellingSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(tag: Tag?) {
+    override fun onWhoisTravellingDeSelected(tag: Tag) {
         selection.onWhoisTravellingDeSelected(tag)
     }
 

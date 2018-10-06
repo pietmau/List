@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
+import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
 
@@ -16,10 +16,9 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
         model = component.accomodationModel()
     }
 
-    override fun getItems() = TODO()
-
-    override fun onItemSelected(item: ButtonsStrip.Item) {
-        //callback.onAccomodationSelected(mapper.map(item))
+    override fun onItemSelected(tag: Tag) {
+        super.onItemSelected(tag)
+        callback.onAccomodationSelected(tag)
     }
 
     companion object {

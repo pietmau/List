@@ -10,7 +10,6 @@ abstract class TagSelectorModel(private val db: CheckListDatabase, private val i
 
     private val tags: MutableMap<Tag, Boolean> = mutableMapOf()
 
-
     fun getTags(): Observable<List<Pair<Tag, Boolean>>> {
         if (!tags.isEmpty()) {
             return Observable.fromIterable(tags.entries.toList())

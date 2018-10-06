@@ -85,7 +85,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     data class Item(val title: String, val id: String, val data: Any? = null)
 
     interface Callback {
-        fun onItemSelected(item: Tag?)
-        fun onItemDeSelected(item: Tag?)
+        fun onItemSelected(item: Tag)
+        fun onItemDeSelected(item: Tag)
     }
 }

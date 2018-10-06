@@ -12,7 +12,7 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        component.inject(this)
+        model = component.longOrShortTripModel()
     }
 
     override fun getItems() = TODO()

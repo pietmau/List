@@ -9,5 +9,5 @@ data class TagsGroup(
 
     constructor() : this("", null, emptyList())
 
-    lateinit var id: String
+    val key: String = title.toKey()
 }

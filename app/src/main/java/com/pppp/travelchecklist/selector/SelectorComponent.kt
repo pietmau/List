@@ -29,4 +29,9 @@ interface SelectorComponent {
     fun plannedActivitesModel(): PlannedActivitesModel
 
     fun expectedWeatherModel(): ExpectedWeatherModel
+
+    fun accomodationModel(): AccomodationModel
+
+    fun longOrShortTripModel(): LongOrShortTripModel
+
 }

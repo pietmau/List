@@ -6,7 +6,6 @@ import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
 class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
-
     override fun getTitle() = resources.getString(R.string.expected_weather)
 
     override fun getLayout() = R.layout.expected_weather

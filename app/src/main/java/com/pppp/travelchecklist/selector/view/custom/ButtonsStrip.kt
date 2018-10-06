@@ -1,13 +1,13 @@
 package com.pppp.travelchecklist.selector.view.custom
 
 import android.content.Context
+import com.pppp.entities.Tag
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
-import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex

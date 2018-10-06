@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity
 import com.pppp.database.CheckListDatabase
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.ExpectedWeatherModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.PlannedActivitesModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.WhoIsTravellingModel
 import com.pppp.travelchecklist.selector.view.viewpager.mappers.*
@@ -55,8 +56,8 @@ class SelectorModule(private val activity: FragmentActivity) {
         SelectorPresenterFactory(wrapper, listGenerator)
 
     @Provides
-    fun providesExpectedWeatherModel(factory: PlannedActivitesModelFactory): PlannedActivitesModel =
-        ViewModelProviders.of(activity, factory).get(PlannedActivitesModel::class.java)
+    fun providesExpectedWeatherModel(factory: PlannedActivitesModelFactory): ExpectedWeatherModel =
+        ViewModelProviders.of(activity, factory).get(ExpectedWeatherModel::class.java)
 
     @Provides
     fun provideExpectedWeatherModelFactory(db: CheckListDatabase) = ExpectedWeatherModelFactory(db)

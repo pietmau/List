@@ -16,6 +16,6 @@ data class CheckListItem(
 ) : Parcelable {
     constructor() : this("", false, 5, null, Category(), emptyList())
 
-    lateinit var id: String
+    var key: String? = null
 }
 

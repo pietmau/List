@@ -75,7 +75,8 @@ open class AddItemActivity : AppCompatActivity() {
             tagSelected.toList(),
             optional
         )
-        db.saveItem(item, item.id).subscribe({}, {})
+        throw RuntimeException("PLase have a look")
+        //db.saveItem(item, item.key).subscribe({}, {})
         clearAll()
     }
 

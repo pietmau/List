@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import kotlinx.android.synthetic.main.who_is_travelling.*
 

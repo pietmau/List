@@ -11,7 +11,7 @@ import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.selector.SelectorComponent
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.TagSelectorModel
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {

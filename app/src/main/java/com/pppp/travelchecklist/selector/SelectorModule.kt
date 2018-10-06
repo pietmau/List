@@ -6,7 +6,7 @@ import com.pppp.database.CheckListDatabase
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenterFactory
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.*
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
 import dagger.Provides

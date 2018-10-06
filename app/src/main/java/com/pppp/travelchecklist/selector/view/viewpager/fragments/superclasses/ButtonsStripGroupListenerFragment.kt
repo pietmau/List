@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.selector.SelectorComponent
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.TagSelectorModel
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
 import io.reactivex.disposables.CompositeDisposable
 
 abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup.Listener {

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager.fragments
+package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

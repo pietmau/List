@@ -7,6 +7,7 @@ import android.widget.CompoundButton
 import android.widget.ToggleButton
 import com.pppp.entities.Tag
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.getChildren
 import kotlinx.android.synthetic.main.button_strip.view.*
 
 class ButtonsStripGroup @JvmOverloads constructor(
@@ -41,9 +42,10 @@ class ButtonsStripGroup @JvmOverloads constructor(
     }
 
     private fun deselectAll() {
-        for (i in 0 .. childCount) {
-            (box.getChildAt(i) as? ToggleButton)?.isChecked = false
-        }
+        box.getChildren()
+            .map { it as? ToggleButton }
+            .filterNotNull()
+            .onEach { it.isChecked = false }
     }
 
     override fun onClick(v: View?) {/*NoOp*/

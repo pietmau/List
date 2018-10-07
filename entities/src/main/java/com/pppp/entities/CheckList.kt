@@ -1,9 +1,9 @@
 package com.pppp.entities
 
+import android.os.Parcelable
 
-data class CheckList(
-    val title: String,
+interface CheckList : Parcelable {
+    val title: String
     val categories: List<Category>
-) {
-    lateinit var id: String
+    var id: String?
 }

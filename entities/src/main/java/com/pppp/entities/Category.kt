@@ -12,5 +12,5 @@ data class Category(
 ) : Parcelable {
     constructor() : this("", null, emptyList())
 
-    lateinit var id: String
+    lateinit var key: String
 }

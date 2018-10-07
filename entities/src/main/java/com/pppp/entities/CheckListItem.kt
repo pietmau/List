@@ -16,6 +16,6 @@ data class CheckListItem(
 ) : Parcelable {
     constructor() : this("", false, 5, null, Category(), emptyList())
 
-    var key: String? = null
+    var key: String = hashCode().toString()
 }
 

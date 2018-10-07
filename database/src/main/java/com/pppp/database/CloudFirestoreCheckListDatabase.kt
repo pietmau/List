@@ -102,10 +102,12 @@ class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirest
 
     override fun saveItem(item: CheckListItem, key: String) =
         Completable.create { emitter ->
-            getItemsReference().document(item.title).set(item).addOnSuccessListener {
+            getItemsReference().document(key).set(item).addOnSuccessListener {
                 emitter.onComplete()
             }.addOnFailureListener { error ->
                 emitter.onError(error)
+            }.addOnCompleteListener {
+
             }
         }
 

@@ -157,7 +157,7 @@ class CloudFirestoreCheckListDatabase constructor(
 
     private fun onTagsAvailable(querySnapshot: QuerySnapshot) = mapper.tags(querySnapshot)
 
-    private fun onGroupsAvailable(querySnapshot: QuerySnapshot?) = mapper.groups(querySnapshot)
+    private fun onGroupsAvailable(querySnapshot: QuerySnapshot) = mapper.groups(querySnapshot)
 
 
 }

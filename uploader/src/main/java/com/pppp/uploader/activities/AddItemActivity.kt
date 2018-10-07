@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
+import com.pppp.database.pokos.CheckListItemImpl
 import com.pppp.entities.Category
 import com.pppp.entities.CheckListItem
 import com.pppp.entities.Tag
@@ -66,7 +67,7 @@ open class AddItemActivity : AppCompatActivity() {
             return
         }
         val optional = check.isChecked
-        val item = CheckListItem(
+        val item = CheckListItemImpl(
             title,
             false,
             priorityTxt,
@@ -75,7 +76,7 @@ open class AddItemActivity : AppCompatActivity() {
             tagSelected.toList(),
             optional
         )
-        db.saveItem(item, item.key).subscribe({}, {})
+        db.saveItem(item, item.hashCode().toString()).subscribe({}, {})
         clearAll()
     }
 

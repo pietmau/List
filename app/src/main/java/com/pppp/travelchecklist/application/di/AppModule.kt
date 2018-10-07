@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.application.di
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.database.CheckListDatabase
-import com.pppp.database.CloudFirestoreCheckListDatabase
+import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.database.DestinationPresenterImpl
 import com.pppp.travelchecklist.listgenerator.ListGenerator
@@ -34,6 +34,7 @@ class AppModule(private val context: Context) {
     fun provideListGenarator(): ListGenerator = ListGeneratorImpl()
 
     @Provides
-    fun provideDb(): CheckListDatabase = CloudFirestoreCheckListDatabase()
+    fun provideDb(): CheckListDatabase =
+        CloudFirestoreCheckListDatabase()
 
 }

@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.pppp.database.CloudFirestoreCheckListDatabase
+import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
 import com.pppp.entities.Category
 import com.pppp.entities.Tag
 import com.pppp.entities.TagsGroup

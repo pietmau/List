@@ -7,5 +7,5 @@ interface TagsGroup : Parcelable {
     var description: String?
     var tags: List<Tag>
     var exclusive: Boolean
-    val id: String?
+    var id: String?
 }

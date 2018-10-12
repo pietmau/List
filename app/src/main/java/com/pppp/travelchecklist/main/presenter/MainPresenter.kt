@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.selector.model.Destination
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 

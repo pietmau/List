@@ -1,9 +1,9 @@
 package com.pppp.travelchecklist.main.presenter
 
+import com.pppp.entities.pokos.CheckList
+import com.pppp.entities.pokos.CheckListItem
 import com.pppp.travelchecklist.main.model.OldModel
 import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.entities.CheckList
-import com.pppp.entities.CheckListItem
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable

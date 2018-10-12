@@ -10,9 +10,9 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
-import com.pppp.database.pokos.TagsGroupImpl
-import com.pppp.entities.Category
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagsGroup
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
@@ -46,7 +46,7 @@ open class AddGroupActivity : AppCompatActivity() {
             return
         }
         val exclusive = check.isChecked
-        val item = TagsGroupImpl(title, descriptionTxt, tagSelected.toList(), exclusive)
+        val item = TagsGroup(title, descriptionTxt, tagSelected.toList(), exclusive)
 
         db.saveTagGroup(item, item.hashCode().toString()).subscribe({}, {})
         clearAll()

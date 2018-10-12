@@ -3,9 +3,9 @@ package com.pppp.travelchecklist.model.dao
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
-import com.pppp.entities.Category
-import com.pppp.entities.CheckList
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckList
+import com.pppp.entities.pokos.CheckListItem
 import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
 
 class ListDaoSqlite(
@@ -19,7 +19,7 @@ class ListDaoSqlite(
         val emptyChecklist = deserializer.getEmptyCheckList(listsCursor)
         var result: CheckList = CheckList("", emptyList())
         if (emptyChecklist != null) {
-            result = CheckList(emptyChecklist.title, getCards(emptyChecklist.id))
+            result = CheckList(emptyChecklist.title, getCards(emptyChecklist.id!!))
             result.id = emptyChecklist.id
         }
         return result
@@ -29,7 +29,7 @@ class ListDaoSqlite(
         var result = mutableListOf<CheckList>()
         val emptyChecklists: List<CheckList> = getEmptyChecklists()
         for (checkList in emptyChecklists) {
-            val element = CheckList(checkList.title, getCards(checkList.id))
+            val element = CheckList(checkList.title, getCards(checkList.id!!))
             element.id = checkList.id
             result.add(element)
         }
@@ -46,7 +46,7 @@ class ListDaoSqlite(
         val emptyCategories: List<Category> =
             deserializer.getEmptyCards(db.rawQuery(queryMaker.getCardsQuery(listId), emptyArray()))
         for (emptycard in emptyCategories) {
-            val element = Category(emptycard.title, null, getItems(emptycard.id))
+            val element = Category(emptycard.title, null, getItems(emptycard.id!!))
             element.id = emptycard.id
             result.add(element)
         }

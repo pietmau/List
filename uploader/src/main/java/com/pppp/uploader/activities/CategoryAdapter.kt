@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.pppp.entities.Category
+import com.pppp.entities.pokos.Category
 import com.pppp.uploader.R
 
 class CategoryAdapter(var items: List<Category>, private val listener: (Category) -> Unit) :

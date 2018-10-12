@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.carditem.CardItem
 import kotlinx.android.synthetic.main.custom_check_list_card.view.*

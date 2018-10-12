@@ -2,10 +2,10 @@ package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
 
 import android.arch.lifecycle.ViewModel
 import com.pppp.database.CheckListDatabase
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import io.reactivex.Observable
 
-abstract class TagSelectorModel(private val db: CheckListDatabase, private val id: String) :
+abstract class TagSelectorModel(private val db: CheckListDatabase, private val title: String) :
     ViewModel() {
 
     private val tags: MutableMap<Tag, Boolean> = mutableMapOf()
@@ -22,7 +22,7 @@ abstract class TagSelectorModel(private val db: CheckListDatabase, private val i
             return db.getTagGroups()
                 .toObservable()
                 .flatMap { Observable.fromIterable(it) }
-                .filter { it.title.equals(id, true) }
+                .filter { it.title.equals(title, true) }
                 .flatMap { Observable.fromIterable(it.tags) }
                 .sorted { o1, o2 -> o1.title.compareTo(o2.title) }
                 .doOnNext { tags.put(it, false) }

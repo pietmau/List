@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ToggleButton
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.getChildren
 import kotlinx.android.synthetic.main.button_strip.view.*

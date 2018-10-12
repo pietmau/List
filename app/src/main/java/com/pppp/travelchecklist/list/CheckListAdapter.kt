@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.entities.Category
-import com.pppp.entities.CheckListItem
 
 
 class CheckListAdapter(

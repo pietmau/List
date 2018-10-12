@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.os.Parcelable
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.selector.model.Destination
 import kotlinx.android.parcel.Parcelize
 

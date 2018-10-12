@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.MainActivity
@@ -16,9 +16,11 @@ import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
-class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
+class SelectorFragment() : Fragment(), SelectorCallback, ISelectorView {
     @Inject
     lateinit var presenter: SelectorPresenter
+    private val mainActivity
+        get() = (activity as? MainActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,12 +80,12 @@ class SelectorFragment : Fragment(), SelectorCallback, ISelectorView {
         presenter.onFinishClicked()
     }
 
-    override fun onError(string: String?) {
-
+    override fun onError(string: String) {
+        mainActivity?.onError(string)
     }
 
     override fun generateAndViewList(selection: SelectionData) {
-        (activity as? MainActivity)?.navigateToNewList(selection)
+        mainActivity?.navigateToNewList(selection)
     }
 
     override fun onDestinationSelected(destination: Destination) {

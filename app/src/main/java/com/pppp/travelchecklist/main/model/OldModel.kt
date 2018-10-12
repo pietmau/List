@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.main.model
 
-import com.pppp.entities.CheckList
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.CheckList
+import com.pppp.entities.pokos.CheckListItem
 import io.reactivex.Observable
 import io.reactivex.Single
 

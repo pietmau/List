@@ -1,6 +1,6 @@
 package com.pppp.database
 
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.CheckListItem
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

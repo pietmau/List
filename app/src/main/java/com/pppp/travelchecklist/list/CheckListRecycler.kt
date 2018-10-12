@@ -6,9 +6,9 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import com.pppp.entities.pokos.Category
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
-import com.pppp.entities.Category
 
 
 class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(context, attrs) {

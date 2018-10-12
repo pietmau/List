@@ -3,10 +3,10 @@ package com.pppp.database.implementation
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.pppp.database.CheckListDatabase
-import com.pppp.entities.Category
-import com.pppp.entities.CheckListItem
-import com.pppp.entities.Tag
-import com.pppp.entities.TagsGroup
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagsGroup
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

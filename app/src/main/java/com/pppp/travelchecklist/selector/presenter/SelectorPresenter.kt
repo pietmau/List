@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.arch.lifecycle.ViewModel
-import com.pppp.entities.CheckList
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.CheckList
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.model.Destination

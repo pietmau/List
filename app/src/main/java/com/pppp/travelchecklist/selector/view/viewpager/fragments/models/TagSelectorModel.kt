@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
 
 import android.arch.lifecycle.ViewModel
 import com.pppp.database.CheckListDatabase
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import io.reactivex.Observable
 
 abstract class TagSelectorModel(private val db: CheckListDatabase, private val id: String) :

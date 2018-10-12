@@ -3,7 +3,7 @@ package com.pppp.uploader.activities
 import android.content.Context
 import android.content.Intent
 import android.widget.TextView
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.CheckListItem
 import kotlinx.android.synthetic.main.add_items.*
 
 class EditItemActivity : AddItemActivity() {
@@ -15,7 +15,7 @@ class EditItemActivity : AddItemActivity() {
         description.setText(item.description, TextView.BufferType.EDITABLE)
         check.isChecked = item.optional
         categoriesSelected.clear()
-        categoriesSelected.add(item.category)
+        categoriesSelected.add(item.category!!)
         tagSelected.addAll(item.tags)
         renderTags()
         rendercategories()

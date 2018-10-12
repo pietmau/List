@@ -2,9 +2,9 @@ package com.pppp.travelchecklist.model.dao
 
 import android.database.Cursor
 import android.provider.BaseColumns
-import com.pppp.entities.Category
-import com.pppp.entities.CheckList
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckList
+import com.pppp.entities.pokos.CheckListItem
 
 import com.pppp.travelchecklist.model.database.CardContract
 import com.pppp.travelchecklist.model.database.ListContract

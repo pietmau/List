@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pppp.entities.pokos.CheckList
+import com.pppp.entities.pokos.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.card.CheckListCard
@@ -13,8 +15,6 @@ import com.pppp.travelchecklist.card.carditem.CustomAlertDialogBuilder
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.OldMainPresenter
 import com.pppp.travelchecklist.main.view.TravelListView
-import com.pppp.entities.CheckList
-import com.pppp.entities.CheckListItem
 import com.pppp.travelchecklist.model.SimpleObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_blank.*

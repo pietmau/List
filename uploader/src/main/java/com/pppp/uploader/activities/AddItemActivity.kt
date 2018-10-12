@@ -10,10 +10,9 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
-import com.pppp.database.pokos.CheckListItemImpl
-import com.pppp.entities.Category
-import com.pppp.entities.CheckListItem
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.Tag
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
@@ -67,7 +66,7 @@ open class AddItemActivity : AppCompatActivity() {
             return
         }
         val optional = check.isChecked
-        val item = CheckListItemImpl(
+        val item = CheckListItem(
             title,
             false,
             priorityTxt,

@@ -47,10 +47,23 @@ class SelectionData() : Parcelable {
         this.destination = destination
     }
 
+    fun toList(): List<Tag> {
+        var list = plannedActivities + travellers
+        accomodation?.let {
+            list += it
+        }
+        weather?.let {
+            list += it
+        }
+        duration?.let {
+            list += it
+        }
+        return list.toList()
+    }
+
     val isEmpty: Boolean
-        get() =
-            accomodation == null && weather == null && duration == null && destination == null
-                    && plannedActivities.isEmpty() && travellers.isEmpty()
+        get() = accomodation == null && weather == null && duration == null && destination == null
+                && plannedActivities.isEmpty() && travellers.isEmpty()
 
     companion object {
         val TAG = SelectionData::class.simpleName

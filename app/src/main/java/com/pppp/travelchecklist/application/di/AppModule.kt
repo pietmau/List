@@ -31,7 +31,7 @@ class AppModule(private val context: Context) {
     fun provideContext() = context
 
     @Provides
-    fun provideListGenarator(): ListGenerator = ListGeneratorImpl()
+    fun provideListGenarator(db: CheckListDatabase): ListGenerator = ListGeneratorImpl(db)
 
     @Provides
     fun provideDb(): CheckListDatabase =

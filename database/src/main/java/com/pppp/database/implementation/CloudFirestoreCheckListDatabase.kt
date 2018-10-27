@@ -64,7 +64,7 @@ class CloudFirestoreCheckListDatabase constructor(
         Observable.create<List<CheckListItem>> { emitter ->
             getItemsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onItemsAvailable(snapshot))
+                    emitter.onNext(onItemsAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
@@ -75,7 +75,7 @@ class CloudFirestoreCheckListDatabase constructor(
         Observable.create<List<Category>> { emitter ->
             getCollectionReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onCategoriesAvailable(snapshot))
+                    emitter.onNext(onCategoriesAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
@@ -86,7 +86,7 @@ class CloudFirestoreCheckListDatabase constructor(
         Observable.create<List<Tag>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onTagsAvailable(snapshot))
+                    emitter.onNext(onTagsAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
@@ -97,7 +97,7 @@ class CloudFirestoreCheckListDatabase constructor(
         Observable.create<List<TagsGroup>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onGroupsAvailable(snapshot))
+                    emitter.onNext(onGroupsAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }

@@ -4,11 +4,14 @@ import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.S3Event
 import com.amazonaws.services.s3.AmazonS3
+import com.google.gson.Gson
 import java.sql.Connection
 import java.sql.DriverManager
+import java.sql.ResultSet
 import java.sql.SQLException
 
 class LambdaFunctionHandler @JvmOverloads constructor(s3: AmazonS3? = null) : RequestHandler<S3Event, String> {
+    private val gson = Gson()
     private lateinit var context: Context
     private val logger
         get() = context.getLogger()
@@ -23,24 +26,43 @@ class LambdaFunctionHandler @JvmOverloads constructor(s3: AmazonS3? = null) : Re
         } catch (exception: SQLException) {
             return exception.localizedMessage
         }
+        return getCategories(connection)
         //connection.
-        return  ""
-            // Get the object from the event and show its content type
-            //        String bucket = event.getRecords().get(0).getS3().getBucket().getName();
-            //        String key = event.getRecords().get(0).getS3().getObject().getKey();
-            //        try {
-            //            S3Object response = s3.getObject(new GetObjectRequest(bucket, key));
-            //            String contentType = response.getObjectMetadata().getContentType();
-            //            context.getLogger().log("CONTENT TYPE: " + contentType);
-            //            return contentType;
-            //        } catch (Exception e) {
-            //            e.printStackTrace();
-            //            context.getLogger().log(String.format(
-            //                "Error getting object %s from bucket %s. Make sure they exist and"
-            //                + " your bucket is in the same region as this function.", key, bucket));
-            //            throw e;
-            //        }
+        //return ""
+        // Get the object from the event and show its content type
+        //        String bucket = event.getRecords().get(0).getS3().getBucket().getName();
+        //        String key = event.getRecords().get(0).getS3().getObject().getKey();
+        //        try {
+        //            S3Object response = s3.getObject(new GetObjectRequest(bucket, key));
+        //            String contentType = response.getObjectMetadata().getContentType();
+        //            context.getLogger().log("CONTENT TYPE: " + contentType);
+        //            return contentType;
+        //        } catch (Exception e) {
+        //            e.printStackTrace();
+        //            context.getLogger().log(String.format(
+        //                "Error getting object %s from bucket %s. Make sure they exist and"
+        //                + " your bucket is in the same region as this function.", key, bucket));
+        //            throw e;
+        //        }
 
+    }
+
+    private fun getCategories(connection: Connection): String {
+        val QUERY = "SELECT * FROM travelchecklist.category;"
+        val result = executeQuery(connection, QUERY)
+        val categories = mutableListOf<Category>()
+        while (result?.next() == true) {
+            val title = result.getString("title")
+            val description = result.getString("description")
+            val id = result.getInt("id")
+            categories.add(Category(title, description, id.toString()))
+        }
+        return gson.toJson(categories)?:""
+    }
+
+    private fun executeQuery(connection: Connection, QUERY: String): ResultSet? {
+        val statement = connection.createStatement()
+        return statement.executeQuery(QUERY)
     }
 
     private fun openConnection(): Connection {

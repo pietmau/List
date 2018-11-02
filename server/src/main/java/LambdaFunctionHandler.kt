@@ -19,13 +19,14 @@ class LambdaFunctionHandler @JvmOverloads constructor(s3: AmazonS3? = null) : Re
 
     override fun handleRequest(event: S3Event, context: Context): String {
         this.context = context
-        logger.log("Received event: " + event);
+        //logger.log("Received event: " + event);
         val connection: Connection
         try {
             connection = openConnection()
         } catch (exception: SQLException) {
             return exception.localizedMessage
         }
+        logger.log(event.records.toString())
         return getCategories(connection)
         //connection.
         //return ""

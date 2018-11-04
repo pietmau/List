@@ -1,12 +1,12 @@
 package com.pppp.travelchecklist.model.dao
 
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 
 
 interface ListDao {
-    fun getCheckLists(): List<CheckList>
-    fun getCheckListById(checklistId: Long): CheckList
-    fun editItem(item: CheckListItem): Int
-    fun deleteItem(it: CheckListItem): Int
+    fun getCheckLists(): List<CheckListImpl>
+    fun getCheckListById(checklistId: Long): CheckListImpl
+    fun editItem(item: CheckListItemImpl): Int
+    fun deleteItem(it: CheckListItemImpl): Int
 }

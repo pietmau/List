@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 
 import android.os.Bundle
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
@@ -19,18 +19,18 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         model = component.plannedActivitesModel()
     }
 
-    override fun setItems(group: List<Pair<Tag, Boolean>>) {
+    override fun setItems(group: List<Pair<TagImpl, Boolean>>) {
         showProgress(false)
         strip.setItems(group.map { it.first })
         strip.setItemsSelected(group)
     }
 
-    override fun onItemSelected(item: Tag) {
+    override fun onItemSelected(item: TagImpl) {
         super.onItemSelected(item)
         callback.onPlannedActivitySelected(item)
     }
 
-    override fun onItemDeSelected(item: Tag) {
+    override fun onItemDeSelected(item: TagImpl) {
         super.onItemDeSelected(item)
         callback.onPlannedActivityDeselected(item)
     }

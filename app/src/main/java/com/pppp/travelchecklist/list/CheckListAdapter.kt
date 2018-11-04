@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
 
 
 class CheckListAdapter(
-    var items: List<Category>,
+    var items: List<CategoryImpl>,
     private val callback: CheckListCard.Callback?
 
 ) : RecyclerView.Adapter<CheckListHolder>() {
@@ -36,8 +36,8 @@ class CheckListAdapter(
         holder.bind(items.get(position), position, callback)
     }
 
-    private fun getItems(payloads: MutableList<Any>): List<CheckListItem> {
-        (payloads[0] as? Bundle)?.getParcelableArrayList<CheckListItem>(DiffCallback.ITEMS_KEY)?.let {
+    private fun getItems(payloads: MutableList<Any>): List<CheckListItemImpl> {
+        (payloads[0] as? Bundle)?.getParcelableArrayList<CheckListItemImpl>(DiffCallback.ITEMS_KEY)?.let {
             return it
         }
         return emptyList()

@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.arch.lifecycle.ViewModel
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.model.Destination
@@ -22,7 +22,7 @@ class SelectorPresenter(
     private val workerThread: Scheduler
 ) : ViewModel(), SelectorCallback {
     private var view: ISelectorView? = null
-    private val subject = BehaviorSubject.create<CheckList>()
+    private val subject = BehaviorSubject.create<CheckListImpl>()
     private lateinit var subscription: Disposable
 
     override fun onFinishClicked() {
@@ -41,8 +41,8 @@ class SelectorPresenter(
         this.view = view
         subscription = subject
             .observeOn(mainThread)
-            .subscribeWith(object : SimpleDisposableObserver<CheckList>() {
-                override fun onNext(t: CheckList) {
+            .subscribeWith(object : SimpleDisposableObserver<CheckListImpl>() {
+                override fun onNext(t: CheckListImpl) {
 
                 }
             })
@@ -53,31 +53,31 @@ class SelectorPresenter(
         subscription.dispose()
     }
 
-    override fun onAccomodationSelected(accomodation: Tag) {
+    override fun onAccomodationSelected(accomodation: TagImpl) {
         selection.onAccomodationSelected(accomodation)
     }
 
-    override fun onWeatherSelected(weather: Tag) {
+    override fun onWeatherSelected(weather: TagImpl) {
         selection.onWeatherSelected(weather)
     }
 
-    override fun onDurationSelected(duration: Tag) {
+    override fun onDurationSelected(duration: TagImpl) {
         selection.onDurationSelected(duration)
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: Tag) {
+    override fun onPlannedActivitySelected(plannedActivity: TagImpl) {
         selection.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: Tag) {
+    override fun onPlannedActivityDeselected(plannedActivity: TagImpl) {
         selection.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: Tag) {
+    override fun onWhoisTravellingSelected(traveller: TagImpl) {
         selection.onWhoisTravellingSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(tag: Tag) {
+    override fun onWhoisTravellingDeSelected(tag: TagImpl) {
         selection.onWhoisTravellingDeSelected(tag)
     }
 

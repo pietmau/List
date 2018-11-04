@@ -4,12 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.uploader.R
 
 class ItemsAdapter(
-    private val items: List<CheckListItem>,
-    private val listener: (CheckListItem) -> Unit
+    private val items: List<CheckListItemImpl>,
+    private val listener: (CheckListItemImpl) -> Unit
 ) :
     RecyclerView.Adapter<ItemsAdapter.ItemHolder>() {
 
@@ -26,10 +26,10 @@ class ItemsAdapter(
 
     class ItemHolder(private val textView: TextView) : RecyclerView.ViewHolder(textView) {
 
-        fun bind(item: CheckListItem, listener: (CheckListItem) -> Unit) {
+        fun bind(item: CheckListItemImpl, listener: (CheckListItemImpl) -> Unit) {
             textView.tag = item
             textView.setText(item.title)
-            textView.setOnClickListener { listener.invoke(textView.tag as CheckListItem) }
+            textView.setOnClickListener { listener.invoke(textView.tag as CheckListItemImpl) }
         }
     }
 

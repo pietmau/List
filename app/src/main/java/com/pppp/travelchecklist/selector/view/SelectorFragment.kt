@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.MainActivity
@@ -48,31 +48,31 @@ class SelectorFragment() : Fragment(), SelectorCallback, ISelectorView {
         selector.callaback = this
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: Tag) {
+    override fun onPlannedActivitySelected(plannedActivity: TagImpl) {
         presenter.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: Tag) {
+    override fun onPlannedActivityDeselected(plannedActivity: TagImpl) {
         presenter.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: Tag) {
+    override fun onWhoisTravellingSelected(traveller: TagImpl) {
         presenter.onWhoisTravellingSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(traveller: Tag) {
+    override fun onWhoisTravellingDeSelected(traveller: TagImpl) {
         presenter.onWhoisTravellingDeSelected(traveller)
     }
 
-    override fun onDurationSelected(duration: Tag) {
+    override fun onDurationSelected(duration: TagImpl) {
         presenter.onDurationSelected(duration)
     }
 
-    override fun onAccomodationSelected(accomodation: Tag) {
+    override fun onAccomodationSelected(accomodation: TagImpl) {
         presenter.onAccomodationSelected(accomodation)
     }
 
-    override fun onWeatherSelected(weather: Tag) {
+    override fun onWeatherSelected(weather: TagImpl) {
         presenter.onWeatherSelected(weather)
     }
 

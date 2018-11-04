@@ -3,12 +3,12 @@ package com.pppp.uploader.activities
 import android.content.Context
 import android.content.Intent
 import android.widget.TextView
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListItemImpl
 import kotlinx.android.synthetic.main.add_items.*
 
 class EditItemActivity : AddItemActivity() {
 
-    override open fun onItemClicked(item: CheckListItem) {
+    override open fun onItemClicked(item: CheckListItemImpl) {
         clearAll()
         name.setText(item.title, TextView.BufferType.EDITABLE)
         priorty.setText(item.title, TextView.BufferType.EDITABLE)

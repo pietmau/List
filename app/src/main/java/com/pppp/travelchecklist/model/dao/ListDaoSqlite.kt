@@ -3,9 +3,9 @@ package com.pppp.travelchecklist.model.dao
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
 
 class ListDaoSqlite(
@@ -14,47 +14,47 @@ class ListDaoSqlite(
     private val deserializer: Deserializer
 ) : ListDao {
 
-    override fun getCheckListById(checklistId: Long): CheckList {
+    override fun getCheckListById(checklistId: Long): CheckListImpl {
         val listsCursor = db.rawQuery(queryMaker.getListQuery(checklistId), emptyArray())
         val emptyChecklist = deserializer.getEmptyCheckList(listsCursor)
-        var result: CheckList = CheckList("", emptyList())
+        var result: CheckListImpl = CheckListImpl("", emptyList())
         if (emptyChecklist != null) {
-            result = CheckList(emptyChecklist.title, getCards(emptyChecklist.id!!))
+            result = CheckListImpl(emptyChecklist.title, getCards(emptyChecklist.id!!))
             result.id = emptyChecklist.id
         }
         return result
     }
 
-    override fun getCheckLists(): List<CheckList> {
-        var result = mutableListOf<CheckList>()
-        val emptyChecklists: List<CheckList> = getEmptyChecklists()
+    override fun getCheckLists(): List<CheckListImpl> {
+        var result = mutableListOf<CheckListImpl>()
+        val emptyChecklists: List<CheckListImpl> = getEmptyChecklists()
         for (checkList in emptyChecklists) {
-            val element = CheckList(checkList.title, getCards(checkList.id!!))
+            val element = CheckListImpl(checkList.title, getCards(checkList.id!!))
             element.id = checkList.id
             result.add(element)
         }
         return result.toList()
     }
 
-    private fun getEmptyChecklists(): List<CheckList> {
+    private fun getEmptyChecklists(): List<CheckListImpl> {
         val listsCursor = db.rawQuery(queryMaker.GET_LISTS_QUERY, emptyArray())
         return deserializer.getEmptyCheckLists(listsCursor)
     }
 
-    private fun getCards(listId: String): List<Category> {
-        var result = mutableListOf<Category>()
-        val emptyCategories: List<Category> =
+    private fun getCards(listId: String): List<CategoryImpl> {
+        var result = mutableListOf<CategoryImpl>()
+        val emptyCategories: List<CategoryImpl> =
             deserializer.getEmptyCards(db.rawQuery(queryMaker.getCardsQuery(listId), emptyArray()))
         for (emptycard in emptyCategories) {
-            val element = Category(emptycard.title, null, getItems(emptycard.id!!))
+            val element = CategoryImpl(emptycard.title, null, getItems(emptycard.id!!))
             element.id = emptycard.id
             result.add(element)
         }
         return result.toList()
     }
 
-    private fun getItems(id: String): List<CheckListItem> {
-        var result = mutableListOf<CheckListItem>()
+    private fun getItems(id: String): List<CheckListItemImpl> {
+        var result = mutableListOf<CheckListItemImpl>()
         result.addAll(
             deserializer.getItems(
                 db.rawQuery(
@@ -66,7 +66,7 @@ class ListDaoSqlite(
         return result.toList()
     }
 
-    override fun editItem(item: CheckListItem): Int {
+    override fun editItem(item: CheckListItemImpl): Int {
         val values = ContentValues()
         values.put(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_TITLE, item.title)
         values.put(
@@ -90,7 +90,7 @@ class ListDaoSqlite(
         )
     }
 
-    override fun deleteItem(item: CheckListItem): Int {
+    override fun deleteItem(item: CheckListItemImpl): Int {
         return db.delete(
             TravelChecklistItemContract.TravelChecklistItem.TABLE_NAME,
             "${BaseColumns._ID} = ?",

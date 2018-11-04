@@ -3,10 +3,10 @@ package com.pppp.database.implementation
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.pppp.database.CheckListDatabase
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.CheckListItem
-import com.pppp.entities.pokos.Tag
-import com.pppp.entities.pokos.TagsGroup
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.TagsGroupImpl
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -17,7 +17,7 @@ class CloudFirestoreCheckListDatabase constructor(
 ) :
     CheckListDatabase {
 
-    override fun getTags() = Single.create<List<Tag>> { emitter ->
+    override fun getTags() = Single.create<List<TagImpl>> { emitter ->
         getTagsReference().get()
             .addOnSuccessListener { querySnapshot ->
                 emitter.onSuccess(onTagsAvailable(querySnapshot))
@@ -28,7 +28,7 @@ class CloudFirestoreCheckListDatabase constructor(
     }
 
     override fun getItems() =
-        Single.create<List<CheckListItem>> { emitter ->
+        Single.create<List<CheckListItemImpl>> { emitter ->
             getItemsReference().get()
                 .addOnSuccessListener { querySnapshot ->
                     emitter.onSuccess(onItemsAvailable(querySnapshot))
@@ -39,7 +39,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun getCategories() =
-        Single.create<List<Category>> { emitter ->
+        Single.create<List<CategoryImpl>> { emitter ->
             getCollectionReference().get()
                 .addOnSuccessListener { querySnapshot ->
                     emitter.onSuccess(onCategoriesAvailable(querySnapshot))
@@ -50,7 +50,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun getTagGroups() =
-        Single.create<List<TagsGroup>> { emitter ->
+        Single.create<List<TagsGroupImpl>> { emitter ->
             getTagGroupsReference().get()
                 .addOnSuccessListener { querySnapshot ->
                     emitter.onSuccess(onGroupsAvailable(querySnapshot))
@@ -61,7 +61,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun subscribeToItemsAndUpdates() =
-        Observable.create<List<CheckListItem>> { emitter ->
+        Observable.create<List<CheckListItemImpl>> { emitter ->
             getItemsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     emitter.onNext(onItemsAvailable(snapshot!!))
@@ -72,7 +72,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun subscribeToCategoriesAndUpdates() =
-        Observable.create<List<Category>> { emitter ->
+        Observable.create<List<CategoryImpl>> { emitter ->
             getCollectionReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     emitter.onNext(onCategoriesAvailable(snapshot!!))
@@ -83,7 +83,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun subscribeToTagsAndUpdates() =
-        Observable.create<List<Tag>> { emitter ->
+        Observable.create<List<TagImpl>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     emitter.onNext(onTagsAvailable(snapshot!!))
@@ -94,7 +94,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun subscribeToGroupsAndUpdates() =
-        Observable.create<List<TagsGroup>> { emitter ->
+        Observable.create<List<TagsGroupImpl>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     emitter.onNext(onGroupsAvailable(snapshot!!))
@@ -104,7 +104,7 @@ class CloudFirestoreCheckListDatabase constructor(
             }
         }
 
-    override fun saveItem(item: CheckListItem, id: String) =
+    override fun saveItem(item: CheckListItemImpl, id: String) =
         Completable.create { emitter ->
             getItemsReference().document(id).set(item).addOnSuccessListener {
                 emitter.onComplete()
@@ -115,7 +115,7 @@ class CloudFirestoreCheckListDatabase constructor(
             }
         }
 
-    override fun saveCategory(category: Category, id: String) =
+    override fun saveCategory(category: CategoryImpl, id: String) =
         Completable.create { emitter ->
             getCollectionReference().document(id).set(category).addOnSuccessListener {
                 emitter.onComplete()
@@ -124,7 +124,7 @@ class CloudFirestoreCheckListDatabase constructor(
             }
         }
 
-    override fun saveTag(tag: Tag, id: String) =
+    override fun saveTag(tag: TagImpl, id: String) =
         Completable.create { emitter ->
             getTagsReference().document(id).set(tag).addOnSuccessListener {
                 emitter.onComplete()
@@ -133,7 +133,7 @@ class CloudFirestoreCheckListDatabase constructor(
             }
         }
 
-    override fun saveTagGroup(group: TagsGroup, id: String) =
+    override fun saveTagGroup(group: TagsGroupImpl, id: String) =
         Completable.create { emitter ->
             getTagGroupsReference().document(id).set(group).addOnSuccessListener {
                 emitter.onComplete()

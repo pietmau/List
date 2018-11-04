@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.api
 
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.TagImpl
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -22,9 +22,9 @@ class RetrofitClient(val url: String) : Client {
         api = retrofit.create<Api>(Api::class.java)
     }
 
-    override fun generateChecklist(tags: List<Tag>): Single<CheckList> = api.generateChecklist(tags)
+    override fun generateChecklist(tags: List<TagImpl>): Single<CheckListImpl> = api.generateChecklist(tags)
 }
 
 interface Client {
-    fun generateChecklist(tags: List<Tag>): Single<CheckList>
+    fun generateChecklist(tags: List<TagImpl>): Single<CheckListImpl>
 }

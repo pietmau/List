@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.uploader.R
 
-class CategoryAdapter(var items: List<Category>, private val listener: (Category) -> Unit) :
+class CategoryAdapter(var items: List<CategoryImpl>, private val listener: (CategoryImpl) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -29,10 +29,10 @@ class CategoryAdapter(var items: List<Category>, private val listener: (Category
             textView = v.findViewById<TextView>(R.id.text)
         }
 
-        fun bind(category: Category, listener: (Category) -> Unit) {
+        fun bind(category: CategoryImpl, listener: (CategoryImpl) -> Unit) {
             textView.tag = category
             textView.setText(category.title)
-            textView.setOnClickListener { listener.invoke(textView.tag as Category) }
+            textView.setOnClickListener { listener.invoke(textView.tag as CategoryImpl) }
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.selector.model.Destination
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 
@@ -11,31 +11,31 @@ class MainPresenter : SelectorCallback {
 
     }
 
-    override fun onAccomodationSelected(accomodation: Tag) {
+    override fun onAccomodationSelected(accomodation: TagImpl) {
 
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: Tag) {
+    override fun onPlannedActivitySelected(plannedActivity: TagImpl) {
 
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: Tag) {
+    override fun onPlannedActivityDeselected(plannedActivity: TagImpl) {
 
     }
 
-    override fun onWhoisTravellingSelected(traveller: Tag) {
+    override fun onWhoisTravellingSelected(traveller: TagImpl) {
 
     }
 
-    override fun onWhoisTravellingDeSelected(traveller: Tag) {
+    override fun onWhoisTravellingDeSelected(traveller: TagImpl) {
 
     }
 
-    override fun onDurationSelected(duration: Tag) {
+    override fun onDurationSelected(duration: TagImpl) {
 
     }
 
-    override fun onWeatherSelected(weather: Tag) {
+    override fun onWeatherSelected(weather: TagImpl) {
 
     }
 

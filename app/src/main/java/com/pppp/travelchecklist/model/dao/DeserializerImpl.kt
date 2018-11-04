@@ -2,9 +2,9 @@ package com.pppp.travelchecklist.model.dao
 
 import android.database.Cursor
 import android.provider.BaseColumns
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 
 import com.pppp.travelchecklist.model.database.CardContract
 import com.pppp.travelchecklist.model.database.ListContract
@@ -12,15 +12,15 @@ import com.pppp.travelchecklist.model.database.TravelChecklistItemContract
 
 class DeserializerImpl : Deserializer {
 
-    override fun getEmptyCheckList(listsCursor: Cursor?): CheckList? {
-        var result: CheckList? = null
+    override fun getEmptyCheckList(listsCursor: Cursor?): CheckListImpl? {
+        var result: CheckListImpl? = null
         try {
             if (listsCursor?.moveToFirst() == true) {
                 val title =
                     listsCursor.getString(listsCursor.getColumnIndexOrThrow(ListContract.List.COLUMN_NAME_TITLE))
                 val id = listsCursor.getLong(listsCursor.getColumnIndexOrThrow(BaseColumns._ID))
                 if (title != null && id != null) {
-                    result = CheckList(title, emptyList())
+                    result = CheckListImpl(title, emptyList())
                     result?.id = id.toString()
                 }
             }
@@ -30,15 +30,15 @@ class DeserializerImpl : Deserializer {
         return result
     }
 
-    override fun getEmptyCheckLists(listsCursor: Cursor?): List<CheckList> {
-        var result = mutableListOf<CheckList>()
+    override fun getEmptyCheckLists(listsCursor: Cursor?): List<CheckListImpl> {
+        var result = mutableListOf<CheckListImpl>()
         try {
             while (listsCursor?.moveToNext() == true) {
                 val title =
                     listsCursor.getString(listsCursor.getColumnIndexOrThrow(ListContract.List.COLUMN_NAME_TITLE))
                 val id = listsCursor.getLong(listsCursor.getColumnIndexOrThrow(BaseColumns._ID))
                 if (title != null && id != null) {
-                    val checklist = CheckList(title, emptyList())
+                    val checklist = CheckListImpl(title, emptyList())
                     checklist.id = id.toString()
                     result.add(checklist)
                 }
@@ -49,8 +49,8 @@ class DeserializerImpl : Deserializer {
         return result.toList()
     }
 
-    override fun getEmptyCards(cardsCursor: Cursor?): List<Category> {
-        var result = mutableListOf<Category>()
+    override fun getEmptyCards(cardsCursor: Cursor?): List<CategoryImpl> {
+        var result = mutableListOf<CategoryImpl>()
         try {
             while (cardsCursor?.moveToNext() == true) {
                 val title =
@@ -59,8 +59,8 @@ class DeserializerImpl : Deserializer {
                 val listId =
                     cardsCursor.getLong(cardsCursor.getColumnIndexOrThrow(CardContract.Card.COLUMN_NAME_LIST_ID))
                 if (title != null && id != null && listId != null) {
-                    val items = emptyList<CheckListItem>()
-                    val card = Category(title, null, items)
+                    val items = emptyList<CheckListItemImpl>()
+                    val card = CategoryImpl(title, null, items)
                     card.id = id.toString()
                     result.add(card)
                 }
@@ -71,8 +71,8 @@ class DeserializerImpl : Deserializer {
         return result.toList()
     }
 
-    override fun getItems(itemsCursor: Cursor?): Collection<CheckListItem> {
-        var result = mutableListOf<CheckListItem>()
+    override fun getItems(itemsCursor: Cursor?): Collection<CheckListItemImpl> {
+        var result = mutableListOf<CheckListItemImpl>()
         try {
             while (itemsCursor?.moveToNext() == true) {
                 val title = itemsCursor.getString(
@@ -92,12 +92,12 @@ class DeserializerImpl : Deserializer {
                     itemsCursor.getColumnIndexOrThrow(TravelChecklistItemContract.TravelChecklistItem.COLUMN_NAME_DESCRIPTION)
                 )
                 if (title != null && id != null && cardId != null && priority != null && checked != null) {
-                    val item = CheckListItem(
+                    val item = CheckListItemImpl(
                         title,
                         checked,
                         priority,
                         description,
-                        Category(),
+                        CategoryImpl(),
                         emptyList()
                     )
 

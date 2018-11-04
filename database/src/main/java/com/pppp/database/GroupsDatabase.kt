@@ -1,13 +1,13 @@
 package com.pppp.database
 
-import com.pppp.entities.pokos.TagsGroup
+import com.pppp.entities.pokos.TagsGroupImpl
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
 interface GroupsDatabase {
 
-    fun getTagGroups(): Single<List<TagsGroup>>
-    fun subscribeToGroupsAndUpdates(): Observable<List<TagsGroup>>
-    fun saveTagGroup(group: TagsGroup, key: String): Completable
+    fun getTagGroups(): Single<List<TagsGroupImpl>>
+    fun subscribeToGroupsAndUpdates(): Observable<List<TagsGroupImpl>>
+    fun saveTagGroup(group: TagsGroupImpl, key: String): Completable
 }

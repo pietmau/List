@@ -2,13 +2,13 @@ package com.pppp.travelchecklist.list
 
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 
 
 class DiffCallback(
-    private val old: List<Category>,
-    private val aNew: List<Category>)
+    private val old: List<CategoryImpl>,
+    private val aNew: List<CategoryImpl>)
     : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean
@@ -34,8 +34,8 @@ class DiffCallback(
         return bundle
     }
 
-    private fun getArray(items: List<CheckListItem>): ArrayList<CheckListItem> {
-        var arr = ArrayList<CheckListItem>()
+    private fun getArray(items: List<CheckListItemImpl>): ArrayList<CheckListItemImpl> {
+        var arr = ArrayList<CheckListItemImpl>()
         for (item in items) {
             arr.add(item)
         }

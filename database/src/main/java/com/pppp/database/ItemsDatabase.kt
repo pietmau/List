@@ -1,13 +1,13 @@
 package com.pppp.database
 
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListItemImpl
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
 interface ItemsDatabase {
 
-    fun getItems(): Single<List<CheckListItem>>
-    fun subscribeToItemsAndUpdates(): Observable<List<CheckListItem>>
-    fun saveItem(item: CheckListItem, key: String): Completable
+    fun getItems(): Single<List<CheckListItemImpl>>
+    fun subscribeToItemsAndUpdates(): Observable<List<CheckListItemImpl>>
+    fun saveItem(item: CheckListItemImpl, key: String): Completable
 }

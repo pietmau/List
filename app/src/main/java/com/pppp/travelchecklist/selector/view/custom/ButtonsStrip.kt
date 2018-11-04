@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -19,7 +19,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var items = mutableListOf<Tag>()
+    private var items = mutableListOf<TagImpl>()
     var callback: Callback? = null
 
     var title: String?
@@ -37,20 +37,20 @@ open class ButtonsStrip @JvmOverloads constructor(
         orientation = LinearLayout.VERTICAL
     }
 
-    fun setItems(items: List<Tag>) {
+    fun setItems(items: List<TagImpl>) {
         this.items.clear()
         this.items.addAll(items)
         items.forEachWithIndex { index, item -> addItem(item, index) }
     }
 
-    private fun addItem(item: Tag, index: Int) {
+    private fun addItem(item: TagImpl, index: Int) {
         val button = createButton(item)
         button.id = index
         button.tag = item
         box.addView(button)
     }
 
-    protected open fun createButton(item: Tag) =
+    protected open fun createButton(item: TagImpl) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.title
@@ -62,7 +62,7 @@ open class ButtonsStrip @JvmOverloads constructor(
             }
 
     private fun OnCheckedChange(view: CompoundButton?, checked: Boolean) {
-        val item = (view as ToggleButton).getTag() as? Tag
+        val item = (view as ToggleButton).getTag() as? TagImpl
         item ?: return
         if (checked) {
             callback?.onItemSelected(item)
@@ -71,18 +71,18 @@ open class ButtonsStrip @JvmOverloads constructor(
         }
     }
 
-    fun setItemsSelected(tags: List<Pair<Tag, Boolean>>) {
+    fun setItemsSelected(tags: List<Pair<TagImpl, Boolean>>) {
         val map = tags.toMap()
         (0..box.childCount - 1)
             .map { box.getChildAt(it) as CompoundButton }
             .map {
-                val key = it.tag as? Tag
+                val key = it.tag as? TagImpl
                 it.isChecked = map.get(key) ?: false
             }
     }
 
     interface Callback {
-        fun onItemSelected(item: Tag)
-        fun onItemDeSelected(item: Tag)
+        fun onItemSelected(item: TagImpl)
+        fun onItemDeSelected(item: TagImpl)
     }
 }

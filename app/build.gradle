@@ -49,6 +49,12 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "com.android.support:support-annotations:$support_version"
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -76,7 +82,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation project(':entities')
+    implementation project(':android_entities')
     implementation project(':database')
 }
 

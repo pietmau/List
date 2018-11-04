@@ -24,6 +24,14 @@ android {
 
 }
 
+
+configurations.all {
+    resolutionStrategy {
+        force "com.android.support:support-annotations:$support_version"
+    }
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.uploader.R
 
-class TagsAdapter(private val tags: List<Tag>, private val listener: (Tag) -> Unit) :
+class TagsAdapter(private val tags: List<TagImpl>, private val listener: (TagImpl) -> Unit) :
     RecyclerView.Adapter<TagsAdapter.TagsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagsHolder {
@@ -25,10 +25,10 @@ class TagsAdapter(private val tags: List<Tag>, private val listener: (Tag) -> Un
     class TagsHolder(val v: View) : RecyclerView.ViewHolder(v) {
         private val tv = v.findViewById<TextView>(R.id.text)
 
-        fun bind(tag: Tag, listener: (Tag) -> Unit) {
+        fun bind(tag: TagImpl, listener: (TagImpl) -> Unit) {
             v.tag = tag
             tv.text = tag.title
-            v.setOnClickListener { view -> listener.invoke(view.tag as Tag) }
+            v.setOnClickListener { view -> listener.invoke(view.tag as TagImpl) }
         }
     }
 }

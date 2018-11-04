@@ -1,45 +1,45 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.os.Parcelable
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.selector.model.Destination
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class SelectionData() : Parcelable {
 
-    var accomodation: Tag? = null
-    var weather: Tag? = null
-    var duration: Tag? = null
-    val plannedActivities = mutableListOf<Tag>()
-    val travellers = mutableListOf<Tag>()
+    var accomodation: TagImpl? = null
+    var weather: TagImpl? = null
+    var duration: TagImpl? = null
+    val plannedActivities = mutableListOf<TagImpl>()
+    val travellers = mutableListOf<TagImpl>()
     var destination: Destination? = null
 
-    fun onAccomodationSelected(accomodation: Tag) {
+    fun onAccomodationSelected(accomodation: TagImpl) {
         this.accomodation = accomodation
     }
 
-    fun onWeatherSelected(weather: Tag) {
+    fun onWeatherSelected(weather: TagImpl) {
         this.weather = weather
     }
 
-    fun onDurationSelected(duration: Tag) {
+    fun onDurationSelected(duration: TagImpl) {
         this.duration = duration
     }
 
-    fun onPlannedActivitySelected(plannedActivity: Tag) {
+    fun onPlannedActivitySelected(plannedActivity: TagImpl) {
         plannedActivities.add(plannedActivity)
     }
 
-    fun onPlannedActivityDeselected(plannedActivity: Tag) {
+    fun onPlannedActivityDeselected(plannedActivity: TagImpl) {
         plannedActivities.remove(plannedActivity)
     }
 
-    fun onWhoisTravellingSelected(traveller: Tag) {
+    fun onWhoisTravellingSelected(traveller: TagImpl) {
         travellers.add(traveller)
     }
 
-    fun onWhoisTravellingDeSelected(traveller: Tag) {
+    fun onWhoisTravellingDeSelected(traveller: TagImpl) {
         travellers.remove(traveller)
     }
 
@@ -47,7 +47,7 @@ class SelectionData() : Parcelable {
         this.destination = destination
     }
 
-    fun toList(): List<Tag> {
+    fun toList(): List<TagImpl> {
         var list = plannedActivities + travellers
         accomodation?.let {
             list += it

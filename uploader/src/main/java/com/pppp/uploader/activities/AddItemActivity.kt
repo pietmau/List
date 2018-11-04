@@ -10,18 +10,18 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.CheckListItem
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
 
 open class AddItemActivity : AppCompatActivity() {
     val categoriesSelected =
-        TreeSet<Category>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
+        TreeSet<CategoryImpl>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     val tagSelected =
-        TreeSet<Tag>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
+        TreeSet<TagImpl>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     private val db = CloudFirestoreCheckListDatabase()
     private val itemsOnDb: MutableSet<String> = mutableSetOf()
 
@@ -34,14 +34,14 @@ open class AddItemActivity : AppCompatActivity() {
         button.setOnClickListener { save() }
     }
 
-    private fun onItemsAvailable(items: List<CheckListItem>) {
+    private fun onItemsAvailable(items: List<CheckListItemImpl>) {
         itemsOnDb.clear()
         itemsOnDb.addAll(items.map { it.title }.toHashSet())
         itemsrv.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         itemsrv.adapter = ItemsAdapter(items.sortedBy { it.title }, ::onItemClicked)
     }
 
-    open fun onItemClicked(checkListItem: CheckListItem) {
+    open fun onItemClicked(checkListItem: CheckListItemImpl) {
         /* NoOp */
     }
 
@@ -62,11 +62,11 @@ open class AddItemActivity : AppCompatActivity() {
             return
         }
         if (categoriesSelected.isEmpty()) {
-            Toast.makeText(this, "No Category", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "No CategoryImpl", Toast.LENGTH_LONG).show()
             return
         }
         val optional = check.isChecked
-        val item = CheckListItem(
+        val item = CheckListItemImpl(
             title,
             false,
             priorityTxt,
@@ -96,19 +96,19 @@ open class AddItemActivity : AppCompatActivity() {
         5
     }
 
-    fun onTagsAvailable(taglist: List<Tag>?) {
+    fun onTagsAvailable(taglist: List<TagImpl>?) {
         taglist ?: return
         tags.layoutManager = LinearLayoutManager(this)
         tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, ::onTagSelecged)
     }
 
-    fun onCategoriesAvailable(catgs: List<Category>?) {
+    fun onCategoriesAvailable(catgs: List<CategoryImpl>?) {
         catgs ?: return
         categories.layoutManager = LinearLayoutManager(this)
         categories.adapter = CategoryAdapter(catgs.sortedBy { it.title }, ::onCategoryClicked)
     }
 
-    fun onCategoryClicked(category: Category) {
+    fun onCategoryClicked(category: CategoryImpl) {
         if (categoriesSelected.contains(category)) {
             categoriesSelected.remove(category)
         } else {
@@ -117,7 +117,7 @@ open class AddItemActivity : AppCompatActivity() {
         rendercategories()
     }
 
-    fun onTagSelecged(tag: Tag) {
+    fun onTagSelecged(tag: TagImpl) {
         if (tagSelected.contains(tag)) {
             tagSelected.remove(tag)
         } else {

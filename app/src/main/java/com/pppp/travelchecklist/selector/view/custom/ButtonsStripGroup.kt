@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ToggleButton
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.getChildren
 import kotlinx.android.synthetic.main.button_strip.view.*
@@ -20,7 +20,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
 
     var listener: Listener? = null
 
-    override fun createButton(item: Tag) =
+    override fun createButton(item: TagImpl) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.title
@@ -32,7 +32,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         deselectAll()
         buttonView?.isChecked = isChecked
-        val item = buttonView?.tag as? Tag
+        val item = buttonView?.tag as? TagImpl
         item ?: return
         if (isChecked) {
             listener?.onItemSelected(item)
@@ -52,7 +52,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     }
 
     interface Listener {
-        fun onItemSelected(item: Tag)
-        fun onItemDeselected(item: Tag)
+        fun onItemSelected(item: TagImpl)
+        fun onItemDeselected(item: TagImpl)
     }
 }

@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
@@ -13,7 +13,7 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
         model = component.expectedWeatherModel()
     }
 
-    override fun onItemSelected(item: Tag) {
+    override fun onItemSelected(item: TagImpl) {
         super.onItemSelected(item)
         callback.onWeatherSelected(item)
     }

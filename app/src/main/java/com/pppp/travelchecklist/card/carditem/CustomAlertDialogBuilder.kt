@@ -6,13 +6,13 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.SeekBar
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 
 
 class CustomAlertDialogBuilder(
     context: Context,
-    private val data: CheckListItem,
+    private val data: CheckListItemImpl,
     private val cardPosition: Int,
     private val itemPosition: Int,
     private val callback: Callback
@@ -47,6 +47,6 @@ class CustomAlertDialogBuilder(
     }
 
     interface Callback {
-        fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int)
+        fun onItemEdited(item: CheckListItemImpl, cardPosition: Int, itemPosition: Int)
     }
 }

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.MainView
@@ -59,17 +59,17 @@ abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStrip
         subscriptions.clear()
     }
 
-    fun setItems(group: List<Pair<Tag, Boolean>>) {
+    fun setItems(group: List<Pair<TagImpl, Boolean>>) {
         showProgress(false)
         strip.setItems(group.map { it.first })
         strip.setItemsSelected(group)
     }
 
-    override fun onItemSelected(item: Tag) {
+    override fun onItemSelected(item: TagImpl) {
         model.onTagSelected(item)
     }
 
-    override fun onItemDeselected(item: Tag) {
+    override fun onItemDeselected(item: TagImpl) {
         model.onTagDeSeleected(item)
     }
 

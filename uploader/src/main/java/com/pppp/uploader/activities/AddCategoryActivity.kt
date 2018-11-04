@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
-import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_category_activity.*
 
@@ -34,13 +34,13 @@ class AddCategoryActivity : AppCompatActivity() {
             Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
             return
         }
-        val category = Category(title, descriptionTxt)
+        val category = CategoryImpl(title, descriptionTxt)
         db.saveCategory(category, category.hashCode().toString()).subscribe({}, {})
         name.text.clear()
         description.text.clear()
     }
 
-    private fun onCategoriesAvailable(catgs: List<Category>?) {
+    private fun onCategoriesAvailable(catgs: List<CategoryImpl>?) {
         catgs ?: return
         itemsOnDb.clear()
         val elements = catgs.map { it.title }.sorted()

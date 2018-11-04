@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.main.presenter
 
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.main.model.OldModel
 import com.pppp.travelchecklist.main.view.TravelListView
 import io.reactivex.Scheduler
@@ -26,7 +26,7 @@ class OldMainPresenter(
 
     fun deleteChecklistItem(cardPosition: Int, itemPosition: Int) = oldModel.deleteItem(cardPosition, itemPosition)
 
-    fun subscribe(view: TravelListView, observer: DisposableObserver<CheckList>) {
+    fun subscribe(view: TravelListView, observer: DisposableObserver<CheckListImpl>) {
         this.view = view
         subscription = oldModel.getCards(1)
                 .subscribeOn(worker)
@@ -34,11 +34,11 @@ class OldMainPresenter(
                 .subscribeWith(observer)
     }
 
-    fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItem> {
+    fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemImpl> {
         return oldModel.getItem(cardPosition, itemPosition)
     }
 
-    fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
+    fun onItemEdited(item: CheckListItemImpl, cardPosition: Int, itemPosition: Int) {
         oldModel.onItemEdited(item, cardPosition, itemPosition)
     }
 }

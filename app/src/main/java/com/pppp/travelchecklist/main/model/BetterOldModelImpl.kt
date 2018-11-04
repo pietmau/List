@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.main.model
 
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.model.SimpleObserver
 import com.pppp.travelchecklist.model.dao.ListDao
 import io.reactivex.Observable
@@ -15,10 +15,10 @@ class BetterOldModelImpl(
         val io: Scheduler,
         val ui: Scheduler) : OldModel {
 
-    private val subject = BehaviorSubject.create<CheckList>()
+    private val subject = BehaviorSubject.create<CheckListImpl>()
     private var checklistId: Long? = null
 
-    override fun getCards(checklistId: Long): Observable<CheckList> {
+    override fun getCards(checklistId: Long): Observable<CheckListImpl> {
         this.checklistId = checklistId
         notifyDatabaseChanged()
         return subject
@@ -37,7 +37,7 @@ class BetterOldModelImpl(
                 .subscribe({ notifyDatabaseChanged() }, {})
     }
 
-    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItem> {
+    override fun getItem(cardPosition: Int, itemPosition: Int): Single<CheckListItemImpl> {
         return subject
                 .map { it.categories }
                 .map { it.get(cardPosition) }
@@ -47,7 +47,7 @@ class BetterOldModelImpl(
                 .observeOn(ui)
     }
 
-    override fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
+    override fun onItemEdited(item: CheckListItemImpl, cardPosition: Int, itemPosition: Int) {
         Observable.fromCallable {
             dao.editItem(item)
         }.

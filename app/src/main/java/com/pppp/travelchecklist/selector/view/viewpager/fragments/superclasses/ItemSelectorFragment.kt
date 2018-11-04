@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.MainView
@@ -58,13 +58,13 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
         disposables.clear()
     }
 
-    abstract fun setItems(group: List<Pair<Tag, Boolean>>)
+    abstract fun setItems(group: List<Pair<TagImpl, Boolean>>)
 
-    override fun onItemSelected(item: Tag) {
+    override fun onItemSelected(item: TagImpl) {
         model.onTagSelected(item)
     }
 
-    override fun onItemDeSelected(item: Tag) {
+    override fun onItemDeSelected(item: TagImpl) {
         model.onTagDeSeleected(item)
     }
 

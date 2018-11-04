@@ -3,13 +3,14 @@ package com.pppp.entities.pokos
 import android.os.Parcelable
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.IgnoreExtraProperties
+import com.pietrantuono.entities.CheckList
 import kotlinx.android.parcel.Parcelize
 
 @IgnoreExtraProperties
 @Parcelize
-data class Tag @JvmOverloads constructor(
-    var title: String = "",
-    var hidden: Boolean = false) : Parcelable {
+data class CheckListImpl @JvmOverloads constructor(
+    override val title: String = "",
+    override val categories: List<CategoryImpl> = emptyList()) : Parcelable, CheckList {
     @get:[Exclude]
-    var id: String? = null
+    override var id: String? = null
 }

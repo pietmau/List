@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pppp.entities.pokos.CheckList
-import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.card.CheckListCard
@@ -29,7 +29,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     private var disposable: Disposable? = null
 
     private val callback = object : CheckListCard.Callback {
-        override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
+        override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemImpl) {
             this@TestFragment.onItemDeleteRequested(cardPosition, itemPosition, data)
         }
 
@@ -44,7 +44,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
         }, {})
     }
 
-    private fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
+    private fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItemImpl) {
         activity?.alert(Appcompat,
                 resources.getString(R.string.delete) + " " + data.title + "?",
                 resources.getString(R.string.delete)) {
@@ -67,7 +67,7 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
 
-    override fun onItemEdited(item: CheckListItem, cardPosition: Int, itemPosition: Int) {
+    override fun onItemEdited(item: CheckListItemImpl, cardPosition: Int, itemPosition: Int) {
         presenterOld.onItemEdited(item, cardPosition, itemPosition)
     }
 
@@ -83,8 +83,8 @@ class TestFragment : Fragment(), TravelListView, CustomAlertDialogBuilder.Callba
     override fun onResume() {
         super.onResume()
         recycler.callback = callback
-        presenterOld.subscribe(this, object : SimpleObserver<CheckList>() {
-            override fun onNext(checkList: CheckList) {
+        presenterOld.subscribe(this, object : SimpleObserver<CheckListImpl>() {
+            override fun onNext(checkList: CheckListImpl) {
                 recycler.setItems(checkList.categories)
             }
         })

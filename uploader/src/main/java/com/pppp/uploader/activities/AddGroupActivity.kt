@@ -10,18 +10,18 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
-import com.pppp.entities.pokos.Category
-import com.pppp.entities.pokos.Tag
-import com.pppp.entities.pokos.TagsGroup
+import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.TagsGroupImpl
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_items.*
 import java.util.*
 
 open class AddGroupActivity : AppCompatActivity() {
     val categoriesSelected =
-        TreeSet<Category>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
+        TreeSet<CategoryImpl>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     val tagSelected =
-        TreeSet<Tag>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
+        TreeSet<TagImpl>(Comparator { o1, o2 -> o1.title.compareTo(o2.title) })
     private val db = CloudFirestoreCheckListDatabase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ open class AddGroupActivity : AppCompatActivity() {
             return
         }
         val exclusive = check.isChecked
-        val item = TagsGroup(title, descriptionTxt, tagSelected.toList(), exclusive)
+        val item = TagsGroupImpl(title, descriptionTxt, tagSelected.toList(), exclusive)
 
         db.saveTagGroup(item, item.hashCode().toString()).subscribe({}, {})
         clearAll()
@@ -62,13 +62,13 @@ open class AddGroupActivity : AppCompatActivity() {
         renderTags()
     }
 
-    fun onTagsAvailable(taglist: List<Tag>?) {
+    fun onTagsAvailable(taglist: List<TagImpl>?) {
         taglist ?: return
         tags.layoutManager = LinearLayoutManager(this)
         tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, ::onTagSelecged)
     }
 
-    fun onTagSelecged(tag: Tag) {
+    fun onTagSelecged(tag: TagImpl) {
         if (tagSelected.contains(tag)) {
             tagSelected.remove(tag)
         } else {

@@ -47,6 +47,10 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 configurations.all {
@@ -84,6 +88,7 @@ dependencies {
     kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation project(':android_entities')
     implementation project(':database')
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

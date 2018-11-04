@@ -2,32 +2,34 @@ package com.amazonaws.lambda.demo
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import com.amazonaws.services.lambda.runtime.events.S3Event
 import com.amazonaws.services.s3.AmazonS3
 import com.google.gson.Gson
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.util.*
 
-class LambdaFunctionHandler @JvmOverloads constructor(s3: AmazonS3? = null) : RequestHandler<S3Event, String> {
+
+class LambdaFunctionHandler @JvmOverloads constructor(s3: AmazonS3? = null) : RequestHandler<List<TagImpl>, List<TagImpl>> {
     private val gson = Gson()
     private lateinit var context: Context
     private val logger
         get() = context.getLogger()
     //private AmazonS3 s3 = AmazonS3ClientBuilder.standard().build();
 
-    override fun handleRequest(event: S3Event, context: Context): String {
+    override fun handleRequest(event: List<TagImpl>, context: Context): List<TagImpl> {
         this.context = context
         //logger.log("Received event: " + event);
         val connection: Connection
         try {
             connection = openConnection()
         } catch (exception: SQLException) {
-            return exception.localizedMessage
+            //return exception.localizedMessage
         }
-        logger.log(event.records.toString())
-        return getCategories(connection)
+        //logger.log(event.records.toString())
+        //return getCategories(connection)
+        return event
         //connection.
         //return ""
         // Get the object from the event and show its content type
@@ -51,12 +53,12 @@ class LambdaFunctionHandler @JvmOverloads constructor(s3: AmazonS3? = null) : Re
     private fun getCategories(connection: Connection): String {
         val QUERY = "SELECT * FROM travelchecklist.category;"
         val result = executeQuery(connection, QUERY)
-        val categories = mutableListOf<Category>()
+        val categories = mutableListOf<Locale.Category>()
         while (result?.next() == true) {
             val title = result.getString("title")
             val description = result.getString("description")
             val id = result.getInt("id")
-            categories.add(Category(title, description, id.toString()))
+            //categories.add(Category(title, description, id.toString()))
         }
         return gson.toJson(categories)?:""
     }

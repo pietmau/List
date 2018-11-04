@@ -32,7 +32,9 @@ class CheckListAdapter(
             holder.bind(items.get(position), position, callback)
             return
         }
-        items[position].items = getItems(payloads)
+        //
+        TODO()
+        //items[position].items = getItems(payloads)
         holder.bind(items.get(position), position, callback)
     }
 

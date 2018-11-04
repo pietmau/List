@@ -39,7 +39,7 @@ class AppModule(private val context: Context) {
     fun provideDb(): CheckListDatabase = CloudFirestoreCheckListDatabase()
 
     companion object {
-        private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/prod"
+        private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/prod/"
     }
 
 }

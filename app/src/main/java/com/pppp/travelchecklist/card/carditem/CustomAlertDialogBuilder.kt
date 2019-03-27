@@ -6,7 +6,7 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.SeekBar
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.CheckListItem
 import com.pppp.travelchecklist.R
 
 

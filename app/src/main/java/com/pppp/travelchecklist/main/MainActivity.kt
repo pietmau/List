@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -80,5 +81,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun onError(text: String) {
+        Snackbar.make(root, text, Snackbar.LENGTH_LONG).show()
     }
 }

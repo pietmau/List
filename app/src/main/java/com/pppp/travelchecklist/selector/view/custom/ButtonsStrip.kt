@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex
-
 
 open class ButtonsStrip @JvmOverloads constructor(
     context: Context,
@@ -82,10 +81,8 @@ open class ButtonsStrip @JvmOverloads constructor(
             }
     }
 
-    data class Item(val title: String, val id: String, val data: Any? = null)
-
     interface Callback {
-        fun onItemSelected(item: Tag?)
-        fun onItemDeSelected(item: Tag?)
+        fun onItemSelected(item: Tag)
+        fun onItemDeSelected(item: Tag)
     }
 }

@@ -7,9 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
-import com.pppp.database.CloudFirestoreCheckListDatabase
-import com.pppp.entities.Tag
-import com.pppp.entities.toKey
+import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
+import com.pppp.entities.pokos.Tag
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_category_activity.*
 
@@ -36,8 +35,8 @@ class AddTagActivity : AppCompatActivity() {
             Toast.makeText(this, "Nono", Toast.LENGTH_LONG).show()
             return
         }
-        val tag = Tag(title, title.toKey(), false)
-        db.saveTag(tag, tag.key).subscribe({}, {})
+        val tag = Tag(title, false)
+        db.saveTag(tag, tag.hashCode().toString()).subscribe({}, {})
         name.text.clear()
         description.text.clear()
     }

@@ -1,16 +1,20 @@
-package com.pppp.database
+package com.pppp.database.implementation
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import com.pppp.entities.Category
-import com.pppp.entities.CheckListItem
-import com.pppp.entities.Tag
-import com.pppp.entities.TagsGroup
+import com.pppp.database.CheckListDatabase
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckListItem
+import com.pppp.entities.pokos.Tag
+import com.pppp.entities.pokos.TagsGroup
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
-class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) :
+class CloudFirestoreCheckListDatabase constructor(
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
+    private val mapper: Mapper = Mapper()
+) :
     CheckListDatabase {
 
     override fun getTags() = Single.create<List<Tag>> { emitter ->
@@ -60,7 +64,7 @@ class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirest
         Observable.create<List<CheckListItem>> { emitter ->
             getItemsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onItemsAvailable(snapshot))
+                    emitter.onNext(onItemsAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
@@ -71,7 +75,7 @@ class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirest
         Observable.create<List<Category>> { emitter ->
             getCollectionReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onCategoriesAvailable(snapshot))
+                    emitter.onNext(onCategoriesAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
@@ -82,7 +86,7 @@ class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirest
         Observable.create<List<Tag>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onTagsAvailable(snapshot))
+                    emitter.onNext(onTagsAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
@@ -93,43 +97,45 @@ class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirest
         Observable.create<List<TagsGroup>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    emitter.onNext(onGroupsAvailable(snapshot))
+                    emitter.onNext(onGroupsAvailable(snapshot!!))
                 } else {
                     emitter.onError(exception)
                 }
             }
         }
 
-    override fun saveItem(item: CheckListItem, key: String) =
+    override fun saveItem(item: CheckListItem, id: String) =
         Completable.create { emitter ->
-            getItemsReference().document(item.title).set(item).addOnSuccessListener {
+            getItemsReference().document(id).set(item).addOnSuccessListener {
+                emitter.onComplete()
+            }.addOnFailureListener { error ->
+                emitter.onError(error)
+            }.addOnCompleteListener {
+
+            }
+        }
+
+    override fun saveCategory(category: Category, id: String) =
+        Completable.create { emitter ->
+            getCollectionReference().document(id).set(category).addOnSuccessListener {
                 emitter.onComplete()
             }.addOnFailureListener { error ->
                 emitter.onError(error)
             }
         }
 
-    override fun saveCategory(category: Category, key: String) =
+    override fun saveTag(tag: Tag, id: String) =
         Completable.create { emitter ->
-            getCollectionReference().document(key).set(category).addOnSuccessListener {
+            getTagsReference().document(id).set(tag).addOnSuccessListener {
                 emitter.onComplete()
             }.addOnFailureListener { error ->
                 emitter.onError(error)
             }
         }
 
-    override fun saveTag(tag: Tag, key: String) =
+    override fun saveTagGroup(group: TagsGroup, id: String) =
         Completable.create { emitter ->
-            getTagsReference().document(key).set(tag).addOnSuccessListener {
-                emitter.onComplete()
-            }.addOnFailureListener { error ->
-                emitter.onError(error)
-            }
-        }
-
-    override fun saveTagGroup(group: TagsGroup, key: String) =
-        Completable.create { emitter ->
-            getTagGroupsReference().document(key).set(group).addOnSuccessListener {
+            getTagGroupsReference().document(id).set(group).addOnSuccessListener {
                 emitter.onComplete()
             }.addOnFailureListener { error ->
                 emitter.onError(error)
@@ -144,16 +150,14 @@ class CloudFirestoreCheckListDatabase constructor(private val db: FirebaseFirest
 
     private fun getCollectionReference() = db.collection(CheckListDatabase.CATEGORIES)
 
-    private fun onCategoriesAvailable(querySnapshot: QuerySnapshot?) =
-        querySnapshot?.toObjects(Category::class.java) ?: emptyList()
+    private fun onCategoriesAvailable(querySnapshot: QuerySnapshot) =
+        mapper.categories(querySnapshot)
 
-    private fun onItemsAvailable(querySnapshot: QuerySnapshot?) =
-        querySnapshot?.toObjects(CheckListItem::class.java) ?: emptyList()
+    private fun onItemsAvailable(querySnapshot: QuerySnapshot) = mapper.items(querySnapshot)
 
-    private fun onTagsAvailable(querySnapshot: QuerySnapshot?) =
-        querySnapshot?.toObjects(Tag::class.java) ?: emptyList()
+    private fun onTagsAvailable(querySnapshot: QuerySnapshot) = mapper.tags(querySnapshot)
 
-    private fun onGroupsAvailable(querySnapshot: QuerySnapshot?) =
-        querySnapshot?.toObjects(TagsGroup::class.java) ?: emptyList()
+    private fun onGroupsAvailable(querySnapshot: QuerySnapshot) = mapper.groups(querySnapshot)
+
 
 }

@@ -23,7 +23,10 @@
             android:id="@+id/nice_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="64dp"/>
+            android:layout_marginLeft="@dimen/spacing_very_big"
+            android:layout_marginTop="@dimen/spacing_big"
+            android:layout_marginRight="@dimen/spacing_very_big"
+            />
 
     </LinearLayout>
 </LinearLayout>

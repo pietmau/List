@@ -1,33 +1,17 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
+
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
-import kotlinx.android.synthetic.main.planned_acctivites.*
+import kotlinx.android.synthetic.main.item_selector_fragment.*
 
 class PlannedActivitiesFragment : ItemSelectorFragment() {
-
     override lateinit var model: TagSelectorModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.planned_acctivites, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        strip.title = resources.getString(R.string.planned_activities)
-        strip.callback = this
-    }
-
-    override fun setItems(group: List<Pair<Tag, Boolean>>) {
-        strip.setItems(group.map { it.first })
-        strip.setItemsSelected(group)
-    }
+    override fun getTitle() = resources.getString(R.string.planned_activities)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +19,19 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         model = component.plannedActivitesModel()
     }
 
-    override fun onItemSelected(item: Tag?) {
-        item ?: return
-        model.onTagSelected(item)
+    override fun setItems(group: List<Pair<Tag, Boolean>>) {
+        showProgress(false)
+        strip.setItems(group.map { it.first })
+        strip.setItemsSelected(group)
+    }
+
+    override fun onItemSelected(item: Tag) {
+        super.onItemSelected(item)
         callback.onPlannedActivitySelected(item)
     }
 
-    override fun onItemDeSelected(item: Tag?) {
-        item ?: return
-        model.onTagDeSeleected(item)
+    override fun onItemDeSelected(item: Tag) {
+        super.onItemDeSelected(item)
         callback.onPlannedActivityDeselected(item)
-    }
-
-    companion object {
-        fun newInstance() = PlannedActivitiesFragment()
     }
 }

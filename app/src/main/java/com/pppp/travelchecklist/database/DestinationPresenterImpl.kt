@@ -26,7 +26,7 @@ class DestinationPresenterImpl(
         subject = PublishSubject.create()
         eventListener =
                 databaseReference.addValueEventListener(object : SimpleValueEventListener() {
-                    override fun onDataChange(dataSnapshot: DataSnapshot?) {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
                         dataSnapshot ?: return
                         val list = dataSnapshot
                             .children

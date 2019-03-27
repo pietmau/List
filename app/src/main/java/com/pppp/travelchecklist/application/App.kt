@@ -27,13 +27,6 @@ class App : Application() {
                     .penaltyDeath()
                     .build()
             )
-            StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectActivityLeaks()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build()
-            )
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()

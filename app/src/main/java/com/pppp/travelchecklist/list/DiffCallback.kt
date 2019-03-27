@@ -2,8 +2,8 @@ package com.pppp.travelchecklist.list
 
 import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import com.pppp.entities.Category
-import com.pppp.entities.CheckListItem
+import com.pppp.entities.pokos.Category
+import com.pppp.entities.pokos.CheckListItem
 
 
 class DiffCallback(

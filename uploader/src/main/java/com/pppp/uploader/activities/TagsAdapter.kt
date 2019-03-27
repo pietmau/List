@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import com.pppp.uploader.R
 
 class TagsAdapter(private val tags: List<Tag>, private val listener: (Tag) -> Unit) :

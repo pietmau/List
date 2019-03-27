@@ -7,5 +7,4 @@ interface CheckListDatabase : TagsDatabase, ItemsDatabase, CategoriesDatabase, G
         const val CATEGORIES = "categories"
         const val GROUPS = "groups"
     }
-
 }

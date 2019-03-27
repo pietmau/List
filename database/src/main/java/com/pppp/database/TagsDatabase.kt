@@ -1,6 +1,6 @@
 package com.pppp.database
 
-import com.pppp.entities.Tag
+import com.pppp.entities.pokos.Tag
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

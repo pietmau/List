@@ -22,6 +22,13 @@ CREATE TABLE `checklist_item` (
   CONSTRAINT `category_key` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+UPDATE `travelchecklist`.`tags`
+SET
+`id` = <{id: }>,
+`title` = <{title: }>,
+`hidden` = <{hidden: }>
+WHERE `id` = <{expr}>;
+
 
 INSERT IGNORE INTO travelchecklist.category (title) VALUES
 ("Travel preparation"),
@@ -55,5 +62,34 @@ INSERT IGNORE INTO travelchecklist.category (title) VALUES
 
 
 INSERT IGNORE INTO travelchecklist.checklist_item (title, category_id) VALUE
-("Renew/check passport",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation"))
+("Renew/check passport",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Reconfirm/check­in online with airline",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Check flight info for airline & times",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Check baggage weights",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Personalize luggage",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Insurance: Trip cancellation/medical",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Change money",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Change money",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation"))
+;
+
+INSERT IGNORE INTO travelchecklist.tags (title) VALUES
+("Male"),
+("Fermale") ,
+("Babies") ,
+("Kids, Toddlers"),
+("Hot/sunny"),
+("Cold/rainy"),
+("Hotel"),
+("Hostel/guesthouse"),
+("Camping"),
+("Backpacking"),
+("Fishing"),
+("Diving"),
+("Beach/sea/cruise"),
+("Business/work"),
+("Going out"),
+("Hicking"),
+("Skiing"),
+("Long"),
+("Short")
 ;

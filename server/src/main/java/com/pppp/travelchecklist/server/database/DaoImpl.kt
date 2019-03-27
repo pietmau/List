@@ -2,19 +2,26 @@ package com.pppp.travelchecklist.server.database
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
+import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.server.handler.ServerCategory
+import com.pppp.travelchecklist.server.pokos.ServerCheckListItem
+import java.sql.ResultSet
 
 const val TITLE = "title"
 const val DESCRIPTION = "description"
 const val ID = "id"
 const val SELECT_FROM_CATEGORY = "SELECT * FROM travelchecklist.category;"
+const val CHECKED = "checked"
+const val PRIORITY = "priority"
+const val OPTIONAL = "optional"
+const val CATEGORY_ID = "category_id"
 
 class DaoImpl(
     private val connector: DatabaseConnector = DatabaseConnectorImpl()
 ) : Dao {
     private val statement get() = connector.openConnection().createStatement()
 
-    override fun getCategories() = queryCategories()
+    override fun getCategories(tags: List<Tag>) = queryCategories()
 
     private fun queryCategories() =
         statement.use {
@@ -24,24 +31,55 @@ class DaoImpl(
                 val title = result.getString(TITLE)
                 val description = result.getString(DESCRIPTION)
                 val id = result.getInt(ID)
-                val items = getItems(id)
+                val items = getItemsByCategoryId(id)
                 categories.add(ServerCategory(title, description, items, id.toString()))
             }
             categories.toList()
         }
 
-    private fun getItems(id: Int) =
+    private fun getItemsByCategoryId(categoryId: Int) =
+        statement.use {
+            val query =
+                "SELECT * FROM travelchecklist.checklist_item WHERE category_id = $categoryId;"
+            val result = it.executeQuery(query)
+            val items = mutableListOf<CheckListItem>()
+            while (result?.next() == true) {
+                val categoryId = categoryId.toString()
+                val element = getItem(result, categoryId)
+                items.add(element)
+            }
+            items.toList()
+        }
+
+    private fun getItemsById(id: Int) =
         statement.use {
             val query = "SELECT * FROM travelchecklist.checklist_item WHERE id = $id;"
             val result = it.executeQuery(query)
-            val categories = mutableListOf<CheckListItem>()
+            val items = mutableListOf<CheckListItem>()
             while (result?.next() == true) {
-                val title = result.getString(TITLE)
-                val description = result.getString(DESCRIPTION)
-                val id = result.getInt(ID)
-                //val items = getItems(id)
-                //categories.add(ServerCategory(title, description, items, id.toString()))
+                val categoryId = result.getInt(CATEGORY_ID)
+                val element = getItem(result, categoryId.toString())
+                items.add(element)
             }
-            categories.toList()
+            items.toList()
         }
+
+    private fun getItem(result: ResultSet, categoryId: String): CheckListItem {
+        val title = result.getString(TITLE)
+        val description = result.getString(DESCRIPTION)
+        val id = result.getInt(ID)
+        val checked = result.getBoolean(CHECKED)
+        val priority = result.getInt(PRIORITY)
+        val optional = result.getBoolean(OPTIONAL)
+        return ServerCheckListItem(
+            title,
+            checked,
+            priority,
+            description,
+            categoryId,
+            emptyList(),
+            optional,
+            id.toString()
+        )
+    }
 }

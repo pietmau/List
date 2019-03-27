@@ -1,4 +1,4 @@
-package handler
+package com.pppp.travelchecklist.server.handler
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem

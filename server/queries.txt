@@ -22,12 +22,27 @@ CREATE TABLE `checklist_item` (
   CONSTRAINT `category_key` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-UPDATE `travelchecklist`.`tags`
-SET
-`id` = <{id: }>,
-`title` = <{title: }>,
-`hidden` = <{hidden: }>
-WHERE `id` = <{expr}>;
+CREATE TABLE `tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) NOT NULL,
+  `hidden` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `title_UNIQUE` (`title`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `tags_to_items` (
+  `tag` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `tags_idx` (`tag`),
+  KEY `items_idx` (`item`),
+  CONSTRAINT `items` FOREIGN KEY (`item`) REFERENCES `checklist_item` (`id`),
+  CONSTRAINT `tags` FOREIGN KEY (`tag`) REFERENCES `tags` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 INSERT IGNORE INTO travelchecklist.category (title) VALUES
@@ -61,17 +76,6 @@ INSERT IGNORE INTO travelchecklist.category (title) VALUES
 ;
 
 
-INSERT IGNORE INTO travelchecklist.checklist_item (title, category_id) VALUE
-("Renew/check passport",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Reconfirm/check­in online with airline",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Check flight info for airline & times",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Check baggage weights",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Personalize luggage",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Insurance: Trip cancellation/medical",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Change money",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
-("Change money",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation"))
-;
-
 INSERT IGNORE INTO travelchecklist.tags (title) VALUES
 ("Male"),
 ("Fermale") ,
@@ -92,4 +96,58 @@ INSERT IGNORE INTO travelchecklist.tags (title) VALUES
 ("Skiing"),
 ("Long"),
 ("Short")
+;
+
+
+INSERT IGNORE INTO travelchecklist.checklist_item (title, category_id) VALUE
+("Renew/check passport",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Reconfirm/check­in online with airline",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Check flight info for airline & times",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Check baggage weights",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Personalize luggage",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Insurance: Trip cancellation/medical",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Change money",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Change money",(SELECT id FROM travelchecklist.category WHERE title="Travel preparation")),
+("Pay bills/rent/utilities",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Forward or hold mail/newspapers/magazines",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Wash clothing",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Empty fridge of perishables",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Empty trash",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Store valuables in a safe place",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Turn off heater/air conditioner",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+,("Lock all doors and windows",(SELECT id FROM travelchecklist.category WHERE title="Home preparation"))
+
+,("Hepatitis A",(SELECT id FROM travelchecklist.category WHERE title="Vaccinations"))
+,("Yellow fever",(SELECT id FROM travelchecklist.category WHERE title="Vaccinations"))
+,("Polio",(SELECT id FROM travelchecklist.category WHERE title="Vaccinations"))
+,("Typhoid",(SELECT id FROM travelchecklist.category WHERE title="Vaccinations"))
+
+,("Passport",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Visas",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Personal identification",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Drivers license",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Hotel/hostel contact info",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Vaccination certificate",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Health insurance documents",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Reservations & itineraries",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Copies of tickets/passport/etc.",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+,("Student ID/FHA/Int'l discount cards",(SELECT id FROM travelchecklist.category WHERE title="Documents"))
+
+,("Cash (Foreigh & local currency)",(SELECT id FROM travelchecklist.category WHERE title="Money"))
+,("Emergency money",(SELECT id FROM travelchecklist.category WHERE title="Money"))
+,("Credit card/debit card",(SELECT id FROM travelchecklist.category WHERE title="Money"))
+,("Wallet",(SELECT id FROM travelchecklist.category WHERE title="Money"))
+
+,("Carry­on bag (small back­pack)",(SELECT id FROM travelchecklist.category WHERE title="Bags, cases and packing"))
+,("Backpack/Suitcase",(SELECT id FROM travelchecklist.category WHERE title="Bags, cases and packing"))
+,("Luggage tags",(SELECT id FROM travelchecklist.category WHERE title="Bags, cases and packing"))
+,("Kid's backpack/suitcase",(SELECT id FROM travelchecklist.category WHERE title="Bags, cases and packing"))
+
+,("Bras",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
+,("Underwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
+,("Socks (thin cotton, thermal, wool)",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
+,("Pajamas, sleepwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
+,("Long/thermal underwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
+
+
 ;

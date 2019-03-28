@@ -15,7 +15,7 @@ class MultipleMappingHandler : RequestHandler<MultipleMapping, List<String>> {
         logger.log(input.toString())
         input.tags.forEach { tag ->
             val select =
-                "SELECT * FROM travelchecklist.tags_to_items WHERE tag_title = \"$tag}\" AND item_title = \"${input.item}\";"
+                "SELECT * FROM travelchecklist.tags_to_items WHERE tag_title = \"$tag\" AND item_title = \"${input.item}\";"
             val result = statement.executeQuery(select)
             if (result.next() == true) {
                 errors.add("Already mapped! ${input.item} $tag")

@@ -6,8 +6,7 @@ public class MultipleMapping {
     public String item = null;
     public List<String> tags = null;
 
-    public MultipleMapping(String item) {
-        this.item = item;
+    public MultipleMapping() {
     }
 
     public String getItem() {

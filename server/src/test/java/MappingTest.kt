@@ -21,7 +21,7 @@ class MappingTest {
     @Test
     fun when_maps() {
         try {
-            lambda.handleRequest(Mapping("Luggage tags", "All"), context)
+            lambda.handleRequest(Mapping("Foo", "Bar"), context)
         } catch (ex: Exception) {
             ex.localizedMessage
         }

@@ -24,7 +24,7 @@ class DaoImpl(
     override fun getCategories(tags: List<Tag>) = queryCategories()
 
     private fun queryCategories() =
-        statement.use {
+        statement.let {
             val result = it.executeQuery(SELECT_FROM_CATEGORY)
             val categories = mutableListOf<Category>()
             while (result?.next() == true) {
@@ -34,11 +34,12 @@ class DaoImpl(
                 val items = getItemsByCategoryId(id)
                 categories.add(ServerCategory(title, description, items, id.toString()))
             }
+            it.close()
             categories.toList()
         }
 
     private fun getItemsByCategoryId(categoryId: Int) =
-        statement.use {
+        statement.let {
             val query =
                 "SELECT * FROM travelchecklist.checklist_item WHERE category_id = $categoryId;"
             val result = it.executeQuery(query)
@@ -48,11 +49,12 @@ class DaoImpl(
                 val element = getItem(result, categoryId)
                 items.add(element)
             }
+            it.close()
             items.toList()
         }
 
     private fun getItemsById(id: Int) =
-        statement.use {
+        statement.let {
             val query = "SELECT * FROM travelchecklist.checklist_item WHERE id = $id;"
             val result = it.executeQuery(query)
             val items = mutableListOf<CheckListItem>()
@@ -61,6 +63,7 @@ class DaoImpl(
                 val element = getItem(result, categoryId.toString())
                 items.add(element)
             }
+            it.close()
             items.toList()
         }
 

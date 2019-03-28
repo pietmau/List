@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.server.database
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag
-import com.pppp.travelchecklist.server.handler.ServerCategory
+import com.pppp.travelchecklist.server.categories.ServerCategory
 import com.pppp.travelchecklist.server.pokos.ServerCheckListItem
 import java.sql.ResultSet
 

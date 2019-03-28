@@ -6,7 +6,6 @@ CREATE TABLE `category` (
   UNIQUE KEY `title_UNIQUE` (`title`)
 ) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
 CREATE TABLE `checklist_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
@@ -31,17 +30,21 @@ CREATE TABLE `tags` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
 CREATE TABLE `tags_to_items` (
-  `tag` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `item` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `tag_title` varchar(45) NOT NULL,
+  `item_title` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `tags_idx` (`tag`),
-  KEY `items_idx` (`item`),
-  CONSTRAINT `items` FOREIGN KEY (`item`) REFERENCES `checklist_item` (`id`),
-  CONSTRAINT `tags` FOREIGN KEY (`tag`) REFERENCES `tags` (`id`)
+  KEY `tags_idx` (`tag_id`,`tag_title`),
+  KEY `items_idx` (`item_id`,`item_title`),
+  KEY `ddd_idx` (`tag_title`),
+  CONSTRAINT `ddd` FOREIGN KEY (`tag_title`) REFERENCES `tags` (`title`),
+  CONSTRAINT `fffff` FOREIGN KEY (`item_id`) REFERENCES `checklist_item` (`id`),
+  CONSTRAINT `hhhh` FOREIGN KEY (`tag_title`) REFERENCES `tags` (`title`),
+  CONSTRAINT `tags_key` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -148,6 +151,5 @@ INSERT IGNORE INTO travelchecklist.checklist_item (title, category_id) VALUE
 ,("Socks (thin cotton, thermal, wool)",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
 ,("Pajamas, sleepwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
 ,("Long/thermal underwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
-
-
 ;
+

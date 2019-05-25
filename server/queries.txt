@@ -151,5 +151,12 @@ INSERT IGNORE INTO travelchecklist.checklist_item (title, category_id) VALUE
 ,("Socks (thin cotton, thermal, wool)",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
 ,("Pajamas, sleepwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
 ,("Long/thermal underwear",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"))
-;
+,("Panty hose",(SELECT id FROM travelchecklist.category WHERE title="Clothes: Basics"));
 
+
+INSERT IGNORE INTO `travelchecklist`.`tags_to_items`(`item_id`,`item_title`,`tag_id`,`tag_title`)
+VALUE
+((SELECT id FROM travelchecklist.checklist_item WHERE title=\"${input.item}\"),
+(SELECT title FROM travelchecklist.checklist_item WHERE title=\"${input.item}\")
+(SELECT id FROM travelchecklist.tags WHERE title=\"${input.tag}\"),
+(SELECT title FROM travelchecklist.tags WHERE title=\"${input.tag}\"));

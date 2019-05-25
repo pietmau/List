@@ -1,4 +1,4 @@
-import com.amazonaws.lambda.demo.LambdaFunctionHandler
+import com.pppp.travelchecklist.server.categories.GetCategories
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.LambdaLogger
 import io.mockk.every
@@ -6,14 +6,14 @@ import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
 
-class LambdaFunctionHandlerTest {
+class GetCategoriesTest {
     private val context: Context = mockk()
-    private lateinit var lambda: LambdaFunctionHandler
+    private lateinit var lambda: GetCategories
     private val logger: LambdaLogger = mockk(relaxed = true)
 
     @Before
     fun setUp() {
-        lambda = LambdaFunctionHandler()
+        lambda = GetCategories()
         every { context.logger } returns logger
     }
 

@@ -11,34 +11,35 @@ class MultipleMappingHandler : RequestHandler<MultipleMapping, List<String>> {
         val logger = context.logger
         val errors = mutableListOf<String>()
         val connector: DatabaseConnector = DatabaseConnectorImpl()
-        val statement = connector.openConnection().createStatement()
-        logger.log(input.toString())
-        input.tags.forEach { tag ->
-            val select =
-                "SELECT * FROM travelchecklist.tags_to_items WHERE tag_title = \"$tag\" AND item_title = \"${input.item}\";"
-            val result = statement.executeQuery(select)
-            if (result.next() == true) {
-                errors.add("Already mapped! ${input.item} $tag")
-            } else {
-                val insert = "INSERT IGNORE INTO `travelchecklist`.`tags_to_items`\n" +
-                        "(`item_id`,\n" +
-                        "`item_title`,\n" +
-                        "`tag_id`,\n" +
-                        "`tag_title`\n" +
-                        ")\n" +
-                        "VALUE\n" +
-                        "((SELECT id FROM travelchecklist.checklist_item WHERE title=\"${input.item}\"),\n" +
-                        "(SELECT title FROM travelchecklist.checklist_item WHERE title=\"${input.item}\"),\n" +
-                        "(SELECT id FROM travelchecklist.tags WHERE title=\"${tag}\"),\n" +
-                        "(SELECT title FROM travelchecklist.tags WHERE title=\"${tag}\"));\n"
-                val z = statement.executeUpdate(insert)
-                if (z <= 0) {
-                    errors.add("InsertFailed! ${input.item} $tag")
+        connector.openConnection().createStatement().use {
+            logger.log(input.toString())
+            input.tagsIds.forEach { tagId ->
+                val select =
+                    "SELECT * FROM travelchecklist.tags_to_items WHERE tag_id = \"$tagId\" AND item_id = \"${input.itemId}\";"
+                val result = it.executeQuery(select)
+                if (result.next() == true) {
+                    errors.add("Already mapped! ${input.itemId} $tagId")
+                } else {
+                    val insert = "INSERT IGNORE INTO `travelchecklist`.`tags_to_items`\n" +
+                            "(`item_id`,\n" +
+                            "`item_title`,\n" +
+                            "`tag_id`,\n" +
+                            "`tag_title`\n" +
+                            ")\n" +
+                            "VALUE\n" +
+                            "(" +
+                            input.itemId + "," +
+                            "(SELECT title FROM travelchecklist.checklist_item WHERE id=\"${input.itemId}\")," +
+                            tagId + "," +
+                            "(SELECT title FROM travelchecklist.tags WHERE id=\"${tagId}\"));\n"
+                    val z = it.executeUpdate(insert)
+                    if (z <= 0) {
+                        errors.add("InsertFailed! ${input.itemId} $tagId")
+                    }
                 }
             }
+            return errors
         }
-        statement.close()
-        return errors
     }
 }
 

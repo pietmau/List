@@ -21,11 +21,35 @@ const val CATEGORY_ID = "category_id"
 class DaoImpl(
     private val connector: DatabaseConnector = DatabaseConnectorImpl()
 ) : Dao {
-
     private val statement get() = connector.openConnection().createStatement()
 
-
     override fun getCategories(tags: List<Tag>) = queryCategories()
+
+    override fun getItems() =
+        statement.use {
+            val query = "SELECT * FROM travelchecklist.checklist_item"
+            val result = it.executeQuery(query)
+            val items = mutableListOf<CheckListItem>()
+            while (result?.next() == true) {
+                val categoryId = result.getInt(CATEGORY_ID)
+                val element = getItem(result, categoryId.toString())
+                items.add(element)
+            }
+            items.toList()
+        }
+
+    override fun getItemsWithTags(): List<CheckListItem> =
+        statement.use {
+            val query = "SELECT * FROM travelchecklist.checklist_item"
+            val result = it.executeQuery(query)
+            val items = mutableListOf<CheckListItem>()
+            while (result?.next() == true) {
+                val categoryId = result.getInt(CATEGORY_ID)
+                val element = getItemWithTag(result, categoryId.toString())
+                items.add(element)
+            }
+            items.toList()
+        }
 
     override fun getTags() = statement.use {
         val result = it.executeQuery(SELECT_FROM_TAGS)
@@ -98,4 +122,36 @@ class DaoImpl(
             id.toString()
         )
     }
+
+    private fun getItemWithTag(result: ResultSet, categoryId: String): CheckListItem {
+        val title = result.getString(TITLE)
+        val description = result.getString(DESCRIPTION)
+        val itemId = result.getInt(ID)
+        val checked = result.getBoolean(CHECKED)
+        val priority = result.getInt(PRIORITY)
+        val optional = result.getBoolean(OPTIONAL)
+        return ServerCheckListItem(
+            title,
+            checked,
+            priority,
+            description,
+            categoryId,
+            getTagsByItem(itemId),
+            optional,
+            itemId.toString()
+        )
+    }
+
+    private fun getTagsByItem(itemId: Int) = statement.use {
+        val result = it.executeQuery("SELECT * FROM travelchecklist.tags_to_items WHERE item_id = "+ itemId+";")
+        val tags = mutableListOf<Tag>()
+        while (result?.next() == true) {
+            val title = result.getString("tag_title")
+            val id = result.getInt("tag_id")
+            tags.add(ServerTag(title, false, id.toString()))
+        }
+        tags.toList()
+    }
+
+
 }

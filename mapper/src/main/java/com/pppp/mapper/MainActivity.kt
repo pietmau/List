@@ -38,9 +38,10 @@ class MainActivity : AppCompatActivity() {
         tags: List<TagImpl>
     ) {
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = ItemsTagsAdapter(items, tags) { item, tags ->
+        recycler.adapter = ItemsTagsAdapter(items.sortedBy { it.title }, tags) { item, tags ->
             val ggcccg = Intent(this, TagsActitity::class.java)
-            ggcccg.putExtra("id", item.id)
+            ggcccg.putExtra("itemId", item.id)
+            ggcccg.putExtra("title", item.title)
             startActivity(ggcccg)
         }
     }

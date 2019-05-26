@@ -14,7 +14,7 @@ class GetItems @JvmOverloads constructor(s3: AmazonS3? = null) :
     override fun handleRequest(any: Any?, context: Context): List<CheckListItem> {
         val logger = context.logger
         return try {
-            dao.getItems()
+            dao.getItemsWithTags()
         } catch (exception: Exception) {
             logger.log(exception.stackTrace.toString())
             throw exception

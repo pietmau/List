@@ -1,7 +1,5 @@
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.LambdaLogger
-import com.pppp.travelchecklist.server.mapping.AddMappingHandler
-import com.pppp.travelchecklist.server.mapping.Mapping
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before

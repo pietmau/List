@@ -1,6 +1,7 @@
 package com.pppp.mapper.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.pppp.travelchecklist.server.mapping.Mapping
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,5 +28,8 @@ object Client {
     internal suspend fun getTags() = service.getTags()
 
     internal suspend fun getItems() = service.getItems()
+
+    internal suspend fun mapping(map: Mapping) = service.mapping(map)
+
 
 }

@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class TagImpl @JvmOverloads constructor(
     override var title: String = "",
-    override var hidden: Boolean = false) : Parcelable, Tag {
+    override var hidden: Boolean = false
+) : Parcelable, Tag {
     @get:[Exclude]
-    override var id: String? = null
+    override var id: Long = -1
 }

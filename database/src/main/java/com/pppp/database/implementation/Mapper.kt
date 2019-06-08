@@ -34,7 +34,7 @@ class Mapper {
             .map { doc -> doc to doc.toObject(TagImpl::class.java) }
             .filter { (_, item) -> item != null }
             .map { (doc, tag) ->
-                tag!!.id = doc.id
+                tag!!.id = doc.id.toLong()
                 tag!!
             }
 
@@ -44,7 +44,7 @@ class Mapper {
             .map { doc -> doc to doc.toObject(TagsGroupImpl::class.java) }
             .filter { (_, item) -> item != null }
             .map { (doc, group) ->
-                group!!.id = doc.id
+                group!!.id = doc.id.toLong()
                 group!!
             }
 }

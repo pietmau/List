@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         setUpSelectionFragment(savedInstanceState)
-        (applicationContext as App).appComponent?.with(MainModule(this))?.inject(this)
+        (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
     }
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {

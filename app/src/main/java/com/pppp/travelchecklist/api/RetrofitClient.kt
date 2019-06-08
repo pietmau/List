@@ -2,11 +2,11 @@ package com.pppp.travelchecklist.api
 
 import com.pppp.entities.pokos.CheckListImpl
 import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.TagsGroupImpl
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 class RetrofitClient(val url: String) : Client {
     private val retrofit: Retrofit
@@ -23,8 +23,12 @@ class RetrofitClient(val url: String) : Client {
     }
 
     override fun generateChecklist(tags: List<TagImpl>): Single<CheckListImpl> = api.generateChecklist(tags)
+
+    override fun getTagsGroup(): Single<TagsGroupImpl> = api.getTagsGroup()
+
 }
 
 interface Client {
     fun generateChecklist(tags: List<TagImpl>): Single<CheckListImpl>
+    fun getTagsGroup(): Single<TagsGroupImpl>
 }

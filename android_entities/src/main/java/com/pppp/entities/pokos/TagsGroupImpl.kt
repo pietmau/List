@@ -12,7 +12,8 @@ data class TagsGroupImpl @JvmOverloads constructor(
     override var title: String = "",
     override var description: String? = null,
     override var tags: List<TagImpl> = emptyList(),
-    override var exclusive: Boolean = false) : Parcelable, TagsGroup {
+    override var exclusive: Boolean = false
+) : Parcelable, TagsGroup {
     @get:[Exclude]
-    override var id: String? = null
+    override var id: String = ""
 }

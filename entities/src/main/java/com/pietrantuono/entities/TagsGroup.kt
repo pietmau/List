@@ -2,9 +2,9 @@ package com.pietrantuono.entities
 
 
 interface TagsGroup {
-    var title: String
-    var description: String?
+    val title: String
+    val description: String?
     val tags: List<Tag>
-    var exclusive: Boolean
-    var id: String?
+    val exclusive: Boolean
+    val id: Long
 }

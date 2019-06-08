@@ -4,6 +4,7 @@ import com.amazonaws.lambda.demo.ServerTag
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag
+import com.pietrantuono.entities.TagsGroup
 import com.pppp.travelchecklist.server.categories.ServerCategory
 import com.pppp.travelchecklist.server.pokos.ServerCheckListItem
 import java.sql.ResultSet
@@ -19,11 +20,24 @@ const val OPTIONAL = "optional"
 const val CATEGORY_ID = "category_id"
 
 class DaoImpl(
-    private val connector: DatabaseConnector = DatabaseConnectorImpl()
+    private val connector: DatabaseConnector = DatabaseConnectorImpl(),
+    private val mapper: Mapper = MapperImpl()
 ) : Dao {
+
     private val statement get() = connector.openConnection().createStatement()
 
     override fun getCategories(tags: List<Tag>) = queryCategories()
+
+    override fun getTagsGroup(): List<TagsGroup> =
+        statement.use {
+            val query = "SELECT  travelchecklist.tags.id as tagsId, \n" +
+                "travelchecklist.tags_group.title as groupTitle,\n" +
+                "travelchecklist.tags.title as tagTitle,\n" +
+                "travelchecklist.tags_group.id as groupId\n" +
+                "FROM travelchecklist.tags JOIN travelchecklist.tags_group ON travelchecklist.tags.group = travelchecklist.tags_group.id;"
+            val result = it.executeQuery(query)
+            mapper.getTagsGroups(result);
+        }
 
     override fun getItems() =
         statement.use {
@@ -56,9 +70,9 @@ class DaoImpl(
         val tags = mutableListOf<Tag>()
         while (result?.next() == true) {
             val title = result.getString(TITLE)
-            val id = result.getInt(ID)
+            val id = result.getLong(ID)
             val items = getItemsByCategoryId(id)
-            tags.add(ServerTag(title, false, id.toString()))
+            tags.add(ServerTag(title, false, id))
         }
         tags.toList()
     }
@@ -70,14 +84,14 @@ class DaoImpl(
             while (result?.next() == true) {
                 val title = result.getString(TITLE)
                 val description = result.getString(DESCRIPTION)
-                val id = result.getInt(ID)
+                val id = result.getLong(ID)
                 val items = getItemsByCategoryId(id)
                 categories.add(ServerCategory(title, description, items, id.toString()))
             }
             categories.toList()
         }
 
-    private fun getItemsByCategoryId(categoryId: Int) =
+    private fun getItemsByCategoryId(categoryId: Long) =
         statement.use {
             val query =
                 "SELECT * FROM travelchecklist.checklist_item WHERE category_id = $categoryId;"
@@ -143,15 +157,14 @@ class DaoImpl(
     }
 
     private fun getTagsByItem(itemId: Int) = statement.use {
-        val result = it.executeQuery("SELECT * FROM travelchecklist.tags_to_items WHERE item_id = "+ itemId+";")
+        val result = it.executeQuery("SELECT * FROM travelchecklist.tags_to_items WHERE item_id = " + itemId + ";")
         val tags = mutableListOf<Tag>()
         while (result?.next() == true) {
             val title = result.getString("tag_title")
-            val id = result.getInt("tag_id")
-            tags.add(ServerTag(title, false, id.toString()))
+            val id = result.getLong("tag_id")
+            tags.add(ServerTag(title, false, id))
         }
         tags.toList()
     }
-
 
 }

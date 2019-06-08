@@ -4,39 +4,39 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.pppp.database.CheckListDatabase
 
-class ExpectedWeatherModel(val db: CheckListDatabase, val title: String) : TagSelectorModel(db, title)
+class ExpectedWeatherModel(val db: CheckListDatabase, val id: Long) : TagSelectorModel(db, id)
 
-class AccomodationModel(val db: CheckListDatabase, val title: String) : TagSelectorModel(db, title)
+class AccomodationModel(val db: CheckListDatabase, val id: Long) : TagSelectorModel(db, id)
 
-class LongOrShortTripModel(val db: CheckListDatabase, val title: String) : TagSelectorModel(db, title)
+class LongOrShortTripModel(val db: CheckListDatabase, val id: Long) : TagSelectorModel(db, id)
 
-class PlannedActivitesModel(val db: CheckListDatabase, val title: String) : TagSelectorModel(db, title)
+class PlannedActivitesModel(val db: CheckListDatabase, val id: Long) : TagSelectorModel(db, id)
 
-class WhoIsTravellingModel(db: CheckListDatabase, title: String) : TagSelectorModel(db, title)
+class WhoIsTravellingModel(db: CheckListDatabase, id: Long) : TagSelectorModel(db, id)
 
 class ExpectedWeatherModelFactory(private val db: CheckListDatabase) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        ExpectedWeatherModel(db, "Expected weather ⛅") as T
+        ExpectedWeatherModel(db, 8) as T
 }
 
-class LongOrShortTripModelFactory (private val db: CheckListDatabase) : ViewModelProvider.Factory {
+class LongOrShortTripModelFactory(private val db: CheckListDatabase) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        LongOrShortTripModel(db, "Is it going to be a long trip?") as T
+        LongOrShortTripModel(db, 11) as T
 }
 
 class AccomodationModelFactory(private val db: CheckListDatabase) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        AccomodationModel(db, "Accommodation \uD83C\uDFE1") as T
+        AccomodationModel(db, 9) as T
 }
 
 class PlannedActivitesModelFactory(val db: CheckListDatabase) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        PlannedActivitesModel(db, "Planned activities") as T
+        PlannedActivitesModel(db, 10) as T
 }
 
 class WhoIsTravellingModelFactory(val db: CheckListDatabase) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        WhoIsTravellingModel(db, "Who is travelling? \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66") as T
+        WhoIsTravellingModel(db, 7) as T
 }

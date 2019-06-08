@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
@@ -16,6 +17,7 @@ import com.pppp.travelchecklist.selector.SelectorComponent
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.button_strip_fragment.*
 
@@ -51,7 +53,7 @@ abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStrip
     override fun onResume() {
         super.onResume()
         showProgress(true)
-        subscriptions.add(model.getTags().subscribe({ setItems(it) }, { onError(it) }))
+        subscriptions.add(model.getTags().observeOn(AndroidSchedulers.mainThread()).subscribe({ setItems(it) }, { onError(it) }))
     }
 
     override fun onPause() {
@@ -59,7 +61,7 @@ abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStrip
         subscriptions.clear()
     }
 
-    fun setItems(group: List<Pair<TagImpl, Boolean>>) {
+    fun setItems(group: List<Pair<Tag, Boolean>>) {
         showProgress(false)
         strip.setItems(group.map { it.first })
         strip.setItemsSelected(group)
@@ -75,7 +77,7 @@ abstract open class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStrip
 
     fun showProgress(show: Boolean) {
         progress.visibility = if (show) VISIBLE else GONE
-        strip.visibility= if (!show) View.VISIBLE else View.GONE
+        strip.visibility = if (!show) View.VISIBLE else View.GONE
     }
 
     private fun onError(throwable: Throwable?) {

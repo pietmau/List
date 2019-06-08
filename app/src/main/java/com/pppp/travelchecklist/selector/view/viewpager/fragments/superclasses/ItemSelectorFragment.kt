@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
@@ -14,6 +15,7 @@ import com.pppp.travelchecklist.selector.SelectorComponent
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.item_selector_fragment.*
 
@@ -44,7 +46,7 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
     override fun onResume() {
         super.onResume()
         showProgress(true)
-        disposables.add(model.getTags().subscribe({ setItems(it) }, { onError(it) }))
+        disposables.add(model.getTags().observeOn(AndroidSchedulers.mainThread()).subscribe({ setItems(it) }, { onError(it) }))
     }
 
     private fun onError(throwable: Throwable?) {
@@ -58,7 +60,7 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
         disposables.clear()
     }
 
-    abstract fun setItems(group: List<Pair<TagImpl, Boolean>>)
+    abstract fun setItems(group: List<Pair<Tag, Boolean>>)
 
     override fun onItemSelected(item: TagImpl) {
         model.onTagSelected(item)
@@ -70,7 +72,7 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
 
     fun showProgress(show: Boolean) {
         progress.visibility = if (show) View.VISIBLE else View.GONE
-        strip.visibility= if (!show) View.VISIBLE else View.GONE
+        strip.visibility = if (!show) View.VISIBLE else View.GONE
     }
 
     abstract fun getTitle(): String?

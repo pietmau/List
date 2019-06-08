@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ToggleButton
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.getChildren
@@ -20,7 +21,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
 
     var listener: Listener? = null
 
-    override fun createButton(item: TagImpl) =
+    override fun createButton(item: Tag) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.title

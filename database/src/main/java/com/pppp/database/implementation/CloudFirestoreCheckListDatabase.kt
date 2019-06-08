@@ -2,6 +2,7 @@ package com.pppp.database.implementation
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import com.pietrantuono.entities.TagsGroup
 import com.pppp.database.CheckListDatabase
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListItemImpl
@@ -94,7 +95,7 @@ class CloudFirestoreCheckListDatabase constructor(
         }
 
     override fun subscribeToGroupsAndUpdates() =
-        Observable.create<List<TagsGroupImpl>> { emitter ->
+        Observable.create<List<TagsGroup>> { emitter ->
             getTagsReference().addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     emitter.onNext(onGroupsAvailable(snapshot!!))

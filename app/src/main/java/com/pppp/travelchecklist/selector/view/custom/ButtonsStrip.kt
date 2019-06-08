@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
@@ -19,7 +20,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var items = mutableListOf<TagImpl>()
+    private var items = mutableListOf<Tag>()
     var callback: Callback? = null
 
     var title: String?
@@ -37,20 +38,20 @@ open class ButtonsStrip @JvmOverloads constructor(
         orientation = LinearLayout.VERTICAL
     }
 
-    fun setItems(items: List<TagImpl>) {
+    fun setItems(items: List<Tag>) {
         this.items.clear()
         this.items.addAll(items)
         items.forEachWithIndex { index, item -> addItem(item, index) }
     }
 
-    private fun addItem(item: TagImpl, index: Int) {
+    private fun addItem(item: Tag, index: Int) {
         val button = createButton(item)
         button.id = index
         button.tag = item
         box.addView(button)
     }
 
-    protected open fun createButton(item: TagImpl) =
+    protected open fun createButton(item: Tag) =
         (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.title
@@ -71,12 +72,12 @@ open class ButtonsStrip @JvmOverloads constructor(
         }
     }
 
-    fun setItemsSelected(tags: List<Pair<TagImpl, Boolean>>) {
+    fun setItemsSelected(tags: List<Pair<Tag, Boolean>>) {
         val map = tags.toMap()
         (0..box.childCount - 1)
             .map { box.getChildAt(it) as CompoundButton }
             .map {
-                val key = it.tag as? TagImpl
+                val key = it.tag as? Tag
                 it.isChecked = map.get(key) ?: false
             }
     }

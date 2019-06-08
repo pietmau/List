@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
@@ -18,7 +19,7 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
         model = component.whoIsTravellingModel()
     }
 
-    override fun setItems(group: List<Pair<TagImpl, Boolean>>) {
+    override fun setItems(group: List<Pair<Tag, Boolean>>) {
         showProgress(false)
         strip.setItems(group.map { it.first })
         strip.setItemsSelected(group)

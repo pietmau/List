@@ -12,5 +12,5 @@ interface Dao {
     fun getItems(): List<CheckListItem>
     fun getAllItems(): List<CheckListItem>
     fun getTagsGroup(): List<TagsGroup>
-    fun getItemsByTag(tags: List<Tag>?): List<Category>
+    fun getItemsByTag(tags: List<ServerTag>): List<Category>
 }

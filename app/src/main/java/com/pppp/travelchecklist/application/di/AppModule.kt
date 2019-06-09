@@ -36,7 +36,7 @@ class AppModule(private val context: Context) {
     fun provideClient(): Client = RetrofitClient(URL)
 
     @Provides
-    fun provideListGenarator(db: CheckListDatabase, client: Client): ListGenerator = ListGeneratorImpl(db, client)
+    fun provideListGenarator(db: CheckListDatabase, client: Client): ListGenerator = ListGeneratorImpl(client)
 
     @Provides
     fun provideDb(client: Client): CheckListDatabase = RetrofitRepository(client)

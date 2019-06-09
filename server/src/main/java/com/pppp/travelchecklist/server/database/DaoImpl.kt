@@ -7,7 +7,6 @@ import com.pietrantuono.entities.Tag
 import com.pietrantuono.entities.TagsGroup
 import com.pppp.travelchecklist.server.categories.ServerCategory
 import com.pppp.travelchecklist.server.pokos.ServerCheckListItem
-import getCategoriesByTag
 import getTagsWithGroup
 import java.sql.ResultSet
 
@@ -16,19 +15,19 @@ const val DESCRIPTION = "description"
 const val ID = "id"
 const val SELECT_FROM_CATEGORY = "SELECT * FROM travelchecklist.category;"
 const val SELECT_FROM_TAGS = "SELECT * FROM travelchecklist.tags;"
-const val CHECKED = "checked"
 const val PRIORITY = "priority"
 const val OPTIONAL = "optional"
 const val CATEGORY_ID = "category_id"
 
 class DaoImpl(
     private val connector: DatabaseConnector = DatabaseConnectorImpl(),
-    private val mapper: Mapper = MapperImpl()
+    private val mapper: Mapper = MapperImpl(),
+    private val queryMaker: QueryMaker = QueryMakerImpl()
 ) : Dao {
 
-    override fun getItemsByTag(tags: List<Tag>?) =
+    override fun getItemsByTag(tags: List<ServerTag>) =
         statement.use {
-            val result = it.executeQuery(getCategoriesByTag)
+            val result = it.executeQuery(queryMaker.getCategoriesByTag(tags))
             mapper.getItemsByTag(result)
         }
 

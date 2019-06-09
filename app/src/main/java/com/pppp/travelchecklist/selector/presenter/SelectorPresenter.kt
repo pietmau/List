@@ -34,7 +34,11 @@ class SelectorPresenter(
                 .subscribeOn(workerThread)
                 .observeOn(mainThread)
                 .doOnNext { subject.onNext(it) }
-                .subscribe({}, {})
+                .subscribe({
+
+                }, {
+
+                })
         }
     }
 

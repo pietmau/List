@@ -1,18 +1,23 @@
 package com.pppp.travelchecklist.listgenerator
 
-import com.google.gson.Gson
 import com.pietrantuono.entities.CheckList
-import com.pppp.database.CheckListDatabase
-import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.api.Client
-import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.selector.presenter.SelectionData
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 
-class ListGeneratorImpl(private val db: CheckListDatabase, retrofitClient: Client) : ListGenerator {
+class ListGeneratorImpl(private val retrofitClient: Client) : ListGenerator {
 
     override fun generate(selection: SelectionData): Observable<CheckList> {
-        val s = Gson().toJson(selection.travellers)
-        TODO()
+        retrofitClient.generateChecklist(selection.toList() as List<TagImpl>)
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+
+            }, {
+
+            })
+
+        return Observable.empty()
     }
 }

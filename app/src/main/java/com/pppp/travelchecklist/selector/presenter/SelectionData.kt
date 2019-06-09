@@ -7,7 +7,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class SelectionData() : Parcelable {
-
     var accomodation: Tag? = null
     var weather: Tag? = null
     var duration: Tag? = null

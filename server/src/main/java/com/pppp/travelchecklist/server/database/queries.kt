@@ -4,7 +4,7 @@ internal const val getTagsWithGroup = "SELECT  travelchecklist.tags.id as tagsId
     "travelchecklist.tags_group.id as groupId\n" +
     "FROM travelchecklist.tags JOIN travelchecklist.tags_group ON travelchecklist.tags.group = travelchecklist.tags_group.id;"
 
-internal const val getCategoriesByTag = "SELECT travelchecklist.checklist_item.id AS itemId,\n" +
+internal const val categoriesByTag = "SELECT travelchecklist.checklist_item.id AS itemId,\n" +
     "travelchecklist.checklist_item.title AS itemTitle,\n" +
     "travelchecklist.checklist_item.priority AS itemPriority,\n" +
     "travelchecklist.checklist_item.optional AS itemIsOptional,\n" +

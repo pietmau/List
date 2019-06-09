@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import kotlinx.android.synthetic.main.row.view.*
 
 class TagsAdapter(
-    private val tags: MutableList<TagImpl>,
-    private val itemTags: MutableList<TagImpl>
+    private val tags: MutableList<Tag>,
+    private val itemTags: MutableList<Tag>
 ) :
     RecyclerView.Adapter<TagHolder>() {
 
@@ -21,11 +22,11 @@ class TagsAdapter(
         return TagHolder(view)
     }
 
-    private fun add(tag: TagImpl) {
+    private fun add(tag: Tag) {
         itemTags.add(tag)
     }
 
-    private fun remosssve(tag: TagImpl) {
+    private fun remove(tag: Tag) {
         itemTags.remove(itemTags.find { it.id == tag.id })
     }
 
@@ -33,13 +34,13 @@ class TagsAdapter(
 
     override fun onBindViewHolder(tagHolder: TagHolder, position: Int) {
         val checkListItemImpl = tags[position]
-        tagHolder.bind(checkListItemImpl, isSelected(checkListItemImpl)){ tag:TagImpl ->
-            if (isSelected(tag)) remosssve(tag) else add(tag)
+        tagHolder.bind(checkListItemImpl, isSelected(checkListItemImpl)){ tag:Tag ->
+            if (isSelected(tag)) remove(tag) else add(tag)
             notifyItemChanged(position)
         }
     }
 
-    private fun isSelected(checkListItemImpl: TagImpl) =
+    private fun isSelected(checkListItemImpl: Tag) =
         itemTags.find { it.id == checkListItemImpl.id } != null
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -53,9 +54,9 @@ class TagHolder(private val view: View) :
     RecyclerView.ViewHolder(view) {
 
     fun bind(
-        tagImpl: TagImpl,
+        tagImpl: Tag,
         selected: Boolean,
-        function: (TagImpl) -> Unit
+        function: (Tag) -> Unit
     ) {
         itemView.textview.text = tagImpl.title
         itemView.setBackgroundColor(if (selected) Color.YELLOW else Color.WHITE)

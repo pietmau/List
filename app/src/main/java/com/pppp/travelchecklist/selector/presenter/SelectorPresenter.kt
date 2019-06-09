@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.arch.lifecycle.ViewModel
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.CheckListImpl
-import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.model.Destination
@@ -53,31 +53,31 @@ class SelectorPresenter(
         subscription.dispose()
     }
 
-    override fun onAccomodationSelected(accomodation: TagImpl) {
+    override fun onAccomodationSelected(accomodation: Tag) {
         selection.onAccomodationSelected(accomodation)
     }
 
-    override fun onWeatherSelected(weather: TagImpl) {
+    override fun onWeatherSelected(weather: Tag) {
         selection.onWeatherSelected(weather)
     }
 
-    override fun onDurationSelected(duration: TagImpl) {
+    override fun onDurationSelected(duration: Tag) {
         selection.onDurationSelected(duration)
     }
 
-    override fun onPlannedActivitySelected(plannedActivity: TagImpl) {
+    override fun onPlannedActivitySelected(plannedActivity: Tag) {
         selection.onPlannedActivitySelected(plannedActivity)
     }
 
-    override fun onPlannedActivityDeselected(plannedActivity: TagImpl) {
+    override fun onPlannedActivityDeselected(plannedActivity: Tag) {
         selection.onPlannedActivityDeselected(plannedActivity)
     }
 
-    override fun onWhoisTravellingSelected(traveller: TagImpl) {
+    override fun onWhoisTravellingSelected(traveller: Tag) {
         selection.onWhoisTravellingSelected(traveller)
     }
 
-    override fun onWhoisTravellingDeSelected(tag: TagImpl) {
+    override fun onWhoisTravellingDeSelected(tag: Tag) {
         selection.onWhoisTravellingDeSelected(tag)
     }
 

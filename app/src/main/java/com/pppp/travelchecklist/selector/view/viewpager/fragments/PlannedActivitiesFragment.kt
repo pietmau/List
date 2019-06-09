@@ -26,12 +26,12 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
         strip.setItemsSelected(group)
     }
 
-    override fun onItemSelected(item: TagImpl) {
+    override fun onItemSelected(item: Tag) {
         super.onItemSelected(item)
         callback.onPlannedActivitySelected(item)
     }
 
-    override fun onItemDeSelected(item: TagImpl) {
+    override fun onItemDeSelected(item: Tag) {
         super.onItemDeSelected(item)
         callback.onPlannedActivityDeselected(item)
     }

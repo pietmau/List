@@ -83,7 +83,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     }
 
     interface Callback {
-        fun onItemSelected(item: TagImpl)
-        fun onItemDeSelected(item: TagImpl)
+        fun onItemSelected(item: Tag)
+        fun onItemDeSelected(item: Tag)
     }
 }

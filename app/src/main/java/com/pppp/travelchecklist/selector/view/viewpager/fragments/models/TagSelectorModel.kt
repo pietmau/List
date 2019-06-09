@@ -36,17 +36,17 @@ abstract class TagSelectorModel(private val db: CheckListDatabase, private val i
         }
     }
 
-    fun onTagSelected(tag: TagImpl) {
+    fun onTagSelected(tag: Tag) {
         setSelected(tag, true)
     }
 
-    private fun setSelected(tag: TagImpl, selected: Boolean) {
+    private fun setSelected(tag: Tag, selected: Boolean) {
         if (tags[tag] != null) {
             tags[tag] = selected
         }
     }
 
-    fun onTagDeSeleected(tag: TagImpl) {
+    fun onTagDeSeleected(tag: Tag) {
         setSelected(tag, false)
     }
 }

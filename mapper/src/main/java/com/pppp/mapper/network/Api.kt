@@ -1,5 +1,8 @@
 package com.pppp.mapper.network
 
+import com.pietrantuono.entities.Category
+import com.pietrantuono.entities.CheckListItem
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TagImpl
@@ -12,7 +15,7 @@ import retrofit2.http.POST
 interface Api {
 
     @GET("prod/categories")
-    suspend fun getCategories(): List<CategoryImpl>
+    suspend fun getCategories(): List<Category>
 
     @GET("prod/tags")
     suspend fun getTags(): List<TagImpl>

@@ -25,12 +25,12 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
         strip.setItemsSelected(group)
     }
 
-    override fun onItemSelected(tag: TagImpl) {
+    override fun onItemSelected(tag: Tag) {
         super.onItemSelected(tag)
         callback.onWhoisTravellingSelected(tag)
     }
 
-    override fun onItemDeSelected(item: TagImpl) {
+    override fun onItemDeSelected(item: Tag) {
         super.onItemDeSelected(item)
         callback.onWhoisTravellingDeSelected(item)
     }

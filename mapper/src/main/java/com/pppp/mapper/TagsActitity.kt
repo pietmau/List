@@ -3,6 +3,8 @@ package com.pppp.mapper
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.pietrantuono.entities.CheckListItem
+import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.mapper.network.Client
@@ -27,6 +29,7 @@ class TagsActitity : AppCompatActivity() {
                     setUpRecycler(tags, items)
                 }
             } catch (ignored: Exception) {
+
             }
         }
         save.setOnClickListener {
@@ -38,7 +41,7 @@ class TagsActitity : AppCompatActivity() {
         }
     }
 
-    private fun setUpRecycler(tags: List<TagImpl>, items: List<CheckListItemImpl>) {
+    private fun setUpRecycler(tags: List<Tag>, items: List<CheckListItem>) {
         val id = getItemId() ?: return
         val item = items.find { item -> item.id == id } ?: return
         itemTitle.text = intent.getStringExtra("title")

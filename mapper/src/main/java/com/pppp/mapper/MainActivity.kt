@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.mapper.network.Client
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun ggg() {}
 
     private fun setUpAdapter(
-        items: List<CheckListItemImpl>,
+        items: List<CheckListItem>,
         tags: List<TagImpl>
     ) {
         recycler.layoutManager = LinearLayoutManager(this)

@@ -1,9 +1,10 @@
-package com.pppp.travelchecklist.server.mapping
+package com.pppp.travelchecklist.server.lambdas
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.pppp.travelchecklist.server.database.DatabaseConnector
 import com.pppp.travelchecklist.server.database.DatabaseConnectorImpl
+import com.pppp.travelchecklist.server.mapping.Mapping
 
 class MultipleMappingHandler : RequestHandler<Mapping, List<String>> {
 

@@ -1,25 +1,25 @@
 package com.pppp.travelchecklist.selector.view
 
-import com.pppp.entities.pokos.TagImpl
+import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.selector.model.Destination
 
 interface SelectorCallback {
 
     fun onFinishClicked()
 
-    fun onAccomodationSelected(accomodation: TagImpl)
+    fun onAccomodationSelected(accomodation: Tag)
 
-    fun onWeatherSelected(weather: TagImpl)
+    fun onWeatherSelected(weather: Tag)
 
-    fun onDurationSelected(duration: TagImpl)
+    fun onDurationSelected(duration: Tag)
 
-    fun onPlannedActivitySelected(plannedActivity: TagImpl)
+    fun onPlannedActivitySelected(plannedActivity: Tag)
 
-    fun onPlannedActivityDeselected(plannedActivity: TagImpl)
+    fun onPlannedActivityDeselected(plannedActivity: Tag)
 
-    fun onWhoisTravellingSelected(traveller: TagImpl)
+    fun onWhoisTravellingSelected(traveller: Tag)
 
-    fun onWhoisTravellingDeSelected(traveller: TagImpl)
+    fun onWhoisTravellingDeSelected(traveller: Tag)
 
     fun onDestinationSelected(destination: Destination)
 

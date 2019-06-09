@@ -1,4 +1,4 @@
-import com.pppp.travelchecklist.server.categories.GetCategories
+import com.pppp.travelchecklist.server.lambdas.GetCategories
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.LambdaLogger
 import io.mockk.every

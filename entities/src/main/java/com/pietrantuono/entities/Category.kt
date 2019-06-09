@@ -5,5 +5,5 @@ interface Category {
     val title: String
     val description: String?
     val items: List<CheckListItem>
-    val id: String
+    val id: Long
 }

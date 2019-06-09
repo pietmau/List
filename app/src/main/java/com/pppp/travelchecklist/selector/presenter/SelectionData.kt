@@ -1,45 +1,45 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.os.Parcelable
-import com.pppp.entities.pokos.TagImpl
+import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.selector.model.Destination
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class SelectionData() : Parcelable {
 
-    var accomodation: TagImpl? = null
-    var weather: TagImpl? = null
-    var duration: TagImpl? = null
-    val plannedActivities = mutableListOf<TagImpl>()
-    val travellers = mutableListOf<TagImpl>()
+    var accomodation: Tag? = null
+    var weather: Tag? = null
+    var duration: Tag? = null
+    val plannedActivities = mutableListOf<Tag>()
+    val travellers = mutableListOf<Tag>()
     var destination: Destination? = null
 
-    fun onAccomodationSelected(accomodation: TagImpl) {
+    fun onAccomodationSelected(accomodation: Tag) {
         this.accomodation = accomodation
     }
 
-    fun onWeatherSelected(weather: TagImpl) {
+    fun onWeatherSelected(weather: Tag) {
         this.weather = weather
     }
 
-    fun onDurationSelected(duration: TagImpl) {
+    fun onDurationSelected(duration: Tag) {
         this.duration = duration
     }
 
-    fun onPlannedActivitySelected(plannedActivity: TagImpl) {
+    fun onPlannedActivitySelected(plannedActivity: Tag) {
         plannedActivities.add(plannedActivity)
     }
 
-    fun onPlannedActivityDeselected(plannedActivity: TagImpl) {
+    fun onPlannedActivityDeselected(plannedActivity: Tag) {
         plannedActivities.remove(plannedActivity)
     }
 
-    fun onWhoisTravellingSelected(traveller: TagImpl) {
+    fun onWhoisTravellingSelected(traveller: Tag) {
         travellers.add(traveller)
     }
 
-    fun onWhoisTravellingDeSelected(traveller: TagImpl) {
+    fun onWhoisTravellingDeSelected(traveller: Tag) {
         travellers.remove(traveller)
     }
 
@@ -47,7 +47,7 @@ class SelectionData() : Parcelable {
         this.destination = destination
     }
 
-    fun toList(): List<TagImpl> {
+    fun toList(): List<Tag> {
         var list = plannedActivities + travellers
         accomodation?.let {
             list += it

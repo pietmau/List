@@ -11,7 +11,7 @@ import com.pppp.entities.pokos.TagImpl
 import kotlinx.android.synthetic.main.row.view.*
 
 class ItemsTagsAdapter(
-    private val items: List<CheckListItemImpl>,
+    private val items: List<CheckListItem>,
     private val tags: List<TagImpl>,
     private val callback: (CheckListItem, List<Tag>) -> Unit
 ) : RecyclerView.Adapter<ItemTagsHolder>() {
@@ -31,7 +31,7 @@ class ItemsTagsAdapter(
 class ItemTagsHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(
-        checkListItemImpl: CheckListItemImpl,
+        checkListItemImpl: CheckListItem,
         callback: (CheckListItem, List<Tag>) -> Unit,
         tags: List<TagImpl>
     ) {

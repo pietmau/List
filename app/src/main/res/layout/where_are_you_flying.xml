@@ -26,6 +26,8 @@
             android:layout_marginLeft="@dimen/spacing_very_big"
             android:layout_marginTop="@dimen/spacing_big"
             android:layout_marginRight="@dimen/spacing_very_big"
+            android:background="@drawable/selector_bg_radio_button"
+            android:textColor="@color/selector_text_radio_button"
             />
 
     </LinearLayout>

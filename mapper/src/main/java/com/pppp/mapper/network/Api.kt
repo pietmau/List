@@ -7,6 +7,7 @@ import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.server.mapping.Mapping
+import okhttp3.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

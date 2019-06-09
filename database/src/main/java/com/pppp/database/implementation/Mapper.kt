@@ -14,7 +14,7 @@ class Mapper {
             .map { doc -> doc to doc.toObject(CategoryImpl::class.java) }
             .filter { (_, item) -> item != null }
             .map { (doc, category) ->
-                category!!.id = doc.id
+                category!!.id = doc.id.toLong()
                 category!!
             }
 
@@ -24,7 +24,7 @@ class Mapper {
             .map { item -> item to item.toObject(CheckListItemImpl::class.java) }
             .filter { (_, item) -> item != null }
             .map { (doc, item) ->
-                item!!.id = doc.id
+                item!!.id = doc.id.toLong()
                 item!!
             }
 

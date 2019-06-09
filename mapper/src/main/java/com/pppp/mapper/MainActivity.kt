@@ -23,16 +23,14 @@ class MainActivity : AppCompatActivity() {
             try {
                 val items = Client.getItems()
                 withContext(Dispatchers.Main) {
-                    setUpAdapter(items, emptyList())
+                        setUpAdapter(items, emptyList())
                 }
             } catch (ignored: Exception) {
-                ggg()
+
             }
         }
 
     }
-
-    private fun ggg() {}
 
     private fun setUpAdapter(
         items: List<CheckListItem>,

@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.selector.presenter
 
 import android.arch.lifecycle.ViewModel
+import com.pietrantuono.entities.CheckList
 import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.CheckListImpl
 import com.pppp.travelchecklist.R
@@ -22,7 +23,7 @@ class SelectorPresenter(
     private val workerThread: Scheduler
 ) : ViewModel(), SelectorCallback {
     private var view: ISelectorView? = null
-    private val subject = BehaviorSubject.create<CheckListImpl>()
+    private val subject = BehaviorSubject.create<CheckList>()
     private lateinit var subscription: Disposable
 
     override fun onFinishClicked() {
@@ -41,8 +42,8 @@ class SelectorPresenter(
         this.view = view
         subscription = subject
             .observeOn(mainThread)
-            .subscribeWith(object : SimpleDisposableObserver<CheckListImpl>() {
-                override fun onNext(t: CheckListImpl) {
+            .subscribeWith(object : SimpleDisposableObserver<CheckList>() {
+                override fun onNext(t: CheckList) {
 
                 }
             })

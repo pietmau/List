@@ -7,7 +7,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 object Client {
     private var service: Api
 
@@ -30,6 +29,4 @@ object Client {
     internal suspend fun getItems() = service.getItems()
 
     internal suspend fun mapping(map: Mapping) = service.mapping(map)
-
-
 }

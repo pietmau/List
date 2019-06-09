@@ -112,12 +112,11 @@ class DaoImpl(
         val title = result.getString(TITLE)
         val description = result.getString(DESCRIPTION)
         val id = result.getLong(ID)
-        val checked = result.getBoolean(CHECKED)
         val priority = result.getInt(PRIORITY)
         val optional = result.getBoolean(OPTIONAL)
         return ServerCheckListItem(
             title,
-            checked,
+            false,
             priority,
             description,
             categoryId,
@@ -131,12 +130,11 @@ class DaoImpl(
         val title = result.getString(TITLE)
         val description = result.getString(DESCRIPTION)
         val itemId = result.getLong(ID)
-        val checked = result.getBoolean(CHECKED)
         val priority = result.getInt(PRIORITY)
         val optional = result.getBoolean(OPTIONAL)
         return ServerCheckListItem(
             title,
-            checked,
+            false,
             priority,
             description,
             categoryId,

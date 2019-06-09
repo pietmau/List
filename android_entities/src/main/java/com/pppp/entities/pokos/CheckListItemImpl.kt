@@ -15,8 +15,8 @@ data class CheckListItemImpl @JvmOverloads constructor(
     override var description: String? = null,
     override var tags: List<TagImpl> = emptyList(),
     override var optional: Boolean = false,
-    override val category_id: String
+    override val category_id: Long
 ) : Parcelable, CheckListItem {
     @get:[Exclude]
-    override var id: String? = null
+    override var id: Long = -1
 }

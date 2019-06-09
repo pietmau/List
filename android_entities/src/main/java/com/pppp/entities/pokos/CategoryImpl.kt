@@ -14,5 +14,5 @@ data class CategoryImpl @JvmOverloads constructor(
     override val items: List<CheckListItemImpl> = emptyList()) : Parcelable, Category {
 
     @get:[Exclude]
-    override var id: String = ""
+    override var id: Long = -1
 }

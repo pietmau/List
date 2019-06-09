@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag
-import com.pppp.entities.pokos.CheckListItemImpl
-import com.pppp.entities.pokos.TagImpl
 import com.pppp.mapper.network.Client
 import com.pppp.travelchecklist.server.mapping.Mapping
 import kotlinx.android.synthetic.main.activity_tags.*
@@ -14,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class TagsActitity : AppCompatActivity() {
 
@@ -35,8 +32,8 @@ class TagsActitity : AppCompatActivity() {
         save.setOnClickListener {
             val tags = (recycler.adapter as TagsAdapter).getTags().map { it.id }.filterNotNull()
             GlobalScope.launch {
-                val kkk = Mapping(getItemId(), tags)
-                Client.mapping(kkk)
+                val mapping = Mapping(getItemId(), tags)
+                Client.mapping(mapping)
             }
         }
     }
@@ -49,5 +46,5 @@ class TagsActitity : AppCompatActivity() {
         recycler.adapter = TagsAdapter(tags.toMutableList(), item.tags.toMutableList())
     }
 
-    private fun getItemId() = intent.getStringExtra("itemId")
+    private fun getItemId() = intent.getLongExtra("itemId", -1)
 }

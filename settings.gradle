@@ -1,1 +1,1 @@
-include ':app', ':uploader', ':android_entities', ':database', ':server', ':entities', ':mapper'
+include ':app', ':uploader', ':android_entities', ':server', ':entities', ':mapper'

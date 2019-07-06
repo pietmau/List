@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.application.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
-import com.pppp.database.CheckListDatabase
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.CheckListDatabase
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.database.DestinationPresenter

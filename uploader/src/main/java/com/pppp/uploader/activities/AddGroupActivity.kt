@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.entities.pokos.TagsGroupImpl

@@ -2,11 +2,8 @@ package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
 
 import android.arch.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
-import com.pppp.database.CheckListDatabase
-import com.pppp.entities.pokos.TagImpl
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 abstract class TagSelectorModel(private val db: CheckListDatabase, private val id: Long, private val scheduler: Scheduler = Schedulers.io()) : ViewModel() {

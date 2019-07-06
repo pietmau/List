@@ -1,7 +1,6 @@
 package com.pppp.uploader
 
-import com.pppp.database.CheckListDatabase
-import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.CheckListDatabase
 import dagger.Module
 import dagger.Provides
 
@@ -9,6 +8,6 @@ import dagger.Provides
 class Module {
 
     @Provides
-    fun provideDatabse(): CheckListDatabase =
+    fun provideDatabse(): com.pppp.travelchecklist.selector.view.viewpager.fragments.models.CheckListDatabase =
         CloudFirestoreCheckListDatabase()
 }

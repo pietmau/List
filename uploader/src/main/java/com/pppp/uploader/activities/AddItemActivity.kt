@@ -9,7 +9,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
-import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TagImpl

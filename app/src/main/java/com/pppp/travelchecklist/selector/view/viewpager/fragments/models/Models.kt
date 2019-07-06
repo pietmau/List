@@ -2,7 +2,6 @@ package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.pppp.database.CheckListDatabase
 
 class ExpectedWeatherModel(val db: CheckListDatabase, val id: Long) : TagSelectorModel(db, id)
 
@@ -12,7 +11,7 @@ class LongOrShortTripModel(val db: CheckListDatabase, val id: Long) : TagSelecto
 
 class PlannedActivitesModel(val db: CheckListDatabase, val id: Long) : TagSelectorModel(db, id)
 
-class WhoIsTravellingModel(db: CheckListDatabase, id: Long) : TagSelectorModel(db, id)
+class WhoIsTravellingModel(val db: CheckListDatabase, id: Long) : TagSelectorModel(db, id)
 
 class ExpectedWeatherModelFactory(private val db: CheckListDatabase) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =

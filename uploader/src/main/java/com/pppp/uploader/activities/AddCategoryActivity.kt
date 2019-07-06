@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
-import com.pppp.database.implementation.CloudFirestoreCheckListDatabase
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.uploader.R
 import kotlinx.android.synthetic.main.add_category_activity.*

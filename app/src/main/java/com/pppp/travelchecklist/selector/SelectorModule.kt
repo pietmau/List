@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.selector
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
-import com.pppp.database.CheckListDatabase
+import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.CheckListDatabase
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenterFactory

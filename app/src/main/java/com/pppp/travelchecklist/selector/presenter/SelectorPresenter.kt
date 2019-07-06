@@ -33,7 +33,6 @@ class SelectorPresenter(
             listGenerator.generate(selection)
                 .subscribeOn(workerThread)
                 .observeOn(mainThread)
-                .doOnNext { subject.onNext(it) }
                 .subscribe({
 
                 }, {

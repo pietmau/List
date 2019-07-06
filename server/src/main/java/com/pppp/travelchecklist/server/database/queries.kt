@@ -4,19 +4,7 @@ internal const val getTagsWithGroup = "SELECT  travelchecklist.tags.id as tagsId
     "travelchecklist.tags_group.id as groupId\n" +
     "FROM travelchecklist.tags JOIN travelchecklist.tags_group ON travelchecklist.tags.group = travelchecklist.tags_group.id;"
 
-internal const val categoriesByTag = "SELECT travelchecklist.checklist_item.id AS itemId,\n" +
-    "travelchecklist.checklist_item.title AS itemTitle,\n" +
-    "travelchecklist.checklist_item.priority AS itemPriority,\n" +
-    "travelchecklist.checklist_item.optional AS itemIsOptional,\n" +
-    "travelchecklist.category.id AS categoryId,\n" +
-    "travelchecklist.category.title AS categoryTitle \n" +
-    "FROM travelchecklist.tags_to_items JOIN travelchecklist.checklist_item\n" +
-    "ON  travelchecklist.tags_to_items.item_id = travelchecklist.checklist_item.id\n" +
-    "JOIN travelchecklist.category ON travelchecklist.category.id =  travelchecklist.checklist_item.category_id\n" +
-    "WHERE"
-
-
-
+internal const val categoriesByTag = "SELECT travelchecklist.checklist_item.id AS itemId, travelchecklist.checklist_item.title AS itemTitle, travelchecklist.checklist_item.priority AS itemPriority, travelchecklist.checklist_item.optional AS itemIsOptional, travelchecklist.category.id AS categoryId, travelchecklist.category.title AS categoryTitle FROM travelchecklist.tags_to_items JOIN travelchecklist.checklist_item ON  travelchecklist.tags_to_items.item_id = travelchecklist.checklist_item.id JOIN travelchecklist.category ON travelchecklist.category.id =  travelchecklist.checklist_item.category_id"
 
 internal val groupTitle = "groupTitle"
 internal val tagTitle = "tagTitle"

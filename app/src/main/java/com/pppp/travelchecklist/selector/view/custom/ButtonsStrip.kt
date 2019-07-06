@@ -41,6 +41,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     fun setItems(items: List<Tag>) {
         this.items.clear()
         this.items.addAll(items)
+        box.removeAllViews()
         items.forEachWithIndex { index, item -> addItem(item, index) }
     }
 

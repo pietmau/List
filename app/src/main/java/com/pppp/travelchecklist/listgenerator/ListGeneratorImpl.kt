@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.listgenerator
 
+import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckList
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.api.Client
@@ -13,11 +14,15 @@ class ListGeneratorImpl(private val retrofitClient: Client) : ListGenerator {
         retrofitClient.generateChecklist(selection.toList() as List<TagImpl>)
             .subscribeOn(Schedulers.io())
             .subscribe({
-
+                foo(it)
             }, {
 
             })
 
         return Observable.empty()
+    }
+
+    private fun foo(it: List<Category>?) {
+
     }
 }

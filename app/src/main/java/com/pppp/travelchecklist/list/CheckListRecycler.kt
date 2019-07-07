@@ -27,7 +27,7 @@ class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(c
             return
         }
         val old = (adapter as CheckListAdapter).items
-        DiffUtil.calculateDiff(DiffCallback(old, aNew)).dispatchUpdatesTo(adapter)
+        //DiffUtil.calculateDiff(DiffCallback(old, aNew)).dispatchUpdatesTo(adapter)
     }
 }
 

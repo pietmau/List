@@ -1,5 +1,7 @@
 package com.pppp.travelchecklist.application.di
 
+import com.pppp.travelchecklist.login.LoginComponent
+import com.pppp.travelchecklist.login.LoginModule
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.di.MainSubComponent
 import com.pppp.travelchecklist.model.DatabaseModule
@@ -14,4 +16,6 @@ interface AppComponent {
     fun with(module: MainModule): MainSubComponent
 
     fun with(module: SelectorModule): SelectorComponent
+
+    fun with(module: LoginModule): LoginComponent
 }

@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.selector.model.models
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 
 class ExpectedWeatherModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModel(db, id)
 

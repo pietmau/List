@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.list
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.pppp.entities.pokos.CategoryImpl
@@ -14,7 +14,7 @@ class CheckListAdapter(
     var items: List<CategoryImpl>,
     private val callback: CheckListCard.Callback?
 
-) : RecyclerView.Adapter<CheckListHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<CheckListHolder>() {
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int) {
         holder.bind(items.get(position), position, callback)

@@ -1,6 +1,6 @@
 package com.pppp.uploader.activities
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.uploader.R
 
 class CategoryAdapter(var items: List<CategoryImpl>, private val listener: (CategoryImpl) -> Unit) :
-    RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+    androidx.recyclerview.widget.RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
@@ -22,7 +22,7 @@ class CategoryAdapter(var items: List<CategoryImpl>, private val listener: (Cate
         holder.bind(items[position], listener)
     }
 
-    class CategoryHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class CategoryHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         private val textView: TextView
 
         init {

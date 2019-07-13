@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.card.carditem
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.SeekBar

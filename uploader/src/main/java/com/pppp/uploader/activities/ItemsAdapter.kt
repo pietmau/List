@@ -1,6 +1,6 @@
 package com.pppp.uploader.activities
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -11,7 +11,7 @@ class ItemsAdapter(
     private val items: List<CheckListItemImpl>,
     private val listener: (CheckListItemImpl) -> Unit
 ) :
-    RecyclerView.Adapter<ItemsAdapter.ItemHolder>() {
+    androidx.recyclerview.widget.RecyclerView.Adapter<ItemsAdapter.ItemHolder>() {
 
     override fun getItemCount() = items.size
 
@@ -24,7 +24,7 @@ class ItemsAdapter(
         holder.bind(items[position], listener)
     }
 
-    class ItemHolder(private val textView: TextView) : RecyclerView.ViewHolder(textView) {
+    class ItemHolder(private val textView: TextView) : androidx.recyclerview.widget.RecyclerView.ViewHolder(textView) {
 
         fun bind(item: CheckListItemImpl, listener: (CheckListItemImpl) -> Unit) {
             textView.tag = item

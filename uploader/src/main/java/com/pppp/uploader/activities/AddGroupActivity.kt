@@ -3,8 +3,8 @@ package com.pppp.uploader.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -63,7 +63,7 @@ open class AddGroupActivity : AppCompatActivity() {
 
     fun onTagsAvailable(taglist: List<TagImpl>?) {
         taglist ?: return
-        tags.layoutManager = LinearLayoutManager(this)
+        tags.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, ::onTagSelecged)
     }
 

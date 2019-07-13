@@ -1,6 +1,6 @@
 package com.pppp.uploader.activities
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.pppp.entities.pokos.TagImpl
 import com.pppp.uploader.R
 
 class TagsAdapter(private val tags: List<TagImpl>, private val listener: (TagImpl) -> Unit) :
-    RecyclerView.Adapter<TagsAdapter.TagsHolder>() {
+    androidx.recyclerview.widget.RecyclerView.Adapter<TagsAdapter.TagsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagsHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
@@ -22,7 +22,7 @@ class TagsAdapter(private val tags: List<TagImpl>, private val listener: (TagImp
         holder.bind(tags[position], listener)
     }
 
-    class TagsHolder(val v: View) : RecyclerView.ViewHolder(v) {
+    class TagsHolder(val v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
         private val tv = v.findViewById<TextView>(R.id.text)
 
         fun bind(tag: TagImpl, listener: (TagImpl) -> Unit) {

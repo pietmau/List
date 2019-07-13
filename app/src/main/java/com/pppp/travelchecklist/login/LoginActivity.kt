@@ -1,9 +1,9 @@
 package com.pppp.travelchecklist.login
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.pppp.travelchecklist.application.App
 import javax.inject.Inject

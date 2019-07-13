@@ -1,6 +1,6 @@
 package com.pppp.mapper
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ class ItemsTagsAdapter(
     private val items: List<CheckListItem>,
     private val tags: List<TagImpl>,
     private val callback: (CheckListItem, List<Tag>) -> Unit
-) : RecyclerView.Adapter<ItemTagsHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<ItemTagsHolder>() {
     override fun getItemCount() = items.count()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, p1: Int): ItemTagsHolder {
@@ -28,7 +28,7 @@ class ItemsTagsAdapter(
 
 }
 
-class ItemTagsHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class ItemTagsHolder(private val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
     fun bind(
         checkListItemImpl: CheckListItem,

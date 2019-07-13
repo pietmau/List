@@ -1,7 +1,7 @@
 package com.pppp.mapper
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +13,9 @@ class TagsAdapter(
     private val tags: MutableList<Tag>,
     private val itemTags: MutableList<Tag>
 ) :
-    RecyclerView.Adapter<TagHolder>() {
+    androidx.recyclerview.widget.RecyclerView.Adapter<TagHolder>() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): TagHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.row, viewGroup, false)
@@ -43,7 +43,7 @@ class TagsAdapter(
     private fun isSelected(checkListItemImpl: Tag) =
         itemTags.find { it.id == checkListItemImpl.id } != null
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         this.recyclerView = recyclerView
     }
 
@@ -51,7 +51,7 @@ class TagsAdapter(
 }
 
 class TagHolder(private val view: View) :
-    RecyclerView.ViewHolder(view) {
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
     fun bind(
         tagImpl: Tag,

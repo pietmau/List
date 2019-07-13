@@ -3,8 +3,8 @@ package com.pppp.uploader.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.pppp.entities.pokos.TagImpl
@@ -45,7 +45,7 @@ class AddTagActivity : AppCompatActivity() {
         itemsOnDb.clear()
         val elements = catgs.map { it.title }.sorted()
         itemsOnDb.addAll(elements)
-        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recycler.adapter = TagsAdapter(catgs.sortedBy { it.title }, {})
     }
 

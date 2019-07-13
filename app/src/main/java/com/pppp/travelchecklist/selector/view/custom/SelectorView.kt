@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.selector.view.custom
 
 import android.content.Context
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +39,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     }
 
     private fun setUp() {//TODO still needed?
-        flipper.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+        flipper.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 onPageChanged(position)
             }

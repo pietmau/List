@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.selector.view.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.design.widget.FloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.util.AttributeSet
 import com.pppp.travelchecklist.R
 

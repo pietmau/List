@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.selector.model.models
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import io.reactivex.Observable
 import io.reactivex.Scheduler

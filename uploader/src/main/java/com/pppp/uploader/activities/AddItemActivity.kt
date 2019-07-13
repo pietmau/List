@@ -3,9 +3,9 @@ package com.pppp.uploader.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
@@ -36,7 +36,7 @@ open class AddItemActivity : AppCompatActivity() {
     private fun onItemsAvailable(items: List<CheckListItemImpl>) {
         itemsOnDb.clear()
         itemsOnDb.addAll(items.map { it.title }.toHashSet())
-        itemsrv.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+        itemsrv.layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(1, androidx.recyclerview.widget.StaggeredGridLayoutManager.HORIZONTAL)
         itemsrv.adapter = ItemsAdapter(items.sortedBy { it.title }, ::onItemClicked)
     }
 
@@ -97,13 +97,13 @@ open class AddItemActivity : AppCompatActivity() {
 
     fun onTagsAvailable(taglist: List<TagImpl>?) {
         taglist ?: return
-        tags.layoutManager = LinearLayoutManager(this)
+        tags.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         tags.adapter = TagsAdapter(taglist.sortedBy { it.title }, ::onTagSelecged)
     }
 
     fun onCategoriesAvailable(catgs: List<CategoryImpl>?) {
         catgs ?: return
-        categories.layoutManager = LinearLayoutManager(this)
+        categories.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         categories.adapter = CategoryAdapter(catgs.sortedBy { it.title }, ::onCategoryClicked)
     }
 

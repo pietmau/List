@@ -1,10 +1,10 @@
 package com.pppp.travelchecklist.list
 
 import android.content.Context
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.travelchecklist.R
@@ -16,7 +16,7 @@ class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(c
 
     init {
         layoutManager = LinearLayoutManager(context)
-        val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
+        val dividerItemDecoration = DividerItemDecoration(context, androidx.recyclerview.widget.RecyclerView.VERTICAL)
         dividerItemDecoration.setDrawable(context.resources.getDrawable(R.drawable.divider))
         addItemDecoration(dividerItemDecoration)
     }

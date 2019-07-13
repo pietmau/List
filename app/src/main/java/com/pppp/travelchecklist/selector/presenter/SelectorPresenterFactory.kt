@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.selector.presenter
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.selector.presenter
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator

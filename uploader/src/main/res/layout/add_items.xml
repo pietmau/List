@@ -11,10 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemsrv"
             android:layout_width="match_parent"
-            android:layout_height="50dp"></android.support.v7.widget.RecyclerView>
+            android:layout_height="50dp"></androidx.recyclerview.widget.RecyclerView>
 
         <EditText
             android:inputType="textCapSentences"
@@ -39,7 +39,7 @@
             android:layout_margin="8dp"
             android:hint="description" />
 
-        <android.support.v7.widget.AppCompatCheckBox
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:checked="false"
             android:id="@+id/check"
             android:layout_width="wrap_content"
@@ -50,11 +50,11 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_bright"></android.support.v7.widget.RecyclerView>
+                android:background="@android:color/holo_blue_bright"></androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 
@@ -81,11 +81,11 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tags"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_bright"></android.support.v7.widget.RecyclerView>
+                android:background="@android:color/holo_blue_bright"></androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 

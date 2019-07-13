@@ -1,15 +1,15 @@
 package com.pppp.travelchecklist
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String): T? {
+inline fun <reified T : androidx.fragment.app.Fragment> androidx.fragment.app.FragmentActivity.findFragmentByTag(tag: String): T? {
     val fragment = supportFragmentManager.findFragmentByTag(tag)
     if (fragment is T) {
         return fragment
@@ -17,7 +17,7 @@ inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String
     return null
 }
 
-val AppCompatActivity.fragmentTransaction: FragmentTransaction
+val AppCompatActivity.fragmentTransaction: androidx.fragment.app.FragmentTransaction
     get() = supportFragmentManager.beginTransaction()
 
 fun View.getChildren(): List<View> {

@@ -1,14 +1,14 @@
 package com.pppp.travelchecklist.selector.view.viewpager
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.*
 
-class SelectionViewPagerAdapter(fragmentManager: FragmentManager) :
+class SelectionViewPagerAdapter(fragmentManager: androidx.fragment.app.FragmentManager) :
     FragmentPagerAdapter(fragmentManager) {
 
-    override fun getItem(position: Int): Fragment =
+    override fun getItem(position: Int): androidx.fragment.app.Fragment =
         when (position) {
             0 -> WhoIsTravellingFragment()
             1 -> DestinationFragment()

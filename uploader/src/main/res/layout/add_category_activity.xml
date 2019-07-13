@@ -21,13 +21,13 @@
         android:layout_margin="8dp"
         android:hint="description" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_above="@+id/button"
         android:layout_below="@+id/description"
-        android:background="@android:color/holo_blue_bright"></android.support.v7.widget.RecyclerView>
+        android:background="@android:color/holo_blue_bright"></androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/button"

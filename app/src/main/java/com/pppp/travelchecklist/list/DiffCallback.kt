@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.list
 
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListItemImpl
 

@@ -2,8 +2,8 @@ package com.pppp.travelchecklist.selector.view.viewpager
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.v4.app.FragmentActivity
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
@@ -17,7 +17,7 @@ class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: Attri
         get() = currentItem > 0
 
     init {
-        val fragmentManager = (context as FragmentActivity).supportFragmentManager
+        val fragmentManager = (context as androidx.fragment.app.FragmentActivity).supportFragmentManager
         adapter = SelectionViewPagerAdapter(fragmentManager)
         offscreenPageLimit = adapter!!.count
         if (isMarshmallowOrAbove) {

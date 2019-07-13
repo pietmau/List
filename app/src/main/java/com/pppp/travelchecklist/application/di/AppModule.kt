@@ -2,14 +2,16 @@ package com.pppp.travelchecklist.application.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.CheckListDatabase
+import com.pppp.travelchecklist.selector.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.database.DestinationPresenterImpl
+import com.pppp.travelchecklist.listgenerator.FirebaseTravelChecklistRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.RetrofitRepository
+import com.pppp.travelchecklist.listgenerator.TravelChecklistRepository
+import com.pppp.travelchecklist.selector.model.models.InitialTagsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,10 +38,17 @@ class AppModule(private val context: Context) {
     fun provideClient(): Client = RetrofitClient(URL)
 
     @Provides
-    fun provideListGenarator(db: CheckListDatabase, client: Client): ListGenerator = ListGeneratorImpl(client)
+    fun provideListGenarator(
+        db: InitialTagsRepository,
+        client: Client,
+        travelChecklistRepository: TravelChecklistRepository
+    ): ListGenerator = ListGeneratorImpl(client, travelChecklistRepository, AndroidSchedulers.mainThread(), Schedulers.io())
 
     @Provides
-    fun provideDb(client: Client): CheckListDatabase = RetrofitRepository(client)
+    fun provideListRepository(): TravelChecklistRepository = FirebaseTravelChecklistRepository()
+
+    @Provides
+    fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

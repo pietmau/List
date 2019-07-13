@@ -92,6 +92,9 @@ class SelectorFragment() : Fragment(), SelectorCallback, ISelectorView {
         presenter.onDestinationSelected(destination)
     }
 
+    override fun onListGenerated(checkListId: String) {
+    }
+
     companion object {
         fun newInstance() = SelectorFragment()
         val TAG = SelectorFragment::class.java.simpleName

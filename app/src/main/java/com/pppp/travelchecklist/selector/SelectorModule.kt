@@ -2,11 +2,11 @@ package com.pppp.travelchecklist.selector
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.CheckListDatabase
+import com.pppp.travelchecklist.selector.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenter
 import com.pppp.travelchecklist.selector.presenter.SelectorPresenterFactory
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.*
+import com.pppp.travelchecklist.selector.model.models.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
 import dagger.Provides
@@ -23,7 +23,7 @@ class SelectorModule(private val activity: FragmentActivity) {
         ViewModelProviders.of(activity, factory).get(WhoIsTravellingModel::class.java)
 
     @Provides
-    fun provideWhoIsTravellingModelFactory(db: CheckListDatabase) =
+    fun provideWhoIsTravellingModelFactory(db: InitialTagsRepository) =
         WhoIsTravellingModelFactory(db)
 
     @Provides
@@ -31,7 +31,7 @@ class SelectorModule(private val activity: FragmentActivity) {
         ViewModelProviders.of(activity, factory).get(PlannedActivitesModel::class.java)
 
     @Provides
-    fun providePlannedActivitesModelFactory(db: CheckListDatabase) =
+    fun providePlannedActivitesModelFactory(db: InitialTagsRepository) =
         PlannedActivitesModelFactory(db)
 
     @Provides
@@ -43,7 +43,7 @@ class SelectorModule(private val activity: FragmentActivity) {
         ViewModelProviders.of(activity, factory).get(ExpectedWeatherModel::class.java)
 
     @Provides
-    fun provideExpectedWeatherModelFactory(db: CheckListDatabase) =
+    fun provideExpectedWeatherModelFactory(db: InitialTagsRepository) =
         ExpectedWeatherModelFactory(db)
 
     @Provides
@@ -51,7 +51,7 @@ class SelectorModule(private val activity: FragmentActivity) {
         ViewModelProviders.of(activity, factory).get(AccomodationModel::class.java)
 
     @Provides
-    fun provideAccomodationModelFactory(db: CheckListDatabase) =
+    fun provideAccomodationModelFactory(db: InitialTagsRepository) =
         AccomodationModelFactory(db)
 
     @Provides
@@ -59,7 +59,7 @@ class SelectorModule(private val activity: FragmentActivity) {
         ViewModelProviders.of(activity, factory).get(LongOrShortTripModel::class.java)
 
     @Provides
-    fun provideLongOrShortTripFragmentFactory(db: CheckListDatabase) =
+    fun provideLongOrShortTripFragmentFactory(db: InitialTagsRepository) =
         LongOrShortTripModelFactory(db)
 
 }

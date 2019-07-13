@@ -4,5 +4,8 @@ import com.pppp.travelchecklist.selector.presenter.SelectionData
 
 interface ISelectorView {
     fun onError(string: String)
+
     fun generateAndViewList(selection: SelectionData)
+
+    fun onListGenerated(checkListId: String)
 }

@@ -10,9 +10,10 @@ import javax.inject.Inject
 import com.firebase.ui.auth.ErrorCodes
 import android.app.Activity
 import com.firebase.ui.auth.IdpResponse
+import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.main.MainActivity
 
-class LoginActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
 
     @Inject
@@ -22,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (application as? App)?.appComponent?.with(LoginModule(this))?.inject(this)
         viewStates.states.observe(this, Observer<ViewState> { render(it) })
-
     }
 
     private fun render(state: ViewState?) {
@@ -56,12 +56,10 @@ class LoginActivity : AppCompatActivity() {
                 if (response == null) {
                     return
                 }
-
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
                     return
                 }
             }
         }
     }
-
 }

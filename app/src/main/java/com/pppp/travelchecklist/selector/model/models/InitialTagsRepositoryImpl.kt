@@ -1,15 +1,15 @@
-package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
+package com.pppp.travelchecklist.selector.model.models
 
 import com.pietrantuono.entities.TagsGroup
 import com.pppp.travelchecklist.api.Client
 import io.reactivex.Single
 
-class RetrofitRepository(private val client: Client) : CheckListDatabase {
+class InitialTagsRepositoryImpl(private val client: Client) : InitialTagsRepository {
 
     override fun getTagGroups(): Single<out List<TagsGroup>> = client.getTagsGroup()
 
 }
 
-interface CheckListDatabase {
+interface InitialTagsRepository {
     fun getTagGroups(): Single<out List<TagsGroup>>
 }

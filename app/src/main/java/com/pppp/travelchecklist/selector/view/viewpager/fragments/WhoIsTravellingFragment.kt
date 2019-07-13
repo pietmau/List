@@ -2,9 +2,8 @@ package com.pppp.travelchecklist.selector.view.viewpager.fragments
 
 import android.os.Bundle
 import com.pietrantuono.entities.Tag
-import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
+import com.pppp.travelchecklist.selector.model.models.TagSelectorModel
 import com.pppp.travelchecklist.selector.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import kotlinx.android.synthetic.main.item_selector_fragment.*
 

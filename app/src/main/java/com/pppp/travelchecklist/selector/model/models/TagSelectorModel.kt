@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.selector.view.viewpager.fragments.models
+package com.pppp.travelchecklist.selector.model.models
 
 import android.arch.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
@@ -6,7 +6,8 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 
-abstract class TagSelectorModel(private val db: CheckListDatabase, private val id: Long, private val scheduler: Scheduler = Schedulers.io()) : ViewModel() {
+abstract class TagSelectorModel(private val repository: InitialTagsRepository, private val tagId: Long, private val scheduler: Scheduler = Schedulers.io()) :
+    ViewModel() {
 
     private val tags: MutableMap<Tag, Boolean> = mutableMapOf()
 
@@ -19,13 +20,12 @@ abstract class TagSelectorModel(private val db: CheckListDatabase, private val i
                 .toObservable()
         } else {
             tags.clear()
-            return db.getTagGroups()
+            return repository.getTagGroups()
                 .subscribeOn(scheduler)
                 .toObservable()
                 .flatMap { Observable.fromIterable(it) }
-                .filter { it.id == id }
+                .filter { it.id == tagId }
                 .flatMap { Observable.fromIterable(it.tags) }
-                .sorted { o1, o2 -> o1.title.compareTo(o2.title) }
                 .doOnNext { tags.put(it, false) }
                 .map { it to false }
                 .toList()

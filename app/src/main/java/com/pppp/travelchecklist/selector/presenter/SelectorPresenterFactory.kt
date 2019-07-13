@@ -11,12 +11,7 @@ class SelectorPresenterFactory(
     val resourcesWrapper: ResourcesWrapper,
     val listGenerator: ListGenerator
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        SelectorPresenter(
-            SelectionData(),
-            resourcesWrapper,
-            listGenerator,
-            AndroidSchedulers.mainThread(),
-            Schedulers.io()
-        ) as T
+        SelectorPresenter(SelectionData(), resourcesWrapper, listGenerator) as T
 }

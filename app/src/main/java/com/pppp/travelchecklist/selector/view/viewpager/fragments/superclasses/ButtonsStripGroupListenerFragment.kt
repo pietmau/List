@@ -16,7 +16,7 @@ import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.selector.SelectorComponent
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
-import com.pppp.travelchecklist.selector.view.viewpager.fragments.models.TagSelectorModel
+import com.pppp.travelchecklist.selector.model.models.TagSelectorModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.button_strip_fragment.*

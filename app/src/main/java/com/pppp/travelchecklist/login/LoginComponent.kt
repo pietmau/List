@@ -5,5 +5,5 @@ import dagger.Subcomponent
 @Subcomponent(modules = arrayOf(LoginModule::class))
 interface LoginComponent {
 
-    fun inject(loginActivity: LoginActivity)
+    fun inject(loginActivity: SplashActivity)
 }

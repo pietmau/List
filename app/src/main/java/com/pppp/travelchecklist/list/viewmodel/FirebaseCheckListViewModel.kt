@@ -8,12 +8,18 @@ import com.pppp.travelchecklist.repository.FirebaseTravelChecklistRepository
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import javax.inject.Inject
 
-class FirebaseCheckListViewModel @Inject constructor(
+class FirebaseCheckListViewModel(
     private val listId: String,
     private val repo: TravelChecklistRepository
 ) : CheckListViewModel, ViewModel() {
 
-    override val states: LiveData<CheckListViewModel.ViewState> = MutableLiveData<CheckListViewModel.ViewState>()
+    override val states: MutableLiveData<CheckListViewModel.ViewState> = MutableLiveData<CheckListViewModel.ViewState>()
+
+    init {
+        repo.getUserCheckListAndUpdates(listId, success = {
+            states.postValue(CheckListViewModel.ViewState.Data(it))
+        })
+    }
 
     override fun push(t: CheckListViewModel.ViewEvent) {
 

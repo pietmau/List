@@ -1,18 +1,17 @@
-package com.pppp.travelchecklist.list
+package com.pppp.travelchecklist.list.view.custom
 
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.pppp.entities.pokos.CategoryImpl
+import com.pietrantuono.entities.Category
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
 
 
 class CheckListAdapter(
-    var items: List<CategoryImpl>,
-    private val callback: CheckListCard.Callback?
+    var items: List<Category>,
+    private val callback: CheckListCard.Callback
 
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<CheckListHolder>() {
 

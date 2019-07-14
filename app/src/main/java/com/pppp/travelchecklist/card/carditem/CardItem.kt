@@ -4,13 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
 
 class CardItem(
     context: Context,
-    val data: CheckListItemImpl,
+    val data: CheckListItem,
     val position: Int,
     val callback: Callback
 ) : RelativeLayout(context) {
@@ -20,26 +21,21 @@ class CardItem(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card_item, this, true)
         check.text = data.title
-        check.isChecked = if (data?.checked == true) true else false
+        check.isChecked = data?.checked == true
         settings.setOnClickListener { showSettings() }
         delete.setOnClickListener { showDelete() }
     }
 
     private fun showDelete() {
         callback.onDeleteRequested(position, data)
-        /*activity.alert(context.getString(R.string.delete) + " " + data.title, context.getString(R.string.confirm_delete) + " " + data.title) {
-            noButton { }
-            yesButton { }
-        }.show()*/
     }
 
     private fun showSettings() {
-        callback.onSettingsRequested(position)
-        //CustomAlertDialogBuilder(context, data).create().show()
+        callback.onSettingsRequested(position, data)
     }
 
     interface Callback {
-        fun onDeleteRequested(position: Int, data: CheckListItemImpl)
-        fun onSettingsRequested(position: Int)
+        fun onDeleteRequested(position: Int, data: CheckListItem)
+        fun onSettingsRequested(position: Int, data: CheckListItem)
     }
 }

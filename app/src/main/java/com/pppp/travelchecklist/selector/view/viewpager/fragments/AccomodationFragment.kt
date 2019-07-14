@@ -17,6 +17,6 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
 
     override fun onItemSelected(tag: TagImpl) {
         super.onItemSelected(tag)
-        callback.onAccomodationSelected(tag)
+        callback?.onAccomodationSelected(tag)
     }
 }

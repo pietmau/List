@@ -27,11 +27,11 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
 
     override fun onItemSelected(item: Tag) {
         super.onItemSelected(item)
-        callback.onPlannedActivitySelected(item)
+        callback?.onPlannedActivitySelected(item)
     }
 
     override fun onItemDeSelected(item: Tag) {
         super.onItemDeSelected(item)
-        callback.onPlannedActivityDeselected(item)
+        callback?.onPlannedActivityDeselected(item)
     }
 }

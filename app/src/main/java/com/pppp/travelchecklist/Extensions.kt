@@ -20,7 +20,7 @@ inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String
     return null
 }
 
-val AppCompatActivity.fragmentTransaction: androidx.fragment.app.FragmentTransaction
+val AppCompatActivity.fragmentTransaction: FragmentTransaction
     get() = supportFragmentManager.beginTransaction()
 
 fun View.getChildren(): List<View> {
@@ -38,4 +38,4 @@ val Activity.appComponent: AppComponent?
     get() = (this.application as App).appComponent
 
 val Fragment.appComponent: AppComponent?
-    get() = this.appComponent
+    get() = activity?.appComponent

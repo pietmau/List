@@ -22,8 +22,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     MainView {
-    override val selectionCallback: SelectorCallback
-        get() = (supportFragmentManager.findFragmentById(R.id.container) as SelectorCallback)
+    override val selectionCallback: SelectorCallback?
+        get() = (supportFragmentManager.findFragmentById(R.id.container) as? SelectorCallback)
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun navigateToNewList(checkListId: String) {
+        supportFragmentManager.findFragmentById(R.id.container)?.let { fragmentTransaction.remove(it) }
         fragmentTransaction.replace(R.id.container, ViewCheckListFragment.fromSelection(checkListId), ViewCheckListFragment.TAG).commit()
     }
 

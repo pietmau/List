@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 19
@@ -39,8 +39,7 @@ configurations.all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    implementation "com.google.firebase:firebase-firestore:17.1.1"
+    implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
     api project(path: ':entities')
 }
 

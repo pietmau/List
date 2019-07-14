@@ -4,22 +4,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import io.reactivex.Single
 import java.lang.Exception
-import javax.inject.Inject
 
-class FirebaseTravelChecklistRepository @Inject constructor(
+class FirebaseTravelChecklistRepository(
     val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : TravelChecklistRepository {
 
-    private val USERS = "users"
-    private val USERS_CHECKLISTS = "user_checklists"
-
     override fun saveAndGet(list: List<Category>): Single<String> = Single.create { emitter ->
-        getUserCheckLists()
-            .add(TravelCheckListImpl(list))
+        db.getAllUserCheckLists(getUserId())
+            .add(TravelCheckListImpl(list as List<CategoryImpl>))
             .addOnSuccessListener {
                 emitter.onSuccess(it.id)
             }
@@ -29,27 +26,35 @@ class FirebaseTravelChecklistRepository @Inject constructor(
     }
 
     override fun getUserCheckList(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        getUserCheckLists().document(listId).get().addOnSuccessListener { documentSnapshot ->
+        db.getCheckListsById(getUserId(), listId).get().addOnSuccessListener { documentSnapshot ->
             val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
             if (checkList != null) {
                 success?.invoke(checkList)
             } else {
-                onFaiulure(failure, listId)
+                onFailure(failure, listId)
             }
         }.addOnFailureListener {
-            onFaiulure(failure, listId)
+            onFailure(failure, listId)
         }
     }
 
-    private fun onFaiulure(failure: ((Throwable) -> Unit)?, listId: String) {
-        failure?.invoke(ListNotFoundException(getUserId(), listId))
+    override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
+        db.getCheckListsById(getUserId(), listId).addSnapshotListener { documentSnapshot, exception ->
+            if (exception != null) {
+                failure?.invoke(exception)
+            } else {
+                val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
+                if (checkList != null) {
+                    success?.invoke(checkList)
+                } else {
+                    onFailure(failure, listId)
+                }
+            }
+        }
     }
 
-    private fun getUserId() = auth.uid ?: throw UserNotLoggedInException()
+    private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(getUserId(), listId))
 
-    private fun getUserCheckLists() =
-        db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS)
+    private fun getUserId() = auth.uid ?: throw UserNotLoggedInException()
 
 }

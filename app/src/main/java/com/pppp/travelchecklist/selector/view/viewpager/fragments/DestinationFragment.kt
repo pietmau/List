@@ -42,7 +42,7 @@ class DestinationFragment : Fragment() {
 
             override fun onItemSelected(adapterView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 val country = (adapterView?.adapter?.getItem(position) as? Country) ?: return
-                callback.onDestinationSelected(Destination(country.country))
+                callback?.onDestinationSelected(Destination(country.country))
             }
         })
         return view

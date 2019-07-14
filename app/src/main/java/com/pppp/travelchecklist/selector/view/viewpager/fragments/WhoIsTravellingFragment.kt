@@ -26,11 +26,11 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
 
     override fun onItemSelected(tag: Tag) {
         super.onItemSelected(tag)
-        callback.onWhoisTravellingSelected(tag)
+        callback?.onWhoisTravellingSelected(tag)
     }
 
     override fun onItemDeSelected(item: Tag) {
         super.onItemDeSelected(item)
-        callback.onWhoisTravellingDeSelected(item)
+        callback?.onWhoisTravellingDeSelected(item)
     }
 }

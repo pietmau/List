@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.model
+package com.pppp.travelchecklist.utils
 
 import io.reactivex.observers.DisposableObserver
 

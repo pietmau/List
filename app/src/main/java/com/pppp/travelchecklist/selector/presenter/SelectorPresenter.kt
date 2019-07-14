@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.travelchecklist.listgenerator.TravelChecklistRepository
 import com.pppp.travelchecklist.selector.model.Destination
 import com.pppp.travelchecklist.selector.view.ISelectorView
 import com.pppp.travelchecklist.selector.view.SelectorCallback

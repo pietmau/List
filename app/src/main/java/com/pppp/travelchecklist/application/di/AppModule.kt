@@ -7,10 +7,10 @@ import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.database.DestinationPresenterImpl
-import com.pppp.travelchecklist.listgenerator.FirebaseTravelChecklistRepository
+import com.pppp.travelchecklist.repository.FirebaseTravelChecklistRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
-import com.pppp.travelchecklist.listgenerator.TravelChecklistRepository
+import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.selector.model.models.InitialTagsRepositoryImpl
 import dagger.Module
 import dagger.Provides

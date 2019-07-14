@@ -64,7 +64,4 @@ class SelectionData() : Parcelable {
         get() = accomodation == null && weather == null && duration == null && destination == null
                 && plannedActivities.isEmpty() && travellers.isEmpty()
 
-    companion object {
-        val TAG = SelectionData::class.simpleName
-    }
 }

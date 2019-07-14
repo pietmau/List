@@ -17,18 +17,18 @@ class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
 
     @Inject
-    lateinit var viewStates: Producer<ViewState>
+    lateinit var viewStates: Producer<LoginViewModel.ViewState>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as? App)?.appComponent?.with(LoginModule(this))?.inject(this)
-        viewStates.states.observe(this, Observer<ViewState> { render(it) })
+        viewStates.states.observe(this, Observer<LoginViewModel.ViewState> { render(it) })
     }
 
-    private fun render(state: ViewState?) {
+    private fun render(state: LoginViewModel.ViewState?) {
         when (state) {
-            is ViewState.UserNotLoggedIn -> login()
-            is ViewState.UserLoggedIn -> proceed()
+            is LoginViewModel.ViewState.UserNotLoggedIn -> login()
+            is LoginViewModel.ViewState.UserLoggedIn -> proceed()
         }
     }
 

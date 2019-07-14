@@ -7,7 +7,7 @@ import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import com.pppp.travelchecklist.ListFragment
+import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.findFragmentByTag
@@ -15,7 +15,6 @@ import com.pppp.travelchecklist.fragmentTransaction
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.selector.presenter.SelectionData
 import com.pppp.travelchecklist.selector.view.SelectorCallback
 import com.pppp.travelchecklist.selector.view.SelectorFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -63,12 +62,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         presenter.unbind()
     }
 
-    override fun navigateToNewList(selection: SelectionData) {
-        fragmentTransaction.replace(R.id.container, ListFragment.fromSelection(selection), ListFragment.TAG).commit()
+    override fun navigateToNewList(checkListId: String) {
+        fragmentTransaction.replace(R.id.container, ViewCheckListFragment.fromSelection(checkListId), ViewCheckListFragment.TAG).commit()
     }
 
     private fun getSelectorFragment() =
-        findFragmentByTag<ListFragment>(SelectorFragment.TAG) ?: SelectorFragment.newInstance()
+        findFragmentByTag<ViewCheckListFragment>(SelectorFragment.TAG) ?: SelectorFragment.newInstance()
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

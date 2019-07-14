@@ -14,7 +14,7 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.model.SimpleObserver
+import com.pppp.travelchecklist.utils.SimpleObserver
 import com.pppp.travelchecklist.selector.SelectorModule
 import com.pppp.travelchecklist.selector.model.Destination
 import org.angmarch.views.BetterSpinner

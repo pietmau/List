@@ -10,8 +10,7 @@ import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.CheckListCard
 
-
-class CheckListRecycler(context: Context, attrs: AttributeSet?) : RecyclerView(context, attrs) {
+class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs) {
     var callback: CheckListCard.Callback? = null
 
     init {

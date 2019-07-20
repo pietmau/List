@@ -1,14 +1,12 @@
-package com.pppp.travelchecklist.list.view.custom
+package com.pppp.travelchecklist.list.view.recycler.list
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.Category
-import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.card.CheckListCard
+import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
 
 class CheckListAdapter(
     private val callback: CheckListCard.Callback
@@ -17,7 +15,7 @@ class CheckListAdapter(
 
     var items: MutableList<Category> = mutableListOf()
         set(value) {
-            DiffUtil.calculateDiff(DiffCallback(items, value)).dispatchUpdatesTo(this)
+            DiffUtil.calculateDiff(ChecklistRecyclerDiffCallback(items, value)).dispatchUpdatesTo(this)
             items.clear()
             items.addAll(value)
         }
@@ -41,7 +39,7 @@ class CheckListAdapter(
         //
         //TODO()
         //categories[itemPosition].categories = getCategories(payloads)
-        holder.bind(items.get(position), position, callback)
+        //holder.bind(items.get(position), position, callback)
     }
 }
 

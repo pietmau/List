@@ -5,11 +5,11 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.pppp.travelchecklist.card.CheckListCard
+    <com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
         android:id="@+id/test_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.pppp.travelchecklist.card.CheckListCard>
+    </com.pppp.travelchecklist.list.view.recycler.card.CheckListCard>
 
 </LinearLayout>

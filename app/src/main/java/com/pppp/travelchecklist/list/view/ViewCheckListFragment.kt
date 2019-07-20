@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
-import com.pppp.travelchecklist.card.CheckListCard
+import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.login.Consumer

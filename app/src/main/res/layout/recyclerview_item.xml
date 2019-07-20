@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.pppp.travelchecklist.card.CheckListCard
+<com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-</com.pppp.travelchecklist.card.CheckListCard>
+</com.pppp.travelchecklist.list.view.recycler.card.CheckListCard>

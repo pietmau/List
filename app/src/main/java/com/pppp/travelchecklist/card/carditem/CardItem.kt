@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
 
@@ -27,15 +26,15 @@ class CardItem(
     }
 
     private fun showDelete() {
-        callback.onDeleteRequested(position, data)
+        callback.onDeleteRequested(data.id, data)
     }
 
     private fun showSettings() {
-        callback.onSettingsRequested(position, data)
+        callback.onSettingsRequested(data.id, data)
     }
 
     interface Callback {
-        fun onDeleteRequested(position: Int, data: CheckListItem)
-        fun onSettingsRequested(position: Int, data: CheckListItem)
+        fun onDeleteRequested(position: Long, data: CheckListItem)
+        fun onSettingsRequested(position: Long, data: CheckListItem)
     }
 }

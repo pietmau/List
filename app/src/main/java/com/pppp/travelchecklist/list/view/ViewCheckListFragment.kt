@@ -47,11 +47,11 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         recycler.setItems(state.travelCheckList.items)
     }
 
-    override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
-        consumer.push(CheckListViewModel.ViewEvent.Delete())
+    override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
+        consumer.push(CheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
     }
 
-    override fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
+    override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {
 
     }
 

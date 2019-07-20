@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.card.carditem.CardItem
 import kotlinx.android.synthetic.main.custom_check_list_card.view.*
@@ -17,14 +17,15 @@ class CheckListCard(
     private val RADIUS = 10F
     private var position: Int? = null
     private var callback: Callback? = null
+    private lateinit var category: Category
 
     private val cardItemCallback = object : CardItem.Callback {
-        override fun onDeleteRequested(position: Int, data: CheckListItem) {
-            callback?.onItemDeleteRequested(this@CheckListCard.position!!, position, data)
+        override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
+            callback?.onItemDeleteRequested(this@CheckListCard.category.id, itemId, data)
         }
 
-        override fun onSettingsRequested(position: Int, data: CheckListItem) {
-            callback?.onItemSettingsRequested(this@CheckListCard.position!!, position, data)
+        override fun onSettingsRequested(itemId: Long, data: CheckListItem) {
+            callback?.onItemSettingsRequested(this@CheckListCard.category.id, itemId, data)
         }
     }
 
@@ -35,19 +36,20 @@ class CheckListCard(
         inflater.inflate(R.layout.custom_check_list_card, this, true)
     }
 
-    fun bind(data: List<CheckListItem>, position: Int, callback: Callback) {
+    fun bind(category: Category, position: Int, callback: Callback) {
+        this.category = category
         this.position = position
         this.callback = callback
         content.removeAllViews()
-        for ((index, value) in data.withIndex()) {
+        for ((index, value) in category.items.withIndex()) {
             content.addView(CardItem(context, value, index, cardItemCallback))
         }
     }
 
     interface Callback {
-        fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem)
+        fun onItemDeleteRequested(cardId: Long, itemPosition: Long, data: CheckListItem)
 
-        fun onItemSettingsRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem)
+        fun onItemSettingsRequested(cardId: Long, itemPosition: Long, data: CheckListItem)
     }
 
 }

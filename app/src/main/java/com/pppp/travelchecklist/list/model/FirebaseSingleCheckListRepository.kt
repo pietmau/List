@@ -16,7 +16,13 @@ class FirebaseSingleCheckListRepository(
 ) : SingleCheckListRepository {
 
     override fun updateList(listId: String, travelCheckList: TravelCheckList) {
-        db.getCheckListsById(getUserId(), listId).update("items", travelCheckList.categories)
+        db.getCheckListsById(getUserId(), listId).update("categories", travelCheckList.categories)
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
     }
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {

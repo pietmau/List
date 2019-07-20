@@ -12,6 +12,8 @@ import com.pppp.travelchecklist.card.CheckListCard
 
 class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs) {
     lateinit var callback: CheckListCard.Callback
+    private val checkListAdapter
+        get() = adapter as CheckListAdapter
 
     init {
         layoutManager = LinearLayoutManager(context)
@@ -20,12 +22,11 @@ class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: Attri
         addItemDecoration(dividerItemDecoration)
     }
 
-    fun setItems(aNew: List<Category>) {
+    fun setItems(categories: List<Category>) {
         if (adapter == null) {
-            adapter = CheckListAdapter(aNew, callback)
+            adapter = CheckListAdapter(callback)
         }
-        val old = (adapter as CheckListAdapter).items
-        DiffUtil.calculateDiff(DiffCallback(old, aNew)).dispatchUpdatesTo(adapter!!)
+        checkListAdapter.items = categories.toMutableList()
     }
 }
 

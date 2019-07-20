@@ -21,7 +21,7 @@ interface Api {
     @GET("prod/tags")
     suspend fun getTags(): List<TagImpl>
 
-    @GET("prod/items")
+    @GET("prod/categories")
     suspend fun getItems(): List<CheckListItemImpl>
 
     @POST("prod/mapping")

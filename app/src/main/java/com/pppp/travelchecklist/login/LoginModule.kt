@@ -3,9 +3,6 @@ package com.pppp.travelchecklist.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.fragment.app.FragmentActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.pppp.travelchecklist.list.viewmodel.CheckListViewModel
 import dagger.Module
 import dagger.Provides
 

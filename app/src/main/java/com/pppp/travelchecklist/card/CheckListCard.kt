@@ -15,17 +15,20 @@ class CheckListCard(
 ) : CardView(context) {
     private val ELEVATION = 8F
     private val RADIUS = 10F
-    private var position: Int? = null
+    private var cardPosition: Int? = null
     private var callback: Callback? = null
-    private lateinit var category: Category
 
     private val cardItemCallback = object : CardItem.Callback {
-        override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
-            callback?.onItemDeleteRequested(this@CheckListCard.category.id, itemId, data)
+        override fun onDeleteRequested(itemPosition: Int, data: CheckListItem) {
+            cardPosition?.let {
+                callback?.onItemDeleteRequested(it, itemPosition, data)
+            }
         }
 
-        override fun onSettingsRequested(itemId: Long, data: CheckListItem) {
-            callback?.onItemSettingsRequested(this@CheckListCard.category.id, itemId, data)
+        override fun onSettingsRequested(itemPosition: Int, data: CheckListItem) {
+            cardPosition?.let {
+                callback?.onItemSettingsRequested(it, itemPosition, data)
+            }
         }
     }
 
@@ -37,8 +40,7 @@ class CheckListCard(
     }
 
     fun bind(category: Category, position: Int, callback: Callback) {
-        this.category = category
-        this.position = position
+        this.cardPosition = position
         this.callback = callback
         content.removeAllViews()
         for ((index, value) in category.items.withIndex()) {
@@ -47,9 +49,9 @@ class CheckListCard(
     }
 
     interface Callback {
-        fun onItemDeleteRequested(cardId: Long, itemPosition: Long, data: CheckListItem)
+        fun onItemDeleteRequested(cardId: Int, itemPosition: Int, data: CheckListItem)
 
-        fun onItemSettingsRequested(cardId: Long, itemPosition: Long, data: CheckListItem)
+        fun onItemSettingsRequested(cardId: Int, itemPosition: Int, data: CheckListItem)
     }
 
 }

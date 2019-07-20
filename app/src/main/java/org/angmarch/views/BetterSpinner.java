@@ -39,7 +39,7 @@ public class BetterSpinner extends AppCompatTextView {
     private static final String IS_ARROW_HIDDEN = "is_arrow_hidden";
     private static final String ARROW_DRAWABLE_RES_ID = "arrow_drawable_res_id";
     public static final int VERTICAL_OFFSET = 1;
-    private static final String ITEMS = "items";
+    private static final String ITEMS = "categories";
 
     private int selectedIndex;
     private Drawable arrowDrawable;
@@ -283,7 +283,7 @@ public class BetterSpinner extends AppCompatTextView {
     /**
      * Set the default spinner item using its index
      *
-     * @param position the item's position
+     * @param position the item's itemPosition
      */
     public void setSelectedIndex(int position) {
         if (adapter != null) {

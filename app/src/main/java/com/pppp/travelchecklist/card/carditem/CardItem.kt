@@ -1,6 +1,5 @@
 package com.pppp.travelchecklist.card.carditem
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
@@ -11,10 +10,9 @@ import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
 class CardItem(
     context: Context,
     val data: CheckListItem,
-    val position: Int,
+    val itemPosition: Int,
     val callback: Callback
 ) : RelativeLayout(context) {
-    private val activity = context as Activity
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -26,15 +24,15 @@ class CardItem(
     }
 
     private fun showDelete() {
-        callback.onDeleteRequested(data.id, data)
+        callback.onDeleteRequested(itemPosition, data)
     }
 
     private fun showSettings() {
-        callback.onSettingsRequested(data.id, data)
+        callback.onSettingsRequested(itemPosition, data)
     }
 
     interface Callback {
-        fun onDeleteRequested(position: Long, data: CheckListItem)
-        fun onSettingsRequested(position: Long, data: CheckListItem)
+        fun onDeleteRequested(position: Int, data: CheckListItem)
+        fun onSettingsRequested(position: Int, data: CheckListItem)
     }
 }

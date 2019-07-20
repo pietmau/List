@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
@@ -35,21 +36,6 @@ class FirebaseTravelChecklistRepository(
             }
         }.addOnFailureListener {
             onFailure(failure, listId)
-        }
-    }
-
-    override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        db.getCheckListsById(getUserId(), listId).addSnapshotListener { documentSnapshot, exception ->
-            if (exception != null) {
-                failure?.invoke(exception)
-            } else {
-                val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
-                if (checkList != null) {
-                    success?.invoke(checkList)
-                } else {
-                    onFailure(failure, listId)
-                }
-            }
         }
     }
 

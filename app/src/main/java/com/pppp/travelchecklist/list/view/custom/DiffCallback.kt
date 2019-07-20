@@ -42,6 +42,6 @@ class DiffCallback(
 
     companion object {
         val TITLE_KEY = "title"
-        val ITEMS_KEY = "items"
+        val ITEMS_KEY = "categories"
     }
 }

@@ -11,7 +11,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
-import com.pppp.travelchecklist.list.viewmodel.CheckListViewModel
+import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.login.Consumer
 import com.pppp.travelchecklist.login.Producer
 import kotlinx.android.synthetic.main.fragment_blank.recycler
@@ -19,9 +19,9 @@ import javax.inject.Inject
 
 class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     @Inject
-    internal lateinit var producer: Producer<CheckListViewModel.ViewState>
+    internal lateinit var producer: Producer<SingleCheckListViewModel.ViewState>
     @Inject
-    internal lateinit var consumer: Consumer<CheckListViewModel.ViewEvent>
+    internal lateinit var consumer: Consumer<SingleCheckListViewModel.ViewEvent>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_checlist, container, false);
@@ -38,20 +38,20 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         recycler.callback = this
     }
 
-    private fun render(state: CheckListViewModel.ViewState) =
+    private fun render(state: SingleCheckListViewModel.ViewState) =
         when (state) {
-            is CheckListViewModel.ViewState.Data -> onDataAvailable(state)
+            is SingleCheckListViewModel.ViewState.Data -> onDataAvailable(state)
         }
 
-    private fun onDataAvailable(state: CheckListViewModel.ViewState.Data) {
-        recycler.setItems(state.travelCheckList.items)
+    private fun onDataAvailable(state: SingleCheckListViewModel.ViewState.Data) {
+        recycler.setItems(state.travelCheckList.categories)
     }
 
-    override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
-        consumer.push(CheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
+    override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
+        consumer.push(SingleCheckListViewModel.ViewEvent.DeleteItem(cardPosition, itemPosition))
     }
 
-    override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {
+    override fun onItemSettingsRequested(cardId: Int, itemId: Int, data: CheckListItem) {
 
     }
 

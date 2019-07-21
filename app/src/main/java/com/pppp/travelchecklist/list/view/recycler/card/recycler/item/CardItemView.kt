@@ -21,7 +21,7 @@ class CardItemView @JvmOverloads constructor(
             field = value
         }
 
-    var itemPosition: Int? = null
+    var itemId: Long? = null
     var callback: Callback? = null
 
     init {
@@ -32,15 +32,15 @@ class CardItemView @JvmOverloads constructor(
     }
 
     private fun showDelete() {
-        callback?.onDeleteRequested(itemPosition!!, data!!)//let it crash!
+        callback?.onDeleteRequested(itemId!!, data!!)//let it crash!
     }
 
     private fun showSettings() {
-        callback?.onSettingsRequested(itemPosition!!, data!!)
+        callback?.onSettingsRequested(itemId!!, data!!)
     }
 
     interface Callback {
-        fun onDeleteRequested(position: Int, data: CheckListItem)
-        fun onSettingsRequested(position: Int, data: CheckListItem)
+        fun onDeleteRequested(position: Long, data: CheckListItem)
+        fun onSettingsRequested(position: Long, data: CheckListItem)
     }
 }

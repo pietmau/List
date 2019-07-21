@@ -16,17 +16,18 @@ class CheckListAdapter(
 
 ) : RecyclerView.Adapter<CheckListHolder>() {
 
+    override fun getItemCount() = items.count()
+
     var items: MutableList<Category> = mutableListOf()
         set(value) {
             DiffUtil.calculateDiff(ChecklistRecyclerDiffCallback(items, value)).dispatchUpdatesTo(this)
-            items.clear()
-            items.addAll(value)
+            field.clear()
+            field.addAll(value)
         }
 
-    override fun getItemCount() = items.count()
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int) {
-        holder.bind(items.get(position), position, callback)
+        holder.bind(items.get(position), callback)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckListHolder {
@@ -36,7 +37,7 @@ class CheckListAdapter(
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
-            holder.bind(items.get(position), position, callback)
+            holder.bind(items.get(position), callback)
             return
         }
         (payloads[0] as Bundle).getParcelable<CategoryImpl>(CATEGORY)?.let { holder.setItems(it.items) }

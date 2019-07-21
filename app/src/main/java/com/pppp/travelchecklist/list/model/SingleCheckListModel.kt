@@ -6,5 +6,5 @@ interface SingleCheckListModel {
 
     fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?)
 
-    fun deleteItem(listId: String, categoryId: Int, itemId: Int)
+    fun deleteItem(listId: String, categoryId: Long, itemId: Long)
 }

@@ -11,7 +11,7 @@ interface SingleCheckListViewModel : Consumer<SingleCheckListViewModel.ViewEvent
     }
 
     sealed class ViewEvent {
-        class DeleteItem(val categorryPosition: Int, val itemPosition: Int) : ViewEvent()
+        class DeleteItem(val categortyId: Long, val itemId: Long) : ViewEvent()
     }
 }
 

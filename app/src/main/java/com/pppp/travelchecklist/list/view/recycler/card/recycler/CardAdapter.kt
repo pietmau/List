@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.list.view.recycler.card.recycler
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
@@ -11,10 +12,11 @@ class CardAdapter(private val callback: CardItemView.Callback) : RecyclerView.Ad
 
     var items: MutableList<CheckListItem> = mutableListOf()
         set(value) {
-            //DiffUtil.calculateDiff(CardRecyclerDiffCallback(items, value)).dispatchUpdatesTo(this)
-            items.clear()
-            items.addAll(value)
-            notifyDataSetChanged()
+            DiffUtil.calculateDiff(CardRecyclerDiffCallback(items, value)).dispatchUpdatesTo(this)
+            Log.d("foo", " old " + items.toString())
+            field.clear()
+            field.addAll(value)
+            Log.d("foo", " new " + items.toString())
         }
 
     override fun getItemCount() = items.count()
@@ -27,13 +29,6 @@ class CardAdapter(private val callback: CardItemView.Callback) : RecyclerView.Ad
         CardHolder(CardItemView(parent.context))
 
     override fun onBindViewHolder(holder: CardHolder, position: Int, payloads: MutableList<Any>) {
-//        if (payloads.isEmpty()) {
-//            holder.bind(items.get(position), position, callback)
-//            return
-//        }
-        //
-        //TODO()
-        //categories[itemPosition].categories = getCategories(payloads)
         holder.bind(items.get(position), position, callback)
     }
 }

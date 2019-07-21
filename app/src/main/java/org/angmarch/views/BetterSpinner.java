@@ -283,7 +283,7 @@ public class BetterSpinner extends AppCompatTextView {
     /**
      * Set the default spinner item using its index
      *
-     * @param position the item's itemPosition
+     * @param position the item's itemId
      */
     public void setSelectedIndex(int position) {
         if (adapter != null) {

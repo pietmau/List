@@ -12,7 +12,7 @@ class CardHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(checkListItem: CheckListItem, position: Int, callback: CardItemView.Callback) {
         cardItemView.callback = callback
-        cardItemView.itemPosition = position
+        cardItemView.itemId = checkListItem.id
         cardItemView.data = checkListItem
     }
 }

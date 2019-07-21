@@ -44,14 +44,14 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         }
 
     private fun onDataAvailable(state: SingleCheckListViewModel.ViewState.Data) {
-        recycler.setItems(state.travelCheckList.categories)
+            recycler.setItems(state.travelCheckList.categories)
     }
 
-    override fun onItemDeleteRequested(cardPosition: Int, itemPosition: Int, data: CheckListItem) {
-        consumer.push(SingleCheckListViewModel.ViewEvent.DeleteItem(cardPosition, itemPosition))
+    override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
+        consumer.push(SingleCheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
     }
 
-    override fun onItemSettingsRequested(cardId: Int, itemId: Int, data: CheckListItem) {
+    override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {
 
     }
 

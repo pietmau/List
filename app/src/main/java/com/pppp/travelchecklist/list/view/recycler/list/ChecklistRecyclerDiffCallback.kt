@@ -13,7 +13,6 @@ class ChecklistRecyclerDiffCallback(
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val areThesame = old.get(oldItemPosition).id == new.get(newItemPosition).id
-        Log.d("foo", "are the same " + areThesame + "( old " + oldItemPosition + ",  new " + newItemPosition)
         return areThesame
     }
 
@@ -23,7 +22,6 @@ class ChecklistRecyclerDiffCallback(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val areContentsTheSame = old.get(oldItemPosition).equals(new.get(newItemPosition))
-        Log.d("foo", "are contents the same " + areContentsTheSame + "( old " + oldItemPosition + ",  new " + newItemPosition)
         return areContentsTheSame
     }
 

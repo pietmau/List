@@ -17,19 +17,19 @@ class CheckListCard @JvmOverloads constructor(
 ) : CardView(context, attrs, defStyleAttr) {
     private val ELEVATION = 8F
     private val RADIUS = 10F
-    private var cardPosition: Int? = null
+    private var cardId: Long? = null
     private var callback: Callback? = null
 
     private val cardItemCallback = object : CardItemView.Callback {
-        override fun onDeleteRequested(itemPosition: Int, data: CheckListItem) {
-            cardPosition?.let {
-                callback?.onItemDeleteRequested(it, itemPosition, data)
+        override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
+            cardId?.let { cardId ->
+                callback?.onItemDeleteRequested(cardId, itemId, data)
             }
         }
 
-        override fun onSettingsRequested(itemPosition: Int, data: CheckListItem) {
-            cardPosition?.let {
-                callback?.onItemSettingsRequested(it, itemPosition, data)
+        override fun onSettingsRequested(itemId: Long, data: CheckListItem) {
+            cardId?.let { cardId ->
+                callback?.onItemSettingsRequested(cardId, itemId, data)
             }
         }
     }
@@ -41,8 +41,8 @@ class CheckListCard @JvmOverloads constructor(
         inflater.inflate(R.layout.custom_check_list_card, this, true)
     }
 
-    fun bind(category: Category, position: Int, callback: Callback) {
-        this.cardPosition = position
+    fun bind(category: Category, callback: Callback) {
+        this.cardId = category.id
         this.callback = callback
         cardItems.callback = cardItemCallback
         setItems(category.items)
@@ -53,9 +53,9 @@ class CheckListCard @JvmOverloads constructor(
     }
 
     interface Callback {
-        fun onItemDeleteRequested(cardId: Int, itemPosition: Int, data: CheckListItem)
+        fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem)
 
-        fun onItemSettingsRequested(cardId: Int, itemPosition: Int, data: CheckListItem)
+        fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem)
     }
 
 }

@@ -24,7 +24,7 @@ class FirebaseSingleCheckListViewModel(
     }
 
     private fun delete(viewEventSingle: SingleCheckListViewModel.ViewEvent.DeleteItem) {
-        model.deleteItem(listId, viewEventSingle.categorryPosition, viewEventSingle.itemPosition)
+        model.deleteItem(listId, viewEventSingle.categortyId, viewEventSingle.itemId)
     }
 
 }

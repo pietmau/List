@@ -45,7 +45,11 @@ class CheckListCard @JvmOverloads constructor(
         this.cardPosition = position
         this.callback = callback
         cardItems.callback = cardItemCallback
-        cardItems.items = category.items
+        setItems(category.items)
+    }
+
+    fun setItems(items: List<CheckListItem>) {
+        cardItems.items = items
     }
 
     interface Callback {

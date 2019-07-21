@@ -2,7 +2,6 @@ package com.pppp.travelchecklist.list.view.recycler.card.recycler
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.list.view.recycler.card.recycler.item.CardItemView
@@ -27,6 +26,6 @@ class CardRecycler @JvmOverloads constructor(
         }
 
     init {
-        layoutManager = LinearLayoutManager(context)
+        layoutManager = CustomLayoutManager(context)
     }
 }

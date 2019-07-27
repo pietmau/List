@@ -1,5 +1,7 @@
 package com.pppp.travelchecklist.newlist.presenter
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
@@ -11,44 +13,51 @@ import com.pppp.travelchecklist.utils.ResourcesWrapper
 import com.pppp.travelchecklist.utils.SimpleDisposableObserver
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.AsyncSubject
+import io.reactivex.subjects.PublishSubject
 
 class NewListPresenter(
     private val selection: SelectionData,
     private val resourcesWrapper: ResourcesWrapper,
     private val listGenerator: ListGenerator
 ) : ViewModel(), NewListCallback {
-
-    private var view: NewListView? = null
+    private var checkListId: String? = null
     private val subject = AsyncSubject.create<String>()
     private lateinit var subscription: Disposable
+    val viewStates: LiveData<ViewState> = MutableLiveData()
 
     override fun onFinishClicked() {
         if (selection.isEmpty) {
-            view?.onError(resourcesWrapper.getString(R.string.must_make_selection))
+            emit(ViewState.Error(resourcesWrapper.getString(R.string.must_make_selection)))
         } else {
-            view?.generatingList()
+            emit(ViewState.Progress)
             listGenerator.generate(selection)
                 .toObservable()
                 .subscribe(subject)
         }
     }
 
-    fun subscribe(view: NewListView) {
-        this.view = view
+    fun subscribe() {
         subscription = subject
             .subscribeWith(object : SimpleDisposableObserver<String>() {
                 override fun onNext(checkListId: String) {
-                    this@NewListPresenter.view?.onListGenerated(checkListId)
+                    onCheckListGenerated(checkListId)
                 }
 
                 override fun onError(e: Throwable) {
-                    this@NewListPresenter.view?.onError(e.localizedMessage)
+                    emit(ViewState.Error(e.localizedMessage))
                 }
             })
     }
 
+    private fun onCheckListGenerated(checkListId: String) {
+        if (this@NewListPresenter.checkListId != null) {
+            return
+        }
+        this@NewListPresenter.checkListId = checkListId
+        emit(ViewState.ListGenerated(checkListId))
+    }
+
     fun unsubscribe() {
-        view = null
         subscription.dispose()
     }
 
@@ -82,5 +91,15 @@ class NewListPresenter(
 
     override fun onDestinationSelected(destination: Destination) {
         selection.onDestinationSelected(destination)
+    }
+
+    private fun emit(value: ViewState) {
+        (viewStates as MutableLiveData).postValue(value)
+    }
+
+    sealed class ViewState {
+        data class Error(val message: String) : ViewState()
+        object Progress : ViewState()
+        data class ListGenerated(val listId: String) : ViewState()
     }
 }

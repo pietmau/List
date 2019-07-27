@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
@@ -26,6 +28,9 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
         appComponent?.with(NewListModule(requireActivity()))?.inject(this)
+        presenter.viewStates.observe(activity as AppCompatActivity, Observer {
+
+        })
     }
 
     override fun onCreateView(
@@ -36,7 +41,7 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
 
     override fun onResume() {
         super.onResume()
-        presenter.subscribe(this)
+        presenter.subscribe()
     }
 
     override fun onPause() {

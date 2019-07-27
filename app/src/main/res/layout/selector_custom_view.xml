@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager
+    <com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/holo_green_light">
-    </com.pppp.travelchecklist.selector.view.viewpager.SelectorViewPager>
+    </com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"/>
 
-        <com.pppp.travelchecklist.selector.view.custom.TwoStatesFab
+        <com.pppp.travelchecklist.newlist.view.custom.TwoStatesFab
             android:scaleType="center"
             android:src="@drawable/ic_chevron_right_white_24dp"
             android:id="@+id/next"

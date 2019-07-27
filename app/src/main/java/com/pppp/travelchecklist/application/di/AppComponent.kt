@@ -6,8 +6,8 @@ import com.pppp.travelchecklist.login.LoginComponent
 import com.pppp.travelchecklist.login.LoginModule
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.di.MainSubComponent
-import com.pppp.travelchecklist.selector.SelectorComponent
-import com.pppp.travelchecklist.selector.SelectorModule
+import com.pppp.travelchecklist.newlist.NewListComponent
+import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.utils.UtilsModule
 import dagger.Component
 
@@ -16,7 +16,7 @@ interface AppComponent {
 
     fun with(module: MainModule): MainSubComponent
 
-    fun with(module: SelectorModule): SelectorComponent
+    fun with(module: NewListModule): NewListComponent
 
     fun with(module: LoginModule): LoginComponent
 

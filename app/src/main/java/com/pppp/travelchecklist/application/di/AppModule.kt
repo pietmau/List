@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.application.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
-import com.pppp.travelchecklist.selector.model.models.InitialTagsRepository
+import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.database.DestinationPresenter
@@ -11,7 +11,7 @@ import com.pppp.travelchecklist.repository.FirebaseTravelChecklistRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
-import com.pppp.travelchecklist.selector.model.models.InitialTagsRepositoryImpl
+import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers

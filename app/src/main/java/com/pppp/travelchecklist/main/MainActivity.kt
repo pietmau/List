@@ -15,15 +15,15 @@ import com.pppp.travelchecklist.fragmentTransaction
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.selector.view.SelectorCallback
-import com.pppp.travelchecklist.selector.view.SelectorFragment
+import com.pppp.travelchecklist.newlist.view.NewListCallback
+import com.pppp.travelchecklist.newlist.view.NewListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     MainView {
-    override val selectionCallback: SelectorCallback?
-        get() = (supportFragmentManager.findFragmentById(R.id.container) as? SelectorCallback)
+    override val selectionCallback: NewListCallback?
+        get() = (supportFragmentManager.findFragmentById(R.id.container) as? NewListCallback)
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            fragmentTransaction.replace(R.id.container, getSelectorFragment(), SelectorFragment.TAG).commit()
+            fragmentTransaction.replace(R.id.container, getSelectorFragment(), NewListFragment.TAG).commit()
         }
     }
 
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun getSelectorFragment() =
-        findFragmentByTag<ViewCheckListFragment>(SelectorFragment.TAG) ?: SelectorFragment.newInstance()
+        findFragmentByTag<ViewCheckListFragment>(NewListFragment.TAG) ?: NewListFragment.newInstance()
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun onError(text: String) {
+    override fun onError(text: String) {
         Snackbar.make(root, text, Snackbar.LENGTH_LONG).show()
     }
 }

@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.listgenerator
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
-import com.pppp.travelchecklist.selector.presenter.SelectionData
+import com.pppp.travelchecklist.newlist.presenter.SelectionData
 import io.reactivex.Scheduler
 import io.reactivex.Single
 

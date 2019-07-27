@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.pppp.travelchecklist.selector.view.custom.ButtonsStrip
+        <com.pppp.travelchecklist.newlist.view.custom.ButtonsStrip
             android:id="@+id/strip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

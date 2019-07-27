@@ -8,9 +8,9 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup
+    <com.pppp.travelchecklist.newlist.view.custom.ButtonsStripGroup
         android:id="@+id/strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </com.pppp.travelchecklist.selector.view.custom.ButtonsStripGroup>
+    </com.pppp.travelchecklist.newlist.view.custom.ButtonsStripGroup>
 </LinearLayout>

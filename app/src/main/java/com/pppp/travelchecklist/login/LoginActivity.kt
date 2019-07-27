@@ -11,6 +11,7 @@ import com.firebase.ui.auth.ErrorCodes
 import android.app.Activity
 import com.firebase.ui.auth.IdpResponse
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.main.CreateChecklistActivity
 import com.pppp.travelchecklist.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -33,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun proceed() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, CreateChecklistActivity::class.java))
         finish()
     }
 

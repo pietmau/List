@@ -16,9 +16,10 @@
         <item name="android:background">@drawable/selector_bg_radio_button</item>
         <item name="android:textColor">@color/selector_text_radio_button</item>
         <item name="android:layout_margin">@dimen/small_margin</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_big</item>
     </style>
 
-    <style name="selction_title">
+    <style name="selection_title">
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
         <item name="android:textColor">@color/yellow</item>
         <item name="android:textStyle">bold</item>

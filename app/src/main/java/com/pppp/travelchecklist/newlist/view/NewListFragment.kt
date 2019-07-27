@@ -28,8 +28,8 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
         appComponent?.with(NewListModule(requireActivity()))?.inject(this)
-        presenter.viewStates.observe(activity as AppCompatActivity, Observer {
-
+        presenter.viewStates.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.ViewState ->
+            render(viewState)
         })
     }
 
@@ -99,7 +99,15 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
 
     override fun generatingList() {
         selector.visibility = View.GONE
+        text.text = context?.getString(R.string.generating)
     }
+
+    private fun render(viewState: NewListPresenter.ViewState) =
+        when (viewState) {
+            is NewListPresenter.ViewState.Error -> onError(viewState.message)
+            is NewListPresenter.ViewState.Progress -> generatingList()
+            is NewListPresenter.ViewState.ListGenerated -> onListGenerated(viewState.listId)
+        }
 
     companion object {
         fun newInstance() = NewListFragment()

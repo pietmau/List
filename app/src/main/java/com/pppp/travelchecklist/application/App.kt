@@ -9,7 +9,6 @@ import com.pppp.travelchecklist.application.di.AppModule
 import com.pppp.travelchecklist.application.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 
-
 class App : Application() {
     lateinit var appComponent: AppComponent
 
@@ -23,6 +22,14 @@ class App : Application() {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
                     .penaltyLog()
                     .penaltyDeath()
                     .build()

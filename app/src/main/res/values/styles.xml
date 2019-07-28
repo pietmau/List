@@ -34,5 +34,23 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
+    <style name="InputText">
+        <item name="android:layout_marginLeft">@dimen/spacing_very_big</item>
+        <item name="android:layout_marginTop">@dimen/spacing_big</item>
+        <item name="android:layout_marginRight">@dimen/spacing_very_big</item>
+        <item name="android:background">@drawable/selector_bg_radio_button</item>
+        <item name="android:textColor">@color/selector_text_radio_button</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:layout_marginLeft">@dimen/spacing_very_big</item>
+        <item name="android:layout_marginTop">@dimen/spacing_big</item>
+        <item name="android:layout_marginRight">@dimen/spacing_very_big</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/selector_bg_radio_button</item>
+    </style>
+
     <dimen name="small_margin">2dp</dimen>
 </resources>

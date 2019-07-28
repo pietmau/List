@@ -70,7 +70,7 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
     }
 
     fun showProgress(show: Boolean) {
-        progress.visibility = if (show) View.VISIBLE else View.GONE
+        progress_container.visibility = if (show) View.VISIBLE else View.GONE
         strip.visibility = if (!show) View.VISIBLE else View.GONE
     }
 

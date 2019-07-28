@@ -39,6 +39,10 @@ class FirebaseTravelChecklistRepository(
         }
     }
 
+    override fun setName(listId: String, name: String?) {
+        db.getCheckListsById(getUserId(), listId).update("name", name)
+    }
+
     private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(getUserId(), listId))
 
     private fun getUserId() = auth.uid ?: throw UserNotLoggedInException()

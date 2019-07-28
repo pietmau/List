@@ -24,7 +24,7 @@
     <string name="kids_toddlers">Kids, Toddlers</string>
     <string name="where_are_you_flying">Where are you flying? 🛩</string>
     <string name="expected_weather">Expected weather ⛅</string>
-    <string name="accomodation">Accomodation 🏡</string>
+    <string name="accomodation">Accommodation 🏡</string>
     <string name="planned_activities">Planned activities</string>
     <string name="long_or_short">Is it going to be a long trip?</string>
     <string name="hot">Hot/sunny</string>
@@ -45,6 +45,7 @@
     <string name="must_make_selection">Please select at least one criteria</string>
 
     <string name="something_went_wrong">Oops, sorry, something went wrong... working on it!</string>
-    <string name="generating">Generating your list! 🚀</string>
+    <string name="generating_list">Generating your list...</string>
+    <string name="list_ready">Your list is ready 🚀!\nPlease, chose a name</string>
 
 </resources>

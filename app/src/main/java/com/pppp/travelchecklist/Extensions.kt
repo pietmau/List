@@ -7,10 +7,14 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.selector_fragment.edittext
 
 inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String): T? {
     val fragment = supportFragmentManager.findFragmentByTag(tag)
@@ -39,3 +43,12 @@ val Activity.appComponent: AppComponent?
 
 val Fragment.appComponent: AppComponent?
     get() = activity?.appComponent
+
+fun EditText.setOnReturnClicked(callback: (TextView.() -> Unit)?) {
+    setOnEditorActionListener { textview, action, _ ->
+        if (action == EditorInfo.IME_ACTION_DONE) {
+            callback?.invoke(textview)
+        }
+        true
+    }
+}

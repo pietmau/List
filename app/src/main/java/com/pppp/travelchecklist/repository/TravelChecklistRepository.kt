@@ -9,6 +9,8 @@ interface TravelChecklistRepository {
     fun saveAndGet(list: List<Category>): Single<String>
 
     fun getUserCheckList(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
+
+    fun setName(listId: String, name: String?)
 }
 
 interface SingleCheckListRepository {

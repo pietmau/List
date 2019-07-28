@@ -1,11 +1,14 @@
 package com.pppp.travelchecklist.newlist.view
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ProgressBar
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
@@ -15,6 +18,7 @@ import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
+import com.pppp.travelchecklist.setOnReturnClicked
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
@@ -94,12 +98,21 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
     }
 
     override fun onListGenerated(checkListId: String) {
+        selector.visibility = GONE
+        progress_bar.visibility = GONE
+        edittext.visibility = VISIBLE
+        edittext.setOnReturnClicked {
+            presenter.onSetupCompleted(this.text?.toString())
+        }
+        text.text = context?.getString(R.string.list_ready)
         mainView?.navigateToNewList(checkListId)
     }
 
     override fun generatingList() {
-        selector.visibility = View.GONE
-        text.text = context?.getString(R.string.generating)
+        progress_bar.visibility = VISIBLE
+        selector.visibility = GONE
+        edittext.visibility = GONE
+        text.text = context?.getString(R.string.generating_list)
     }
 
     private fun render(viewState: NewListPresenter.ViewState) =
@@ -107,6 +120,8 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
             is NewListPresenter.ViewState.Error -> onError(viewState.message)
             is NewListPresenter.ViewState.Progress -> generatingList()
             is NewListPresenter.ViewState.ListGenerated -> onListGenerated(viewState.listId)
+            is NewListPresenter.ViewState.ListNamed -> {
+            }
         }
 
     companion object {

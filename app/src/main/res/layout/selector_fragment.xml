@@ -10,14 +10,15 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
+        android:id="@+id/progress_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
         >
 
         <TextView
+            android:gravity="center"
             android:id="@+id/text"
             style="@style/selection_title"
             android:layout_width="wrap_content"
@@ -28,15 +29,32 @@
             />
 
         <ProgressBar
-            android:layout_marginTop="@dimen/spacing_big"
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_big"
             android:autoStart="true"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text"
             />
+
+        <EditText
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:id="@+id/edittext"
+            android:lines="1"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.pppp.travelchecklist.newlist.view.custom.SelectorView

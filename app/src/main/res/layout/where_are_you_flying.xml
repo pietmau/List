@@ -5,29 +5,28 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_light"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             style="@style/selection_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/where_are_you_flying"/>
+            android:text="@string/where_are_you_flying"
+            />
 
         <org.angmarch.views.BetterSpinner
             android:id="@+id/nice_spinner"
+            style="@style/InputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_very_big"
-            android:layout_marginTop="@dimen/spacing_big"
-            android:layout_marginRight="@dimen/spacing_very_big"
-            android:background="@drawable/selector_bg_radio_button"
-            android:textColor="@color/selector_text_radio_button"
             />
 
     </LinearLayout>

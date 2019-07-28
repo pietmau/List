@@ -93,6 +93,11 @@ class NewListPresenter(
         selection.onDestinationSelected(destination)
     }
 
+    fun onSetupCompleted(text: String?) {
+        listGenerator.setName(checkListId!!, text) // If it is null here, we better crash
+        emit(ViewState.ListNamed(checkListId!!, text))
+    }
+
     private fun emit(value: ViewState) {
         (viewStates as MutableLiveData).postValue(value)
     }
@@ -101,5 +106,6 @@ class NewListPresenter(
         data class Error(val message: String) : ViewState()
         object Progress : ViewState()
         data class ListGenerated(val listId: String) : ViewState()
+        data class ListNamed(val listId: String, val name: String?) : ViewState()
     }
 }

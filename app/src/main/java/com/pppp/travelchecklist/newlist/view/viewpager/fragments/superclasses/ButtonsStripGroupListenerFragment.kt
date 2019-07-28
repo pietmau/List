@@ -76,7 +76,7 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     }
 
     fun showProgress(show: Boolean) {
-        progress.visibility = if (show) VISIBLE else GONE
+        progress_container.visibility = if (show) VISIBLE else GONE
         strip.visibility = if (!show) View.VISIBLE else View.GONE
     }
 

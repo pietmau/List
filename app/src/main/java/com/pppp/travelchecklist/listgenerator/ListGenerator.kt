@@ -9,6 +9,7 @@ import io.reactivex.Single
 
 interface ListGenerator {
     fun generate(selection: SelectionData): Single<String>
+    fun setName(listid: String, name: String?)
 }
 
 class ListGeneratorImpl(
@@ -24,4 +25,8 @@ class ListGeneratorImpl(
             .flatMap { travelChecklistRepository.saveAndGet(it) }
             .subscribeOn(workerThread)
             .observeOn(mainThread)
+
+    override fun setName(listId: String, name: String?) {
+        travelChecklistRepository.setName(listId, name)
+    }
 }

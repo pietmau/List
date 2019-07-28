@@ -26,15 +26,6 @@ class CreateChecklistActivity : AppCompatActivity(), MainView {
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.bind(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.unbind()
-    }
 
     override fun navigateToNewList(checkListId: String) {
         //supportFragmentManager.findFragmentById(R.id.container)?.let { fragmentTransaction.remove(it) }

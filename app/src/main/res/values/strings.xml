@@ -47,5 +47,6 @@
     <string name="something_went_wrong">Oops, sorry, something went wrong... working on it!</string>
     <string name="generating_list">Generating your list...</string>
     <string name="list_ready">Your list is ready 🚀!\nPlease, chose a name</string>
+    <string name="your_lists">Your lists</string>
 
 </resources>

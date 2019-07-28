@@ -1,7 +1,6 @@
 package com.pppp.travelchecklist.repository
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
@@ -26,7 +25,7 @@ class FirebaseTravelChecklistRepository(
             }
     }
 
-    override fun getUserCheckList(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
+    override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         db.getCheckListsById(getUserId(), listId).get().addOnSuccessListener { documentSnapshot ->
             val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
             if (checkList != null) {
@@ -39,8 +38,20 @@ class FirebaseTravelChecklistRepository(
         }
     }
 
+    override fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
+        db.getAllUserCheckLists(getUserId()).get().addOnSuccessListener { querySnapshot ->
+            val result = querySnapshot.documents
+                .map { documentSnapshot ->
+                    documentSnapshot.toObject(TravelCheckListImpl::class.java)
+                }.filterNotNull()
+            success?.invoke(result)
+        }.addOnFailureListener { failure?.invoke(it) }
+    }
+
     override fun setName(listId: String, name: String?) {
         db.getCheckListsById(getUserId(), listId).update("name", name)
+            .addOnSuccessListener { }
+            .addOnFailureListener { }
     }
 
     private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(getUserId(), listId))

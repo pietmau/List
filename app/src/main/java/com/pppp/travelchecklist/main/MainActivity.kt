@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
@@ -15,6 +16,7 @@ import com.pppp.travelchecklist.fragmentTransaction
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.main.view.MenuCreator
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.NewListFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @Inject
     lateinit var presenter: MainPresenter
+    @Inject
+    lateinit var menuCreator: MenuCreator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,22 +48,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
         setUpSelectionFragment(savedInstanceState)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
+        presenter.viewStates.observe(this, Observer {
+            render(it)
+        })
     }
+
+    private fun render(viewState: MainPresenter.ViewState) =
+        when (viewState) {
+            is MainPresenter.ViewState.GotMenu -> menuCreator.initMenu(nav_view.menu, viewState.userChecklists)
+        }
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             fragmentTransaction.replace(R.id.container, getSelectorFragment(), NewListFragment.TAG).commit()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.bind(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.unbind()
     }
 
     override fun navigateToNewList(checkListId: String) {

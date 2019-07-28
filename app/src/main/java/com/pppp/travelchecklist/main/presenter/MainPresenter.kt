@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.travelchecklist.main.model.MainModel
 
-class MainPresenter(private val mainModel: MainModel) {
+class MainPresenter(mainModel: MainModel) {
     val viewStates: LiveData<ViewState> = MutableLiveData()
+    var checkLists: List<TravelCheckList> = emptyList()
 
     init {
         mainModel.getUsersLists({
             emit(ViewState.GotMenu(it))
+            checkLists = it
         }, {})
     }
 

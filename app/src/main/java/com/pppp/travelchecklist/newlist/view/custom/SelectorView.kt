@@ -7,23 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.findViewByIdLazy
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     var callaback: NewListCallback? = null
-    @BindView(R.id.flipper)
-    lateinit var flipper: SelectorViewPager
-    @BindView(R.id.next)
-    lateinit var next: TwoStatesFab
-    @BindView(R.id.previous)
-    lateinit var previous: View
+    private val flipper: SelectorViewPager by findViewByIdLazy(R.id.flipper)
+    private val next: TwoStatesFab by findViewByIdLazy(R.id.next)
+    private val previous: View by findViewByIdLazy(R.id.previous)
     val canGoNext get() = flipper.canGoToNext
     private var time = 0L
 
@@ -34,7 +29,6 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         val appComponent = (context.applicationContext as? App)?.appComponent
         val selectorComponent = appComponent?.with(NewListModule(context))
         selectorComponent?.inject(this)
-        ButterKnife.bind(this)
         setUp()
     }
 
@@ -45,14 +39,21 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
             }
         })
         onPageChanged(0)
-    }
-
-    @OnClick(R.id.previous)
-    fun onPreviousClicked() {
-        if (clickedTooSoon()) {
-            return
+        previous.setOnClickListener {
+            if (!clickedTooSoon()) {
+                flipper.showPrevious()
+            }
         }
-        flipper.showPrevious()
+        next.setOnClickListener {
+            if (clickedTooSoon()) {
+                return@setOnClickListener
+            }
+            if (canGoNext) {
+                flipper.showNext()
+            } else {
+                callaback?.onFinishClicked()
+            }
+        }
     }
 
     private fun onPageChanged(position: Int) {
@@ -62,18 +63,6 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     private fun setUpNextButton() {
         next.canGoNext = canGoNext
-    }
-
-    @OnClick(R.id.next)
-    fun onNextClicked() {
-        if (clickedTooSoon()) {
-            return
-        }
-        if (canGoNext) {
-            flipper.showNext()
-        } else {
-            callaback?.onFinishClicked()
-        }
     }
 
     private fun clickedTooSoon(): Boolean {

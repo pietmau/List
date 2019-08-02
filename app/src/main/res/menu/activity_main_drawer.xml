@@ -2,13 +2,36 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group>
+    <group
+        android:id="@+id/fghrghghghjgjghjg"
+        android:checkableBehavior="single"
+        >
 
         <item
             android:id="@+id/new_list"
             android:icon="@drawable/ic_baseline_add_24px"
             android:title="New list"/>
+        <item
+            android:id="@+id/fffffffffffffffffffffffffff"
+            android:icon="@drawable/ic_baseline_add_24px"
+            android:title="B"/>
     </group>
+
+    <group
+        android:id="@+id/fdfsdfsdfsdfs"
+        android:checkableBehavior="single"
+        >
+
+        <item
+            android:id="@+id/sfdsdfsfsf"
+            android:icon="@drawable/ic_baseline_add_24px"
+            android:title="C"/>
+        <item
+            android:id="@+id/cxxzcsdfsdfs"
+            android:icon="@drawable/ic_baseline_add_24px"
+            android:title="D"/>
+    </group>
+
     <!--
         <group android:checkableBehavior="single">
 

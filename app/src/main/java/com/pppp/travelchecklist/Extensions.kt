@@ -10,11 +10,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.IdRes
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.selector_fragment.edittext
+
+inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
+    findViewById<T>(id)
+}
+
+inline fun <T : View> Fragment.findViewByIdLazy(@IdRes id: Int): Lazy<T>? = view?.findViewByIdLazy<T>(id)
 
 inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String): T? {
     val fragment = supportFragmentManager.findFragmentByTag(tag)

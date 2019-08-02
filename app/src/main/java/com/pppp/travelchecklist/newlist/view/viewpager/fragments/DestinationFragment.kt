@@ -13,6 +13,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
+import com.pppp.travelchecklist.findViewByIdLazy
 import com.pppp.travelchecklist.main.presenter.MainView
 import com.pppp.travelchecklist.utils.SimpleObserver
 import com.pppp.travelchecklist.newlist.NewListModule
@@ -20,15 +21,13 @@ import com.pppp.travelchecklist.newlist.model.Destination
 import org.angmarch.views.BetterSpinner
 import javax.inject.Inject
 
-
 class DestinationFragment : Fragment() {
     protected val callback
         get() = (requireActivity() as MainView).selectionCallback
 
     @Inject
     lateinit var presenter: DestinationPresenter
-    @BindView(R.id.nice_spinner)
-    lateinit var spinner: BetterSpinner
+    private lateinit var spinner: BetterSpinner
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +35,7 @@ class DestinationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.where_are_you_flying, container, false)
-        ButterKnife.bind(this, view)
+        spinner = view.findViewById(R.id.nice_spinner)
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 

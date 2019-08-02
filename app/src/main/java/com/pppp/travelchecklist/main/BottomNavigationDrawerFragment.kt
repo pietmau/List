@@ -36,6 +36,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         menuCreator.initMenu(nav_view.menu, checkLists)
+        nav_view.setNavigationItemSelectedListener { item -> true }
     }
 
     companion object {

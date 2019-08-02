@@ -10,10 +10,11 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.findFragmentByTag
 import com.pppp.travelchecklist.fragmentTransaction
+import com.pppp.travelchecklist.login.Consumer
+import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.main.view.MenuCreator
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.NewListFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +24,10 @@ class MainActivity : AppCompatActivity(), MainView {
     override val selectionCallback: NewListCallback?
         get() = (supportFragmentManager.findFragmentById(R.id.container) as? NewListCallback)
     @Inject
-    lateinit var presenter: MainPresenter
+    lateinit var producer: Producer<MainPresenter.ViewState>
+
+    @Inject
+    lateinit var consumer: Consumer<MainPresenter.ViewEvent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +35,24 @@ class MainActivity : AppCompatActivity(), MainView {
         setUpSelectionFragment(savedInstanceState)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
         bottom_bar.setNavigationOnClickListener { view ->
-            BottomNavigationDrawerFragment.newInstance(presenter.checkLists as List<TravelCheckListImpl>)
-                .show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
+            emit(MainPresenter.ViewEvent.NavMenuOpenSelected)
         }
+        producer.states.observe(this, Observer {
+            render(it)
+        })
+    }
+
+    private fun render(viewState: MainPresenter.ViewState) = when (viewState) {
+        is MainPresenter.ViewState.OpenNavMenu -> openNavMenu(viewState.userChecklists)
+    }
+
+    private fun emit(viewEvent: MainPresenter.ViewEvent) {
+        consumer.push(viewEvent)
+    }
+
+    private fun openNavMenu(checkLists: List<TravelCheckListImpl>) {
+        BottomNavigationDrawerFragment.newInstance(checkLists)
+            .show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 
     private fun setUpSelectionFragment(savedInstanceState: Bundle?) {

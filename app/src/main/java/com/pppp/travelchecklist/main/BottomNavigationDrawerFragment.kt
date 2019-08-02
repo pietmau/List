@@ -36,7 +36,10 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         menuCreator.initMenu(nav_view.menu, checkLists)
-        nav_view.setNavigationItemSelectedListener { item -> true }
+        nav_view.setNavigationItemSelectedListener { item ->
+            (activity as? NavigationItemListener)?.onNavItemSelected(item.itemId, item.title?.toString() ?: "")
+            true
+        }
     }
 
     companion object {
@@ -49,5 +52,9 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
         val TAG = BottomNavigationDrawerFragment::class.simpleName!!
         val ITEMS = "item"
+    }
+
+    interface NavigationItemListener {
+        fun onNavItemSelected(id: Int, titme: String)
     }
 }

@@ -24,7 +24,6 @@ import javax.inject.Inject
 class DestinationFragment : Fragment() {
     protected val callback
         get() = (requireActivity() as MainView).selectionCallback
-
     @Inject
     lateinit var presenter: DestinationPresenter
     private lateinit var spinner: BetterSpinner

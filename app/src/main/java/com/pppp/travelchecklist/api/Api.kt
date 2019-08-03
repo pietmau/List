@@ -9,6 +9,7 @@ import com.pppp.entities.pokos.CheckListImpl
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.entities.pokos.TagsGroupImpl
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -20,4 +21,7 @@ interface Api {
 
     @GET("prod/tags-groups")
     fun getTagsGroup(): Single<List<TagsGroupImpl>>
+
+    @GET("prod/tags-groups")
+    fun generatefffChecklist(list: List<TagImpl>): Call<List<TagsGroupImpl>>
 }

@@ -7,10 +7,12 @@ import android.util.AttributeSet
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
-import com.pppp.travelchecklist.newlist.view.viewpager.fragments.GetNameFragment
+import com.pppp.travelchecklist.newlist.view.viewpager.fragments.NameFragment
 
 class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ViewPager(context, attrs) {
+    private val nameFragment: NameFragment?
+        get() = adapter?.instantiateItem(this, 6) as? NameFragment
 
     val canGoToNext
         get() = currentItem < (adapter!!.count - 1)
@@ -41,7 +43,6 @@ class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     fun setNameInputError(nameInputError: String?) {
-        val fragment = adapter?.instantiateItem(this, 6) as? GetNameFragment
-        fragment?.setNameInputError(nameInputError)
+        nameFragment?.setNameInputError(nameInputError)
     }
 }

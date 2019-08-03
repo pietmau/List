@@ -14,31 +14,39 @@ import io.reactivex.subjects.AsyncSubject
 
 class NewListPresenter(
     private val model: Model,
-    private val resourcesWrapper: ResourcesWrapper,
-    private val listGenerator: ListGenerator
+    private val resourcesWrapper: ResourcesWrapper
 ) : ViewModel() {
     private val subject = AsyncSubject.create<String>()
     private lateinit var subscription: Disposable
     val viewStates: LiveData<ViewState> = MutableLiveData()
 
-    fun setChecklistName(name: String) {
+    fun onNameChanged(name: String) {
         model.listName = name
+        enableDisable()
+    }
+
+    private fun enableDisable() {
+        if (model.isDataComplete()) {
+            emit(ViewState.EnableDisable.Enable)
+        } else {
+            emit(ViewState.EnableDisable.Disable)
+        }
     }
 
     fun onFinishClicked() {
-        if (model.isEmpty || model.hasNoValidName()) {
-            emitErrors()
-        } else {
+        if (model.isDataComplete()) {
             emit(ViewState.Progress)
-            listGenerator.generate(model, model.listName!!)
+            model.generate()
                 .toObservable()
                 .subscribe(subject)
+        } else {
+            emitErrors()
         }
     }
 
     private fun emitErrors() {
         val incompleteDataMessage = if (model.isEmpty) resourcesWrapper.getString(R.string.must_make_selection) else null
-        val noNameMessage = if (model.hasNoValidName()) resourcesWrapper.getString(R.string.please_input_name) else null
+        val noNameMessage = if (!model.hasValidName()) resourcesWrapper.getString(R.string.please_input_name) else null
         emit(ViewState.Error(incompleteDataMessage, noNameMessage))
     }
 
@@ -103,5 +111,9 @@ class NewListPresenter(
         data class Error(val incompleteDataMessage: String?, val noNameMessage: String?) : ViewState()
         object Progress : ViewState()
         data class ListGenerated(val listId: String) : ViewState()
+        sealed class EnableDisable : ViewState() {
+            object Enable : EnableDisable()
+            object Disable : EnableDisable()
+        }
     }
 }

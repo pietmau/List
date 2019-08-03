@@ -91,6 +91,11 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     fun goBack() = flipper.showPrevious()
 
+    fun enableFinish(enable: Boolean) {
+        val state = if (enable) TwoStatesFab.State.CAN_FINISH else TwoStatesFab.State.CANNOT_FINISH
+        next.setState(state)
+    }
+
     companion object {
         private const val THRESHOLD = 300L
     }

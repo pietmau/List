@@ -23,7 +23,7 @@ interface NewListCallback {
 
     fun onDestinationSelected(destination: Destination)
 
-    fun generateChecklist(name: String)
+    fun onNameChanged(name: String)
 
     fun goBack(): Boolean
 }

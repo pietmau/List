@@ -24,7 +24,7 @@ class NewListFragment : Fragment(), NewListCallback {
     private val DELAY_IN_MILLS = 1000L
     @Inject
     lateinit var presenter: NewListPresenter
-    private val createChecklistView
+    private val parent
         get() = (activity as? CreateChecklistView)
     private val handler by lazy { Handler() }
 
@@ -54,7 +54,7 @@ class NewListFragment : Fragment(), NewListCallback {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        selector.callaback = this
+        selectorView.callaback = this
     }
 
     override fun onPlannedActivitySelected(plannedActivity: Tag) {
@@ -98,36 +98,36 @@ class NewListFragment : Fragment(), NewListCallback {
         presenter.onDestinationSelected(destination)
     }
 
-    override fun generateChecklist(name: String) {
-        presenter.setChecklistName(name)
+    override fun onNameChanged(name: String) {
+        presenter.onNameChanged(name)
     }
 
-    override fun goBack()= selector.goBack()
+    override fun goBack() = selectorView.goBack()
 
     fun showError(incompleteDataMessage: String?, noNameMessage: String?) {
         incompleteDataMessage?.let {
-            createChecklistView?.onError(it)
+            parent?.onError(it)
             animateBackButton()
         }
-        selector.setNameInputError(noNameMessage)
+        selectorView.setNameInputError(noNameMessage)
     }
 
     private fun animateBackButton() {
-        selector.animateBackButton()
+        selectorView.animateBackButton()
     }
 
     private fun renderFinish(viewState: NewListPresenter.ViewState.ListGenerated) {
         progress_bar.visibility = GONE
-        selector.visibility = GONE
+        selectorView.visibility = GONE
         text.text = context?.getString(R.string.list_ready)
         handler.postDelayed({
-            createChecklistView?.navigateToNewList(viewState.listId)
+            parent?.navigateToNewList(viewState.listId)
         }, DELAY_IN_MILLS)
     }
 
     fun renderProgress() {
         progress_bar.visibility = VISIBLE
-        selector.visibility = GONE
+        selectorView.visibility = GONE
         text.text = context?.getString(R.string.generating_list)
     }
 
@@ -136,5 +136,11 @@ class NewListFragment : Fragment(), NewListCallback {
             is NewListPresenter.ViewState.Error -> showError(viewState.incompleteDataMessage, viewState.noNameMessage)
             is NewListPresenter.ViewState.Progress -> renderProgress()
             is NewListPresenter.ViewState.ListGenerated -> renderFinish(viewState)
+            is NewListPresenter.ViewState.EnableDisable -> enableDisable(viewState)
         }
+
+    private fun enableDisable(viewState: NewListPresenter.ViewState.EnableDisable) {
+        val enable = viewState is NewListPresenter.ViewState.EnableDisable.Enable
+        selectorView.enableFinish(enable)
+    }
 }

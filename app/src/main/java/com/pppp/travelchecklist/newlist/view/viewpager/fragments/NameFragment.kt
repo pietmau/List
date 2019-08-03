@@ -11,7 +11,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import kotlinx.android.synthetic.main.fragment_getname.edittext
 
-class GetNameFragment : Fragment() {
+class NameFragment : Fragment() {
     private var nameInputError: String? = null
 
     private val callback
@@ -23,7 +23,7 @@ class GetNameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         edittext.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                callback?.generateChecklist(edittext.text.toString())
+                callback?.onNameChanged(edittext.text.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { /*NoOp*/

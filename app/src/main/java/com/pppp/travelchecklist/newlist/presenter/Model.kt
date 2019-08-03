@@ -2,11 +2,13 @@ package com.pppp.travelchecklist.newlist.presenter
 
 import android.os.Parcelable
 import com.pietrantuono.entities.Tag
+import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.newlist.model.Destination
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-class Model() : Parcelable {
+class Model(
+    private val listGenerator: ListGenerator
+) {
     var accomodation: Tag? = null
     var weather: Tag? = null
     var duration: Tag? = null
@@ -16,7 +18,7 @@ class Model() : Parcelable {
     var listName: String? = null
     var checkListId: String? = null
 
-    fun hasNoValidName() = listName.isNullOrBlank()
+    fun hasValidName() = !listName.isNullOrBlank()
 
     fun onAccomodationSelected(accomodation: Tag) {
         this.accomodation = accomodation
@@ -63,6 +65,10 @@ class Model() : Parcelable {
         }
         return list.toList()
     }
+
+    fun isDataComplete() = ((!isEmpty) && hasValidName())
+
+    fun generate() = listGenerator.generate(this, listName!!) // Cannot be null, let's crash
 
     val isEmpty: Boolean
         get() = accomodation == null && weather == null && duration == null && destination == null

@@ -14,7 +14,7 @@ class SelectionViewPagerAdapter(fragmentManager: androidx.fragment.app.FragmentM
             3 -> AccomodationFragment()
             4 -> PlannedActivitiesFragment()
             5 -> LongOrShortTripFragment()
-            6 -> GetNameFragment()
+            6 -> NameFragment()
             else -> throw UnsupportedOperationException("Invalid itemId")
         }
 

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun startCreateChecklistActivity() {
-        startActivityForResult(Intent(this, CreateChecklistActivity::class.java), CreateChecklistActivity.CODE)
+        startActivityForResult(Intent(this, CreateChecklistActivity::class.java), CreateChecklistActivity.REQUEST_CODE)
         overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 

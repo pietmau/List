@@ -93,7 +93,7 @@ class NewListPresenter(
         selection.onDestinationSelected(destination)
     }
 
-    fun onSetupCompleted(text: String?) {
+    fun onSetupCompleted(text: String) {
         listGenerator.setName(checkListId!!, text) // If it is null here, we better crash
         emit(ViewState.ListNamed(checkListId!!, text))
     }

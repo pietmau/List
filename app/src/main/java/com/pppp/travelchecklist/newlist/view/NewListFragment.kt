@@ -13,7 +13,6 @@ import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
-import com.pppp.travelchecklist.main.presenter.ErrorCallback
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
@@ -24,7 +23,7 @@ import javax.inject.Inject
 class NewListFragment() : Fragment(), NewListCallback, NewListView {
     @Inject
     lateinit var presenter: NewListPresenter
-    private val mainView
+    private val createChecklistView
         get() = (activity as? CreateChecklistView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +88,7 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
     }
 
     override fun onError(string: String) {
-        mainView?.onError(string)
+        createChecklistView?.onError(string)
     }
 
     override fun onDestinationSelected(destination: Destination) {
@@ -101,10 +100,13 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
         progress_bar.visibility = GONE
         edittext.visibility = VISIBLE
         edittext.setOnReturnClicked {
-            presenter.onSetupCompleted(this.text?.toString())
+            if (this.text.isNullOrBlank()) {
+                edittext.error = resources.getString(R.string.please_input_name)
+            } else {
+                presenter.onSetupCompleted(this.text.toString())
+            }
         }
         text.text = context?.getString(R.string.list_ready)
-        mainView?.navigateToNewList(checkListId)
     }
 
     override fun generatingList() {
@@ -119,8 +121,7 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
             is NewListPresenter.ViewState.Error -> onError(viewState.message)
             is NewListPresenter.ViewState.Progress -> generatingList()
             is NewListPresenter.ViewState.ListGenerated -> onListGenerated(viewState.listId)
-            is NewListPresenter.ViewState.ListNamed -> {
-            }
+            is NewListPresenter.ViewState.ListNamed -> createChecklistView?.navigateToNewList(viewState.listId)
         }
 
     companion object {

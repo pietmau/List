@@ -48,5 +48,6 @@
     <string name="generating_list">Generating your list...</string>
     <string name="list_ready">Your list is ready 🚀!\nPlease, chose a name</string>
     <string name="your_lists">Your lists</string>
+    <string name="please_input_name">Please, the name cannot be empty</string>
 
 </resources>

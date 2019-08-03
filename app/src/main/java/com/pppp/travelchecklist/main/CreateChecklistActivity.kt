@@ -1,6 +1,9 @@
 package com.pppp.travelchecklist.main
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ActionMenuView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.pppp.travelchecklist.R
@@ -13,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_create_cheklist.selector_fragment
 import javax.inject.Inject
 
 class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
-
     override val selectionCallback: NewListCallback?
         get() = (supportFragmentManager.findFragmentById(R.id.selector_fragment) as? NewListCallback)
 
@@ -27,8 +29,11 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
     }
 
     override fun navigateToNewList(checkListId: String) {
-        //supportFragmentManager.findFragmentById(R.id.container)?.let { fragmentTransaction.remove(it) }
-        //fragmentTransaction.replace(R.id.container, ViewCheckListFragment.fromSelection(checkListId), ViewCheckListFragment.TAG).commit()
+        val data = Intent().apply {
+            putExtra(CHECKLIST_ID, checkListId)
+        }
+        setResult(RESULT_OK, data)
+        finish()
     }
 
     override fun onError(text: String) {
@@ -38,11 +43,17 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
     }
 
     override fun onBackPressed() {
+        setResult(RESULT_CANCELED)
         super.onBackPressed()
+    }
+
+    override fun finish() {
+        super.finish()
         overridePendingTransition(R.anim.no_change, R.anim.slide_down);
     }
 
     companion object {
-        const val CODE: Int = 123
+        const val REQUEST_CODE = 123
+        const val CHECKLIST_ID = "checklist_id"
     }
 }

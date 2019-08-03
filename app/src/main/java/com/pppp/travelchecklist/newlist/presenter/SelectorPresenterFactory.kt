@@ -11,5 +11,5 @@ class SelectorPresenterFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        NewListPresenter(SelectionData(), resourcesWrapper, listGenerator) as T
+        NewListPresenter(Model(), resourcesWrapper, listGenerator) as T
 }

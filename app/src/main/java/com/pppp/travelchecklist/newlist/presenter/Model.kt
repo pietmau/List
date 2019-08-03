@@ -6,13 +6,17 @@ import com.pppp.travelchecklist.newlist.model.Destination
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class SelectionData() : Parcelable {
+class Model() : Parcelable {
     var accomodation: Tag? = null
     var weather: Tag? = null
     var duration: Tag? = null
     val plannedActivities = mutableListOf<Tag>()
     val travellers = mutableListOf<Tag>()
     var destination: Destination? = null
+    var listName: String? = null
+    var checkListId: String? = null
+
+    fun hasNoValidName() = listName.isNullOrBlank()
 
     fun onAccomodationSelected(accomodation: Tag) {
         this.accomodation = accomodation
@@ -62,6 +66,6 @@ class SelectionData() : Parcelable {
 
     val isEmpty: Boolean
         get() = accomodation == null && weather == null && duration == null && destination == null
-                && plannedActivities.isEmpty() && travellers.isEmpty()
+            && plannedActivities.isEmpty() && travellers.isEmpty()
 
 }

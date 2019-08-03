@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
-import com.pppp.travelchecklist.setOnReturnClicked
 import kotlinx.android.synthetic.main.fragment_getname.edittext
 
 class GetNameFragment : Fragment() {
@@ -37,19 +36,22 @@ class GetNameFragment : Fragment() {
 
     fun setNameInputError(nameInputError: String?) {
         this.nameInputError = nameInputError
-        setError(nameInputError)
+        setErrorInternal(nameInputError)
     }
 
-    private fun setError(nameInputError: String?) {
+    private fun setErrorInternal(nameInputError: String?) {
         edittext?.error = nameInputError
+        if (nameInputError != null) {
+            edittext?.requestFocus()
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
-            setError(nameInputError)
+            setErrorInternal(nameInputError)
         } else {
-            setError(null)
+            setErrorInternal(null)
         }
     }
 }

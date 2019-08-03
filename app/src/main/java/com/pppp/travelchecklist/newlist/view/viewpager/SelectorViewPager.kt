@@ -40,7 +40,7 @@ class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     fun setNameInputError(nameInputError: String?) {
-        val fragment = adapter?.instantiateItem(this, 6)
-        (fragment as? GetNameFragment)?.setNameInputError(nameInputError)
+        val fragment = adapter?.instantiateItem(this, 6) as? GetNameFragment
+        fragment?.setNameInputError(nameInputError)
     }
 }

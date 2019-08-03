@@ -1,5 +1,7 @@
 package com.pppp.travelchecklist.newlist.view.custom
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.util.AttributeSet
@@ -76,6 +78,11 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     fun setNameInputError(nameInputError: String?) {
         flipper.setNameInputError(nameInputError)
+    }
+
+    fun animateBackButton() {
+        val anim = android.view.animation.AnimationUtils.loadAnimation(previous.getContext(), R.anim.shake)
+        previous.startAnimation(anim)
     }
 
     companion object {

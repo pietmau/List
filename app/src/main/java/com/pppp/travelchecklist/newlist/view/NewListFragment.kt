@@ -103,8 +103,15 @@ class NewListFragment : Fragment(), NewListCallback {
     }
 
     fun showError(incompleteDataMessage: String?, noNameMessage: String?) {
-        incompleteDataMessage?.let { createChecklistView?.onError(it) }
+        incompleteDataMessage?.let {
+            createChecklistView?.onError(it)
+            animateBackButton()
+        }
         selector.setNameInputError(noNameMessage)
+    }
+
+    private fun animateBackButton() {
+        selector.animateBackButton()
     }
 
     private fun renderFinish(viewState: NewListPresenter.ViewState.ListGenerated) {

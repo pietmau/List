@@ -21,20 +21,27 @@ class NewListPresenter(
     private val subject = AsyncSubject.create<String>()
     private lateinit var subscription: Disposable
     val viewStates: LiveData<ViewState> = MutableLiveData()
+    private var listName: String? = null
 
-    fun generateChecklist(name: String) {
-        emit(ViewState.Progress)
-        listGenerator.generate(selection, name)
-            .toObservable()
-            .subscribe(subject)
+    fun setChecklistName(name: String) {
+        this.listName = name
     }
 
     fun onFinishClicked() {
-        if (selection.isEmpty) {
-            emit(ViewState.Error(resourcesWrapper.getString(R.string.must_make_selection)))
+        if (selection.isEmpty || listName.isNullOrBlank()) {
+            emitErrors()
         } else {
-            emit(ViewState.GetName)
+            emit(ViewState.Progress)
+            listGenerator.generate(selection, listName!!)
+                .toObservable()
+                .subscribe(subject)
         }
+    }
+
+    private fun emitErrors() {
+        val incompleteDataMessage = if (selection.isEmpty) resourcesWrapper.getString(R.string.must_make_selection) else null
+        val noNameMessage = if (listName.isNullOrBlank()) resourcesWrapper.getString(R.string.please_input_name) else null
+        emit(ViewState.Error(incompleteDataMessage, noNameMessage))
     }
 
     fun subscribe() {
@@ -49,7 +56,7 @@ class NewListPresenter(
                 }
 
                 override fun onError(e: Throwable) {
-                    emit(ViewState.Error(e.localizedMessage))
+                    emit(ViewState.Error(e.localizedMessage, null))
                 }
             })
     }
@@ -95,9 +102,8 @@ class NewListPresenter(
     }
 
     sealed class ViewState {
-        data class Error(val message: String) : ViewState()
+        data class Error(val incompleteDataMessage: String?, val noNameMessage: String?) : ViewState()
         object Progress : ViewState()
-        object GetName : ViewState()
         data class ListGenerated(val listId: String) : ViewState()
     }
 }

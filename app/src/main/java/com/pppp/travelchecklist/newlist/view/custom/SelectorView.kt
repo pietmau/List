@@ -19,7 +19,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     private val flipper: SelectorViewPager by findViewByIdLazy(R.id.flipper)
     private val next: TwoStatesFab by findViewByIdLazy(R.id.next)
     private val previous: View by findViewByIdLazy(R.id.previous)
-    val canGoNext get() = flipper.canGoToNext
+    private val canGoNext get() = flipper.canGoToNext
     private var time = 0L
 
     init {
@@ -72,6 +72,10 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
             time = System.currentTimeMillis()
             return false
         }
+    }
+
+    fun setNameInputError(nameInputError: String?) {
+        flipper.setNameInputError(nameInputError)
     }
 
     companion object {

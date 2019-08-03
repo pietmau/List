@@ -17,7 +17,6 @@ import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
-import com.pppp.travelchecklist.setOnReturnClicked
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
@@ -95,18 +94,22 @@ class NewListFragment : Fragment(), NewListCallback {
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun showError(string: String) {
-        createChecklistView?.onError(string)
-    }
-
     override fun onDestinationSelected(destination: Destination) {
         presenter.onDestinationSelected(destination)
+    }
+
+    override fun generateChecklist(name: String) {
+        presenter.setChecklistName(this.text.toString())
+    }
+
+    fun showError(incompleteDataMessage: String?, noNameMessage: String?) {
+        incompleteDataMessage?.let { createChecklistView?.onError(it) }
+        selector.setNameInputError(noNameMessage)
     }
 
     private fun renderFinish(viewState: NewListPresenter.ViewState.ListGenerated) {
         progress_bar.visibility = GONE
         selector.visibility = GONE
-        edittext.visibility = GONE
         text.text = context?.getString(R.string.list_ready)
         handler.postDelayed({
             createChecklistView?.navigateToNewList(viewState.listId)
@@ -116,29 +119,13 @@ class NewListFragment : Fragment(), NewListCallback {
     fun renderProgress() {
         progress_bar.visibility = VISIBLE
         selector.visibility = GONE
-        edittext.visibility = GONE
         text.text = context?.getString(R.string.generating_list)
-    }
-
-    private fun renderGetName() {
-        selector.visibility = GONE
-        progress_bar.visibility = GONE
-        edittext.visibility = VISIBLE
-        edittext.setOnReturnClicked {
-            if (this.text.isNullOrBlank()) {
-                edittext.error = resources.getString(R.string.please_input_name)
-            } else {
-                presenter.generateChecklist(this.text.toString())
-            }
-        }
-        text.text = context?.getString(R.string.please_chose_name)
     }
 
     private fun render(viewState: NewListPresenter.ViewState) =
         when (viewState) {
-            is NewListPresenter.ViewState.Error -> showError(viewState.message)
+            is NewListPresenter.ViewState.Error -> showError(viewState.incompleteDataMessage, viewState.noNameMessage)
             is NewListPresenter.ViewState.Progress -> renderProgress()
             is NewListPresenter.ViewState.ListGenerated -> renderFinish(viewState)
-            is NewListPresenter.ViewState.GetName -> renderGetName()
         }
 }

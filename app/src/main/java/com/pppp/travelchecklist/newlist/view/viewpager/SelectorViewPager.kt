@@ -5,7 +5,9 @@ import android.content.Context
 import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import com.pppp.travelchecklist.extensions.isMarshmallowOrAbove
+import com.pppp.travelchecklist.newlist.view.viewpager.fragments.GetNameFragment
 
 class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ViewPager(context, attrs) {
@@ -16,7 +18,7 @@ class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: Attri
         get() = currentItem > 0
 
     init {
-        val fragmentManager = (context as androidx.fragment.app.FragmentActivity).supportFragmentManager
+        val fragmentManager = (context as FragmentActivity).supportFragmentManager
         adapter = SelectionViewPagerAdapter(fragmentManager)
         offscreenPageLimit = adapter!!.count
         if (isMarshmallowOrAbove) {
@@ -35,5 +37,10 @@ class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: Attri
 
     fun showNext() {
         currentItem = currentItem + 1
+    }
+
+    fun setNameInputError(nameInputError: String?) {
+        val fragment = adapter?.instantiateItem(this, 6)
+        (fragment as? GetNameFragment)?.setNameInputError(nameInputError)
     }
 }

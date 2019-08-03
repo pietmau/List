@@ -14,9 +14,9 @@ class FirebaseTravelChecklistRepository(
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : TravelChecklistRepository {
 
-    override fun saveAndGet(list: List<Category>): Single<String> = Single.create { emitter ->
+    override fun saveAndGet(list: List<Category>, name: String): Single<String> = Single.create { emitter ->
         db.getAllUserCheckLists(getUserId())
-            .add(TravelCheckListImpl(list as List<CategoryImpl>))
+            .add(TravelCheckListImpl(list as List<CategoryImpl>, name))
             .addOnSuccessListener {
                 emitter.onSuccess(it.id)
             }

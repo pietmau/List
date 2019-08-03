@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.newlist.view
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +21,13 @@ import com.pppp.travelchecklist.setOnReturnClicked
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
-class NewListFragment() : Fragment(), NewListCallback, NewListView {
+class NewListFragment : Fragment(), NewListCallback {
+    private val DELAY_IN_MILLS = 1000L
     @Inject
     lateinit var presenter: NewListPresenter
     private val createChecklistView
         get() = (activity as? CreateChecklistView)
+    private val handler by lazy { Handler() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +90,12 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
         presenter.onFinishClicked()
     }
 
-    override fun onError(string: String) {
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    fun showError(string: String) {
         createChecklistView?.onError(string)
     }
 
@@ -95,7 +103,24 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
         presenter.onDestinationSelected(destination)
     }
 
-    override fun onListGenerated(checkListId: String) {
+    private fun renderFinish(viewState: NewListPresenter.ViewState.ListGenerated) {
+        progress_bar.visibility = GONE
+        selector.visibility = GONE
+        edittext.visibility = GONE
+        text.text = context?.getString(R.string.list_ready)
+        handler.postDelayed({
+            createChecklistView?.navigateToNewList(viewState.listId)
+        }, DELAY_IN_MILLS)
+    }
+
+    fun renderProgress() {
+        progress_bar.visibility = VISIBLE
+        selector.visibility = GONE
+        edittext.visibility = GONE
+        text.text = context?.getString(R.string.generating_list)
+    }
+
+    private fun renderGetName() {
         selector.visibility = GONE
         progress_bar.visibility = GONE
         edittext.visibility = VISIBLE
@@ -103,29 +128,17 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
             if (this.text.isNullOrBlank()) {
                 edittext.error = resources.getString(R.string.please_input_name)
             } else {
-                presenter.onSetupCompleted(this.text.toString())
+                presenter.generateChecklist(this.text.toString())
             }
         }
-        text.text = context?.getString(R.string.list_ready)
-    }
-
-    override fun generatingList() {
-        progress_bar.visibility = VISIBLE
-        selector.visibility = GONE
-        edittext.visibility = GONE
-        text.text = context?.getString(R.string.generating_list)
+        text.text = context?.getString(R.string.please_chose_name)
     }
 
     private fun render(viewState: NewListPresenter.ViewState) =
         when (viewState) {
-            is NewListPresenter.ViewState.Error -> onError(viewState.message)
-            is NewListPresenter.ViewState.Progress -> generatingList()
-            is NewListPresenter.ViewState.ListGenerated -> onListGenerated(viewState.listId)
-            is NewListPresenter.ViewState.ListNamed -> createChecklistView?.navigateToNewList(viewState.listId)
+            is NewListPresenter.ViewState.Error -> showError(viewState.message)
+            is NewListPresenter.ViewState.Progress -> renderProgress()
+            is NewListPresenter.ViewState.ListGenerated -> renderFinish(viewState)
+            is NewListPresenter.ViewState.GetName -> renderGetName()
         }
-
-    companion object {
-        fun newInstance() = NewListFragment()
-        val TAG = NewListFragment::class.java.simpleName
-    }
 }

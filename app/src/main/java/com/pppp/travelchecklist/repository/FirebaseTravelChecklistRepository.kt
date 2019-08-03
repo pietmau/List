@@ -38,14 +38,23 @@ class FirebaseTravelChecklistRepository(
         }
     }
 
-    override fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        db.getAllUserCheckLists(getUserId()).get().addOnSuccessListener { querySnapshot ->
-            val result = querySnapshot.documents
-                .map { documentSnapshot ->
-                    documentSnapshot.toObject(TravelCheckListImpl::class.java)
-                }.filterNotNull()
-            success?.invoke(result)
-        }.addOnFailureListener { failure?.invoke(it) }
+    override fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS).addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    failure?.invoke(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val result = snapshot.documents
+                        .map { documentSnapshot ->
+                            documentSnapshot.toObject(TravelCheckListImpl::class.java)
+                        }.filterNotNull()
+                    success?.invoke(result)
+                }
+
+            }
     }
 
     override fun setName(listId: String, name: String?) {

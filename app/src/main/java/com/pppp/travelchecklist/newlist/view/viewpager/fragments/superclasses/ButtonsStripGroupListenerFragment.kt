@@ -12,7 +12,7 @@ import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.newlist.NewListComponent
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.view.custom.ButtonsStripGroup
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.button_strip_fragment.*
 
 abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup.Listener {
     protected val callback
-        get() = (requireActivity() as? MainView)?.selectionCallback
+        get() = (requireActivity() as? CreateChecklistView)?.selectionCallback
     private val subscriptions = CompositeDisposable()
     protected lateinit var model: TagSelectorModel
     protected lateinit var component: NewListComponent

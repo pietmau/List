@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.newlist.NewListComponent
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.view.custom.ButtonsStrip
@@ -22,7 +22,7 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
     protected val disposables = CompositeDisposable()
     abstract protected var model: TagSelectorModel
     protected val callback
-        get() = (requireActivity() as MainView).selectionCallback
+        get() = (requireActivity() as CreateChecklistView).selectionCallback
     protected lateinit var component: NewListComponent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -12,7 +12,7 @@ interface TravelChecklistRepository {
 
     fun setName(listId: String, name: String?)
 
-    fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
+    fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 }
 
 interface SingleCheckListRepository {

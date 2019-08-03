@@ -1,28 +1,22 @@
 package com.pppp.travelchecklist.main
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.pppp.entities.pokos.TravelCheckListImpl
-import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.findFragmentByTag
-import com.pppp.travelchecklist.fragmentTransaction
 import com.pppp.travelchecklist.login.Consumer
 import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
-import com.pppp.travelchecklist.main.presenter.MainView
-import com.pppp.travelchecklist.newlist.view.NewListCallback
-import com.pppp.travelchecklist.newlist.view.NewListFragment
+import com.pppp.travelchecklist.main.presenter.ErrorCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainView {
-    override val selectionCallback: NewListCallback?
-        get() = (supportFragmentManager.findFragmentById(R.id.container) as? NewListCallback)
+class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
     lateinit var producer: Producer<MainPresenter.ViewState>
 
@@ -32,7 +26,6 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setUpSelectionFragment(savedInstanceState)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
         bottom_bar.setNavigationOnClickListener { view ->
             emit(MainPresenter.ViewEvent.NavMenuOpenSelected)
@@ -44,6 +37,12 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private fun render(viewState: MainPresenter.ViewState) = when (viewState) {
         is MainPresenter.ViewState.OpenNavMenu -> openNavMenu(viewState.userChecklists)
+        is MainPresenter.ViewState.GoToCreateNewList -> startCreateChecklistActivity()
+    }
+
+    private fun startCreateChecklistActivity() {
+        startActivityForResult(Intent(this, CreateChecklistActivity::class.java), CreateChecklistActivity.CODE)
+        overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 
     private fun emit(viewEvent: MainPresenter.ViewEvent) {
@@ -51,23 +50,12 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun openNavMenu(checkLists: List<TravelCheckListImpl>) {
-        BottomNavigationDrawerFragment.newInstance(checkLists)
-            .show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
+        BottomNavigationDrawerFragment.newInstance(checkLists).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 
-    private fun setUpSelectionFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            fragmentTransaction.replace(R.id.container, getSelectorFragment(), NewListFragment.TAG).commit()
-        }
+    override fun onNavItemSelected(id: Int, title: String) {
+        emit(MainPresenter.ViewEvent.NavItemSelected(id, title))
     }
-
-    override fun navigateToNewList(checkListId: String) {
-        supportFragmentManager.findFragmentById(R.id.container)?.let { fragmentTransaction.remove(it) }
-        fragmentTransaction.replace(R.id.container, ViewCheckListFragment.fromSelection(checkListId), ViewCheckListFragment.TAG).commit()
-    }
-
-    private fun getSelectorFragment() =
-        findFragmentByTag<ViewCheckListFragment>(NewListFragment.TAG) ?: NewListFragment.newInstance()
 
     override fun onError(text: String) {
         Snackbar.make(root, text, Snackbar.LENGTH_LONG).show()

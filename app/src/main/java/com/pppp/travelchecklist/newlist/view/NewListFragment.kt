@@ -1,20 +1,19 @@
 package com.pppp.travelchecklist.newlist.view
 
 import android.os.Bundle
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.main.presenter.ErrorCallback
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
@@ -26,7 +25,7 @@ class NewListFragment() : Fragment(), NewListCallback, NewListView {
     @Inject
     lateinit var presenter: NewListPresenter
     private val mainView
-        get() = (activity as? MainView)
+        get() = (activity as? CreateChecklistView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

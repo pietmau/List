@@ -9,13 +9,11 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.view.MenuCreator
 import kotlinx.android.synthetic.main.fragment_navigation_view.nav_view
 import javax.inject.Inject
 
 class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
-
     @Inject
     lateinit var menuCreator: MenuCreator
 
@@ -37,7 +35,8 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         menuCreator.initMenu(nav_view.menu, checkLists)
         nav_view.setNavigationItemSelectedListener { item ->
-            (activity as? NavigationItemListener)?.onNavItemSelected(item.itemId, item.title?.toString() ?: "")
+            (activity as? BottomNavigationItemListener)?.onNavItemSelected(item.itemId, item.title?.toString() ?: "")
+            dismiss()
             true
         }
     }
@@ -54,7 +53,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
         val ITEMS = "item"
     }
 
-    interface NavigationItemListener {
-        fun onNavItemSelected(id: Int, titme: String)
+    interface BottomNavigationItemListener {
+        fun onNavItemSelected(id: Int, title: String)
     }
 }

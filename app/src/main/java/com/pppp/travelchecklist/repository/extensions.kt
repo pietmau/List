@@ -2,8 +2,8 @@ package com.pppp.travelchecklist.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 
-private val USERS = "users"
-private val USERS_CHECKLISTS = "user_checklists"
+internal val USERS = "users"
+    internal val USERS_CHECKLISTS = "user_checklists"
 
 fun FirebaseFirestore.getAllUserCheckLists(userId: String) = this.collection(USERS)
     .document(userId)

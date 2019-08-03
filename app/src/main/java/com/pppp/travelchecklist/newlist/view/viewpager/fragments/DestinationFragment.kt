@@ -7,14 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
-import com.pppp.travelchecklist.findViewByIdLazy
-import com.pppp.travelchecklist.main.presenter.MainView
+import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.utils.SimpleObserver
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
@@ -23,7 +20,7 @@ import javax.inject.Inject
 
 class DestinationFragment : Fragment() {
     protected val callback
-        get() = (requireActivity() as MainView).selectionCallback
+        get() = (requireActivity() as CreateChecklistView).selectionCallback
     @Inject
     lateinit var presenter: DestinationPresenter
     private lateinit var spinner: BetterSpinner

@@ -24,14 +24,14 @@
         </activity>
 
         <activity
-            android:name=".main.CreateChecklistActivity"
+            android:name=".newlist.CreateChecklistActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"/>
+            />
 
         <activity
             android:name=".login.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"/>
+            />
 
     </application>
 

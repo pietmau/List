@@ -9,19 +9,26 @@ import com.pppp.travelchecklist.R
 class TwoStatesFab @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     FloatingActionButton(context, attrs) {
 
-    var canGoNext: Boolean = false
-        set(value) {
-            if (value) {
-                backgroundTintList =
-                        ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
-                setImageDrawable(
-                    resources.getDrawable(R.drawable.ic_chevron_right_white_24dp, context.theme)
-                )
-            } else {
-                backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
-                setImageDrawable(
-                    resources.getDrawable(R.drawable.ic_check_white_24dp, context.theme)
-                )
-            }
+    init {
+        setState(State.GO_FORWARD)
+    }
+
+    fun setState(state: State) = when (state) {
+        State.GO_FORWARD -> {
+            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
+            setImageDrawable(resources.getDrawable(R.drawable.ic_chevron_right_white_24dp, context.theme))
         }
+        State.CANNOT_FINISH -> {
+            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
+            setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_close_24px, context.theme))
+        }
+        State.CAN_FINISH -> {
+            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
+            setImageDrawable(resources.getDrawable(R.drawable.ic_check_white_24dp, context.theme))
+        }
+    }
+
+    enum class State {
+        GO_FORWARD, CAN_FINISH, CANNOT_FINISH
+    }
 }

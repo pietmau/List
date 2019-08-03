@@ -25,4 +25,5 @@ interface NewListCallback {
 
     fun generateChecklist(name: String)
 
+    fun goBack(): Boolean
 }

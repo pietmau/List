@@ -31,8 +31,9 @@ class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: Attri
         setOnScrollChangeListener({ p0, p1, p2, p3, p4 -> Log.e("Scroll", "") })
     }
 
-    fun showPrevious() {
+    fun showPrevious(): Boolean {
         currentItem = currentItem - 1
+        return canGoToPrevious
     }
 
     fun showNext() {

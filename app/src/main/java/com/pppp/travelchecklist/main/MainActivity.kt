@@ -13,6 +13,7 @@ import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.ErrorCallback
+import com.pppp.travelchecklist.newlist.CreateChecklistActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 

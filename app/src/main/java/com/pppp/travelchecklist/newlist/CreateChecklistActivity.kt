@@ -1,9 +1,7 @@
-package com.pppp.travelchecklist.main
+package com.pppp.travelchecklist.newlist
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ActionMenuView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.pppp.travelchecklist.R
@@ -43,6 +41,9 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
     }
 
     override fun onBackPressed() {
+        if (selectionCallback?.goBack() == true) {
+            return
+        }
         setResult(RESULT_CANCELED)
         super.onBackPressed()
     }

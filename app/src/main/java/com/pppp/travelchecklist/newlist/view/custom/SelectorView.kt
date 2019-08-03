@@ -34,7 +34,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         setUp()
     }
 
-    private fun setUp() {//TODO still needed?
+    private fun setUp() {
         flipper.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 onPageChanged(position)
@@ -64,7 +64,11 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     }
 
     private fun setUpNextButton() {
-        next.canGoNext = canGoNext
+        if (canGoNext) {
+            next.setState(TwoStatesFab.State.GO_FORWARD)
+        } else {
+            next.setState(TwoStatesFab.State.CANNOT_FINISH)
+        }
     }
 
     private fun clickedTooSoon(): Boolean {
@@ -84,6 +88,8 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         val anim = android.view.animation.AnimationUtils.loadAnimation(previous.getContext(), R.anim.shake)
         previous.startAnimation(anim)
     }
+
+    fun goBack() = flipper.showPrevious()
 
     companion object {
         private const val THRESHOLD = 300L

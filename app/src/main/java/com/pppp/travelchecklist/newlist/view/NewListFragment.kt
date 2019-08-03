@@ -99,8 +99,10 @@ class NewListFragment : Fragment(), NewListCallback {
     }
 
     override fun generateChecklist(name: String) {
-        presenter.setChecklistName(this.text.toString())
+        presenter.setChecklistName(name)
     }
+
+    override fun goBack()= selector.goBack()
 
     fun showError(incompleteDataMessage: String?, noNameMessage: String?) {
         incompleteDataMessage?.let {

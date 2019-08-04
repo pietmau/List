@@ -20,8 +20,9 @@ import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
+private const val DELAY_IN_MILLS = 1000L
+
 class NewListFragment : Fragment(), NewListCallback {
-    private val DELAY_IN_MILLS = 1000L
     @Inject
     lateinit var presenter: NewListPresenter
     private val parent
@@ -32,9 +33,10 @@ class NewListFragment : Fragment(), NewListCallback {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
         appComponent?.with(NewListModule(requireActivity()))?.inject(this)
-        presenter.viewStates.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.ViewState ->
+        presenter.states.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.ViewState ->
             render(viewState)
         })
+        presenter.transientStates = ::showTransientState
     }
 
     override fun onCreateView(
@@ -42,16 +44,6 @@ class NewListFragment : Fragment(), NewListCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = inflater.inflate(R.layout.selector_fragment, container, false)
-
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.unsubscribe()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         selectorView.callaback = this
@@ -102,45 +94,48 @@ class NewListFragment : Fragment(), NewListCallback {
         presenter.onNameChanged(name)
     }
 
-    override fun goBack() = selectorView.goBack()
-
-    fun showError(incompleteDataMessage: String?, noNameMessage: String?) {
-        incompleteDataMessage?.let {
-            parent?.onError(it)
-            animateBackButton()
-        }
-        selectorView.setNameInputError(noNameMessage)
+    override fun onDurationDeselected(item: Tag) {
+        presenter.onDurationDeselected(item)
     }
 
-    private fun animateBackButton() {
-        selectorView.animateBackButton()
+    override fun onAccommodationDeselected(item: Tag) {
+        presenter.onAccommodationDeselected(item)
     }
 
-    private fun renderFinish(viewState: NewListPresenter.ViewState.ListGenerated) {
-        progress_bar.visibility = GONE
-        selectorView.visibility = GONE
-        text.text = context?.getString(R.string.list_ready)
-        handler.postDelayed({
-            parent?.navigateToNewList(viewState.listId)
-        }, DELAY_IN_MILLS)
+    override fun onWeatherDeselected(item: Tag) {
+        presenter.onWeatherDeselected(item)
     }
 
-    fun renderProgress() {
-        progress_bar.visibility = VISIBLE
-        selectorView.visibility = GONE
-        text.text = context?.getString(R.string.generating_list)
+    override fun onPageChanged(position: Int) {
+        presenter.onPageChanged()
     }
 
-    private fun render(viewState: NewListPresenter.ViewState) =
-        when (viewState) {
-            is NewListPresenter.ViewState.Error -> showError(viewState.incompleteDataMessage, viewState.noNameMessage)
-            is NewListPresenter.ViewState.Progress -> renderProgress()
-            is NewListPresenter.ViewState.ListGenerated -> renderFinish(viewState)
-            is NewListPresenter.ViewState.EnableDisable -> enableDisable(viewState)
+    override fun navigateBack() = selectorView.goBack()
+
+    private fun render(viewState: NewListPresenter.ViewState) {
+        selectorView.enableFinish(viewState.enableFinish)
+
+        if (viewState.showPreogress) {
+            progress_bar.visibility = VISIBLE
+            selectorView.visibility = GONE
+            text.text = context?.getString(R.string.generating_list)
         }
 
-    private fun enableDisable(viewState: NewListPresenter.ViewState.EnableDisable) {
-        val enable = viewState is NewListPresenter.ViewState.EnableDisable.Enable
-        selectorView.enableFinish(enable)
+        if (viewState.listId != null) {
+            progress_bar.visibility = GONE
+            selectorView.visibility = GONE
+            text.text = context?.getString(R.string.list_ready)
+            handler.postDelayed({
+                parent?.navigateToNewList(viewState.listId)
+            }, DELAY_IN_MILLS)
+        }
+    }
+
+    private fun showTransientState(transientState: NewListPresenter.TransientState) {
+        transientState.genericError?.let {
+            parent?.onError(it.message)
+            selectorView.animateBackButton()
+        }
+        transientState.noName?.let { selectorView.setNameInputError(resources.getString(R.string.please_input_name)) }
     }
 }

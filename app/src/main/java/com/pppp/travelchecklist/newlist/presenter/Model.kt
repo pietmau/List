@@ -52,6 +52,18 @@ class Model(
         this.destination = destination
     }
 
+    fun onDurationDeselected(item: Tag) {
+        duration = null
+    }
+
+    fun onAccommodationDeselected(item: Tag) {
+        accomodation = null
+    }
+
+    fun onWeatherDeselected(item: Tag) {
+        weather = null
+    }
+
     fun toList(): List<Tag> {
         var list = plannedActivities + travellers
         accomodation?.let {

@@ -12,8 +12,6 @@ import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import kotlinx.android.synthetic.main.fragment_getname.edittext
 
 class NameFragment : Fragment() {
-    private var nameInputError: String? = null
-
     private val callback
         get() = (requireActivity() as CreateChecklistView).selectionCallback
 
@@ -35,23 +33,9 @@ class NameFragment : Fragment() {
     }
 
     fun setNameInputError(nameInputError: String?) {
-        this.nameInputError = nameInputError
-        setErrorInternal(nameInputError)
-    }
-
-    private fun setErrorInternal(nameInputError: String?) {
         edittext?.error = nameInputError
         if (nameInputError != null) {
             edittext?.requestFocus()
-        }
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            setErrorInternal(nameInputError)
-        } else {
-            setErrorInternal(null)
         }
     }
 }

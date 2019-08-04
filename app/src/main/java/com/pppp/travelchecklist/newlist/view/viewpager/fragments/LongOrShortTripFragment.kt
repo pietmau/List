@@ -19,4 +19,8 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
         callback?.onDurationSelected(item)
     }
 
+    override fun onItemDeselected(item: TagImpl) {
+        super.onItemDeselected(item)
+        callback?.onDurationDeselected(item)
+    }
 }

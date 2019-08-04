@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.newlist.view
 
 import com.pietrantuono.entities.Tag
+import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.newlist.model.Destination
 
 interface NewListCallback {
@@ -25,5 +26,13 @@ interface NewListCallback {
 
     fun onNameChanged(name: String)
 
-    fun goBack(): Boolean
+    fun navigateBack(): Boolean
+
+    fun onPageChanged(position: Int)
+
+    fun onDurationDeselected(item: Tag)
+
+    fun onAccommodationDeselected(item: Tag)
+
+    fun onWeatherDeselected(item: Tag)
 }

@@ -17,11 +17,11 @@
         >
 
         <TextView
-            android:layout_gravity="center_horizontal"
             android:id="@+id/text"
             style="@style/selection_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="@string/please_chose_name"
             />
@@ -35,7 +35,6 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:lines="1"
-
             />
 
     </LinearLayout>

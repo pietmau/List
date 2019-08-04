@@ -5,7 +5,6 @@ import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.newlist.view.viewpager.fragments.superclasses.ButtonsStripGroupListenerFragment
 
-
 class AccomodationFragment : ButtonsStripGroupListenerFragment() {
 
     override fun getTitle() = resources.getString(R.string.accomodation)
@@ -18,5 +17,10 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
     override fun onItemSelected(tag: TagImpl) {
         super.onItemSelected(tag)
         callback?.onAccommodationSelected(tag)
+    }
+
+    override fun onItemDeselected(item: TagImpl) {
+        super.onItemDeselected(item)
+        callback?.onAccommodationDeselected(item)
     }
 }

@@ -15,6 +15,7 @@ import com.pppp.travelchecklist.findViewByIdLazy
 import com.pppp.travelchecklist.newlist.NewListModule
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager
+import kotlinx.android.synthetic.main.selector_fragment.view.selectorView
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     var callaback: NewListCallback? = null
@@ -61,6 +62,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     private fun onPageChanged(position: Int) {
         previous.visibility = if (flipper.canGoToPrevious) VISIBLE else GONE
         setUpNextButton()
+        callaback?.onPageChanged(position)
     }
 
     private fun setUpNextButton() {
@@ -92,8 +94,15 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     fun goBack() = flipper.showPrevious()
 
     fun enableFinish(enable: Boolean) {
-        val state = if (enable) TwoStatesFab.State.CAN_FINISH else TwoStatesFab.State.CANNOT_FINISH
+        val state = getStatus(enable)
         next.setState(state)
+    }
+
+    private fun getStatus(enable: Boolean): TwoStatesFab.State {
+        if (canGoNext) {
+            return TwoStatesFab.State.GO_FORWARD
+        }
+        return if (enable) TwoStatesFab.State.CAN_FINISH else TwoStatesFab.State.CANNOT_FINISH
     }
 
     companion object {

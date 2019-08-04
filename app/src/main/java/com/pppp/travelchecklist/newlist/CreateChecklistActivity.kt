@@ -41,7 +41,7 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
     }
 
     override fun onBackPressed() {
-        if (selectionCallback?.goBack() == true) {
+        if (selectionCallback?.navigateBack() == true) {
             return
         }
         setResult(RESULT_CANCELED)

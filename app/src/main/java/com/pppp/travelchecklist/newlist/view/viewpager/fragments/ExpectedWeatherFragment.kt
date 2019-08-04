@@ -17,4 +17,9 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
         super.onItemSelected(item)
         callback?.onWeatherSelected(item)
     }
+
+    override fun onItemDeselected(item: TagImpl) {
+        super.onItemDeselected(item)
+        callback?.onWeatherDeselected(item)
+    }
 }

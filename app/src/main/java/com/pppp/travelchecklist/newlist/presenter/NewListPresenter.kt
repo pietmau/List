@@ -1,119 +1,120 @@
 package com.pppp.travelchecklist.newlist.presenter
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.listgenerator.ListGenerator
+import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.utils.ResourcesWrapper
-import com.pppp.travelchecklist.utils.SimpleDisposableObserver
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.AsyncSubject
 
 class NewListPresenter(
     private val model: Model,
     private val resourcesWrapper: ResourcesWrapper
-) : ViewModel() {
-    private val subject = AsyncSubject.create<String>()
-    private lateinit var subscription: Disposable
-    val viewStates: LiveData<ViewState> = MutableLiveData()
+) : ViewModel(), Producer<NewListPresenter.ViewState> {
+
+    override val states: LiveData<ViewState> = MutableLiveData()
+    lateinit var transientStates: (TransientState) -> Unit
 
     fun onNameChanged(name: String) {
         model.listName = name
-        enableDisable()
+        updateUi()
     }
 
-    private fun enableDisable() {
-        if (model.isDataComplete()) {
-            emit(ViewState.EnableDisable.Enable)
-        } else {
-            emit(ViewState.EnableDisable.Disable)
-        }
-    }
-
+    @SuppressLint("CheckResult")
     fun onFinishClicked() {
         if (model.isDataComplete()) {
-            emit(ViewState.Progress)
+            updateUi(true)
             model.generate()
-                .toObservable()
-                .subscribe(subject)
+                .subscribe({
+                    this@NewListPresenter.model.checkListId = it
+                    updateUi(false, it)
+                }, {
+                    transientStates(TransientState(TransientState.Error.GenericError(it.localizedMessage)))
+                })
         } else {
             emitErrors()
         }
     }
 
     private fun emitErrors() {
-        val incompleteDataMessage = if (model.isEmpty) resourcesWrapper.getString(R.string.must_make_selection) else null
-        val noNameMessage = if (!model.hasValidName()) resourcesWrapper.getString(R.string.please_input_name) else null
-        emit(ViewState.Error(incompleteDataMessage, noNameMessage))
-    }
-
-    fun subscribe() {
-        subscription = subject
-            .subscribeWith(object : SimpleDisposableObserver<String>() {
-                override fun onNext(checkListId: String) {
-                    if (this@NewListPresenter.model.checkListId != null) {
-                        return
-                    }
-                    this@NewListPresenter.model.checkListId = checkListId
-                    emit(ViewState.ListGenerated(checkListId))
-                }
-
-                override fun onError(e: Throwable) {
-                    emit(ViewState.Error(e.localizedMessage, null))
-                }
-            })
-    }
-
-    fun unsubscribe() {
-        subscription.dispose()
+        val genericError = if (model.isEmpty) TransientState.Error.GenericError(resourcesWrapper.getString(R.string.must_make_selection)) else null
+        val noNameError = if (!model.hasValidName()) TransientState.Error.NoNameError else null
+        transientStates(TransientState(genericError, noNameError))
     }
 
     fun onAccommodationSelected(accomodation: Tag) {
         model.onAccomodationSelected(accomodation)
+        updateUi()
     }
 
     fun onWeatherSelected(weather: Tag) {
         model.onWeatherSelected(weather)
+        updateUi()
     }
 
     fun onDurationSelected(duration: Tag) {
         model.onDurationSelected(duration)
+        updateUi()
     }
 
     fun onPlannedActivitySelected(plannedActivity: Tag) {
         model.onPlannedActivitySelected(plannedActivity)
+        updateUi()
     }
 
     fun onPlannedActivityDeselected(plannedActivity: Tag) {
         model.onPlannedActivityDeselected(plannedActivity)
+        updateUi()
     }
 
     fun onWhoisTravellingSelected(traveller: Tag) {
         model.onWhoisTravellingSelected(traveller)
+        updateUi()
     }
 
     fun onWhoisTravellingDeSelected(tag: Tag) {
         model.onWhoisTravellingDeSelected(tag)
+        updateUi()
     }
 
     fun onDestinationSelected(destination: Destination) {
         model.onDestinationSelected(destination)
+        updateUi()
     }
 
-    private fun emit(value: ViewState) {
-        (viewStates as MutableLiveData).postValue(value)
+    fun onDurationDeselected(item: Tag) {
+        model.onDurationDeselected(item)
+        updateUi()
     }
 
-    sealed class ViewState {
-        data class Error(val incompleteDataMessage: String?, val noNameMessage: String?) : ViewState()
-        object Progress : ViewState()
-        data class ListGenerated(val listId: String) : ViewState()
-        sealed class EnableDisable : ViewState() {
-            object Enable : EnableDisable()
-            object Disable : EnableDisable()
+    fun onAccommodationDeselected(item: Tag) {
+        model.onAccommodationDeselected(item)
+        updateUi()
+    }
+
+    fun onWeatherDeselected(item: Tag) {
+        model.onWeatherDeselected(item)
+        updateUi()
+    }
+
+    private fun updateUi(progress: Boolean = false, listId: String? = null) {
+        val enableFinish = model.isDataComplete()
+        (states as MutableLiveData).postValue(ViewState(progress, enableFinish, listId))
+    }
+
+    fun onPageChanged() {
+        updateUi()
+    }
+
+    data class ViewState(val showPreogress: Boolean, val enableFinish: Boolean, val listId: String?)
+
+    data class TransientState(val genericError: Error.GenericError? = null, val noName: Error.NoNameError? = null) {
+        sealed class Error {
+            data class GenericError(val message: String) : Error()
+            object NoNameError : Error()
         }
     }
 }

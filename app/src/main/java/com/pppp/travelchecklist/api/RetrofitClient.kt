@@ -37,9 +37,14 @@ class RetrofitClient(url: String) : Client {
 
     override fun getTagsGroup(): Single<out List<TagsGroup>> = api.getTagsGroup()
 
+    override fun getTagsGroupCall() = api.getTagsGroupCall()
+
 }
 
 interface Client {
     fun generateChecklist(tags: List<TagImpl>): Single<out List<Category>>
+
     fun getTagsGroup(): Single<out List<TagsGroup>>
+
+    fun getTagsGroupCall(): Call<List<TagsGroupImpl>>
 }

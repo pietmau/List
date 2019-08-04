@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="com.pppp.travelchecklist.newlist.view.NewListFragment"
-    android:id="@+id/selector_fragment"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-</fragment>
+</FrameLayout>

@@ -14,7 +14,7 @@ import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
-import com.pppp.travelchecklist.newlist.NewListModule
+import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
 import kotlinx.android.synthetic.main.selector_fragment.*
@@ -137,5 +137,9 @@ class NewListFragment : Fragment(), NewListCallback {
             selectorView.animateBackButton()
         }
         transientState.noName?.let { selectorView.setNameInputError(resources.getString(R.string.please_input_name)) }
+    }
+
+    companion object {
+        fun newInstance() = NewListFragment()
     }
 }

@@ -3,15 +3,15 @@ package com.pppp.travelchecklist.newlist.model.models
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class ExpectedWeatherModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModel(db, id)
+class ExpectedWeatherModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModelImpl(db, id)
 
-class AccomodationModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModel(db, id)
+class AccomodationModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModelImpl(db, id)
 
-class LongOrShortTripModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModel(db, id)
+class LongOrShortTripModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModelImpl(db, id)
 
-class PlannedActivitesModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModel(db, id)
+class PlannedActivitesModel(val db: InitialTagsRepository, val id: Long) : TagSelectorModelImpl(db, id)
 
-class WhoIsTravellingModel(val db: InitialTagsRepository, id: Long) : TagSelectorModel(db, id)
+class WhoIsTravellingModel(val db: InitialTagsRepository, id: Long) : TagSelectorModelImpl(db, id)
 
 class ExpectedWeatherModelFactory(private val db: InitialTagsRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>) =

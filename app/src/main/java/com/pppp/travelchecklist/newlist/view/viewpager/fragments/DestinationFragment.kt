@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.utils.SimpleObserver
-import com.pppp.travelchecklist.newlist.NewListModule
+import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import org.angmarch.views.BetterSpinner
 import javax.inject.Inject

@@ -10,10 +10,10 @@ import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
-import com.pppp.travelchecklist.newlist.NewListComponent
-import com.pppp.travelchecklist.newlist.NewListModule
-import com.pppp.travelchecklist.newlist.view.custom.ButtonsStrip
+import com.pppp.travelchecklist.newlist.di.NewListComponent
+import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.models.TagSelectorModel
+import com.pppp.travelchecklist.newlist.view.custom.ButtonsStrip
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.item_selector_fragment.*

@@ -1,8 +1,11 @@
-package com.pppp.travelchecklist.newlist
+package com.pppp.travelchecklist.newlist.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
+import com.pppp.travelchecklist.newlist.model.TagsCache
+import com.pppp.travelchecklist.newlist.model.TagsCacheFactory
+import com.pppp.travelchecklist.newlist.model.TagsCacheImpl
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
 import com.pppp.travelchecklist.newlist.presenter.SelectorPresenterFactory
 import com.pppp.travelchecklist.newlist.model.models.*
@@ -60,5 +63,8 @@ class NewListModule(private val activity: androidx.fragment.app.FragmentActivity
     @Provides
     fun provideLongOrShortTripFragmentFactory(db: InitialTagsRepository) =
         LongOrShortTripModelFactory(db)
+
+    @Provides
+    fun ggg(repository: InitialTagsRepository): TagsCache = ViewModelProviders.of(activity, TagsCacheFactory(repository))[TagsCacheImpl::class.java]
 
 }

@@ -1,9 +1,10 @@
-package com.pppp.travelchecklist.newlist
+package com.pppp.travelchecklist.newlist.di
 
 import com.pppp.travelchecklist.newlist.view.NewListFragment
 import com.pppp.travelchecklist.newlist.view.custom.SelectorView
 import com.pppp.travelchecklist.newlist.view.viewpager.fragments.*
 import com.pppp.travelchecklist.newlist.model.models.*
+import com.pppp.travelchecklist.newlist.InitialDownloadFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(NewListModule::class))
@@ -34,5 +35,7 @@ interface NewListComponent {
     fun accomodationModel(): AccomodationModel
 
     fun longOrShortTripModel(): LongOrShortTripModel
+
+    fun inject(initialDownloadFragment: InitialDownloadFragment)
 
 }

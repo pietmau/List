@@ -23,5 +23,5 @@ interface Api {
     fun getTagsGroup(): Single<List<TagsGroupImpl>>
 
     @GET("prod/tags-groups")
-    fun generatefffChecklist(list: List<TagImpl>): Call<List<TagsGroupImpl>>
+    fun getTagsGroupCall(): Call<List<TagsGroupImpl>>
 }

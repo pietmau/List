@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.newlist.model.models.TagSelectorModel
+import com.pppp.travelchecklist.newlist.model.models.TagSelectorModelImpl
 import com.pppp.travelchecklist.newlist.view.viewpager.fragments.superclasses.ItemSelectorFragment
 import kotlinx.android.synthetic.main.item_selector_fragment.*
 

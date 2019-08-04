@@ -10,12 +10,13 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.newlist.view.NewListCallback
-import kotlinx.android.synthetic.main.activity_create_cheklist.selector_fragment
+import com.pppp.travelchecklist.newlist.view.NewListFragment
+import kotlinx.android.synthetic.main.activity_create_cheklist.container
 import javax.inject.Inject
 
-class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
+class NewListActivity : AppCompatActivity(), CreateChecklistView {
     override val selectionCallback: NewListCallback?
-        get() = (supportFragmentManager.findFragmentById(R.id.selector_fragment) as? NewListCallback)
+        get() = (supportFragmentManager.findFragmentById(R.id.container) as? NewListCallback)
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -24,6 +25,9 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_cheklist)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.container, InitialDownloadFragment.newInstance()).commit()
+        }
     }
 
     override fun navigateToNewList(checkListId: String) {
@@ -35,9 +39,7 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
     }
 
     override fun onError(text: String) {
-        selector_fragment.view?.let {
-            Snackbar.make(it, text, Snackbar.LENGTH_LONG).show()
-        }
+        Snackbar.make(container, text, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onBackPressed() {
@@ -51,6 +53,10 @@ class CreateChecklistActivity : AppCompatActivity(), CreateChecklistView {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.no_change, R.anim.slide_down);
+    }
+
+    override fun navigateToSelector() {
+        supportFragmentManager.beginTransaction().replace(R.id.container, NewListFragment.newInstance()).commit()
     }
 
     companion object {

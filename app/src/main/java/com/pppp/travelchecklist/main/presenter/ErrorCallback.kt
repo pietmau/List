@@ -12,6 +12,8 @@ interface CreateChecklistView : ErrorCallback {
 
     val selectionCallback: NewListCallback?
 
+    fun navigateToSelector()
+
     fun navigateToNewList(selection: String)
 
 }

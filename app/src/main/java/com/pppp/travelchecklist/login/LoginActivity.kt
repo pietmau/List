@@ -10,7 +10,7 @@ import javax.inject.Inject
 import com.firebase.ui.auth.ErrorCodes
 import android.app.Activity
 import com.firebase.ui.auth.IdpResponse
-import com.pppp.travelchecklist.newlist.CreateChecklistActivity
+import com.pppp.travelchecklist.newlist.NewListActivity
 
 class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun proceed() {
-        startActivity(Intent(this, CreateChecklistActivity::class.java))
+        startActivity(Intent(this, NewListActivity::class.java))
         finish()
     }
 

@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.ErrorCallback
-import com.pppp.travelchecklist.newlist.CreateChecklistActivity
+import com.pppp.travelchecklist.newlist.NewListActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun startCreateChecklistActivity() {
-        startActivityForResult(Intent(this, CreateChecklistActivity::class.java), CreateChecklistActivity.REQUEST_CODE)
+        startActivityForResult(Intent(this, NewListActivity::class.java), NewListActivity.REQUEST_CODE)
         overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 

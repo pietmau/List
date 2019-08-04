@@ -1,7 +1,5 @@
 package com.pppp.travelchecklist.newlist.view.custom
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.util.AttributeSet
@@ -12,10 +10,9 @@ import androidx.viewpager.widget.ViewPager
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.findViewByIdLazy
-import com.pppp.travelchecklist.newlist.NewListModule
+import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager
-import kotlinx.android.synthetic.main.selector_fragment.view.selectorView
 
 class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     var callaback: NewListCallback? = null

@@ -1,39 +1,36 @@
 package com.pppp.travelchecklist.newlist.model.models
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
+import com.pppp.travelchecklist.newlist.model.TagsCache
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 
 abstract class TagSelectorModelImpl(
-    private val repository: InitialTagsRepository,
-    private val tagId: Long,
-    private val scheduler: Scheduler = Schedulers.io()
+    private val tagsCache: TagsCache,
+    private val groupId: Long
 ) :
     ViewModel(), TagSelectorModel {
 
-    private val tags: MutableMap<Tag, Boolean> = mutableMapOf()
+    override var tags: MutableMap<Tag, Boolean> = mutableMapOf()
 
-    override fun getTags(): Observable<List<Pair<Tag, Boolean>>> {
-        if (!tags.isEmpty()) {
-            return Observable.fromIterable(tags.entries.toList())
-                .map { it.key to it.value }
-                .sorted { o1, o2 -> o1.first.title.compareTo(o2.first.title) }
-                .toList()
-                .toObservable()
-        } else {
-            tags.clear()
-            return repository.getTagGroups()
-                .subscribeOn(scheduler)
-                .toObservable()
-                .flatMap { Observable.fromIterable(it) }
-                .filter { it.id == tagId }
-                .flatMap { Observable.fromIterable(it.tags) }
-                .doOnNext { tags.put(it, false) }
-                .map { it to false }
-                .toList()
-                .toObservable()
+    init {
+        tagsCache.getTags.observeForever { event ->
+            when (event) {
+                is TagsCache.Event.Success -> {
+                    event.result ?: return@observeForever
+                    tags = event.result
+                        .filter { it.id == groupId }
+                        .flatMap { it.tags }
+                        .map { it to false }
+                        .toMap()
+                        .toMutableMap()
+                }
+                is TagsCache.Event.Failure -> throw Exception(event.exception)
+            }
         }
     }
 
@@ -50,4 +47,5 @@ abstract class TagSelectorModelImpl(
     override fun onTagDeSeleected(tag: Tag) {
         setSelected(tag, false)
     }
+
 }

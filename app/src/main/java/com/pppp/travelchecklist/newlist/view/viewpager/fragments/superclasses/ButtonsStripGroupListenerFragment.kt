@@ -8,11 +8,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.di.NewListComponent
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.models.TagSelectorModel
@@ -24,7 +26,6 @@ import kotlinx.android.synthetic.main.button_strip_fragment.*
 abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup.Listener {
     protected val callback
         get() = (requireActivity() as? CreateChecklistView)?.selectionCallback
-    private val subscriptions = CompositeDisposable()
     protected lateinit var model: TagSelectorModel
     protected lateinit var component: NewListComponent
     lateinit var strip: ButtonsStripGroup
@@ -42,23 +43,13 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (requireActivity().applicationContext as App).appComponent
-        component = appComponent.with(NewListModule(requireActivity()))
+        component = appComponent.with(NewListModule(requireActivity() as NewListActivity))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         strip.title = getTitle()
         strip.listener = this
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showProgress(true)
-        subscriptions.add(model.getTags().observeOn(AndroidSchedulers.mainThread()).subscribe({ setItems(it) }, { onError(it) }))
-    }
-
-    override fun onPause() {
-        super.onPause()
-        subscriptions.clear()
+        setItems(model.tags.toList())
     }
 
     fun setItems(group: List<Pair<Tag, Boolean>>) {
@@ -78,12 +69,6 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     fun showProgress(show: Boolean) {
         progress_container.visibility = if (show) VISIBLE else GONE
         strip.visibility = if (!show) View.VISIBLE else View.GONE
-    }
-
-    private fun onError(throwable: Throwable?) {
-        showProgress(false)
-        val message = throwable?.localizedMessage ?: getString(R.string.something_went_wrong)
-        Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
     }
 
     abstract fun getTitle(): String?

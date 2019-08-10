@@ -14,6 +14,7 @@ import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.newlist.presenter.NewListPresenter
@@ -32,7 +33,7 @@ class NewListFragment : Fragment(), NewListCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
-        appComponent?.with(NewListModule(requireActivity()))?.inject(this)
+        appComponent?.with(NewListModule(requireActivity() as NewListActivity))?.inject(this)
         presenter.states.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.ViewState ->
             render(viewState)
         })

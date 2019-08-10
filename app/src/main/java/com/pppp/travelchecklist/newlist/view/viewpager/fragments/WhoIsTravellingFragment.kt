@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.newlist.view.viewpager.fragments
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.newlist.model.models.TagSelectorModel

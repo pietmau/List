@@ -4,7 +4,7 @@ import com.pppp.travelchecklist.newlist.view.NewListFragment
 import com.pppp.travelchecklist.newlist.view.custom.SelectorView
 import com.pppp.travelchecklist.newlist.view.viewpager.fragments.*
 import com.pppp.travelchecklist.newlist.model.models.*
-import com.pppp.travelchecklist.newlist.InitialDownloadFragment
+import com.pppp.travelchecklist.newlist.initialdownload.InitialDownloadFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(NewListModule::class))

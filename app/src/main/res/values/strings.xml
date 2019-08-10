@@ -46,10 +46,10 @@
 
     <string name="something_went_wrong">Oops, sorry, something went wrong... working on it!</string>
     <string name="generating_list">Generating your list...</string>
-    <string name="list_ready">Your list is ready 🚀!</string>
+    <string name="list_ready">🎉 Your list is ready! 🎉</string>
     <string name="your_lists">Your lists</string>
     <string name="please_input_name">Please, the name cannot be empty</string>
     <string name="please_chose_name">Please, chose a name</string>
-
+    <string name="preparing_your_options">Preparing your options! 🚀</string>
 
 </resources>

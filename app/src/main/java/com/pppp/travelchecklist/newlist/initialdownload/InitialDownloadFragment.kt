@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.newlist
+package com.pppp.travelchecklist.newlist.initialdownload
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,15 +8,14 @@ import androidx.lifecycle.Observer
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.TagsCache
-import com.pppp.travelchecklist.newlist.view.NewListFragment
 import javax.inject.Inject
 
 class InitialDownloadFragment : Fragment() {
     @Inject
-    lateinit var tagsCache: TagsCache
-
+    lateinit var viewModel: InitialDownloadViewModel
     private val parent
         get() = (activity as? CreateChecklistView)
 
@@ -26,8 +25,8 @@ class InitialDownloadFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (requireActivity().applicationContext as App).appComponent
-        appComponent.with(NewListModule(requireActivity())).inject(this)
-        tagsCache.getTags.observe(requireActivity(), Observer { event ->
+        appComponent.with(NewListModule(requireActivity() as NewListActivity)).inject(this)
+        viewModel.getTags.observe(requireActivity(), Observer { event ->
             when (event) {
                 is TagsCache.Event.Failure -> onError(event)
                 is TagsCache.Event.Success -> parent?.navigateToSelector()
@@ -40,6 +39,6 @@ class InitialDownloadFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = NewListFragment()
+        fun newInstance() = InitialDownloadFragment()
     }
 }

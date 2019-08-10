@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.findViewByIdLazy
+import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager
@@ -27,7 +28,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.selector_custom_view, this, true)
         val appComponent = (context.applicationContext as? App)?.appComponent
-        val selectorComponent = appComponent?.with(NewListModule(context))
+        val selectorComponent = appComponent?.with(NewListModule(context as NewListActivity))
         selectorComponent?.inject(this)
         setUp()
     }
@@ -60,6 +61,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         previous.visibility = if (flipper.canGoToPrevious) VISIBLE else GONE
         setUpNextButton()
         callaback?.onPageChanged(position)
+        setNameInputError(null)
     }
 
     private fun setUpNextButton() {

@@ -13,7 +13,6 @@ class TagsCacheImpl(
     repository: InitialTagsRepository
 ) : TagsCache, ViewModel() {
     override val getTags = MutableLiveData<TagsCache.Event>()
-    override var tags: List<TagsGroup>? = null
 
     init {
         repository.getTagsGroupCall().enqueue(object : Callback<List<TagsGroup>> {
@@ -22,7 +21,6 @@ class TagsCacheImpl(
             }
 
             override fun onResponse(call: Call<List<TagsGroup>>, response: Response<List<TagsGroup>>) {
-                tags = response.body()
                 getTags.postValue(TagsCache.Event.Success(response.body()))
             }
         })
@@ -31,7 +29,6 @@ class TagsCacheImpl(
 
 interface TagsCache {
     val getTags: MutableLiveData<Event>
-    var tags: List<TagsGroup>?
 
     sealed class Event {
         data class Failure(val exception: Throwable) : Event()

@@ -12,6 +12,7 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.utils.SimpleObserver
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination
@@ -46,7 +47,7 @@ class DestinationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
-        val selectorComponent = appComponent?.with(NewListModule(activity as AppCompatActivity))
+        val selectorComponent = appComponent?.with(NewListModule(activity as NewListActivity))
         selectorComponent?.inject(this)
     }
 

@@ -9,6 +9,7 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
 import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.newlist.initialdownload.InitialDownloadFragment
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.NewListFragment
 import kotlinx.android.synthetic.main.activity_create_cheklist.container

@@ -2,4 +2,5 @@
 <resources>
     <attr name="fabColor" format="reference"/>
 
+    <attr name="fancyBackgroundColor" format="reference"/>
 </resources>

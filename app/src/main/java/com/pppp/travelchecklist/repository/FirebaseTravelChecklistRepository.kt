@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
@@ -48,14 +49,18 @@ class FirebaseTravelChecklistRepository(
                 }
                 if (snapshot != null) {
                     val result = snapshot.documents
-                        .map { documentSnapshot ->
-                            documentSnapshot.toObject(TravelCheckListImpl::class.java)
-                        }.filterNotNull()
+                        .map { toTravelChecklist(it) }
+                        .filterNotNull()
                     success?.invoke(result)
                 }
 
             }
     }
+
+    private fun toTravelChecklist(documentSnapshot: DocumentSnapshot) =
+        documentSnapshot.toObject(TravelCheckListImpl::class.java)?.apply {
+            id = documentSnapshot.id
+        }
 
     override fun setName(listId: String, name: String?) {
         db.getCheckListsById(getUserId(), listId).update("name", name)

@@ -23,13 +23,21 @@ class MainPresenter(mainModel: MainModel) : Producer<MainPresenter.ViewState>, C
     override fun push(viewEvent: ViewEvent) = when (viewEvent) {
         is ViewEvent.NavMenuOpenSelected -> emit(ViewState.OpenNavMenu((checkLists as? List<TravelCheckListImpl>) ?: emptyList()))
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
+        is ViewEvent.NewListGenerated -> emit(ViewState.GoToList(viewEvent.listId))
     }
 
     private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected): Unit =
-        when (viewEvent.id) {
+        when (val id = viewEvent.id) {
             R.id.new_list -> emit(ViewState.GoToCreateNewList)
-            else -> TODO()
+            else -> goToList(id)
         }
+
+    private fun goToList(position: Int) {
+        if (position !in 0..(checkLists.size - 1)) {
+            return
+        }
+        emit(ViewState.GoToList(checkLists[position].id!!))
+    }
 
     private fun emit(viewState: ViewState) {
         (states as MutableLiveData).postValue(viewState)
@@ -38,10 +46,12 @@ class MainPresenter(mainModel: MainModel) : Producer<MainPresenter.ViewState>, C
     sealed class ViewState {
         data class OpenNavMenu(val userChecklists: List<TravelCheckListImpl>) : ViewState()
         object GoToCreateNewList : ViewState()
+        data class GoToList(val listId: String) : ViewState()
     }
 
     sealed class ViewEvent {
         object NavMenuOpenSelected : ViewEvent()
         data class NavItemSelected(val id: Int, val title: String?) : ViewEvent()
+        data class NewListGenerated(val listId: String) : ViewEvent()
     }
 }

@@ -61,7 +61,7 @@ class NewListActivity : AppCompatActivity(), CreateChecklistView {
     }
 
     companion object {
-        const val REQUEST_CODE = 123
+        const val CREATE_NEW_LIST = 123
         const val CHECKLIST_ID = "checklist_id"
     }
 }

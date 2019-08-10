@@ -56,7 +56,6 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     }
 
     companion object {
-        val TAG = ViewCheckListFragment::class.java.simpleName
         val LIST_ID = "list_id"
 
         fun fromSelection(listId: String) =

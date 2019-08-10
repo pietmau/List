@@ -8,19 +8,21 @@ import androidx.lifecycle.Observer
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.login.Consumer
 import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.ErrorCallback
 import com.pppp.travelchecklist.newlist.NewListActivity
+import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
+import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
     lateinit var producer: Producer<MainPresenter.ViewState>
-
     @Inject
     lateinit var consumer: Consumer<MainPresenter.ViewEvent>
 
@@ -39,10 +41,15 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     private fun render(viewState: MainPresenter.ViewState) = when (viewState) {
         is MainPresenter.ViewState.OpenNavMenu -> openNavMenu(viewState.userChecklists)
         is MainPresenter.ViewState.GoToCreateNewList -> startCreateChecklistActivity()
+        is MainPresenter.ViewState.GoToList -> goToList(viewState.listId)
+    }
+
+    private fun goToList(listId: String) {
+        supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commit()
     }
 
     private fun startCreateChecklistActivity() {
-        startActivityForResult(Intent(this, NewListActivity::class.java), NewListActivity.REQUEST_CODE)
+        startActivityForResult(Intent(this, NewListActivity::class.java), CREATE_NEW_LIST)
         overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 
@@ -52,6 +59,15 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun openNavMenu(checkLists: List<TravelCheckListImpl>) {
         BottomNavigationDrawerFragment.newInstance(checkLists).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CREATE_NEW_LIST) {
+            if (resultCode == RESULT_OK) {
+                val checkListId = data?.extras?.getString(CHECKLIST_ID) ?: return
+                emit(MainPresenter.ViewEvent.NewListGenerated(checkListId))
+            }
+        }
     }
 
     override fun onNavItemSelected(id: Int, title: String) {

@@ -9,8 +9,8 @@ class MenuCreatorImpl @Inject constructor() : MenuCreator {
 
     override fun initMenu(menu: Menu, userChecklists: List<TravelCheckList>) {
         val lists = menu.addSubMenu(R.string.your_lists)
-        userChecklists.forEach {
-            lists.add(Menu.NONE, it.hashCode(), Menu.NONE, it.name)
+        userChecklists.withIndex().forEach { (index, item) ->
+            lists.add(Menu.NONE, index, Menu.NONE, item.name)
         }
     }
 

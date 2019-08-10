@@ -10,12 +10,15 @@ import javax.inject.Inject
 import com.firebase.ui.auth.ErrorCodes
 import android.app.Activity
 import android.app.AlertDialog
+import com.crashlytics.android.Crashlytics
 import com.firebase.ui.auth.IdpResponse
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
 import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.main.MainActivity
 import com.pppp.travelchecklist.newlist.NewListActivity
+import io.fabric.sdk.android.Fabric
 
 class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
@@ -47,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun proceed() {
-        startActivity(Intent(this, NewListActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

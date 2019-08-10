@@ -7,6 +7,7 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.main.model.MainModel
 import java.lang.IndexOutOfBoundsException
 

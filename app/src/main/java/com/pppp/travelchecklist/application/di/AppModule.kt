@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.application.di
 
 import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
@@ -18,7 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @Module
-class AppModule(private val context: Context) {
+class AppModule(private val context: Context, firebaseAnalytics: FirebaseAnalytics) {
 
     @Provides
     fun provideTravelChecklistDatabase(firebaseDatabase: FirebaseDatabase): DestinationPresenter =

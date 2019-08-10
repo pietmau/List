@@ -4,7 +4,7 @@ import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.model.MainModelImpl
 import com.pppp.travelchecklist.main.presenter.MainViewModel
-import com.pppp.travelchecklist.main.presenter.TransientEvents
+import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.main.view.MenuCreator
 import com.pppp.travelchecklist.main.view.MenuCreatorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository

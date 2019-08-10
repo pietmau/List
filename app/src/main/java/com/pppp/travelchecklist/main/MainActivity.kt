@@ -14,7 +14,7 @@ import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainViewModel
 import com.pppp.travelchecklist.main.presenter.ErrorCallback
-import com.pppp.travelchecklist.main.presenter.TransientEvents
+import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST

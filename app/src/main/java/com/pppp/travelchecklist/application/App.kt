@@ -2,21 +2,28 @@ package com.pppp.travelchecklist.application
 
 import android.app.Application
 import android.os.StrictMode
+import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.BuildConfig
 import com.pppp.travelchecklist.application.di.AppComponent
 import com.pppp.travelchecklist.application.di.AppModule
 import com.pppp.travelchecklist.application.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
+import io.fabric.sdk.android.Fabric
+
+
 
 class App : Application() {
     lateinit var appComponent: AppComponent
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate() {
         super.onCreate()
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         LeakCanary.install(this);
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
@@ -36,6 +43,6 @@ class App : Application() {
             )
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build()
     }
 }

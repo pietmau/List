@@ -1,8 +1,8 @@
 package com.pppp.travelchecklist.list.viewmodel
 
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.travelchecklist.login.Consumer
-import com.pppp.travelchecklist.login.Producer
+import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.Producer
 
 interface SingleCheckListViewModel : Consumer<SingleCheckListViewModel.ViewEvent>, Producer<SingleCheckListViewModel.ViewState> {
 

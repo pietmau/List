@@ -12,8 +12,8 @@ import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
-import com.pppp.travelchecklist.login.Consumer
-import com.pppp.travelchecklist.login.Producer
+import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.Producer
 import kotlinx.android.synthetic.main.fragment_blank.recycler
 import javax.inject.Inject
 

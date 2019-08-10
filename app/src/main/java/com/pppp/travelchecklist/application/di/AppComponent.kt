@@ -2,8 +2,8 @@ package com.pppp.travelchecklist.application.di
 
 import com.pppp.travelchecklist.list.di.ViewCheckListComponent
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
-import com.pppp.travelchecklist.login.LoginComponent
-import com.pppp.travelchecklist.login.LoginModule
+import com.pppp.travelchecklist.login.di.LoginComponent
+import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.di.MainSubComponent
 import com.pppp.travelchecklist.newlist.di.NewListComponent

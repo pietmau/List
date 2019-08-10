@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.login
+package com.pppp.travelchecklist.login.view
 
 import androidx.lifecycle.Observer
 import android.content.Intent
@@ -9,7 +9,12 @@ import com.pppp.travelchecklist.application.App
 import javax.inject.Inject
 import com.firebase.ui.auth.ErrorCodes
 import android.app.Activity
+import android.app.AlertDialog
 import com.firebase.ui.auth.IdpResponse
+import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.login.di.LoginModule
+import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
+import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.newlist.NewListActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -20,15 +25,25 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
         (application as? App)?.appComponent?.with(LoginModule(this))?.inject(this)
         viewStates.states.observe(this, Observer<LoginViewModel.ViewState> { render(it) })
     }
 
-    private fun render(state: LoginViewModel.ViewState?) {
+    private fun render(state: LoginViewModel.ViewState) =
         when (state) {
             is LoginViewModel.ViewState.UserNotLoggedIn -> login()
             is LoginViewModel.ViewState.UserLoggedIn -> proceed()
+            is LoginViewModel.ViewState.Kill -> kill()
         }
+
+    private fun kill() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setTitle(R.string.app_not_supported)
+            .setMessage(R.string.app_not_supported_message)
+            .setPositiveButton(R.string.close_app) { _, _ -> finish() }
+            .create().show()
     }
 
     private fun proceed() {

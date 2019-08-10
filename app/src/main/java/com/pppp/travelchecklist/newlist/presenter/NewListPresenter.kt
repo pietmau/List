@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.login.Producer
+import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 

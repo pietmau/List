@@ -1,9 +1,9 @@
 package com.pppp.travelchecklist.main.di
 
-import com.pppp.travelchecklist.login.Consumer
-import com.pppp.travelchecklist.login.Producer
+import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.model.MainModelImpl
-import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.presenter.MainViewModel
 import com.pppp.travelchecklist.main.presenter.TransientEvents
 import com.pppp.travelchecklist.main.view.MenuCreator
 import com.pppp.travelchecklist.main.view.MenuCreatorImpl
@@ -17,17 +17,17 @@ class MainModule(private val activity: androidx.fragment.app.FragmentActivity) {
 
     @Singleton
     @Provides
-    fun providePresenter(repo: TravelChecklistRepository) = MainPresenter(MainModelImpl(repo))
+    fun providePresenter(repo: TravelChecklistRepository) = MainViewModel(MainModelImpl(repo))
 
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
 
     @Provides
-    fun provideProducer(presenter: MainPresenter): Producer<MainPresenter.ViewState> = presenter
+    fun provideProducer(viewModel: MainViewModel): Producer<MainViewModel.ViewState> = viewModel
 
     @Provides
-    fun provideConsumer(presenter: MainPresenter): Consumer<MainPresenter.ViewEvent> = presenter
+    fun provideConsumer(viewModel: MainViewModel): Consumer<MainViewModel.ViewEvent> = viewModel
 
     @Provides
-    fun provideTransientEvdents(presenter: MainPresenter): TransientEvents<MainPresenter.TransientEvent> = presenter
+    fun provideTransientEvdents(viewModel: MainViewModel): TransientEvents<MainViewModel.TransientEvent> = viewModel
 }

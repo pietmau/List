@@ -8,9 +8,8 @@ import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListModel
 import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.list.viewmodel.FirebaseSingleCheckListViewModel
-import com.pppp.travelchecklist.login.Consumer
-import com.pppp.travelchecklist.login.Producer
-import com.pppp.travelchecklist.repository.FirebaseTravelChecklistRepository
+import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.Producer
 import dagger.Module
 import dagger.Provides
 

@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist
 
 import android.app.Activity
+import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
@@ -58,3 +59,6 @@ fun EditText.setOnReturnClicked(callback: (TextView.() -> Unit)?) {
         true
     }
 }
+
+val View.isMarshmallowOrAbove
+    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M

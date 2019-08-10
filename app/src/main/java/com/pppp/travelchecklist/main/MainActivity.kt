@@ -9,10 +9,10 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
-import com.pppp.travelchecklist.login.Consumer
-import com.pppp.travelchecklist.login.Producer
+import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.presenter.MainViewModel
 import com.pppp.travelchecklist.main.presenter.ErrorCallback
 import com.pppp.travelchecklist.main.presenter.TransientEvents
 import com.pppp.travelchecklist.newlist.NewListActivity
@@ -23,27 +23,27 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
-    lateinit var producer: Producer<MainPresenter.ViewState>
+    lateinit var producer: Producer<MainViewModel.ViewState>
     @Inject
-    lateinit var consumer: Consumer<MainPresenter.ViewEvent>
+    lateinit var consumer: Consumer<MainViewModel.ViewEvent>
     @Inject
-    lateinit var transientEvents: TransientEvents<MainPresenter.TransientEvent>
+    lateinit var transientEvents: TransientEvents<MainViewModel.TransientEvent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
-        bottom_bar.setNavigationOnClickListener { emit(MainPresenter.ViewEvent.NavMenuOpenSelected) }
+        bottom_bar.setNavigationOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
         producer.states.observe(this, Observer { render(it) })
         transientEvents.subscribe { onTransientEventReceived(it) }
     }
 
-    private fun render(viewState: MainPresenter.ViewState): Nothing = TODO()
+    private fun render(viewState: MainViewModel.ViewState): Nothing = TODO()
 
-    private fun onTransientEventReceived(viewState: MainPresenter.TransientEvent) = when (viewState) {
-        is MainPresenter.TransientEvent.OpenNavMenu -> openNavMenu(viewState.userChecklists)
-        is MainPresenter.TransientEvent.GoToCreateNewList -> startCreateChecklistActivity()
-        is MainPresenter.TransientEvent.GoToList -> goToList(viewState.listId)
+    private fun onTransientEventReceived(viewState: MainViewModel.TransientEvent) = when (viewState) {
+        is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(viewState.userChecklists)
+        is MainViewModel.TransientEvent.GoToCreateNewList -> startCreateChecklistActivity()
+        is MainViewModel.TransientEvent.GoToList -> goToList(viewState.listId)
     }
 
     private fun goToList(listId: String) {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 
-    private fun emit(viewEvent: MainPresenter.ViewEvent) {
+    private fun emit(viewEvent: MainViewModel.ViewEvent) {
         consumer.push(viewEvent)
     }
 
@@ -67,13 +67,13 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         if (requestCode == CREATE_NEW_LIST) {
             if (resultCode == RESULT_OK) {
                 val checkListId = data?.extras?.getString(CHECKLIST_ID) ?: return
-                emit(MainPresenter.ViewEvent.NewListGenerated(checkListId))
+                emit(MainViewModel.ViewEvent.NewListGenerated(checkListId))
             }
         }
     }
 
     override fun onNavItemSelected(id: Int, title: String) {
-        emit(MainPresenter.ViewEvent.NavItemSelected(id, title))
+        emit(MainViewModel.ViewEvent.NavItemSelected(id, title))
     }
 
     override fun onError(text: String) {

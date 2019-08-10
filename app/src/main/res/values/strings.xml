@@ -51,5 +51,8 @@
     <string name="please_input_name">Please, the name cannot be empty</string>
     <string name="please_chose_name">Please, chose a name</string>
     <string name="preparing_your_options">Preparing your options! 🚀</string>
+    <string name="app_not_supported_message">Sorry this app version is not supported anymore, please contact the developer.</string>
+    <string name="app_not_supported">Version not supported</string>
+    <string name="close_app">OK, close app</string>
 
 </resources>

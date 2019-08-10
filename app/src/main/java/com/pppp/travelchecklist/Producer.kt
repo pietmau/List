@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.login
+package com.pppp.travelchecklist
 
 import androidx.lifecycle.LiveData
 

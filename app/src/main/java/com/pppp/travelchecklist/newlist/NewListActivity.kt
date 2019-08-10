@@ -8,7 +8,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.CreateChecklistView
-import com.pppp.travelchecklist.main.presenter.MainPresenter
+import com.pppp.travelchecklist.main.presenter.MainViewModel
 import com.pppp.travelchecklist.newlist.initialdownload.InitialDownloadFragment
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.NewListFragment
@@ -20,7 +20,7 @@ class NewListActivity : AppCompatActivity(), CreateChecklistView {
         get() = (supportFragmentManager.findFragmentById(R.id.container) as? NewListCallback)
 
     @Inject
-    lateinit var presenter: MainPresenter
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

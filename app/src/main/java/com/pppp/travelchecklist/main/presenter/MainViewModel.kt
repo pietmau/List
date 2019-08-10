@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.login.Consumer
-import com.pppp.travelchecklist.login.Producer
+import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.model.MainModel
 import java.lang.IndexOutOfBoundsException
 
-class MainPresenter(mainModel: MainModel) : Producer<MainPresenter.ViewState>, Consumer<MainPresenter.ViewEvent>,
-    TransientEvents<MainPresenter.TransientEvent> {
+class MainViewModel(mainModel: MainModel) : Producer<MainViewModel.ViewState>, Consumer<MainViewModel.ViewEvent>,
+    TransientEvents<MainViewModel.TransientEvent> {
 
     override val states: LiveData<ViewState> = MutableLiveData()
     private var checkLists: List<TravelCheckList> = emptyList()

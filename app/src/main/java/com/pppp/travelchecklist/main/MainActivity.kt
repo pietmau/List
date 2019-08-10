@@ -14,6 +14,7 @@ import com.pppp.travelchecklist.login.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.presenter.MainPresenter
 import com.pppp.travelchecklist.main.presenter.ErrorCallback
+import com.pppp.travelchecklist.main.presenter.TransientEvents
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
@@ -25,23 +26,24 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     lateinit var producer: Producer<MainPresenter.ViewState>
     @Inject
     lateinit var consumer: Consumer<MainPresenter.ViewEvent>
+    @Inject
+    lateinit var transientEvents: TransientEvents<MainPresenter.TransientEvent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
-        bottom_bar.setNavigationOnClickListener { view ->
-            emit(MainPresenter.ViewEvent.NavMenuOpenSelected)
-        }
-        producer.states.observe(this, Observer {
-            render(it)
-        })
+        bottom_bar.setNavigationOnClickListener { emit(MainPresenter.ViewEvent.NavMenuOpenSelected) }
+        producer.states.observe(this, Observer { render(it) })
+        transientEvents.subscribe { onTransientEventReceived(it) }
     }
 
-    private fun render(viewState: MainPresenter.ViewState) = when (viewState) {
-        is MainPresenter.ViewState.OpenNavMenu -> openNavMenu(viewState.userChecklists)
-        is MainPresenter.ViewState.GoToCreateNewList -> startCreateChecklistActivity()
-        is MainPresenter.ViewState.GoToList -> goToList(viewState.listId)
+    private fun render(viewState: MainPresenter.ViewState): Nothing = TODO()
+
+    private fun onTransientEventReceived(viewState: MainPresenter.TransientEvent) = when (viewState) {
+        is MainPresenter.TransientEvent.OpenNavMenu -> openNavMenu(viewState.userChecklists)
+        is MainPresenter.TransientEvent.GoToCreateNewList -> startCreateChecklistActivity()
+        is MainPresenter.TransientEvent.GoToList -> goToList(viewState.listId)
     }
 
     private fun goToList(listId: String) {

@@ -31,11 +31,11 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         arguments?.getString(LIST_ID)?.let { listId ->
             appComponent?.with(ViewCheckListModule(listId, requireActivity()))?.inject(this@ViewCheckListFragment)
         }
-        producer.states.observe(requireActivity(), Observer { render(it) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recycler.callback = this
+        producer.states.observe(requireActivity(), Observer { render(it) })
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) =

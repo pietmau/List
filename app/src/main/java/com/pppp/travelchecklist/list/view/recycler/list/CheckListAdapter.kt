@@ -11,10 +11,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
 import com.pppp.travelchecklist.list.view.recycler.list.ChecklistRecyclerDiffCallback.Companion.CATEGORY
 
-class CheckListAdapter(
-    private val callback: CheckListCard.Callback
-
-) : RecyclerView.Adapter<CheckListHolder>() {
+class CheckListAdapter(private val callback: CheckListCard.Callback) : RecyclerView.Adapter<CheckListHolder>() {
 
     override fun getItemCount() = items.count()
 
@@ -24,7 +21,6 @@ class CheckListAdapter(
             field.clear()
             field.addAll(value)
         }
-
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int) {
         holder.bind(items.get(position), callback)

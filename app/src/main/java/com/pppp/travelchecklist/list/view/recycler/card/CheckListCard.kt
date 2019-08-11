@@ -9,6 +9,7 @@ import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.view.recycler.card.recycler.item.CardItemView
 import kotlinx.android.synthetic.main.custom_check_list_card.view.cardItems
+import kotlinx.android.synthetic.main.header_layout.view.title
 
 class CheckListCard @JvmOverloads constructor(
     context: Context,
@@ -46,6 +47,7 @@ class CheckListCard @JvmOverloads constructor(
         this.callback = callback
         cardItems.callback = cardItemCallback
         setItems(category.items)
+        title.text = category.title
     }
 
     fun setItems(items: List<CheckListItem>) {

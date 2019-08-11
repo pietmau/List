@@ -2,9 +2,9 @@ package com.pppp.travelchecklist.list.view.recycler.card.recycler
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.travelchecklist.list.view.recycler.card.recycler.item.CardItemView
 
 class CardRecycler @JvmOverloads constructor(
     context: Context,
@@ -27,5 +27,23 @@ class CardRecycler @JvmOverloads constructor(
 
     init {
         layoutManager = CustomLayoutManager(context)
+        ItemTouchHelper(customItemTouchHelperCallback()).attachToRecyclerView(this)
+        addItemDecoration(CustomDividerItemDecoration(context))
+    }
+
+    private fun customItemTouchHelperCallback(): CustomItemTouchHelperCallback {
+        return CustomItemTouchHelperCallback { viewHolder ->
+            val position = viewHolder.adapterPosition
+            val checkListItem = cardAdapter.items[position]
+            callback.onDeleteRequested(checkListItem.id, checkListItem)
+        }
+    }
+
+    class CustomItemTouchHelperCallback(val callback: ((ViewHolder) -> Unit)? = null) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder) = throw Exception("Drag and drop not supportend")
+
+        override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
+            callback?.invoke(viewHolder)
+        }
     }
 }

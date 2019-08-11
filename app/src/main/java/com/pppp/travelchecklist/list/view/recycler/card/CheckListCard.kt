@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.view.recycler.card.recycler.item.CardItemView
+import com.pppp.travelchecklist.list.view.recycler.card.recycler.CardItemView
 import kotlinx.android.synthetic.main.custom_check_list_card.view.cardItems
 import kotlinx.android.synthetic.main.header_layout.view.title
 

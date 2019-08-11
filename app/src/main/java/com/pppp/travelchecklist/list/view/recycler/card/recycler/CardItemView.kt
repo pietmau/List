@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler.item
+package com.pppp.travelchecklist.list.view.recycler.card.recycler
 
 import android.content.Context
 import android.util.AttributeSet
@@ -28,11 +28,6 @@ class CardItemView @JvmOverloads constructor(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card_item, this, true)
         settings.setOnClickListener { showSettings() }
-        delete.setOnClickListener { showDelete() }
-    }
-
-    private fun showDelete() {
-        callback?.onDeleteRequested(itemId!!, data!!)//let it crash!
     }
 
     private fun showSettings() {

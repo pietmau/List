@@ -60,6 +60,7 @@
                     />
 
             </LinearLayout>
+
         </com.pppp.travelchecklist.main.view.LoadingContentErrorView>
 
     </FrameLayout>

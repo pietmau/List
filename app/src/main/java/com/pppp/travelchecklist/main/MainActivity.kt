@@ -2,6 +2,8 @@ package com.pppp.travelchecklist.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,8 +14,8 @@ import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.presenter.MainViewModel
-import com.pppp.travelchecklist.main.presenter.ErrorCallback
+import com.pppp.travelchecklist.main.viewmodel.MainViewModel
+import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
@@ -33,9 +35,32 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
-        bottom_bar.setNavigationOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
+        setupViews()
+        setupViewModel()
+        if (savedInstanceState == null) {
+            emit(MainViewModel.ViewEvent.GetLatestListVisited)
+        }
+    }
+
+    private fun setupViewModel() {
         producer.states.observe(this, Observer { render(it) })
-        transientEvents.subscribe { onTransientEventReceived(it) }
+        transientEvents.transientEvents.observe(this, Observer {
+            onTransientEventReceived(it)
+        })
+    }
+
+    private fun setupViews() {
+        fab.setOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
+        setSupportActionBar(bottom_bar)
+        button.setOnClickListener {
+            emit(MainViewModel.ViewEvent.OnButtonClicked)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main, menu)
+        return true
     }
 
     private fun render(viewState: MainViewModel.ViewState): Nothing = TODO()
@@ -44,10 +69,16 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(viewState.userChecklists)
         is MainViewModel.TransientEvent.GoToCreateNewList -> startCreateChecklistActivity()
         is MainViewModel.TransientEvent.GoToList -> goToList(viewState.listId)
+        is MainViewModel.TransientEvent.Empty -> loading_content_error.error()
     }
 
     private fun goToList(listId: String) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commit()
+        loading_content_error.hide()
+        replaceFragment(ViewCheckListFragment.fromSelection(listId))
+    }
+
+    private fun replaceFragment(fromSelection: ViewCheckListFragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.container, fromSelection).commitAllowingStateLoss()
     }
 
     private fun startCreateChecklistActivity() {

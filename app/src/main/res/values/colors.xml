@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#FFFF00</color>
     <color name="colorPrimaryDark">#FFb3b300</color>
-    <color name="colorAccent">#FFff6699</color>
+    <color name="colorAccent">#dd99ff</color>
     <color name="separatorLineColor">#44000000</color>
     <color name="iconColor">#FF000000</color>
     <color name="buttonDefault">#FFFFFFFF</color>
@@ -12,7 +12,7 @@
     <color name="grey">#FFAAAAAA</color>
     <color name="green">#FF00CC66</color>
 
-    <color name="background">@android:color/holo_blue_light</color>
-
+    <color name="background">#66d9ff</color>
+    <color name="green_super_light">#CCFAEA</color>
 
 </resources>

@@ -1,6 +1,9 @@
 package com.pppp.travelchecklist
 
+import androidx.lifecycle.LiveData
+import com.pppp.travelchecklist.main.viewmodel.MainViewModel
+
 interface TransientEvents<E> {
 
-    fun subscribe(observer: ((E) -> Unit)? = null)
+    val transientEvents: LiveData<MainViewModel.TransientEvent>
 }

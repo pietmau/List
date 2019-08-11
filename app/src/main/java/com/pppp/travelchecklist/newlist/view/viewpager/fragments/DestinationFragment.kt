@@ -2,7 +2,6 @@ package com.pppp.travelchecklist.newlist.view.viewpager.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.database.Country
 import com.pppp.travelchecklist.database.DestinationPresenter
-import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.utils.SimpleObserver
 import com.pppp.travelchecklist.newlist.di.NewListModule

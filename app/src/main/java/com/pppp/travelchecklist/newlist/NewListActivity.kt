@@ -7,8 +7,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.presenter.CreateChecklistView
-import com.pppp.travelchecklist.main.presenter.MainViewModel
+import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
+import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.newlist.initialdownload.InitialDownloadFragment
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 import com.pppp.travelchecklist.newlist.view.NewListFragment

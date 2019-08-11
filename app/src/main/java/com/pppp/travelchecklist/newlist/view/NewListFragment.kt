@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.main.presenter.CreateChecklistView
+import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.model.Destination

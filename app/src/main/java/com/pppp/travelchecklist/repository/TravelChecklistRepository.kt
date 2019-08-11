@@ -13,6 +13,10 @@ interface TravelChecklistRepository {
     fun setName(listId: String, name: String?)
 
     fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
+
+    fun saveLastVisitedList(listId: String)
+
+    fun getLastVisitedList(success: ((String?) -> Unit)? = null)
 }
 
 interface SingleCheckListRepository {

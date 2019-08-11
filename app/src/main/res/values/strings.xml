@@ -54,5 +54,7 @@
     <string name="app_not_supported_message">Sorry this app version is not supported anymore, please contact the developer.</string>
     <string name="app_not_supported">Version not supported</string>
     <string name="close_app">OK, close app</string>
+    <string name="add_new_checklist">Go ahead, add a new checklist!</string>
+    <string name="you_don_t_have_a_list_yet">You don\'t have a list, yet 🙁</string>
 
 </resources>

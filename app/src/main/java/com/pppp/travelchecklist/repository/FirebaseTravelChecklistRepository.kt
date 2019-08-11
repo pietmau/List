@@ -10,10 +10,26 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import io.reactivex.Single
 import java.lang.Exception
 
+private const val LAST_VISITED_LIST = "last_visited_list"
+
 class FirebaseTravelChecklistRepository(
     val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : TravelChecklistRepository {
+
+    override fun saveLastVisitedList(listId: String) {
+        db.collection(USERS)
+            .document(getUserId())
+            .update(LAST_VISITED_LIST, listId)
+    }
+
+    override fun getLastVisitedList(success: ((String?) -> Unit)?) {
+        db.collection(USERS)
+            .document(getUserId())
+            .get().addOnSuccessListener {
+                success?.invoke(it[LAST_VISITED_LIST] as? String)
+            }
+    }
 
     override fun saveAndGet(list: List<Category>, name: String): Single<String> = Single.create { emitter ->
         db.getAllUserCheckLists(getUserId())

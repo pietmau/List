@@ -4,5 +4,6 @@ import android.os.Bundle
 
 interface Logger {
     fun logEvent(tag: String, bundle: Bundle?)
-    fun logException(e: Exception)
+
+    fun logException(exception: Exception)
 }

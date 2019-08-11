@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.main.presenter
+package com.pppp.travelchecklist.main.viewmodel
 
 import com.pppp.travelchecklist.newlist.view.NewListCallback
 

@@ -7,6 +7,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:fitsSystemWindows="true"
     >
 
@@ -15,15 +16,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.pppp.travelchecklist.main.MainActivity"
-        />
+        >
+
+        <com.pppp.travelchecklist.main.view.LoadingContentErrorView
+            android:id="@+id/loading_content_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autoStart="true"
+                />
+
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/text"
+                    style="@style/selection_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/you_don_t_have_a_list_yet"
+                    />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_big"
+                    android:text="@string/add_new_checklist"
+                    />
+
+            </LinearLayout>
+        </com.pppp.travelchecklist.main.view.LoadingContentErrorView>
+
+    </FrameLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:backgroundTint="@color/green_super_light"
+        app:fabAlignmentMode="end"
         app:hideOnScroll="true"
-        app:navigationIcon="@drawable/ic_baseline_menu_24px"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_menu_24px"
+        app:layout_anchor="@id/bottom_bar"
+        app:tint="@android:color/white"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

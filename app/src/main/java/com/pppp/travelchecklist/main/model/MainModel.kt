@@ -6,4 +6,7 @@ interface MainModel {
 
     fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 
+    fun saveLastVisitedList(listId: String?)
+
+    fun getLastVisitedList(success: ((String?) -> Unit)? = null)
 }

@@ -26,7 +26,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
 
     }
 
-    override fun push(viewEvent: ViewEvent) = when (viewEvent) {
+    override fun accept(viewEvent: ViewEvent) = when (viewEvent) {
         is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu((checkLists as? List<TravelCheckListImpl>) ?: emptyList()))
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)

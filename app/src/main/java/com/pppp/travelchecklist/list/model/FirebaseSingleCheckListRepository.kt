@@ -6,8 +6,9 @@ import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.ListNotFoundException
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
+import com.pppp.travelchecklist.repository.USERS
+import com.pppp.travelchecklist.repository.USERS_CHECKLISTS
 import com.pppp.travelchecklist.repository.UserNotLoggedInException
-import com.pppp.travelchecklist.repository.getCheckListsById
 
 class FirebaseSingleCheckListRepository(
     val auth: FirebaseAuth = FirebaseAuth.getInstance(),
@@ -16,7 +17,9 @@ class FirebaseSingleCheckListRepository(
 ) : SingleCheckListRepository {
 
     override fun updateList(listId: String, travelCheckList: TravelCheckList) {
-        db.getCheckListsById(getUserId(), listId).update("categories", travelCheckList.categories)
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS).document(listId).update("categories", travelCheckList.categories)
             .addOnSuccessListener {
 
             }
@@ -26,7 +29,9 @@ class FirebaseSingleCheckListRepository(
     }
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        db.getCheckListsById(getUserId(), listId).addSnapshotListener { documentSnapshot, exception ->
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS).document(listId).addSnapshotListener { documentSnapshot, exception ->
             if (exception != null) {
                 failure?.invoke(exception)
             } else {

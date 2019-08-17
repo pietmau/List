@@ -48,7 +48,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     }
 
     override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
-        consumer.push(SingleCheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
+        consumer.accept(SingleCheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
     }
 
     override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {

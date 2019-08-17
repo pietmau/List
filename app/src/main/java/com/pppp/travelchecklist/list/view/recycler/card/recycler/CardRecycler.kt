@@ -29,6 +29,7 @@ class CardRecycler @JvmOverloads constructor(
         layoutManager = CustomLayoutManager(context)
         ItemTouchHelper(customItemTouchHelperCallback()).attachToRecyclerView(this)
         addItemDecoration(CustomDividerItemDecoration(context))
+        setNestedScrollingEnabled(false)
     }
 
     private fun customItemTouchHelperCallback(): CustomItemTouchHelperCallback {

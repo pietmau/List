@@ -3,7 +3,6 @@ package com.pppp.travelchecklist.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun emit(viewEvent: MainViewModel.ViewEvent) {
-        consumer.push(viewEvent)
+        consumer.accept(viewEvent)
     }
 
     private fun openNavMenu(checkLists: List<TravelCheckListImpl>) {

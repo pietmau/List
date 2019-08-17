@@ -5,13 +5,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.utils.NetworkChecker
 
-class LoginViewModel(val model: LoginModel) : Consumer<LoginViewModel.ViewEvent>, Producer<LoginViewModel.ViewState>, ViewModel() {
+class LoginViewModel(
+    private val killSwitch: KillSwitch,
+    private val networkChecker: NetworkChecker
+) : Consumer<Any>, Producer<LoginViewModel.ViewState>, ViewModel() {
 
-    override val states: LiveData<ViewState> = MutableLiveData()
+    override val states: LiveData<ViewState> = MutableLiveData<ViewState>()
 
     init {
-        model.shouldAppBeEnabled({
+        checkNetwork()
+    }
+
+    private fun checkNetwork() {
+        networkChecker.checkNetworkConnectionRepeatedly({
+            checkIfAppEnabled()
+        }, {
+            emit(ViewState.Offline(it))
+        })
+    }
+
+    private fun checkIfAppEnabled() {
+        killSwitch.shouldAppBeEnabled({
             checkIfUserIsLoggedIn()
         }, {
             emit(ViewState.Kill)
@@ -19,28 +35,30 @@ class LoginViewModel(val model: LoginModel) : Consumer<LoginViewModel.ViewEvent>
     }
 
     private fun checkIfUserIsLoggedIn() {
-        if (model.isUserLoggedIn()) {
+        if (killSwitch.isUserLoggedIn()) {
             emit(ViewState.UserLoggedIn)
         } else {
             emit(ViewState.UserNotLoggedIn)
         }
     }
 
+    override fun onCleared() {
+        networkChecker.cancelNetworkChecks()
+    }
+
     private fun emit(userNotLoggedIn: ViewState) {
         (states as MutableLiveData<ViewState>).postValue(userNotLoggedIn)
     }
 
-    override fun push(t: ViewEvent) {
-
-    }
+    override fun accept(t: Any) = TODO()
 
     sealed class ViewState {
+        data class Offline(val errorMessage: NetworkChecker.ErrorMessage) : ViewState()
         object UserNotLoggedIn : ViewState()
         object UserLoggedIn : ViewState()
         object Kill : ViewState()
     }
 
-    sealed class ViewEvent
 }
 
 

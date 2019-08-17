@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -16,6 +17,9 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.ConnectivityManager
+import androidx.core.content.ContextCompat.getSystemService
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)
@@ -62,3 +66,9 @@ fun EditText.setOnReturnClicked(callback: (TextView.() -> Unit)?) {
 
 val View.isMarshmallowOrAbove
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+fun Context.isNetworkAvailable(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+    val activeNetworkInfo = connectivityManager?.getActiveNetworkInfo()
+    return activeNetworkInfo?.isConnected() == true
+}

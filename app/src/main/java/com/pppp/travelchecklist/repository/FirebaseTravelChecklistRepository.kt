@@ -21,6 +21,8 @@ class FirebaseTravelChecklistRepository(
         db.collection(USERS)
             .document(getUserId())
             .update(LAST_VISITED_LIST, listId)
+            .addOnSuccessListener { }
+            .addOnFailureListener { }
     }
 
     override fun getLastVisitedList(success: ((String?) -> Unit)?) {
@@ -32,7 +34,9 @@ class FirebaseTravelChecklistRepository(
     }
 
     override fun saveAndGet(list: List<Category>, name: String): Single<String> = Single.create { emitter ->
-        db.getAllUserCheckLists(getUserId())
+        db.collection(USERS)
+            .document(getUserId()).addOnz
+            .collection(USERS_CHECKLISTS)
             .add(TravelCheckListImpl(list as List<CategoryImpl>, name))
             .addOnSuccessListener {
                 emitter.onSuccess(it.id)
@@ -43,7 +47,11 @@ class FirebaseTravelChecklistRepository(
     }
 
     override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        db.getCheckListsById(getUserId(), listId).get().addOnSuccessListener { documentSnapshot ->
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS)
+            .document(listId).get()
+            .addOnSuccessListener { documentSnapshot ->
             val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
             if (checkList != null) {
                 success?.invoke(checkList)
@@ -79,7 +87,9 @@ class FirebaseTravelChecklistRepository(
         }
 
     override fun setName(listId: String, name: String?) {
-        db.getCheckListsById(getUserId(), listId).update("name", name)
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS).document(listId).update("name", name)
             .addOnSuccessListener { }
             .addOnFailureListener { }
     }

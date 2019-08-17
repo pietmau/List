@@ -17,7 +17,7 @@ class FirebaseSingleCheckListViewModel(
         })
     }
 
-    override fun push(viewEventSingle: SingleCheckListViewModel.ViewEvent) {
+    override fun accept(viewEventSingle: SingleCheckListViewModel.ViewEvent) {
         when (viewEventSingle) {
             is SingleCheckListViewModel.ViewEvent.DeleteItem -> delete(viewEventSingle)
         }

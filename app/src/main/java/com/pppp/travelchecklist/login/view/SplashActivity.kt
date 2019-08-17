@@ -7,18 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.pppp.travelchecklist.application.App
 import javax.inject.Inject
-import com.firebase.ui.auth.ErrorCodes
 import android.app.Activity
 import android.app.AlertDialog
-import com.crashlytics.android.Crashlytics
-import com.firebase.ui.auth.IdpResponse
+import com.google.android.material.snackbar.Snackbar
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.MainActivity
-import com.pppp.travelchecklist.newlist.NewListActivity
-import io.fabric.sdk.android.Fabric
+import com.pppp.travelchecklist.utils.NetworkChecker
+import kotlinx.android.synthetic.main.activity_splash.container
 
 class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
@@ -38,7 +36,12 @@ class SplashActivity : AppCompatActivity() {
             is LoginViewModel.ViewState.UserNotLoggedIn -> login()
             is LoginViewModel.ViewState.UserLoggedIn -> proceed()
             is LoginViewModel.ViewState.Kill -> kill()
+            is LoginViewModel.ViewState.Offline -> onError(state.errorMessage)
         }
+
+    private fun onError(errorMessage: NetworkChecker.ErrorMessage) {
+        Snackbar.make(container, errorMessage.message, Snackbar.LENGTH_LONG).show()
+    }
 
     private fun kill() {
         AlertDialog.Builder(this)
@@ -67,16 +70,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === REQUEST_CODE) {
-            val response = IdpResponse.fromResultIntent(data)
             if (resultCode === Activity.RESULT_OK) {
                 proceed()
-            } else {
-                if (response == null) {
-                    return
-                }
-                if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    return
-                }
             }
         }
     }

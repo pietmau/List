@@ -3,13 +3,12 @@ package com.pppp.travelchecklist.login.viewmodel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pppp.travelchecklist.BuildConfig
-import com.pppp.travelchecklist.R
 
 private val TWETNTYFOUR_HOURS = 24L
 
-class FirebaseLoginModel( // TODO add offline warning
+class FirebaseKillSwitch(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(), val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-) : LoginModel {
+) : KillSwitch {
 
     override fun shouldAppBeEnabled(isOn: () -> Unit, isOff: () -> Unit) {
         firebaseFirestore

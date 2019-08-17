@@ -9,6 +9,8 @@
         <item name="fabColor">@color/green</item>
         <item name="fancyBackgroundColor">@color/background</item>
         <item name="colorSecondary">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>

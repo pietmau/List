@@ -2,7 +2,6 @@ package com.pppp.travelchecklist.main.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.Consumer
@@ -16,18 +15,9 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     TransientEvents<MainViewModel.TransientEvent> {
     override val transientEvents: LiveData<TransientEvent> = TransientLiveData()
     override val states: LiveData<ViewState> = MutableLiveData()
-    private var checkLists: List<TravelCheckList> = emptyList()
-    private var lastList: String? = null
-
-    init {
-        model.getUsersLists({
-            checkLists = it
-        }, {})
-
-    }
 
     override fun accept(viewEvent: ViewEvent) = when (viewEvent) {
-        is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu((checkLists as? List<TravelCheckListImpl>) ?: emptyList()))
+        is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu(model as List<TravelCheckListImpl>))
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)
         is ViewEvent.OnButtonClicked -> goToCreateNewList()
@@ -39,23 +29,28 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
             if (listId != null) {
                 goToList(listId)
             } else {
-                emitTransientEvent(TransientEvent.Empty)
+                emitViewState(ViewState.Empty)
             }
         }
+    }
+
+    private fun emitViewState(viewState: ViewState) {
+        (states as MutableLiveData<ViewState>).postValue(viewState)
     }
 
     private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected): Unit =
         when (val id = viewEvent.id) {
             R.id.new_list -> goToCreateNewList()
             else -> {
-                if (isInRange(id)) {
-                    goToList(checkLists[id].id!!)
+                if (id in model) {
+                    goToList(model[id].id!!) // Let it crash.
                 } else throw IndexOutOfBoundsException()
             }
         }
 
     private fun goToList(listId: String) {
         model.saveLastVisitedList(listId)
+        emitViewState(ViewState.Content)
         emitTransientEvent(TransientEvent.GoToList(listId))
     }
 
@@ -67,16 +62,16 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         (transientEvents as MutableLiveData<TransientEvent>).postValue(transientEvent)
     }
 
-    private fun isInRange(position: Int) = (position in 0..(checkLists.size - 1))
-
     sealed class TransientEvent {
         data class OpenNavMenu(val userChecklists: List<TravelCheckListImpl>) : TransientEvent()
         object GoToCreateNewList : TransientEvent()
         data class GoToList(val listId: String) : TransientEvent()
-        object Empty : TransientEvent()
     }
 
-    sealed class ViewState
+    sealed class ViewState {
+        object Empty : ViewState()
+        object Content : ViewState()
+    }
 
     sealed class ViewEvent {
         object NavMenuOpenSelected : ViewEvent()

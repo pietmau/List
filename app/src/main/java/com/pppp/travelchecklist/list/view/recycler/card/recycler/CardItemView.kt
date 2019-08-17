@@ -27,7 +27,6 @@ class CardItemView @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card_item, this, true)
-        settings.setOnClickListener { showSettings() }
     }
 
     private fun showSettings() {

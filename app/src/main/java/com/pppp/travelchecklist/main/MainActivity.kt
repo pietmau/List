@@ -62,22 +62,19 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         return true
     }
 
-    private fun render(viewState: MainViewModel.ViewState): Nothing = TODO()
+    private fun render(viewState: MainViewModel.ViewState) = when (viewState) {
+        is MainViewModel.ViewState.Empty -> loading_content_error.error()
+        is MainViewModel.ViewState.Content -> loading_content_error.hide()
+    }
 
     private fun onTransientEventReceived(viewState: MainViewModel.TransientEvent) = when (viewState) {
         is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(viewState.userChecklists)
         is MainViewModel.TransientEvent.GoToCreateNewList -> startCreateChecklistActivity()
         is MainViewModel.TransientEvent.GoToList -> goToList(viewState.listId)
-        is MainViewModel.TransientEvent.Empty -> loading_content_error.error()
     }
 
     private fun goToList(listId: String) {
-        loading_content_error.hide()
-        replaceFragment(ViewCheckListFragment.fromSelection(listId))
-    }
-
-    private fun replaceFragment(fromSelection: ViewCheckListFragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, fromSelection).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
     }
 
     private fun startCreateChecklistActivity() {

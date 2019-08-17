@@ -5,6 +5,18 @@ import com.pppp.travelchecklist.repository.TravelChecklistRepository
 
 class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
 
+    override var checkLists: List<TravelCheckList> = emptyList()
+
+    init {
+        getUsersLists({
+            checkLists = it
+        }, {})
+    }
+
+    override operator fun get(index: Int) = checkLists[index]
+
+    override operator fun contains(position: Int) = (position in 0..(checkLists.size - 1))
+
     override fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         repo.getUsersListsAndUpdates(success, failure)
     }

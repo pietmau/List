@@ -12,6 +12,7 @@
         >
 
         <CheckBox
+            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

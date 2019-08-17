@@ -10,8 +10,12 @@
     <color name="yellow">#FFFF00</color>
     <color name="grey">#FFAAAAAA</color>
     <color name="green">#FF00CC66</color>
+    <color name="orange">#ffcc99</color>
+    <color name="light_yellow">#ffffb3</color>
 
     <color name="background">#99ffff</color>
-    <color name="green_super_light">#CCFAEA</color>
+    <color name="very_light_blue">#e6ffff</color>
+
+    <color name="green_super_light">#45edb2</color>
 
 </resources>

@@ -17,7 +17,7 @@ class CheckListCard @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
     private val ELEVATION = 8F
-    private val RADIUS = 10F
+    private val RADIUS = 15F
     private var cardId: Long? = null
     private var callback: Callback? = null
 
@@ -40,6 +40,7 @@ class CheckListCard @JvmOverloads constructor(
         radius = RADIUS
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card, this, true)
+        setBackgroundResource(R.color.very_light_blue)
     }
 
     fun bind(category: Category, callback: Callback) {

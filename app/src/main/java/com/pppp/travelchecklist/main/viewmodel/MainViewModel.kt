@@ -17,7 +17,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     override val states: LiveData<ViewState> = MutableLiveData()
 
     override fun accept(viewEvent: ViewEvent) = when (viewEvent) {
-        is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu(model as List<TravelCheckListImpl>))
+        is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu(model.checkLists as List<TravelCheckListImpl>))
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)
         is ViewEvent.OnButtonClicked -> goToCreateNewList()
@@ -41,11 +41,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected): Unit =
         when (val id = viewEvent.id) {
             R.id.new_list -> goToCreateNewList()
-            else -> {
-                if (id in model) {
-                    goToList(model[id].id!!) // Let it crash.
-                } else throw IndexOutOfBoundsException()
-            }
+            else -> goToList(model[id].id!!) // Let it crash.
         }
 
     private fun goToList(listId: String) {

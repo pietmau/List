@@ -3,4 +3,7 @@
     <attr name="fabColor" format="reference"/>
 
     <attr name="fancyBackgroundColor" format="reference"/>
+
+    <attr name="itemBackground" format="reference"/>
+
 </resources>

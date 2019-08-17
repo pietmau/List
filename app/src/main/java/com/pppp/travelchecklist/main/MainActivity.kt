@@ -43,17 +43,13 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun setupViewModel() {
         producer.states.observe(this, Observer { render(it) })
-        transientEvents.transientEvents.observe(this, Observer {
-            onTransientEventReceived(it)
-        })
+        transientEvents.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
     }
 
     private fun setupViews() {
         fab.setOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
         setSupportActionBar(bottom_bar)
-        button.setOnClickListener {
-            emit(MainViewModel.ViewEvent.OnButtonClicked)
-        }
+        button.setOnClickListener { emit(MainViewModel.ViewEvent.OnButtonClicked) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

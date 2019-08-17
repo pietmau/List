@@ -8,11 +8,10 @@
     <color name="buttonDefault">#FFFFFFFF</color>
     <color name="buttonSelected">#FFAAAAAA</color>
     <color name="yellow">#FFFF00</color>
-    <color name="blue_sky">#3799f4</color>
     <color name="grey">#FFAAAAAA</color>
     <color name="green">#FF00CC66</color>
 
-    <color name="background">#66d9ff</color>
+    <color name="background">#99ffff</color>
     <color name="green_super_light">#CCFAEA</color>
 
 </resources>

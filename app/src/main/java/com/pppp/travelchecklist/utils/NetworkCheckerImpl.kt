@@ -1,6 +1,9 @@
 package com.pppp.travelchecklist.utils
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
 import com.pppp.travelchecklist.R
@@ -9,7 +12,8 @@ import java.util.concurrent.atomic.AtomicLong
 
 private const val BACKOFF_FACTOR = 2
 
-class NetworkCheckerImpl(private val context: Context) : NetworkChecker {
+class NetworkCheckerImpl(private val context: Context) : NetworkChecker, BroadcastReceiver() {
+    private var intentFilter: IntentFilter? = null
 
     private val delayInMillSeconds = AtomicLong(10 * 1000)
 
@@ -18,18 +22,38 @@ class NetworkCheckerImpl(private val context: Context) : NetworkChecker {
     override fun isNetworkAvailable() = context.isNetworkAvailable()
 
     override fun checkNetworkConnectionRepeatedly(success: (() -> Unit)?, failure: ((NetworkChecker.ErrorMessage) -> Unit)?) {
+        registerReceverIfAppropriate()
         handler.removeCallbacksAndMessages(null)
-        if (!isNetworkAvailable()) {
-            failure?.invoke(getMessage())
+        if (isNetworkAvailable()) {
+            onSuccess(success)
+        } else {
+            onFailure(failure, success)
         }
+
+    }
+
+    private fun registerReceverIfAppropriate() {
+        if (intentFilter != null) {
+            return
+        }
+        intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
+        context.registerReceiver(NetworkCheckerImpl@ this, intentFilter)
+    }
+
+    override fun onReceive(context: Context?, intent: Intent?) {
+        //TODO
+    }
+
+    private fun onFailure(failure: ((NetworkChecker.ErrorMessage) -> Unit)?, success: (() -> Unit)?) {
+        failure?.invoke(getMessage())
         handler.postDelayed({
-            if (isNetworkAvailable()) {
-                success?.invoke()
-            } else {
-                delayInMillSeconds.set((delayInMillSeconds.get() * BACKOFF_FACTOR).toLong())
-                checkNetworkConnectionRepeatedly(success, failure)
-            }
+            delayInMillSeconds.set((delayInMillSeconds.get() * BACKOFF_FACTOR).toLong())
+            checkNetworkConnectionRepeatedly(success, failure)
         }, delayInMillSeconds.get())
+    }
+
+    private fun onSuccess(success: (() -> Unit)?) {
+        success?.invoke()
     }
 
     private fun getMessage(): NetworkChecker.ErrorMessage {
@@ -38,5 +62,7 @@ class NetworkCheckerImpl(private val context: Context) : NetworkChecker {
 
     override fun cancelNetworkChecks() {
         handler.removeCallbacksAndMessages(null)
+        context.unregisterReceiver(this)
+        intentFilter = null
     }
 }

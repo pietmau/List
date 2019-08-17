@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
@@ -20,9 +21,7 @@ class FirebaseTravelChecklistRepository(
     override fun saveLastVisitedList(listId: String) {
         db.collection(USERS)
             .document(getUserId())
-            .update(LAST_VISITED_LIST, listId)
-            .addOnSuccessListener { }
-            .addOnFailureListener { }
+            .set(mapOf(LAST_VISITED_LIST to listId), SetOptions.merge())
     }
 
     override fun getLastVisitedList(success: ((String?) -> Unit)?) {
@@ -35,7 +34,7 @@ class FirebaseTravelChecklistRepository(
 
     override fun saveAndGet(list: List<Category>, name: String): Single<String> = Single.create { emitter ->
         db.collection(USERS)
-            .document(getUserId()).addOnz
+            .document(getUserId())
             .collection(USERS_CHECKLISTS)
             .add(TravelCheckListImpl(list as List<CategoryImpl>, name))
             .addOnSuccessListener {
@@ -52,15 +51,15 @@ class FirebaseTravelChecklistRepository(
             .collection(USERS_CHECKLISTS)
             .document(listId).get()
             .addOnSuccessListener { documentSnapshot ->
-            val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
-            if (checkList != null) {
-                success?.invoke(checkList)
-            } else {
+                val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
+                if (checkList != null) {
+                    success?.invoke(checkList)
+                } else {
+                    onFailure(failure, listId)
+                }
+            }.addOnFailureListener {
                 onFailure(failure, listId)
             }
-        }.addOnFailureListener {
-            onFailure(failure, listId)
-        }
     }
 
     override fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {

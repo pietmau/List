@@ -24,6 +24,7 @@ class CheckListAdapter(private val callback: CheckListCard.Callback) : RecyclerV
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int) {
         holder.bind(items.get(position), callback)
+        holder.setIsRecyclable(false)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckListHolder {
@@ -32,6 +33,7 @@ class CheckListAdapter(private val callback: CheckListCard.Callback) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: CheckListHolder, position: Int, payloads: MutableList<Any>) {
+        holder.setIsRecyclable(false)
         if (payloads.isEmpty()) {
             holder.bind(items.get(position), callback)
             return

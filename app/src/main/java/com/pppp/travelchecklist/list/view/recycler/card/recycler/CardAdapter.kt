@@ -18,11 +18,13 @@ class CardAdapter(private val callback: CardItemView.Callback) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
         holder.bind(items.get(position), callback)
+        holder.setIsRecyclable(false)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CardHolder(CardItemView(parent.context))
 
     override fun onBindViewHolder(holder: CardHolder, position: Int, payloads: MutableList<Any>) {
         holder.bind(items.get(position), callback)
+        holder.setIsRecyclable(false)
     }
 }

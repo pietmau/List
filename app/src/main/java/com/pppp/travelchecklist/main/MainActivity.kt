@@ -71,7 +71,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun goToList(listId: String) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
     }
 
     private fun startCreateChecklistActivity() {

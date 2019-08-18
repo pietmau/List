@@ -16,7 +16,6 @@ class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: Attri
 
     init {
         layoutManager = LinearLayoutManager(context)
-        val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
     }
 
     fun setItems(categories: List<Category>) {

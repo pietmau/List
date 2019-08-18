@@ -9,13 +9,11 @@ class FirebaseSingleCheckListViewModel(
     private val model: SingleCheckListModel
 ) : SingleCheckListViewModel, ViewModel() {
 
-    override val states: MutableLiveData<SingleCheckListViewModel.ViewState> = MutableLiveData()
-        get() = field.also {
-            model.getUserCheckListAndUpdates(listId, success = {
-                states.postValue(SingleCheckListViewModel.ViewState.Data(it))
-            })
+    init {
+        model.getUserCheckListAndUpdates(listId, success = { states.postValue(SingleCheckListViewModel.ViewState.Data(it)) })
+    }
 
-        }
+    override val states: MutableLiveData<SingleCheckListViewModel.ViewState> = MutableLiveData<SingleCheckListViewModel.ViewState>()
 
     override fun accept(event: SingleCheckListViewModel.ViewEvent) =
         when (event) {

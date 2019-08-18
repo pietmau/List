@@ -12,7 +12,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?) {
         this.listId = listId
-        repository.getUserCheckList(listId, success = {
+        repository.getUserCheckListAndUpdates(listId, success = {
             this@FirebaseSingleCheckListModel.travelCheckList = it as TravelCheckListImpl
             success?.invoke(it)
         })

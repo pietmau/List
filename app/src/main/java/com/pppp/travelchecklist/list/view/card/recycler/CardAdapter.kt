@@ -10,10 +10,20 @@ class CardAdapter(private val callback: CardItemView.Callback) : RecyclerView.Ad
 
     var items: MutableList<CheckListItem> = mutableListOf()
         set(value) {
+            if (onlyReordering(field, value)) {
+                return
+            }
             DiffUtil.calculateDiff(CardRecyclerDiffCallback(items, value)).dispatchUpdatesTo(this)
             field.clear()
             field.addAll(value)
         }
+
+    private fun onlyReordering(old: MutableList<CheckListItem>, new: MutableList<CheckListItem>): Boolean {
+        if (old.size != new.size) {
+            return false
+        }
+        return new.sortedBy { it.id } == old.sortedBy { it.id }
+    }
 
     override fun getItemCount() = items.count()
 

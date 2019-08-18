@@ -45,18 +45,17 @@ class CardRecycler @JvmOverloads constructor(
         override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
             val fromPosition = viewHolder.adapterPosition
             val toPosition = target.adapterPosition
-            val cardRecycler = recyclerView as CardRecycler
-            val items = cardRecycler.items.toMutableList()
-            val prev = items.removeAt(fromPosition)
-            items.add(if (toPosition > fromPosition) toPosition - 1 else toPosition, prev)
-            cardRecycler.items = items
+            val prev = adapter.items.removeAt(fromPosition)
+            adapter.items.add(if (toPosition > fromPosition) toPosition - 1 else toPosition, prev)
+            adapter.notifyItemMoved(fromPosition, toPosition)
             callback.onItemMoved(fromPosition, toPosition)
             return true
         }
 
         override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
             val position = viewHolder.adapterPosition
-            val item = adapter.items[position]
+            val item = adapter.items.removeAt(position)
+            adapter.notifyItemRemoved(position)
             callback.onDeleteRequested(item.id, item)
         }
 

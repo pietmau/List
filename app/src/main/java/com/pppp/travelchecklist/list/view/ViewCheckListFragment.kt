@@ -14,7 +14,9 @@ import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_blank.recycler
+import kotlinx.android.synthetic.main.header_layout.title
 import javax.inject.Inject
 
 class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
@@ -45,6 +47,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
 
     private fun onDataAvailable(state: SingleCheckListViewModel.ViewState.Data) {
         recycler.setItems(state.travelCheckList.categories)
+        (activity as? MainActivity)?.setListTitle(state.travelCheckList.name)
     }
 
     override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {

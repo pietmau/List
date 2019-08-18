@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         fab.setOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewModel.ViewEvent.OnButtonClicked) }
+        collapsing.isTitleEnabled = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -101,5 +102,9 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     override fun onError(text: String) {
         Snackbar.make(root, text, Snackbar.LENGTH_LONG).show()
+    }
+
+    fun setListTitle(name: String?) {
+        toolbar.setTitle(name)
     }
 }

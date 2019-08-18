@@ -4,6 +4,7 @@ import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
+import java.util.Collections
 
 class FirebaseSingleCheckListModel(private val repository: SingleCheckListRepository) : SingleCheckListModel {
     private lateinit var travelCheckList: TravelCheckListImpl
@@ -11,7 +12,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?) {
         this.listId = listId
-        repository.getUserCheckListAndUpdates(listId, success = {
+        repository.getUserCheckList(listId, success = {
             this@FirebaseSingleCheckListModel.travelCheckList = it as TravelCheckListImpl
             success?.invoke(it)
         })
@@ -28,6 +29,21 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
             categories.set(indexedCategory.index, copy)
         }
         saveChanges(categories, listId)
+    }
+
+    override fun moveItems(cardId: Long, fromPosition: Int, toPosition: Int) {
+        val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
+        val categories = travelCheckList.categories.toMutableList()
+        val category = indexedCategory.value
+        val copy = swapItems(category, fromPosition, toPosition)
+        categories.set(indexedCategory.index, copy)
+        saveChanges(categories, listId)
+    }
+
+    private fun swapItems(category: CategoryImpl, fromPosition: Int, toPosition: Int): CategoryImpl {
+        var items = category.items.toMutableList()
+        Collections.swap(items, fromPosition, toPosition)
+        return category.copy(items = items.toList())
     }
 
     private fun removeItem(category: CategoryImpl, itemId: Long): CategoryImpl {

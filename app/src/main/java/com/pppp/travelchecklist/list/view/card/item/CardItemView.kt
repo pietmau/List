@@ -1,6 +1,7 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler
+package com.pppp.travelchecklist.list.view.card.item
 
 import android.content.Context
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
@@ -27,14 +28,18 @@ class CardItemView @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card_item, this, true)
+        check.setOnCheckedChangeListener { buttonView, isChecked ->
+            buttonView.setPaintFlags(getPaint(isChecked));
+            callback?.onItemChecked(data?.id!!, isChecked)
+        }
     }
 
-    private fun showSettings() {
-        callback?.onSettingsRequested(itemId!!, data!!)
-    }
+    private fun getPaint(checked: Boolean) = if (checked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.LINEAR_TEXT_FLAG
 
     interface Callback {
         fun onDeleteRequested(position: Long, data: CheckListItem)
         fun onSettingsRequested(position: Long, data: CheckListItem)
+        fun onItemChecked(id: Long, checked: Boolean)
+        fun onItemMoved(fromPosition: Int, toPosition: Int)
     }
 }

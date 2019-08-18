@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler
+package com.pppp.travelchecklist.list.view.card.recycler
 
 import android.util.Log
 import androidx.recyclerview.widget.DiffUtil

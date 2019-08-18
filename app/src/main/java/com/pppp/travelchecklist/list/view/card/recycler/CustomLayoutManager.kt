@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler
+package com.pppp.travelchecklist.list.view.card.recycler
 
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager

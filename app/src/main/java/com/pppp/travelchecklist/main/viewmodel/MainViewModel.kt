@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.Consumer
@@ -12,7 +13,7 @@ import com.pppp.travelchecklist.main.model.MainModel
 import java.lang.IndexOutOfBoundsException
 
 class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewState>, Consumer<MainViewModel.ViewEvent>,
-    TransientEvents<MainViewModel.TransientEvent> {
+    TransientEvents<MainViewModel.TransientEvent>, ViewModel() {
     override val transientEvents: LiveData<TransientEvent> = TransientLiveData()
     override val states: LiveData<ViewState> = MutableLiveData()
 

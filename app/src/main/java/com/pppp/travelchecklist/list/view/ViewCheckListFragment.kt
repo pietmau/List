@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
-import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
+import com.pppp.travelchecklist.list.view.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.Consumer
@@ -44,15 +44,25 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         }
 
     private fun onDataAvailable(state: SingleCheckListViewModel.ViewState.Data) {
-            recycler.setItems(state.travelCheckList.categories)
+        recycler.setItems(state.travelCheckList.categories)
     }
 
     override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
-        consumer.accept(SingleCheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
+        sendToViewModel(SingleCheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
+    }
+
+    private fun sendToViewModel(viewEvent: SingleCheckListViewModel.ViewEvent) {
+        consumer.accept(viewEvent)
     }
 
     override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {
+    }
 
+    override fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean) {
+    }
+
+    override fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int) {
+        sendToViewModel(SingleCheckListViewModel.ViewEvent.MoveItems(cardId, fromPosition, toPosition))
     }
 
     companion object {

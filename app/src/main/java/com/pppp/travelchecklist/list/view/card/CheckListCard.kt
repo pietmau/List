@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.card
+package com.pppp.travelchecklist.list.view.card
 
 import android.content.Context
 import androidx.cardview.widget.CardView
@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.view.recycler.card.recycler.CardItemView
+import com.pppp.travelchecklist.list.view.card.item.CardItemView
 import kotlinx.android.synthetic.main.custom_check_list_card.view.cardItems
 import kotlinx.android.synthetic.main.header_layout.view.title
+import kotlin.properties.Delegates
+import android.R.attr.right
+import android.R.attr.left
+import android.widget.FrameLayout
 
 class CheckListCard @JvmOverloads constructor(
     context: Context,
@@ -17,21 +21,26 @@ class CheckListCard @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
     private val ELEVATION = 8F
-    private val RADIUS = 15F
-    private var cardId: Long? = null
-    private var callback: Callback? = null
+    private val RADIUS = 10F
+    private var cardId: Long by Delegates.notNull()
+    lateinit var callback: Callback
 
     private val cardItemCallback = object : CardItemView.Callback {
+        override fun onItemMoved(fromPosition: Int, toPosition: Int) {
+            callback.onItemMoved(cardId, fromPosition, toPosition)
+        }
+
+        override fun onItemChecked(itemId: Long, checked: Boolean) {
+            callback.onItemChecked(cardId, itemId, checked)
+        }
+
         override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
-            cardId?.let { cardId ->
-                callback?.onItemDeleteRequested(cardId, itemId, data)
-            }
+            callback.onItemDeleteRequested(cardId, itemId, data)
+
         }
 
         override fun onSettingsRequested(itemId: Long, data: CheckListItem) {
-            cardId?.let { cardId ->
-                callback?.onItemSettingsRequested(cardId, itemId, data)
-            }
+            callback.onItemSettingsRequested(cardId, itemId, data)
         }
     }
 
@@ -40,7 +49,9 @@ class CheckListCard @JvmOverloads constructor(
         radius = RADIUS
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card, this, true)
-        setBackgroundResource(R.color.very_light_blue)
+        val params = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        params.setMargins(10, 10, 10, 0)
+        setLayoutParams(params)
     }
 
     fun bind(category: Category, callback: Callback) {
@@ -59,6 +70,10 @@ class CheckListCard @JvmOverloads constructor(
         fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem)
 
         fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem)
+
+        fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean)
+
+        fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int)
     }
 
 }

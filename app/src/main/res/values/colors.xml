@@ -13,7 +13,7 @@
     <color name="orange">#ffcc99</color>
     <color name="light_yellow">#ffffb3</color>
 
-    <color name="background">#99ffff</color>
+    <color name="background">@color/light_yellow</color>
     <color name="very_light_blue">#e6ffff</color>
 
     <color name="green_super_light">#45edb2</color>

@@ -1,9 +1,10 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler
+package com.pppp.travelchecklist.list.view.card.recycler
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.CheckListItem
+import com.pppp.travelchecklist.list.view.card.item.CardItemView
 
 class CardAdapter(private val callback: CardItemView.Callback) : RecyclerView.Adapter<CardHolder>() {
 

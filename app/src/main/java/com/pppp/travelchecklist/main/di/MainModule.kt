@@ -1,5 +1,9 @@
 package com.pppp.travelchecklist.main.di
 
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.model.MainModelImpl
@@ -13,11 +17,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class MainModule(private val activity: androidx.fragment.app.FragmentActivity) {
+class MainModule(private val activity: FragmentActivity) {
 
     @Singleton
     @Provides
-    fun providePresenter(repo: TravelChecklistRepository) = MainViewModel(MainModelImpl(repo))
+    fun providePresenter(repo: TravelChecklistRepository) = ViewModelProviders.of(activity, MainViewModelFactory(repo)).get(MainViewModel::class.java)
 
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
@@ -30,4 +34,8 @@ class MainModule(private val activity: androidx.fragment.app.FragmentActivity) {
 
     @Provides
     fun provideTransientEvdents(viewModel: MainViewModel): TransientEvents<MainViewModel.TransientEvent> = viewModel
+
+    class MainViewModelFactory(private val repo: TravelChecklistRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(MainModelImpl(repo)) as T
+    }
 }

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler
+package com.pppp.travelchecklist.list.view.card.recycler
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,9 +6,6 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {

@@ -1,7 +1,6 @@
-package com.pppp.travelchecklist.list.view.recycler.list
+package com.pppp.travelchecklist.list.view.list
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.pietrantuono.entities.Category
 import com.pppp.entities.pokos.CategoryImpl

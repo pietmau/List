@@ -1,9 +1,9 @@
-package com.pppp.travelchecklist.list.view.recycler.list
+package com.pppp.travelchecklist.list.view.list
 
 import android.view.View
 import com.pietrantuono.entities.Category
 import com.pppp.entities.pokos.CheckListItemImpl
-import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
+import com.pppp.travelchecklist.list.view.card.CheckListCard
 
 class CheckListHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 

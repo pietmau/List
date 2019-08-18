@@ -32,9 +32,24 @@ class FirebaseSingleCheckListRepository(
         db.collection(USERS)
             .document(getUserId())
             .collection(USERS_CHECKLISTS).document(listId).addSnapshotListener { documentSnapshot, exception ->
-            if (exception != null) {
-                failure?.invoke(exception)
-            } else {
+                if (exception != null) {
+                    failure?.invoke(exception)
+                } else {
+                    val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
+                    if (checkList != null) {
+                        success?.invoke(checkList)
+                    } else {
+                        onFailure(failure, listId)
+                    }
+                }
+            }
+    }
+
+    override fun getUserCheckList(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS).document(listId).get()
+            .addOnFailureListener { failure?.invoke(it) }.addOnSuccessListener { documentSnapshot ->
                 val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
                 if (checkList != null) {
                     success?.invoke(checkList)
@@ -42,7 +57,6 @@ class FirebaseSingleCheckListRepository(
                     onFailure(failure, listId)
                 }
             }
-        }
     }
 
     private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(getUserId(), listId))

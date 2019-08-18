@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.card.recycler.dialog
+package com.pppp.travelchecklist.list.view.card.recycler.dialog
 
 import android.content.Context
 import android.content.DialogInterface

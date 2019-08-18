@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.recycler.list
+package com.pppp.travelchecklist.list.view.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.Category
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.view.recycler.card.CheckListCard
-import com.pppp.travelchecklist.list.view.recycler.list.ChecklistRecyclerDiffCallback.Companion.CATEGORY
+import com.pppp.travelchecklist.list.view.card.CheckListCard
+import com.pppp.travelchecklist.list.view.list.ChecklistRecyclerDiffCallback.Companion.CATEGORY
 
 class CheckListAdapter(private val callback: CheckListCard.Callback) : RecyclerView.Adapter<CheckListHolder>() {
 

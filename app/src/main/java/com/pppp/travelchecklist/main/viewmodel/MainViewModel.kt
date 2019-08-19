@@ -10,7 +10,6 @@ import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.main.model.MainModel
-import java.lang.IndexOutOfBoundsException
 
 class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewState>, Consumer<MainViewModel.ViewEvent>,
     TransientEvents<MainViewModel.TransientEvent>, ViewModel() {
@@ -39,8 +38,9 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         (states as MutableLiveData<ViewState>).postValue(viewState)
     }
 
-    private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected): Unit =
-        when (val id = viewEvent.id) {
+    private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected) =
+        when (viewEvent) {
+            is
             R.id.new_list -> goToCreateNewList()
             else -> goToList(model[id].id!!) // Let it crash.
         }
@@ -72,7 +72,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
 
     sealed class ViewEvent {
         object NavMenuOpenSelected : ViewEvent()
-        data class NavItemSelected(val id: Int, val title: String?) : ViewEvent()
+        data class NavItemSelected(val id: String?, val title: String?) : ViewEvent()
         data class NewListGenerated(val listId: String) : ViewEvent()
         object OnButtonClicked : ViewEvent()
         object GetLatestListVisited : ViewEvent()

@@ -16,6 +16,7 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEvents
+import com.pppp.travelchecklist.main.model.NavigationActionMapper
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     lateinit var consumer: Consumer<MainViewModel.ViewEvent>
     @Inject
     lateinit var transientEvents: TransientEvents<MainViewModel.TransientEvent>
+    @Inject
+    lateinit var navigationActionMapper: NavigationActionMapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +57,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
@@ -97,8 +99,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         }
     }
 
-    override fun onNavItemSelected(id: Int, title: String) {
-        emit(MainViewModel.ViewEvent.NavItemSelected(id, title))
+    override fun onNavItemSelected(navigationAction: BottomNavigationDrawerFragment.NavigationAction) {
+        emit(navigationActionMapper.map(navigationAction))
     }
 
     override fun onError(text: String) {

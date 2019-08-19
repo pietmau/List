@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -35,10 +36,40 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         menuCreator.initMenu(nav_view.menu, checkLists)
         nav_view.setNavigationItemSelectedListener { item ->
-            (activity as? BottomNavigationItemListener)?.onNavItemSelected(item.itemId, item.title?.toString() ?: "")
-            dismiss()
+            onNavItemSelected(item)
             true
         }
+    }
+
+    private fun onNavItemSelected(item: MenuItem) {
+        if (item.itemId == R.id.new_list) {
+            onNewListClicked()
+        } else {
+            onNavigateToExistingListClicked(item.itemId)
+        }
+        dismiss()
+    }
+
+    private fun onNavigateToExistingListClicked(itemId: Int) {
+        val id = checkLists[itemId].id!! // let it crash
+        emit(NavigationAction.NavigateToExistingList(id))
+    }
+
+    private fun onNewListClicked() {
+        emit(NavigationAction.NewList)
+    }
+
+    private fun emit(navigationAction: NavigationAction) {
+        (activity as? BottomNavigationItemListener)?.onNavItemSelected(navigationAction)
+    }
+
+    interface BottomNavigationItemListener {
+        fun onNavItemSelected(navigationAction: NavigationAction)
+    }
+
+    sealed class NavigationAction {
+        object NewList : NavigationAction()
+        data class NavigateToExistingList(val id: String) : NavigationAction()
     }
 
     companion object {
@@ -51,9 +82,5 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
         val TAG = BottomNavigationDrawerFragment::class.simpleName!!
         val ITEMS = "item"
-    }
-
-    interface BottomNavigationItemListener {
-        fun onNavItemSelected(id: Int, title: String)
     }
 }

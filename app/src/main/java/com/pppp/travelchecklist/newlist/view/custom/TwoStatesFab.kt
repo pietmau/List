@@ -15,7 +15,7 @@ class TwoStatesFab @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     fun setState(state: State) = when (state) {
         State.GO_FORWARD -> {
-            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
+            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green_super_light)) // TODO use custom attrs!
             setImageDrawable(resources.getDrawable(R.drawable.ic_chevron_right_white_24dp, context.theme))
         }
         State.CANNOT_FINISH -> {
@@ -23,7 +23,7 @@ class TwoStatesFab @JvmOverloads constructor(context: Context, attrs: AttributeS
             setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_close_24px, context.theme))
         }
         State.CAN_FINISH -> {
-            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green))
+            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green_super_light))
             setImageDrawable(resources.getDrawable(R.drawable.ic_check_white_24dp, context.theme))
         }
     }

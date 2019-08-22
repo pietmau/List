@@ -15,15 +15,13 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEvents
-import com.pppp.travelchecklist.main.model.NavigationActionMapper
+import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
+import com.pppp.travelchecklist.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import androidx.appcompat.app.AppCompatDelegate.FEATURE_SUPPORT_ACTION_BAR
-
-
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     @Inject
     lateinit var transientEvents: TransientEvents<MainViewModel.TransientEvent>
     @Inject
-    lateinit var navigationActionMapper: NavigationActionMapper
+    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun setupViews() {
-        fab.setOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
+        fab.setOnClickListener { }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewModel.ViewEvent.NewList) }
         collapsing.isTitleEnabled = false
@@ -61,12 +59,16 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         return true
     }
 
-    override fun onMenuOpened(featureId: Int, menu: Menu?): Boolean {
-        return false
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> emit(MainViewModel.ViewEvent.NavMenuOpenSelected)
+            R.id.add -> askConfirmation()
+        }
+        return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return false
+    private fun askConfirmation() {
+        showConfirmationDialog({ emit(MainViewModel.ViewEvent.NewList) })
     }
 
     private fun render(viewState: MainViewModel.ViewState) = when (viewState) {
@@ -81,8 +83,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun goToList(listId: String) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
     }
 
     private fun startCreateChecklistActivity() {
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     override fun onNavItemSelected(navigationAction: BottomNavigationDrawerFragment.NavigationAction) {
-        emit(navigationActionMapper.map(navigationAction))
+        emit(navigator.map(navigationAction))
     }
 
     override fun onError(text: String) {

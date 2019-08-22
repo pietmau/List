@@ -42,11 +42,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     private fun onNavItemSelected(item: MenuItem) {
-        if (item.itemId == R.id.new_list) {
-            onNewListClicked()
-        } else {
-            onNavigateToExistingListClicked(item.itemId)
-        }
+        onNavigateToExistingListClicked(item.itemId)
         dismiss()
     }
 

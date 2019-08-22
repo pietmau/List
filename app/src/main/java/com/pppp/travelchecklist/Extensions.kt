@@ -17,9 +17,9 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import android.content.Context.CONNECTIVITY_SERVICE
+import android.content.DialogInterface
 import android.net.ConnectivityManager
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.appcompat.app.AlertDialog
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)
@@ -73,7 +73,6 @@ fun Context.isNetworkAvailable(): Boolean {
     return activeNetworkInfo?.isConnected() == true
 }
 
-
 fun <K, V> lazyMap(initializer: (K) -> V): Map<K, V> {
     val map = mutableMapOf<K, V>()
     return map.withDefault { key ->
@@ -81,4 +80,16 @@ fun <K, V> lazyMap(initializer: (K) -> V): Map<K, V> {
         map[key] = newValue
         return@withDefault newValue
     }
+}
+
+
+fun Activity.showConfirmationDialog(yes: () -> Unit) {
+    AlertDialog.Builder(this)
+        .setTitle(R.string.add_list)
+        .setMessage(R.string.confirm_add_new_list)
+        .setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+            yes?.invoke()
+        })
+        .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
+        .create().show()
 }

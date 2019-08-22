@@ -2,13 +2,4 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/new_list_container">
-
-        <item
-            android:id="@+id/new_list"
-            android:icon="@drawable/ic_baseline_add_24px"
-            android:title="New list"/>
-
-    </group>
-
 </menu>

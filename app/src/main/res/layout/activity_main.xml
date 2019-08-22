@@ -3,7 +3,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -97,8 +96,10 @@
         android:layout_gravity="bottom"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:backgroundTint="@color/green_super_light"
-        app:fabAlignmentMode="end"
+        app:fabAlignmentMode="center"
         app:hideOnScroll="true"
+        app:navigationIcon="@drawable/ic_baseline_menu_24px"
+        app:fabAnimationMode="slide"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -106,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="center"
-        android:src="@drawable/ic_baseline_menu_24px"
+        android:src="@drawable/ic_baseline_add_24px"
         app:layout_anchor="@id/bottom_bar"
         app:tint="@android:color/white"
         />

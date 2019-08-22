@@ -1,9 +1,11 @@
 package com.pppp.travelchecklist.main.model
 
+import android.view.MenuItem
+import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.main.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 
-object NavigationActionMapperImpl : NavigationActionMapper {
+object NavigatorImpl : Navigator {
 
     override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.ViewEvent =
         when (navigationAction) {
@@ -12,7 +14,7 @@ object NavigationActionMapperImpl : NavigationActionMapper {
         }
 }
 
-interface NavigationActionMapper : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewModel.ViewEvent> {
+interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewModel.ViewEvent> {
 
     override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.ViewEvent
 

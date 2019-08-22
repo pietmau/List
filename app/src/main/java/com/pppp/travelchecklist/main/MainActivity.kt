@@ -2,6 +2,8 @@ package com.pppp.travelchecklist.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -19,6 +21,9 @@ import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import androidx.appcompat.app.AppCompatDelegate.FEATURE_SUPPORT_ACTION_BAR
+
+
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
@@ -49,6 +54,19 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewModel.ViewEvent.NewList) }
         collapsing.isTitleEnabled = false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onMenuOpened(featureId: Int, menu: Menu?): Boolean {
+        return false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return false
     }
 
     private fun render(viewState: MainViewModel.ViewState) = when (viewState) {

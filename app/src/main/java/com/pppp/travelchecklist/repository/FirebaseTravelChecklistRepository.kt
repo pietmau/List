@@ -8,14 +8,16 @@ import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.travelchecklist.newlist.presenter.Model
 import io.reactivex.Single
 import java.lang.Exception
 
 private const val LAST_VISITED_LIST = "last_visited_list"
 
 class FirebaseTravelChecklistRepository(
-    val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
+    private val mapper: TravelCheckListMapper = TravelCheckListMapperImpl
 ) : TravelChecklistRepository {
 
     override fun saveLastVisitedList(listId: String) {
@@ -32,11 +34,11 @@ class FirebaseTravelChecklistRepository(
             }
     }
 
-    override fun saveAndGet(list: List<Category>, name: String): Single<String> = Single.create { emitter ->
+    override fun saveAndGet(list: List<Category>, model: Model): Single<String> = Single.create { emitter ->
         db.collection(USERS)
             .document(getUserId())
             .collection(USERS_CHECKLISTS)
-            .add(TravelCheckListImpl(list as List<CategoryImpl>, name))
+            .add(mapper.map(list, model))
             .addOnSuccessListener {
                 emitter.onSuccess(it.id)
             }

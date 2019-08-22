@@ -36,7 +36,7 @@ class DestinationFragment : Fragment() {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
             override fun onItemSelected(adapterView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                val country = (adapterView?.adapter?.getItem(position) as? Country) ?: return
+                val country = adapterView?.adapter?.getItem(position - 1) as? Country ?: return
                 callback?.onDestinationSelected(Destination(country.country))
             }
         })

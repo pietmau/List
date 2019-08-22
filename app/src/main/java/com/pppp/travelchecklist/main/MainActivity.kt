@@ -2,7 +2,6 @@ package com.pppp.travelchecklist.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,8 +9,6 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
@@ -25,9 +22,7 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
-    lateinit var producer: Producer<MainViewModel.ViewState>
-    @Inject
-    lateinit var consumer: Consumer<MainViewModel.ViewEvent>
+    lateinit var viewModel: MainViewModel
     @Inject
     lateinit var transientEvents: TransientEvents<MainViewModel.TransientEvent>
     @Inject
@@ -45,7 +40,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun setupViewModel() {
-        producer.states.observe(this, Observer { render(it) })
+        viewModel.states.observe(this, Observer { render(it) })
         transientEvents.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
     }
 
@@ -54,11 +49,6 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewModel.ViewEvent.NewList) }
         collapsing.isTitleEnabled = false
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
     }
 
     private fun render(viewState: MainViewModel.ViewState) = when (viewState) {
@@ -83,7 +73,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun emit(viewEvent: MainViewModel.ViewEvent) {
-        consumer.accept(viewEvent)
+        viewModel.accept(viewEvent)
     }
 
     private fun openNavMenu(checkLists: List<TravelCheckListImpl>) {
@@ -107,7 +97,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         Snackbar.make(root, text, Snackbar.LENGTH_LONG).show()
     }
 
-    fun setListTitle(name: String?) {
-        toolbar.setTitle(name)
+    fun setListTitle(name: String, subTitle: String) {
+        toolbar.title = name
+        toolbar.subtitle = subTitle
     }
 }

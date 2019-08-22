@@ -2,11 +2,12 @@ package com.pppp.travelchecklist.repository
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.travelchecklist.newlist.presenter.Model
 import io.reactivex.Single
 
 interface TravelChecklistRepository {
 
-    fun saveAndGet(list: List<Category>, name: String): Single<String>
+    fun saveAndGet(list: List<Category>, name: Model): Single<String>
 
     fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 

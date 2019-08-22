@@ -9,6 +9,10 @@ interface SingleCheckListViewModel : Consumer<SingleCheckListViewModel.ViewEvent
 
     fun states(listId: String): LiveData<ViewState>
 
+    fun getTitle(travelCheckList: TravelCheckList): String
+
+    fun getSubTitle(travelCheckList: TravelCheckList): String
+
     sealed class ViewState {
         data class Data(val travelCheckList: TravelCheckList) : ViewState()
     }

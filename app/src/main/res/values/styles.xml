@@ -9,6 +9,7 @@
         <item name="fabColor">@color/green_super_light</item>
         <item name="fancyBackgroundColor">@color/background</item>
         <item name="colorSecondary">@color/colorAccent</item>
+        <item name="itemBackground">@android:color/white</item>
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
     </style>

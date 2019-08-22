@@ -1,16 +1,11 @@
 package com.pppp.travelchecklist.listgenerator
 
-import com.pietrantuono.entities.TagsGroup
 import com.pppp.entities.pokos.TagImpl
-import com.pppp.entities.pokos.TagsGroupImpl
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.newlist.presenter.Model
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 interface ListGenerator {
     fun generate(selection: Model, name: String): Single<String>
@@ -27,7 +22,7 @@ class ListGeneratorImpl(
     override fun generate(selection: Model, name: String) =
         retrofitClient
             .generateChecklist(selection.toList() as List<TagImpl>)
-            .flatMap { items -> travelChecklistRepository.saveAndGet(items, name) }
+            .flatMap { items -> travelChecklistRepository.saveAndGet(items, selection) }
             .subscribeOn(workerThread)
             .observeOn(mainThread)
 

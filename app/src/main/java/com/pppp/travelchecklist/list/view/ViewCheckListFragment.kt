@@ -40,7 +40,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
 
     private fun onDataAvailable(state: SingleCheckListViewModel.ViewState.Data) {
         recycler.setItems(state.travelCheckList.categories)
-        (activity as? MainActivity)?.setListTitle(state.travelCheckList.name)
+        (activity as? MainActivity)?.setListTitle(viewModel.getTitle(state.travelCheckList), viewModel.getSubTitle(state.travelCheckList))
     }
 
     override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {

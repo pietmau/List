@@ -9,5 +9,12 @@ import kotlinx.android.parcel.Parcelize
 data class TravelCheckListImpl @JvmOverloads constructor(
     override var categories: List<CategoryImpl> = emptyList(),
     override val name: String? = null,
-    override var id: String? = null
+    override var id: String? = null,
+    override val accomodation: String? = null,
+    override val weather: String? = null,
+    override val duration: String? = null,
+    override val plannedActivities: List<String> = emptyList(),
+    override val travellers: List<String> = emptyList(),
+    override val destination: String? = null
+
 ) : TravelCheckList, Parcelable

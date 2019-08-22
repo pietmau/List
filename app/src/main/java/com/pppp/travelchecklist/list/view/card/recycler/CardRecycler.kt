@@ -1,6 +1,9 @@
 package com.pppp.travelchecklist.list.view.card.recycler
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -58,6 +61,5 @@ class CardRecycler @JvmOverloads constructor(
             adapter.notifyItemRemoved(position)
             callback.onDeleteRequested(item.id, item)
         }
-
     }
 }

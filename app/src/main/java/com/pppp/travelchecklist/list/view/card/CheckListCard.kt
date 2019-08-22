@@ -14,6 +14,7 @@ import kotlin.properties.Delegates
 import android.R.attr.right
 import android.R.attr.left
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 
 class CheckListCard @JvmOverloads constructor(
     context: Context,
@@ -21,7 +22,7 @@ class CheckListCard @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
     private val ELEVATION = 8F
-    private val RADIUS = 10F
+    private val RADIUS = 12F
     private var cardId: Long by Delegates.notNull()
     lateinit var callback: Callback
 
@@ -52,6 +53,8 @@ class CheckListCard @JvmOverloads constructor(
         val params = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         params.setMargins(10, 10, 10, 0)
         setLayoutParams(params)
+        val color = ContextCompat.getColor(context, R.color.green_super_super_light)
+        setCardBackgroundColor(color)
     }
 
     fun bind(category: Category, callback: Callback) {

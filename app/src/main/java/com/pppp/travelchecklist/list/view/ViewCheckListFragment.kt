@@ -12,32 +12,25 @@ import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.list.view.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_blank.recycler
-import kotlinx.android.synthetic.main.header_layout.title
 import javax.inject.Inject
 
 class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     @Inject
-    internal lateinit var producer: Producer<SingleCheckListViewModel.ViewState>
-    @Inject
-    internal lateinit var consumer: Consumer<SingleCheckListViewModel.ViewEvent>
+    internal lateinit var viewModel: SingleCheckListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_checlist, container, false);
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getString(LIST_ID)?.let { listId ->
-            appComponent?.with(ViewCheckListModule(listId, requireActivity()))?.inject(this@ViewCheckListFragment)
-        }
+        appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this@ViewCheckListFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recycler.callback = this
-        producer.states.observe(requireActivity(), Observer { render(it) })
+        viewModel.states(arguments?.getString(LIST_ID)!!).observe(requireActivity(), Observer { render(it) })
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) =
@@ -55,7 +48,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     }
 
     private fun sendToViewModel(viewEvent: SingleCheckListViewModel.ViewEvent) {
-        consumer.accept(viewEvent)
+        viewModel.accept(viewEvent)
     }
 
     override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {

@@ -14,22 +14,16 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ViewCheckListModule(private val listId: String, private val activity: FragmentActivity) {
+class ViewCheckListModule(private val activity: FragmentActivity) {
 
     @Provides
-    fun provideProducerl(): Producer<SingleCheckListViewModel.ViewState> = ViewModelProviders.of(activity, ViewCheckListViewModelFactory(listId))
+    fun provideSingleCheckListViewModel(): SingleCheckListViewModel = ViewModelProviders.of(activity, ViewCheckListViewModelFactory())
         .get(FirebaseSingleCheckListViewModel::class.java)
-
-    @Provides
-    fun provideConsumerl(): Consumer<SingleCheckListViewModel.ViewEvent> = ViewModelProviders.of(activity, ViewCheckListViewModelFactory(listId))
-        .get(FirebaseSingleCheckListViewModel::class.java)
-
 }
 
-class ViewCheckListViewModelFactory(private val listId: String) : ViewModelProvider.NewInstanceFactory() {
+class ViewCheckListViewModelFactory() : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = FirebaseSingleCheckListViewModel(
-        listId = listId,
-        model = FirebaseSingleCheckListModel(FirebaseSingleCheckListRepository())
+        FirebaseSingleCheckListModel(FirebaseSingleCheckListRepository())
     ) as T
 }

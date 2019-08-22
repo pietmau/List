@@ -20,8 +20,8 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu(model.checkLists as List<TravelCheckListImpl>))
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)
-        is ViewEvent.OnButtonClicked -> goToCreateNewList()
         is ViewEvent.GetLatestListVisited -> getLatestListVisited()
+        is ViewEvent.NewList -> goToCreateNewList()
     }
 
     private fun getLatestListVisited() {
@@ -38,12 +38,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         (states as MutableLiveData<ViewState>).postValue(viewState)
     }
 
-    private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected) =
-        when (viewEvent) {
-            is
-            R.id.new_list -> goToCreateNewList()
-            else -> goToList(model[id].id!!) // Let it crash.
-        }
+    private fun onNavItemSelected(viewEvent: ViewEvent.NavItemSelected) = goToList(viewEvent.id)
 
     private fun goToList(listId: String) {
         model.saveLastVisitedList(listId)
@@ -72,9 +67,9 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
 
     sealed class ViewEvent {
         object NavMenuOpenSelected : ViewEvent()
-        data class NavItemSelected(val id: String?, val title: String?) : ViewEvent()
+        object NewList : ViewEvent()
+        data class NavItemSelected(val id: String) : ViewEvent()
         data class NewListGenerated(val listId: String) : ViewEvent()
-        object OnButtonClicked : ViewEvent()
         object GetLatestListVisited : ViewEvent()
     }
 }

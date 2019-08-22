@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     private fun setupViews() {
         fab.setOnClickListener { emit(MainViewModel.ViewEvent.NavMenuOpenSelected) }
         setSupportActionBar(bottom_bar)
-        button.setOnClickListener { emit(MainViewModel.ViewEvent.OnButtonClicked) }
+        button.setOnClickListener { emit(MainViewModel.ViewEvent.NewList) }
         collapsing.isTitleEnabled = false
     }
 

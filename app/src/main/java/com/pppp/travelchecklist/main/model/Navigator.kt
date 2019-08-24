@@ -22,7 +22,7 @@ object NavigatorImpl : Navigator {
 
     override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.ViewEvent =
         when (navigationAction) {
-            is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewModel.ViewEvent.NewList
+            is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewModel.ViewEvent.GoMakeNewList
             is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewModel.ViewEvent.NavItemSelected(navigationAction.id)
         }
 }

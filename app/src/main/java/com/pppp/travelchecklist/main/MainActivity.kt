@@ -42,9 +42,11 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun setUpViews() {
-        fab.setOnClickListener { }
+        fab.setOnClickListener {
+            emit(MainViewModel.ViewEvent.OnFabClicked)
+        }
         setSupportActionBar(bottom_bar)
-        button.setOnClickListener { emit(MainViewModel.ViewEvent.NewList) }
+        button.setOnClickListener { emit(MainViewModel.ViewEvent.GoMakeNewList) }
         collapsing.isTitleEnabled = false
     }
 
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> emit(MainViewModel.ViewEvent.NavMenuOpenSelected)
-            R.id.add -> showConfirmationDialog({ emit(MainViewModel.ViewEvent.NewList) })
+            R.id.add -> showConfirmationDialog({ emit(MainViewModel.ViewEvent.GoMakeNewList) })
         }
         return true
     }
@@ -64,14 +66,22 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     private fun render(viewState: MainViewModel.ViewState) = when (viewState) {
         is MainViewModel.ViewState.Empty -> onNoListPresent()
         is MainViewModel.ViewState.Content -> onContentPresent()
+        is MainViewModel.ViewState.Loading -> onLoading()
+    }
+
+    private fun onLoading() {
+        loading_content_error.loading()
+        bottom_bar.navigationIcon = null
     }
 
     private fun onContentPresent() {
         loading_content_error.hide()
+        bottom_bar.setNavigationIcon(R.drawable.ic_baseline_menu_24px)
     }
 
     private fun onNoListPresent() {
         loading_content_error.empty()
+        bottom_bar.navigationIcon = null
     }
 
     private fun onTransientEventReceived(transientEvent: MainViewModel.TransientEvent) = when (transientEvent) {

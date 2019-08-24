@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pppp.entities.pokos.TravelCheckListImpl
-import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.TransientEvents
@@ -21,10 +20,19 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)
         is ViewEvent.GetLatestListVisited -> getLatestListVisited()
-        is ViewEvent.NewList -> goToCreateNewList()
+        is ViewEvent.GoMakeNewList -> goToCreateNewList()
+        is ViewEvent.OnFabClicked -> onFabClicked()
+    }
+
+    private fun onFabClicked() {
+        if (model.isEmpty) {
+            goToCreateNewList()
+        } else {
+        }
     }
 
     private fun getLatestListVisited() {
+        emitViewState(ViewState.Loading)
         model.getLastVisitedList({ listId ->
             if (listId != null) {
                 goToList(listId)
@@ -67,13 +75,15 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     sealed class ViewState {
         object Empty : ViewState()
         object Content : ViewState()
+        object Loading : ViewState()
     }
 
     sealed class ViewEvent {
         object NavMenuOpenSelected : ViewEvent()
-        object NewList : ViewEvent()
+        object GoMakeNewList : ViewEvent()
         data class NavItemSelected(val id: String) : ViewEvent()
         data class NewListGenerated(val listId: String) : ViewEvent()
         object GetLatestListVisited : ViewEvent()
+        object OnFabClicked : ViewEvent()
     }
 }

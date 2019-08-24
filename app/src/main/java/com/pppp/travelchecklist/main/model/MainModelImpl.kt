@@ -1,9 +1,12 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 
 class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
+    override val isEmpty: Boolean
+        get() = checkLists.isEmpty()
 
     override var checkLists: List<TravelCheckList> = emptyList()
 

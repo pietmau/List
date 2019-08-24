@@ -12,6 +12,8 @@ interface MainModel {
 
     var checkLists: List<TravelCheckList>
 
+    val isEmpty: Boolean
+
     operator fun get(index: Int): TravelCheckList
 
     operator fun contains(position: Int): Boolean

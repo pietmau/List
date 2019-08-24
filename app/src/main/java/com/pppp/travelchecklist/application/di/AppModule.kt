@@ -13,8 +13,6 @@ import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepositoryImpl
-import com.pppp.travelchecklist.utils.NetworkChecker
-import com.pppp.travelchecklist.utils.NetworkCheckerImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,9 +50,6 @@ class AppModule(private val context: Context, firebaseAnalytics: FirebaseAnalyti
 
     @Provides
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
-
-    @Provides
-    fun provideNetworkCheckerImpl(): NetworkChecker = NetworkCheckerImpl(context)
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

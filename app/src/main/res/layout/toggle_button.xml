@@ -3,6 +3,6 @@
 <ToggleButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingLeft="@dimen/button_strip_element_padding"
     android:paddingRight="@dimen/button_strip_element_padding"
-    style="@style/custom_toggleButton"
+    style="@style/CustomToggleButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />

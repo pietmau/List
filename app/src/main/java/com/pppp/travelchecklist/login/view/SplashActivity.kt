@@ -9,20 +9,21 @@ import com.pppp.travelchecklist.application.App
 import javax.inject.Inject
 import android.app.Activity
 import android.app.AlertDialog
-import com.google.android.material.snackbar.Snackbar
+import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.MainActivity
-import com.pppp.travelchecklist.utils.NetworkChecker
-import kotlinx.android.synthetic.main.activity_splash.container
 
 class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
 
     @Inject
     lateinit var viewStates: Producer<LoginViewModel.ViewState>
+
+    @Inject
+    lateinit var viewActions: Consumer<LoginViewModel.ViewAction>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +35,9 @@ class SplashActivity : AppCompatActivity() {
     private fun render(state: LoginViewModel.ViewState) =
         when (state) {
             is LoginViewModel.ViewState.UserNotLoggedIn -> login()
-            is LoginViewModel.ViewState.UserLoggedIn -> proceed()
+            is LoginViewModel.ViewState.AppEnabled -> onLoginSuccessful()
             is LoginViewModel.ViewState.Kill -> kill()
-            is LoginViewModel.ViewState.Offline -> onError(state.errorMessage)
         }
-
-    private fun onError(errorMessage: NetworkChecker.ErrorMessage) {
-        Snackbar.make(container, errorMessage.message, Snackbar.LENGTH_LONG).show()
-    }
 
     private fun kill() {
         AlertDialog.Builder(this)
@@ -52,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
             .create().show()
     }
 
-    private fun proceed() {
+    private fun onLoginSuccessful() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
@@ -76,7 +72,8 @@ class SplashActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === REQUEST_CODE) {
             if (resultCode === Activity.RESULT_OK) {
-                proceed()
+                viewActions.accept(LoginViewModel.ViewAction.UserLoggedInSuccessfully)
+                return
             }
         }
         finish()

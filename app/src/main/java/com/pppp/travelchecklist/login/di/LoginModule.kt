@@ -7,7 +7,6 @@ import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.login.viewmodel.FirebaseKillSwitch
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
-import com.pppp.travelchecklist.utils.NetworkChecker
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -20,14 +19,14 @@ class LoginModule(private val activity: androidx.fragment.app.FragmentActivity) 
     fun provideProducer(loginViewModel: LoginViewModel): Producer<LoginViewModel.ViewState> = loginViewModel
 
     @Provides
-    fun provideConsumer(loginViewModel: LoginViewModel): Consumer<Any> = loginViewModel
+    fun provideConsumer(loginViewModel: LoginViewModel): Consumer<LoginViewModel.ViewAction> = loginViewModel
 
     @Singleton
     @Provides
-    fun getLoginViewModel(checker: NetworkChecker) = ViewModelProviders.of(activity, LoginViewModelFactory(checker)).get(LoginViewModel::class.java)
+    fun getLoginViewModel() = ViewModelProviders.of(activity, LoginViewModelFactory()).get(LoginViewModel::class.java)
 }
 
-class LoginViewModelFactory(val checker: NetworkChecker) : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = LoginViewModel(FirebaseKillSwitch(), checker) as T
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T = LoginViewModel(FirebaseKillSwitch()) as T
 }

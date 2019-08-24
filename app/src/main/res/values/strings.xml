@@ -63,5 +63,6 @@
     <string name="action_love">Love</string>
     <string name="add_list">Add new list</string>
     <string name="confirm_add_new_list">Do you want yo add a new list?</string>
+    <string name="welcome">Hey, welcome!</string>
 
 </resources>

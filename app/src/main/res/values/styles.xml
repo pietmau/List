@@ -18,15 +18,22 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat"/>
 
-    <style name="custom_toggleButton">
+    <style name="CustomToggleButton">
         <item name="android:background">@drawable/selector_bg_radio_button</item>
         <item name="android:textColor">@color/selector_text_radio_button</item>
         <item name="android:layout_margin">@dimen/small_margin</item>
         <item name="android:layout_marginBottom">@dimen/spacing_big</item>
     </style>
 
-    <style name="selection_title">
+    <style name="DefaultTextStyleLarge">
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:textColor">?colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DefaultTextStyleXL">
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:textSize">36sp</item>
         <item name="android:textColor">?colorAccent</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -58,5 +65,11 @@
         <item name="android:background">@drawable/selector_bg_radio_button</item>
     </style>
 
-    <dimen name="small_margin">2dp</dimen>
+    <style name="FirebaseUI" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/FirebaseUI.Button</item>
+    </style>
+
 </resources>

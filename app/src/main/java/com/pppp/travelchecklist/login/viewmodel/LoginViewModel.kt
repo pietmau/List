@@ -5,30 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pppp.travelchecklist.Consumer
 import com.pppp.travelchecklist.Producer
-import com.pppp.travelchecklist.utils.NetworkChecker
 
 class LoginViewModel(
-    private val killSwitch: KillSwitch,
-    private val networkChecker: NetworkChecker
-) : Consumer<Any>, Producer<LoginViewModel.ViewState>, ViewModel() {
+    private val killSwitch: KillSwitch
+) : Consumer<LoginViewModel.ViewAction>, Producer<LoginViewModel.ViewState>, ViewModel() {
 
     override val states: LiveData<ViewState> = MutableLiveData<ViewState>()
 
     init {
-        checkNetwork()
-    }
-
-    private fun checkNetwork() {
-        networkChecker.checkNetworkConnectionRepeatedly({
-            checkIfAppEnabled()
-        }, {
-            emit(ViewState.Offline(it))
-        })
+        checkIfUserIsLoggedIn()
     }
 
     private fun checkIfAppEnabled() {
         killSwitch.shouldAppBeEnabled({
-            checkIfUserIsLoggedIn()
+            emit(ViewState.AppEnabled)
         }, {
             emit(ViewState.Kill)
         })
@@ -36,29 +26,29 @@ class LoginViewModel(
 
     private fun checkIfUserIsLoggedIn() {
         if (killSwitch.isUserLoggedIn()) {
-            emit(ViewState.UserLoggedIn)
+            checkIfAppEnabled()
         } else {
             emit(ViewState.UserNotLoggedIn)
         }
-    }
-
-    override fun onCleared() {
-        networkChecker.cancelNetworkChecks()
     }
 
     private fun emit(userNotLoggedIn: ViewState) {
         (states as MutableLiveData<ViewState>).postValue(userNotLoggedIn)
     }
 
-    override fun accept(t: Any) = TODO()
+    override fun accept(action: ViewAction) = when (action) {
+        is ViewAction.UserLoggedInSuccessfully -> checkIfAppEnabled()
+    }
 
     sealed class ViewState {
-        data class Offline(val errorMessage: NetworkChecker.ErrorMessage) : ViewState()
         object UserNotLoggedIn : ViewState()
-        object UserLoggedIn : ViewState()
+        object AppEnabled : ViewState()
         object Kill : ViewState()
     }
 
+    sealed class ViewAction {
+        object UserLoggedInSuccessfully : ViewAction()
+    }
 }
 
 

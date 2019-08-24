@@ -11,8 +11,8 @@ import com.pppp.travelchecklist.application.di.AppModule
 import com.pppp.travelchecklist.application.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 import io.fabric.sdk.android.Fabric
-
-
+import com.instabug.library.invocation.InstabugInvocationEvent
+import com.instabug.library.Instabug
 
 class App : Application() {
     lateinit var appComponent: AppComponent
@@ -25,6 +25,9 @@ class App : Application() {
         }
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         LeakCanary.install(this);
+        Instabug.Builder(this, BuildConfig.instabug)
+            .setInvocationEvents(InstabugInvocationEvent.SHAKE)
+            .build()
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
@@ -37,8 +40,8 @@ class App : Application() {
             )
             StrictMode.setVmPolicy(
                 StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
+                         .detectLeakedSqlLiteObjects()
+                    //.detectLeakedClosableObjects()
                     .penaltyLog()
                     .penaltyDeath()
                     .build()

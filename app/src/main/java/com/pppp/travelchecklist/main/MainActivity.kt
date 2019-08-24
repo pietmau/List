@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         if (savedInstanceState == null) {
             emit(MainViewModel.ViewEvent.GetLatestListVisited)
         }
+        throw UnsupportedOperationException()
     }
 
     private fun setupViewModel() {

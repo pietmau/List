@@ -8,8 +8,11 @@ interface MainModel {
 
     fun saveLastVisitedList(listId: String?)
 
-    fun getLastVisitedList(success: ((String?) -> Unit)? = null)
+    fun getLastVisitedList(success: ((String?) -> Unit)? = null, failure: ((Throwable?) -> Unit)? = null)
+
     var checkLists: List<TravelCheckList>
+
     operator fun get(index: Int): TravelCheckList
+
     operator fun contains(position: Int): Boolean
 }

@@ -13,7 +13,7 @@ class LoadingContentErrorView @JvmOverloads constructor(context: Context, attrs:
         displayedChild = 0
     }
 
-    fun error() {
+    fun empty() {
         displayedChild = 1
     }
 

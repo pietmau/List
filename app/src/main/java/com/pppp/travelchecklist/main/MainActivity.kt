@@ -10,13 +10,11 @@ import androidx.lifecycle.Observer
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.main.model.Navigator
-import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
 import com.pppp.travelchecklist.showConfirmationDialog
@@ -35,19 +33,15 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
-        setupViews()
-        setupViewModel()
+        setUpViews()
+        viewModel.states.observe(this, Observer { render(it) })
+        transientEvents.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
         if (savedInstanceState == null) {
             emit(MainViewModel.ViewEvent.GetLatestListVisited)
         }
     }
 
-    private fun setupViewModel() {
-        viewModel.states.observe(this, Observer { render(it) })
-        transientEvents.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
-    }
-
-    private fun setupViews() {
+    private fun setUpViews() {
         fab.setOnClickListener { }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewModel.ViewEvent.NewList) }
@@ -62,33 +56,29 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> emit(MainViewModel.ViewEvent.NavMenuOpenSelected)
-            R.id.add -> askConfirmation()
+            R.id.add -> showConfirmationDialog({ emit(MainViewModel.ViewEvent.NewList) })
         }
         return true
     }
 
-    private fun askConfirmation() {
-        showConfirmationDialog({ emit(MainViewModel.ViewEvent.NewList) })
-    }
-
     private fun render(viewState: MainViewModel.ViewState) = when (viewState) {
-        is MainViewModel.ViewState.Empty -> loading_content_error.error()
-        is MainViewModel.ViewState.Content -> loading_content_error.hide()
+        is MainViewModel.ViewState.Empty -> onNoListPresent()
+        is MainViewModel.ViewState.Content -> onContentPresent()
     }
 
-    private fun onTransientEventReceived(viewState: MainViewModel.TransientEvent) = when (viewState) {
-        is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(viewState.userChecklists)
-        is MainViewModel.TransientEvent.GoToCreateNewList -> startCreateChecklistActivity()
-        is MainViewModel.TransientEvent.GoToList -> goToList(viewState.listId)
+    private fun onContentPresent() {
+        loading_content_error.hide()
     }
 
-    private fun goToList(listId: String) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
+    private fun onNoListPresent() {
+        loading_content_error.empty()
     }
 
-    private fun startCreateChecklistActivity() {
-        startActivityForResult(Intent(this, NewListActivity::class.java), CREATE_NEW_LIST)
-        overridePendingTransition(R.anim.slide_up, R.anim.no_change);
+    private fun onTransientEventReceived(transientEvent: MainViewModel.TransientEvent) = when (transientEvent) {
+        is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists)
+        is MainViewModel.TransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
+        is MainViewModel.TransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
+        is MainViewModel.TransientEvent.Error -> onError(transientEvent.message)
     }
 
     private fun emit(viewEvent: MainViewModel.ViewEvent) {
@@ -100,11 +90,9 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CREATE_NEW_LIST) {
-            if (resultCode == RESULT_OK) {
-                val checkListId = data?.extras?.getString(CHECKLIST_ID) ?: return
-                emit(MainViewModel.ViewEvent.NewListGenerated(checkListId))
-            }
+        if (requestCode == CREATE_NEW_LIST && resultCode == RESULT_OK) {
+            val checkListId = data?.extras?.getString(CHECKLIST_ID) ?: return
+            emit(MainViewModel.ViewEvent.NewListGenerated(checkListId))
         }
     }
 

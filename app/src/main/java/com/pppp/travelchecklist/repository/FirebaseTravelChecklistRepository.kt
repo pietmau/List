@@ -6,7 +6,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.newlist.presenter.Model
 import io.reactivex.Single
@@ -26,11 +25,14 @@ class FirebaseTravelChecklistRepository(
             .set(mapOf(LAST_VISITED_LIST to listId), SetOptions.merge())
     }
 
-    override fun getLastVisitedList(success: ((String?) -> Unit)?) {
+    override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
         db.collection(USERS)
             .document(getUserId())
             .get().addOnSuccessListener {
                 success?.invoke(it[LAST_VISITED_LIST] as? String)
+            }
+            .addOnFailureListener {
+                failure?.invoke(it)
             }
     }
 

@@ -25,13 +25,16 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     }
 
     private fun getLatestListVisited() {
-        model.getLastVisitedList { listId ->
+        model.getLastVisitedList({ listId ->
             if (listId != null) {
                 goToList(listId)
             } else {
                 emitViewState(ViewState.Empty)
             }
-        }
+        }, {
+            emitViewState(ViewState.Empty)
+            emitTransientEvent(TransientEvent.Error(it?.message ?: ""))
+        })
     }
 
     private fun emitViewState(viewState: ViewState) {
@@ -58,6 +61,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         data class OpenNavMenu(val userChecklists: List<TravelCheckListImpl>) : TransientEvent()
         object GoToCreateNewList : TransientEvent()
         data class GoToList(val listId: String) : TransientEvent()
+        data class Error(val message: String) : TransientEvent()
     }
 
     sealed class ViewState {

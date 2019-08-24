@@ -17,7 +17,7 @@ interface TravelChecklistRepository {
 
     fun saveLastVisitedList(listId: String)
 
-    fun getLastVisitedList(success: ((String?) -> Unit)? = null)
+    fun getLastVisitedList(success: ((String?) -> Unit)? = null, failure: ((Throwable?) -> Unit)?)
 }
 
 interface SingleCheckListRepository {

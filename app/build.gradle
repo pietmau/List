@@ -24,6 +24,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "instabug", instabug
+            resValue 'string', "fabric", fabric
             resValue 'string', "facebook_app_id", facebook_app_id
             resValue 'string', "fb_login_protocol_scheme", fb_login_protocol_scheme
             resValue 'string', "fabricApiKey", fabricApiKey
@@ -40,6 +41,7 @@ android {
             ext.alwaysUpdateBuildId = false
             crunchPngs false
             buildConfigField 'String', "instabug", instabug
+            resValue 'string', "fabric", fabric
             resValue 'string', "facebook_app_id", facebook_app_id
             resValue 'string', "fb_login_protocol_scheme", fb_login_protocol_scheme
             resValue 'string', "fabricApiKey", fabricApiKey

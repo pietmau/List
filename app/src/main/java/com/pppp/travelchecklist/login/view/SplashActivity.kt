@@ -54,14 +54,18 @@ class SplashActivity : AppCompatActivity() {
 
     private fun proceed() {
         startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
+     }
 
     private fun login() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder()
                 .setAvailableProviders(
-                    listOf(AuthUI.IdpConfig.GoogleBuilder().build(), AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.PhoneBuilder().build())
+                    listOf(
+                        AuthUI.IdpConfig.GoogleBuilder().build(),
+                        AuthUI.IdpConfig.EmailBuilder().build(),
+                        AuthUI.IdpConfig.FacebookBuilder().build(),
+                        AuthUI.IdpConfig.AnonymousBuilder().build()
+                    )
                 )
                 .build(), REQUEST_CODE
         )
@@ -74,5 +78,6 @@ class SplashActivity : AppCompatActivity() {
                 proceed()
             }
         }
+        finish()
     }
 }

@@ -17,6 +17,7 @@
         app:headerLayout="@layout/profile_header_layout"
         app:itemBackground="@drawable/menu_divider"
         app:menu="@menu/activity_main_drawer"
+        app:itemTextColor="@color/menu_item_text_color"
         />
 
 </LinearLayout>

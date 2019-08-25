@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun onTransientEventReceived(transientEvent: MainViewModel.TransientEvent) = when (transientEvent) {
-        is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists)
+        is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists, transientEvent.lastList)
         is MainViewModel.TransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
         is MainViewModel.TransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
         is MainViewModel.TransientEvent.Error -> onError(transientEvent.message)
@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         viewModel.accept(viewEvent)
     }
 
-    private fun openNavMenu(checkLists: List<TravelCheckListImpl>) {
-        BottomNavigationDrawerFragment.newInstance(checkLists).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
+    private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: String?) {
+        BottomNavigationDrawerFragment.newInstance(checkLists, lastList).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

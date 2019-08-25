@@ -19,7 +19,7 @@ class NewListPresenter(
     lateinit var transientStates: (TransientState) -> Unit
 
     fun onNameChanged(name: String) {
-        model.listName = name
+        model.listName = name.capitalize()
         updateUi()
     }
 

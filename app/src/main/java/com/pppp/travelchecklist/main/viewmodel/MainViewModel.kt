@@ -16,12 +16,22 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     override val states: LiveData<ViewState> = MutableLiveData()
 
     override fun accept(viewEvent: ViewEvent) = when (viewEvent) {
-        is ViewEvent.NavMenuOpenSelected -> emitTransientEvent(TransientEvent.OpenNavMenu(model.checkLists as List<TravelCheckListImpl>))
+        is ViewEvent.NavMenuOpenSelected -> openNavMenu()
         is ViewEvent.NavItemSelected -> onNavItemSelected(viewEvent)
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)
         is ViewEvent.GetLatestListVisited -> getLatestListVisited()
         is ViewEvent.GoMakeNewList -> goToCreateNewList()
         is ViewEvent.OnFabClicked -> onFabClicked()
+    }
+
+    private fun openNavMenu() {
+        model.getLastVisitedList(success = { lastList ->
+            val userChecklists = model.checkLists as List<TravelCheckListImpl>
+            val transientEvent = TransientEvent.OpenNavMenu(userChecklists, lastList)
+            emitTransientEvent(transientEvent)
+        }, failure = {
+            onError(it)
+        })
     }
 
     private fun onFabClicked() {
@@ -41,8 +51,12 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
             }
         }, {
             emitViewState(ViewState.Empty)
-            emitTransientEvent(TransientEvent.Error(it?.message ?: ""))
+            onError(it)
         })
+    }
+
+    private fun onError(it: Throwable?) {
+        emitTransientEvent(TransientEvent.Error(it?.message ?: ""))
     }
 
     private fun emitViewState(viewState: ViewState) {
@@ -66,7 +80,7 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
     }
 
     sealed class TransientEvent {
-        data class OpenNavMenu(val userChecklists: List<TravelCheckListImpl>) : TransientEvent()
+        data class OpenNavMenu(val userChecklists: List<TravelCheckListImpl>, val lastList: String?) : TransientEvent()
         object GoToCreateNewList : TransientEvent()
         data class GoToList(val listId: String) : TransientEvent()
         data class Error(val message: String) : TransientEvent()

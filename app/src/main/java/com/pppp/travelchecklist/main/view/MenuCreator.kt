@@ -4,5 +4,5 @@ import android.view.Menu
 import com.pietrantuono.entities.TravelCheckList
 
 interface MenuCreator {
-    fun initMenu(menu: Menu, userChecklists: List<TravelCheckList>)
+    fun initMenu(menu: Menu, userChecklists: List<TravelCheckList>, string: String?)
 }

@@ -10,6 +10,9 @@
     <dimen name="spacing_big">32dp</dimen>
     <dimen name="spacing_very_big">64dp</dimen>
     <dimen name="small_margin">2dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
     <dimen name="design_fab_image_size" tools:override="true">32dp</dimen>
+    <dimen name="profile_image_size">48dp</dimen>
+    <dimen name="radius">12dp</dimen>
 
 </resources>

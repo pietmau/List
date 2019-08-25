@@ -9,6 +9,7 @@ interface TitleUseCase {
 
     fun getSubTitle(travelCheckList: TravelCheckList): String
 
+    fun getTitleForMenu(travelCheckList: TravelCheckList): String
 }
 
 object TitleUseCaseImpl : TitleUseCase {
@@ -28,4 +29,10 @@ object TitleUseCaseImpl : TitleUseCase {
 
     override fun getTitle(travelCheckList: TravelCheckList) = travelCheckList.name ?: ""
 
+    override fun getTitleForMenu(travelCheckList: TravelCheckList): String {
+        if (getSubTitle(travelCheckList).isNullOrBlank()) {
+            return travelCheckList.name ?: ""
+        }
+        return travelCheckList.name + " (" + getSubTitle(travelCheckList) + " )"
+    }
 }

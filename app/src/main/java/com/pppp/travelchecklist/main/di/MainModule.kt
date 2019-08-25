@@ -9,6 +9,8 @@ import com.pppp.travelchecklist.Producer
 import com.pppp.travelchecklist.main.model.MainModelImpl
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.TransientEvents
+import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
+import com.pppp.travelchecklist.list.viewmodel.TitleUseCaseImpl
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.main.model.NavigatorImpl
 import com.pppp.travelchecklist.main.view.MenuCreator
@@ -39,6 +41,10 @@ class MainModule(private val activity: FragmentActivity) {
 
     @Provides
     fun provideNavigationActionMapper(): Navigator = NavigatorImpl
+
+    @Provides
+    fun provideTitleUseCase(): TitleUseCase = TitleUseCaseImpl
+
 
     class MainViewModelFactory(private val repo: TravelChecklistRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(MainModelImpl(repo)) as T

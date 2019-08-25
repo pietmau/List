@@ -10,6 +10,8 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
 
     override var checkLists: List<TravelCheckList> = emptyList()
 
+    private var lastVisitedList: String? = null
+
     init {
         getUsersLists({
             checkLists = it
@@ -25,8 +27,18 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
     }
 
     override fun saveLastVisitedList(listId: String?) {
+        lastVisitedList = listId
         listId?.let { repo.saveLastVisitedList(it) }
     }
 
-    override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) = repo.getLastVisitedList(success, failure)
+    override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
+        if (lastVisitedList == null) {
+            repo.getLastVisitedList({
+                lastVisitedList = it
+                success?.invoke(it)
+            }, failure)
+        } else {
+            success?.invoke(lastVisitedList)
+        }
+    }
 }

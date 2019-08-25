@@ -34,7 +34,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        menuCreator.initMenu(nav_view.menu, checkLists)
+        menuCreator.initMenu(nav_view.menu, checkLists, arguments?.getString(LAST_VISITED))
         nav_view.setNavigationItemSelectedListener { item ->
             onNavItemSelected(item)
             true
@@ -69,14 +69,16 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(checkLists: List<TravelCheckListImpl>) =
+        fun newInstance(checkLists: List<TravelCheckListImpl>, lastList: String?) =
             BottomNavigationDrawerFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ITEMS, ArrayList(checkLists))
+                    putString(LAST_VISITED, lastList)
                 }
             }
 
         val TAG = BottomNavigationDrawerFragment::class.simpleName!!
         val ITEMS = "item"
+        val LAST_VISITED = "last_visited"
     }
 }

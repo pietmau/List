@@ -61,8 +61,11 @@
     <string name="in_x_seconds">&#160;seconds</string>
     <string name="action_add">Add new list</string>
     <string name="action_love">Love</string>
-    <string name="add_list">Add new list</string>
+    <string name="add_list">Add new list?</string>
     <string name="confirm_add_new_list">Do you want yo add a new list?</string>
     <string name="welcome">Hey, welcome!</string>
+    <string name="add_new_card">Add new card</string>
+    <string name="card_title">Card title</string>
+    <string name="done">Done</string>
 
 </resources>

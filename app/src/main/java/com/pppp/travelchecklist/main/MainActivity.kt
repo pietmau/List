@@ -14,6 +14,9 @@ import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEvents
+import com.pppp.travelchecklist.findFragmentById
+import com.pppp.travelchecklist.findFragmentByTag
+import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
@@ -43,11 +46,20 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun setUpViews() {
         fab.setOnClickListener {
-            emit(MainViewModel.ViewEvent.OnFabClicked)
+            onFabClicked()
         }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewModel.ViewEvent.GoMakeNewList) }
         collapsing.isTitleEnabled = false
+    }
+
+    private fun onFabClicked() {
+        val frag = findFragmentById<ViewCheckListFragment>(R.id.container)
+        if (frag != null && frag.isAdded) {
+            frag.addCategory()
+        } else {
+            emit(MainViewModel.ViewEvent.GoMakeNewList)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

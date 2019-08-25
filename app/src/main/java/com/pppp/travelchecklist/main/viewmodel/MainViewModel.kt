@@ -21,7 +21,6 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         is ViewEvent.NewListGenerated -> goToList(viewEvent.listId)
         is ViewEvent.GetLatestListVisited -> getLatestListVisited()
         is ViewEvent.GoMakeNewList -> goToCreateNewList()
-        is ViewEvent.OnFabClicked -> onFabClicked()
     }
 
     private fun openNavMenu() {
@@ -98,6 +97,5 @@ class MainViewModel(private val model: MainModel) : Producer<MainViewModel.ViewS
         data class NavItemSelected(val id: String) : ViewEvent()
         data class NewListGenerated(val listId: String) : ViewEvent()
         object GetLatestListVisited : ViewEvent()
-        object OnFabClicked : ViewEvent()
     }
 }

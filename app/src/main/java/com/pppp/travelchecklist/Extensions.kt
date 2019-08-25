@@ -35,6 +35,14 @@ inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String
     return null
 }
 
+inline fun <reified T : Fragment> FragmentActivity.findFragmentById(@IdRes id: Int): T? {
+    val fragment = supportFragmentManager.findFragmentById(id)
+    if (fragment is T) {
+        return fragment
+    }
+    return null
+}
+
 val AppCompatActivity.fragmentTransaction: FragmentTransaction
     get() = supportFragmentManager.beginTransaction()
 
@@ -81,7 +89,6 @@ fun <K, V> lazyMap(initializer: (K) -> V): Map<K, V> {
         return@withDefault newValue
     }
 }
-
 
 fun Activity.showConfirmationDialog(yes: () -> Unit) {
     AlertDialog.Builder(this)

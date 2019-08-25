@@ -39,10 +39,6 @@ class CheckListCard @JvmOverloads constructor(
             callback.onItemDeleteRequested(cardId, itemId, data)
 
         }
-
-        override fun onSettingsRequested(itemId: Long, data: CheckListItem) {
-            callback.onItemSettingsRequested(cardId, itemId, data)
-        }
     }
 
     init {
@@ -71,8 +67,6 @@ class CheckListCard @JvmOverloads constructor(
 
     interface Callback {
         fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem)
-
-        fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem)
 
         fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean)
 

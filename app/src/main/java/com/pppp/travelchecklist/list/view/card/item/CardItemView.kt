@@ -17,9 +17,9 @@ class CardItemView @JvmOverloads constructor(
 
     var data: CheckListItem? = null
         set(value) {
+            field = value
             check.text = value?.title
             check.isChecked = value?.checked == true
-            field = value
         }
 
     var itemId: Long? = null
@@ -38,7 +38,6 @@ class CardItemView @JvmOverloads constructor(
 
     interface Callback {
         fun onDeleteRequested(position: Long, data: CheckListItem)
-        fun onSettingsRequested(position: Long, data: CheckListItem)
         fun onItemChecked(id: Long, checked: Boolean)
         fun onItemMoved(fromPosition: Int, toPosition: Int)
     }

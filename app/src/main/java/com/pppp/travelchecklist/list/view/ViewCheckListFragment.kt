@@ -30,7 +30,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recycler.callback = this
-        viewModel.states(arguments?.getString(LIST_ID)!!).observe(requireActivity(), Observer { render(it) })
+        viewModel.states(arguments?.getString(LIST_ID)!!).observe(viewLifecycleOwner, Observer { render(it) })
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) =
@@ -51,14 +51,12 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         viewModel.accept(viewEvent)
     }
 
-    override fun onItemSettingsRequested(cardId: Long, itemId: Long, data: CheckListItem) {
-    }
-
     override fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean) {
+        sendToViewModel(SingleCheckListViewModel.ViewEvent.ItemChecked(cardId, itemId, checked))
     }
 
     override fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int) {
-        sendToViewModel(SingleCheckListViewModel.ViewEvent.MoveItems(cardId, fromPosition, toPosition))
+        sendToViewModel(SingleCheckListViewModel.ViewEvent.MoveItem(cardId, fromPosition, toPosition))
     }
 
     companion object {

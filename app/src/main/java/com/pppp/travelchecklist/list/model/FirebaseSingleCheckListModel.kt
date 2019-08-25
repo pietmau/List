@@ -10,6 +10,14 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
     private lateinit var travelCheckList: TravelCheckListImpl
     private lateinit var listId: String
 
+    override fun checkItem(cardId: Long, itemId: Long, checked: Boolean) {
+        val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
+        val categories = travelCheckList.categories.toMutableList()
+        val copy = checkItemInternal(indexedCategory, itemId, checked)
+        categories.set(indexedCategory.index, copy)
+        saveChanges(categories, listId)
+    }
+
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?) {
         this.listId = listId
         repository.getUserCheckListAndUpdates(listId, success = {
@@ -21,8 +29,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
     override fun deleteItem(listId: String, categoryId: Long, itemId: Long) {
         val indexedCategory = findCategoryById(travelCheckList.categories, categoryId) ?: return
         val categories = travelCheckList.categories.toMutableList()
-        val category = indexedCategory.value
-        val copy = removeItem(category, itemId)
+        val copy = removeItem(indexedCategory, itemId)
         if (copy.items.isNullOrEmpty()) {
             categories.removeAt(indexedCategory.index)
         } else {
@@ -31,24 +38,32 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         saveChanges(categories, listId)
     }
 
-    override fun moveItems(cardId: Long, fromPosition: Int, toPosition: Int) {
+    override fun moveItem(cardId: Long, fromPosition: Int, toPosition: Int) {
         val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
         val categories = travelCheckList.categories.toMutableList()
-        val category = indexedCategory.value
-        val copy = swapItems(category, fromPosition, toPosition)
+        val copy = swapItems(indexedCategory, fromPosition, toPosition)
         categories.set(indexedCategory.index, copy)
         saveChanges(categories, listId)
     }
 
-    private fun swapItems(category: CategoryImpl, fromPosition: Int, toPosition: Int): CategoryImpl {
-        var items = category.items.toMutableList()
+    private fun swapItems(category: IndexedValue<CategoryImpl>, fromPosition: Int, toPosition: Int): CategoryImpl {
+        var items = category.value.items.toMutableList()
         Collections.swap(items, fromPosition, toPosition)
-        return category.copy(items = items.toList())
+        return category.value.copy(items = items.toList())
     }
 
-    private fun removeItem(category: CategoryImpl, itemId: Long): CategoryImpl {
-        return category.copy(items = category.items.filter { it.id != itemId })
+    private fun checkItemInternal(indexedCategory: IndexedValue<CategoryImpl>, itemId: Long, checked: Boolean): CategoryImpl {
+        val items = indexedCategory.value.items.map { item ->
+            if (item.id.equals(itemId)) {
+                item.copy(checked = checked)
+            } else {
+                item
+            }
+        }
+        return indexedCategory.value.copy(items = items)
     }
+
+    private fun removeItem(category: IndexedValue<CategoryImpl>, itemId: Long) = category.value.copy(items = category.value.items.filter { it.id != itemId })
 
     private fun saveChanges(categories: MutableList<CategoryImpl>, listId: String) {
         val travelCheckList = travelCheckList.copy(categories = categories.toList())

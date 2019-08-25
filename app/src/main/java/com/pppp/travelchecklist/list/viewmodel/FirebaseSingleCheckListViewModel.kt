@@ -12,7 +12,7 @@ class FirebaseSingleCheckListViewModel(
     private val titleUsecase: TitleUseCase = TitleUseCaseImpl
 ) : SingleCheckListViewModel, ViewModel() {
 
-    private lateinit var listId: String
+    private lateinit var listId: String // TODO remove!!!
 
     private val viewStates: Map<String, LiveData<SingleCheckListViewModel.ViewState>> = lazyMap { listId ->
         this@FirebaseSingleCheckListViewModel.listId = listId
@@ -26,7 +26,8 @@ class FirebaseSingleCheckListViewModel(
     override fun accept(event: SingleCheckListViewModel.ViewEvent) =
         when (event) {
             is SingleCheckListViewModel.ViewEvent.DeleteItem -> model.deleteItem(listId, event.categortyId, event.itemId)
-            is SingleCheckListViewModel.ViewEvent.MoveItems -> model.moveItems(event.cardId, event.fromPosition, event.toPosition)
+            is SingleCheckListViewModel.ViewEvent.MoveItem -> model.moveItem(event.cardId, event.fromPosition, event.toPosition)
+            is SingleCheckListViewModel.ViewEvent.ItemChecked -> model.checkItem(event.cardId, event.itemId, event.isChecked)
         }
 
     override fun getTitle(travelCheckList: TravelCheckList) = titleUsecase.getTitle(travelCheckList)

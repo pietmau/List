@@ -12,7 +12,7 @@ class FirebaseSingleCheckListViewModel(
     private val titleUsecase: TitleUseCase = TitleUseCaseImpl
 ) : SingleCheckListViewModel, ViewModel() {
 
-    private lateinit var listId: String // TODO remove!!!
+    override lateinit var listId: String // TODO remove!!!
 
     private val viewStates: Map<String, LiveData<SingleCheckListViewModel.ViewState>> = lazyMap { listId ->
         this@FirebaseSingleCheckListViewModel.listId = listId

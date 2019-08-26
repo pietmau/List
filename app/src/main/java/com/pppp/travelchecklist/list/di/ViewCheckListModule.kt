@@ -8,8 +8,9 @@ import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListModel
 import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.list.viewmodel.FirebaseSingleCheckListViewModel
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.list.bottomdialog.CategoryAdder
+import com.pppp.travelchecklist.list.bottomdialog.CategoryAdderImpl
+import com.pppp.travelchecklist.repository.SingleCheckListRepository
 import dagger.Module
 import dagger.Provides
 
@@ -17,13 +18,22 @@ import dagger.Provides
 class ViewCheckListModule(private val activity: FragmentActivity) {
 
     @Provides
-    fun provideSingleCheckListViewModel(): SingleCheckListViewModel = ViewModelProviders.of(activity, ViewCheckListViewModelFactory())
+    fun provideSingleCheckListViewModel(repo: SingleCheckListRepository): SingleCheckListViewModel = ViewModelProviders.of(
+        activity,
+        ViewCheckListViewModelFactory(repo)
+    )
         .get(FirebaseSingleCheckListViewModel::class.java)
+
+    @Provides
+    fun provideCategoryAdder(adder: CategoryAdderImpl): CategoryAdder = adder
+
+    @Provides
+    fun provideFirebaseSingleCheckListRepository(): SingleCheckListRepository = FirebaseSingleCheckListRepository()
 }
 
-class ViewCheckListViewModelFactory() : ViewModelProvider.NewInstanceFactory() {
+class ViewCheckListViewModelFactory(val repo: SingleCheckListRepository) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = FirebaseSingleCheckListViewModel(
-        FirebaseSingleCheckListModel(FirebaseSingleCheckListRepository())
+        FirebaseSingleCheckListModel(repo)
     ) as T
 }

@@ -27,4 +27,6 @@ interface SingleCheckListRepository {
     fun updateList(listId: String, travelCheckList: TravelCheckList)
 
     fun getUserCheckList(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
+
+    fun addCategory(name: String, name1: String)
 }

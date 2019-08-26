@@ -61,7 +61,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     }
 
     fun addCategory() {
-        AddCategoryBottomDialog().show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        AddCategoryBottomDialog.newInstance(viewModel.listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     companion object {

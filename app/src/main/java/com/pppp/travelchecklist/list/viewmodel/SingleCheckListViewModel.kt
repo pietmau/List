@@ -22,6 +22,8 @@ interface SingleCheckListViewModel : Consumer<SingleCheckListViewModel.ViewEvent
         data class MoveItem(val cardId: Long, val fromPosition: Int, val toPosition: Int) : ViewEvent()
         class ItemChecked(val cardId: Long, val itemId: Long, val isChecked: Boolean) : ViewEvent()
     }
+
+    var listId: String
 }
 
 

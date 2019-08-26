@@ -1,8 +1,10 @@
 package com.pppp.travelchecklist.list.model
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.ListNotFoundException
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
@@ -15,6 +17,17 @@ class FirebaseSingleCheckListRepository(
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
 ) : SingleCheckListRepository {
+    override fun addCategory(listId: String, name: String) {
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS).document(listId).update("categories", FieldValue.arrayUnion(CategoryImpl(title = name)))
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
+    }
 
     override fun updateList(listId: String, travelCheckList: TravelCheckList) {
         db.collection(USERS)

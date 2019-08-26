@@ -64,6 +64,9 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
         AddCategoryBottomDialog.newInstance(viewModel.listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
+    override fun onCardOptionsClicked(cardId: Long) {
+    }
+
     companion object {
         val LIST_ID = "list_id"
 

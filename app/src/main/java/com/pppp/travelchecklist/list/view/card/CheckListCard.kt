@@ -15,6 +15,7 @@ import android.R.attr.right
 import android.R.attr.left
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.header_layout.view.overflow
 
 class CheckListCard @JvmOverloads constructor(
     context: Context,
@@ -51,6 +52,9 @@ class CheckListCard @JvmOverloads constructor(
         setLayoutParams(params)
         val color = ContextCompat.getColor(context, R.color.green_super_super_light)
         setCardBackgroundColor(color)
+        overflow.setOnClickListener {
+            callback.onCardOptionsClicked(cardId)
+        }
     }
 
     fun bind(category: Category, callback: Callback) {
@@ -71,6 +75,8 @@ class CheckListCard @JvmOverloads constructor(
         fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean)
 
         fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int)
+
+        fun onCardOptionsClicked(cardId: Long)
     }
 
 }

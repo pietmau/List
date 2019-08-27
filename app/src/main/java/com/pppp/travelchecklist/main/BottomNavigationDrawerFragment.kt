@@ -34,11 +34,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        menuCreator.initMenu(nav_view.menu, checkLists, arguments?.getString(LAST_VISITED))
-        nav_view.setNavigationItemSelectedListener { item ->
-            onNavItemSelected(item)
-            true
-        }
+        nav_view.items = menuCreator.getItems(checkLists, arguments?.getString(LAST_VISITED))
     }
 
     private fun onNavItemSelected(item: MenuItem) {

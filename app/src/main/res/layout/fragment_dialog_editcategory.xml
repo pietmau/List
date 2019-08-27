@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/text"
-        style="@style/bootomsheet_title"
+        style="@style/BottomsheetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingEnd="@dimen/activity_vertical_margin"

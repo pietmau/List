@@ -10,9 +10,11 @@ import java.lang.UnsupportedOperationException
 class BetterMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs, defStyle),
     BetterMenuAdapter.Callback {
 
-    private var items: List<BetterMenuItem>
+    var callback: BetterMenuAdapter.Callback? = null
+
+    var items: List<BetterMenuItem>
         set(value) {
-            adapter = BetterMenuAdapter(items, this)
+            adapter = BetterMenuAdapter(value, this)
         }
         get() = throw UnsupportedOperationException()
 

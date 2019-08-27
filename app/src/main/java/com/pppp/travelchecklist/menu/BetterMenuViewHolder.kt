@@ -15,6 +15,7 @@ class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     fun bind(betterMenuItem: BetterMenuItem, callback: (Int) -> Unit) {
         title.text = betterMenuItem.title
         title.setCompoundDrawablesRelativeWithIntrinsicBounds(betterMenuItem.icon ?: 0, 0, 0, 0)
+        title.isSelected = betterMenuItem.selected
         itemView.setOnClickListener {
             callback(adapterPosition)
         }

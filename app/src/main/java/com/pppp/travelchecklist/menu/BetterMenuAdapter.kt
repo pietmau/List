@@ -12,7 +12,7 @@ class BetterMenuAdapter(private val items: List<BetterMenuItem>, private val cal
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BetterMenuViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = when (viewType) {
-            0 -> inflater.inflate(R.layout.better_menu_item, parent, false)
+            0 -> inflater.inflate(R.layout.item_better_menu, parent, false)
             else -> throw IndexOutOfBoundsException()
         }
         return BetterMenuViewHolder(view)

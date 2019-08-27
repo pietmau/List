@@ -11,7 +11,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.view.MenuCreator
-import kotlinx.android.synthetic.main.fragment_navigation_view.nav_view
+import kotlinx.android.synthetic.main.fragment_dialog_navigation.nav_view
 import javax.inject.Inject
 
 class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
@@ -26,7 +26,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.fragment_navigation_view, container, false)
+    ) = inflater.inflate(R.layout.fragment_dialog_navigation, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

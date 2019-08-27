@@ -1,7 +1,0 @@
-<com.pppp.travelchecklist.list.view.list.CheckListRecycler
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycler"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-</com.pppp.travelchecklist.list.view.list.CheckListRecycler>
-

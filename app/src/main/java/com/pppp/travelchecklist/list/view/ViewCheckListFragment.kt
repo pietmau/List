@@ -14,7 +14,7 @@ import com.pppp.travelchecklist.list.view.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_blank.recycler
+import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
 class ViewCheckListFragment : Fragment(), CheckListCard.Callback {

@@ -26,7 +26,7 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
     init {
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
         val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.selector_custom_view, this, true)
+        inflater.inflate(R.layout.custom_view_selector, this, true)
         val appComponent = (context.applicationContext as? App)?.appComponent
         val selectorComponent = appComponent?.with(NewListModule(context as NewListActivity))
         selectorComponent?.inject(this)

@@ -67,5 +67,7 @@
     <string name="add_new_card">Add new card</string>
     <string name="card_title">Card title</string>
     <string name="done">Done</string>
+    <string name="add_item">Add item</string>
+    <string name="edit_card">Edit Card</string>
 
 </resources>

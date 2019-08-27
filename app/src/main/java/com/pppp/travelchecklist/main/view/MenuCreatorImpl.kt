@@ -10,9 +10,8 @@ import javax.inject.Inject
 class MenuCreatorImpl @Inject constructor(private val titleUseCase: TitleUseCase) : MenuCreator {
 
     override fun initMenu(menu: Menu, userChecklists: List<TravelCheckList>, lastVisited: String?) {
-        val submenu = menu.addSubMenu(R.string.your_lists)
         userChecklists.withIndex().forEach { (index, item) ->
-            val menuItem = submenu.add(Menu.NONE, index, Menu.NONE, titleUseCase.getTitleForMenu(item))
+            val menuItem = menu.add(Menu.NONE, index, Menu.NONE, titleUseCase.getTitleForMenu(item))
             if (item.id?.equals(lastVisited) == true) {
                 menuItem.setChecked(true)
             }

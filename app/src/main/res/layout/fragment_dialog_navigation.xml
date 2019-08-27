@@ -5,17 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    style="@style/BottomSheet"
     >
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/your_lists"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/bootomsheet_title"
+        />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:background="@drawable/bottom_sheet_background"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/profile_header_layout"
-        app:itemBackground="@drawable/menu_divider"
         app:menu="@menu/activity_main_drawer"
         app:itemTextColor="@color/menu_item_text_color"
         />

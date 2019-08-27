@@ -10,6 +10,7 @@ import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
+import com.pppp.travelchecklist.list.bottomdialog.EditCategoryBottomDialog
 import com.pppp.travelchecklist.list.view.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
@@ -65,6 +66,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     }
 
     override fun onCardOptionsClicked(cardId: Long) {
+        EditCategoryBottomDialog.newInstance(viewModel.listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     companion object {

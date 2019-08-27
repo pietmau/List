@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/BottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottom_sheet_background"
-    android:padding="@dimen/medium_margin"
+    android:orientation="vertical"
     >
 
-    <!--<com.google.android.material.navigation.NavigationView-->
-        <!--android:id="@+id/nav_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:background="@drawable/bottom_sheet_background"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--app:headerLayout="@layout/profile_header_layout"-->
-        <!--app:itemBackground="@drawable/menu_divider"-->
-        <!--app:itemTextColor="@color/menu_item_text_color"-->
-        <!--app:menu="@menu/activity_main_drawer"-->
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/text"
+        style="@style/bootomsheet_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/activity_vertical_margin"
+        android:text="@string/edit_card"
+        />
+
+    <TextView
+        android:drawableStart="@drawable/ic_baseline_add_24px"
+        android:drawableTint="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/activity_vertical_margin"
+        android:text="@string/edit_card"
+        />
+
+</LinearLayout>

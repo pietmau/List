@@ -1,7 +1,6 @@
 package com.pppp.travelchecklist.list.view.card
 
 import android.content.Context
-import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.pietrantuono.entities.Category
@@ -13,7 +12,6 @@ import kotlinx.android.synthetic.main.header_layout.view.title
 import kotlin.properties.Delegates
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.header_layout.view.overflow
 
 class NoCardCheckListCard @JvmOverloads constructor(
@@ -42,13 +40,19 @@ class NoCardCheckListCard @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_check_list_card, this, true)
-        val params = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        params.setMargins(10, 10, 10, 0)
-        setLayoutParams(params)
-        val color = ContextCompat.getColor(context, R.color.green_super_super_light)
+        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.NoCardCheckListCard, 0, 0)
+        val margin = typedArray.getDimensionPixelSize(R.styleable.NoCardCheckListCard_margin, 0)
+        setMargins(margin)
+        typedArray.recycle()
         overflow.setOnClickListener {
             checkListCardCallback.onCardOptionsClicked(cardId)
         }
+    }
+
+    private fun setMargins(margin: Int) {
+        val params = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        params.setMargins(margin, margin, margin, 0)
+        setLayoutParams(params)
     }
 
     override fun bind(category: Category, chackListCardCallback: ChackListCardCallback) {

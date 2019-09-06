@@ -5,27 +5,25 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import android.R.attr.data
 import android.util.TypedValue
 import androidx.annotation.ColorInt
-import com.instabug.library.Instabug.getTheme
 import com.pppp.travelchecklist.R
 
 class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
-
     private val mDivider: Drawable
-
     private val mBounds = Rect()
+    private val dividerSize: Int
 
     init {
         val typedValue = TypedValue()
         val theme = context.theme
-        theme.resolveAttribute(R.attr.dividerColor, typedValue, true)
+        theme.resolveAttribute(R.attr.customDividerColor, typedValue, true)
         @ColorInt val color = typedValue.data
         mDivider = ColorDrawable(color)
+        theme.resolveAttribute(R.attr.customDividerHeight, typedValue, true)
+        dividerSize = context.resources.getDimensionPixelSize(typedValue.resourceId)
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -57,7 +55,7 @@ class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoratio
             val child = parent.getChildAt(i)
             parent.getDecoratedBoundsWithMargins(child, mBounds)
             val bottom = mBounds.bottom + Math.round(child.translationY)
-            val top = bottom - 10
+            val top = bottom - dividerSize
             mDivider.setBounds(left, top, right, bottom)
             mDivider.draw(canvas)
         }
@@ -68,7 +66,7 @@ class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoratio
         outRect: Rect, view: View, parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        outRect.set(0, 0, 0, 10)
+        outRect.set(0, 0, 0, dividerSize)
     }
 
     companion object {

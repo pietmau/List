@@ -18,7 +18,7 @@
 
     <color name="green_super_light">#45edb2</color>
     <color name="green_super_super_light">#e8fdf5</color>
-
+    <color name="colorAccentSuperLight">#44dd99ff</color>
 
 
 </resources>

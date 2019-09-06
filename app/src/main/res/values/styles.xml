@@ -90,7 +90,7 @@
     </style>
 
     <style name="BetterMenuCell">
-        <item name="android:background">@color/menu_item_background</item>
+        <item name="android:background">@drawable/menu_item_background</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 

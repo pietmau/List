@@ -23,6 +23,6 @@ class BetterMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     override fun onItemClicked(item: BetterMenuItem) {
-
+        callback?.onItemClicked(item)
     }
 }

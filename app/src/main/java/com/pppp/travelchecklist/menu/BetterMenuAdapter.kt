@@ -19,7 +19,9 @@ class BetterMenuAdapter(private val items: List<BetterMenuItem>, private val cal
     }
 
     override fun onBindViewHolder(holder: BetterMenuViewHolder, position: Int) {
-        holder.bind(items[position]) {}
+        holder.bind(items[position]) {
+            callback.onItemClicked(items[it])
+        }
     }
 
     override fun getItemViewType(position: Int) = items[position].type.value

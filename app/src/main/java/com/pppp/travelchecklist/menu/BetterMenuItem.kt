@@ -6,7 +6,7 @@ import com.pppp.travelchecklist.R
 
 data class BetterMenuItem(
     val type: ViewType = ViewType.NORMAL,
-    val id: String? = null,
+    val id: String,
     val title: String,
     @DrawableRes val icon: Int? = null,
     val selected: Boolean = false

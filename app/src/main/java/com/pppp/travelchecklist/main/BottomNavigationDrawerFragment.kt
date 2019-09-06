@@ -2,7 +2,6 @@ package com.pppp.travelchecklist.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -11,10 +10,13 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.view.MenuCreator
+import com.pppp.travelchecklist.menu.BetterMenuAdapter
+import com.pppp.travelchecklist.menu.BetterMenuItem
 import kotlinx.android.synthetic.main.fragment_dialog_navigation.nav_view
 import javax.inject.Inject
 
-class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
+class BottomNavigationDrawerFragment : BottomSheetDialogFragment(), BetterMenuAdapter.Callback {
+
     @Inject
     lateinit var menuCreator: MenuCreator
 
@@ -35,20 +37,16 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         nav_view.items = menuCreator.getItems(checkLists, arguments?.getString(LAST_VISITED))
+        nav_view.callback = this
     }
 
-    private fun onNavItemSelected(item: MenuItem) {
-        onNavigateToExistingListClicked(item.itemId)
+    override fun onItemClicked(item: BetterMenuItem) {
+        onNavigateToExistingListClicked(item.id)
         dismiss()
     }
 
-    private fun onNavigateToExistingListClicked(itemId: Int) {
-        val id = checkLists[itemId].id!! // let it crash
-        emit(NavigationAction.NavigateToExistingList(id))
-    }
-
-    private fun onNewListClicked() {
-        emit(NavigationAction.NewList)
+    private fun onNavigateToExistingListClicked(itemId: String) {
+        emit(NavigationAction.NavigateToExistingList(itemId))
     }
 
     private fun emit(navigationAction: NavigationAction) {

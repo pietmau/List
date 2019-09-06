@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.list.view.card.recycler
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
@@ -7,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import android.util.TypedValue
 import androidx.annotation.ColorInt
 import com.pppp.travelchecklist.R
 
@@ -17,13 +17,12 @@ class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoratio
     private val dividerSize: Int
 
     init {
-        val typedValue = TypedValue()
-        val theme = context.theme
-        theme.resolveAttribute(R.attr.customDividerColor, typedValue, true)
-        @ColorInt val color = typedValue.data
+        val typedArray = context.theme.obtainStyledAttributes(intArrayOf(R.attr.customDividerColor, R.attr.customDividerHeight))
+        @ColorInt val color = typedArray.getColor(0, 0)
         mDivider = ColorDrawable(color)
-        theme.resolveAttribute(R.attr.customDividerHeight, typedValue, true)
-        dividerSize = context.resources.getDimensionPixelSize(typedValue.resourceId)
+        @SuppressLint("ResourceType")
+        dividerSize = typedArray.getDimensionPixelSize(1, 0)
+        typedArray.recycle()
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {

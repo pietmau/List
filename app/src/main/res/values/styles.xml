@@ -14,8 +14,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="android:actionMenuTextColor">@color/orange</item>
-        <item name="customDividerColor">@color/green</item>
-        <item name="customDividerHeight">20dp</item>
+        <item name="customDividerColor">@color/separatorLineColor</item>
+        <item name="customDividerHeight">@dimen/very_small_margin</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>

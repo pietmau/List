@@ -6,7 +6,7 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="600dp"
-    android:background="@android:color/holo_red_light"
+    android:background="@drawable/card_background"
     android:padding="@dimen/big_margin"
     app:margin="@dimen/medium_margin"
     >

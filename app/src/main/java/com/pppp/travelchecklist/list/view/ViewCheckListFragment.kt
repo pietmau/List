@@ -11,14 +11,14 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.list.bottomdialog.EditCategoryBottomDialog
-import com.pppp.travelchecklist.list.view.card.CheckListCard
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
+import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
-class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
+class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     @Inject
     internal lateinit var viewModel: SingleCheckListViewModel
 
@@ -31,7 +31,7 @@ class ViewCheckListFragment : Fragment(), CheckListCard.Callback {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recycler.callback = this
+        recycler.chackListCardCallback = this
         viewModel.states(arguments?.getString(LIST_ID)!!).observe(viewLifecycleOwner, Observer { render(it) })
     }
 

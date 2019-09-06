@@ -97,6 +97,6 @@
     <style name="BottomSheet">
         <item name="android:background">@drawable/bottom_sheet_background</item>
         <item name="android:padding">@dimen/big_margin</item>
-x    </style>
+    </style>
 
 </resources>

@@ -3,6 +3,7 @@
     <attr name="fabColor" format="reference"/>
     <attr name="fancyBackgroundColor" format="reference"/>
     <attr name="itemBackground" format="reference"/>
+    <attr name="dividerColor" format="reference"/>
 
     <declare-styleable name="NoCardCheckListCard">
         <attr name="margin" format="dimension"/>

@@ -3,43 +3,33 @@ package com.pppp.travelchecklist.list.view.card.recycler
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import android.R.attr.data
+import android.util.TypedValue
+import androidx.annotation.ColorInt
+import com.instabug.library.Instabug.getTheme
+import com.pppp.travelchecklist.R
 
 class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
-    private var mDivider: Drawable? = null
+    private val mDivider: Drawable
 
     private val mBounds = Rect()
 
     init {
-        val a = context.obtainStyledAttributes(ATTRS)
-        mDivider = a.getDrawable(0)
-        if (mDivider == null) {
-            Log.w(
-                TAG,
-                "@android:attr/listDivider was not set in the theme used for this " + "DividerItemDecoration. Please set that attribute all call setDrawable()"
-            )
-        }
-        a.recycle()
-    }
-
-    /**
-     * Sets the [Drawable] for this divider.
-     *
-     * @param drawable Drawable that should be used as a divider.
-     */
-    fun setDrawable(drawable: Drawable) {
-        if (drawable == null) {
-            throw IllegalArgumentException("Drawable cannot be null.")
-        }
-        mDivider = drawable
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(R.attr.dividerColor, typedValue, true)
+        @ColorInt val color = typedValue.data
+        mDivider = ColorDrawable(color)
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        if (parent.layoutManager == null || mDivider == null) {
+        if (parent.layoutManager == null) {
             return
         }
         drawVertical(c, parent)
@@ -67,9 +57,9 @@ class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoratio
             val child = parent.getChildAt(i)
             parent.getDecoratedBoundsWithMargins(child, mBounds)
             val bottom = mBounds.bottom + Math.round(child.translationY)
-            val top = bottom - mDivider!!.intrinsicHeight
-            mDivider!!.setBounds(left, top, right, bottom)
-            mDivider!!.draw(canvas)
+            val top = bottom - 10
+            mDivider.setBounds(left, top, right, bottom)
+            mDivider.draw(canvas)
         }
         canvas.restore()
     }
@@ -78,11 +68,7 @@ class CustomDividerItemDecoration(context: Context) : RecyclerView.ItemDecoratio
         outRect: Rect, view: View, parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        if (mDivider == null) {
-            outRect.set(0, 0, 0, 0)
-            return
-        }
-        outRect.set(0, 0, 0, mDivider!!.intrinsicHeight)
+        outRect.set(0, 0, 0, 10)
     }
 
     companion object {

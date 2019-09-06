@@ -33,7 +33,6 @@ class NoCardCheckListCard @JvmOverloads constructor(
 
         override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
             checkListCardCallback.onItemDeleteRequested(cardId, itemId, data)
-
         }
     }
 

@@ -10,7 +10,7 @@
 
     <item android:state_selected="true">
         <shape>
-            <solid android:color="@color/colorAccentSuperLight"/>
+            <solid android:color="@color/lilla_light"/>
             />
         </shape>
     </item>

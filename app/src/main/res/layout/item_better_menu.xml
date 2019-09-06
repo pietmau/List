@@ -5,8 +5,7 @@
     style="@style/BetterMenuCell"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/big_margin"
-    android:paddingBottom="@dimen/big_margin"
+    android:padding="@dimen/big_margin"
     >
 
 </TextView>

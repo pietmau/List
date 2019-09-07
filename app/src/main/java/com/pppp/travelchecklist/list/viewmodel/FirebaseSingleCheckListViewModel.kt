@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.travelchecklist.lazyMap
+import com.pppp.travelchecklist.utils.lazyMap
 import com.pppp.travelchecklist.list.model.SingleCheckListModel
 
 class FirebaseSingleCheckListViewModel(
@@ -23,11 +23,11 @@ class FirebaseSingleCheckListViewModel(
 
     override fun states(listId: String): LiveData<SingleCheckListViewModel.ViewState> = viewStates.getValue(listId)
 
-    override fun accept(event: SingleCheckListViewModel.ViewEvent) =
-        when (event) {
-            is SingleCheckListViewModel.ViewEvent.DeleteItem -> model.deleteItem(listId, event.categortyId, event.itemId)
-            is SingleCheckListViewModel.ViewEvent.MoveItem -> model.moveItem(event.cardId, event.fromPosition, event.toPosition)
-            is SingleCheckListViewModel.ViewEvent.ItemChecked -> model.checkItem(event.cardId, event.itemId, event.isChecked)
+    override fun accept(eventSingleList: SingleCheckListViewModel.SingleListViewEvent) =
+        when (eventSingleList) {
+            is SingleCheckListViewModel.SingleListViewEvent.DeleteItem -> model.deleteItem(listId, eventSingleList.categortyId, eventSingleList.itemId)
+            is SingleCheckListViewModel.SingleListViewEvent.MoveItem -> model.moveItem(eventSingleList.cardId, eventSingleList.fromPosition, eventSingleList.toPosition)
+            is SingleCheckListViewModel.SingleListViewEvent.ItemChecked -> model.checkItem(eventSingleList.cardId, eventSingleList.itemId, eventSingleList.isChecked)
         }
 
     override fun getTitle(travelCheckList: TravelCheckList) = titleUsecase.getTitle(travelCheckList)

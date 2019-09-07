@@ -9,34 +9,34 @@ import com.pppp.travelchecklist.application.App
 import javax.inject.Inject
 import android.app.Activity
 import android.app.AlertDialog
-import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 857
 
     @Inject
-    lateinit var viewStates: Producer<LoginViewModel.ViewState>
+    lateinit var viewStates: ViewStatesProducer<LoginViewModel.LoginViewState>
 
     @Inject
-    lateinit var viewActions: Consumer<LoginViewModel.ViewAction>
+    lateinit var viewActions: ViewActionsConsumer<LoginViewModel.LoginViewAction>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         (application as? App)?.appComponent?.with(LoginModule(this))?.inject(this)
-        viewStates.states.observe(this, Observer<LoginViewModel.ViewState> { render(it) })
+        viewStates.states.observe(this, Observer<LoginViewModel.LoginViewState> { render(it) })
     }
 
-    private fun render(state: LoginViewModel.ViewState) =
+    private fun render(state: LoginViewModel.LoginViewState) =
         when (state) {
-            is LoginViewModel.ViewState.UserNotLoggedIn -> login()
-            is LoginViewModel.ViewState.AppEnabled -> onLoginSuccessful()
-            is LoginViewModel.ViewState.Kill -> kill()
+            is LoginViewModel.LoginViewState.UserNotLoggedIn -> login()
+            is LoginViewModel.LoginViewState.AppEnabled -> onLoginSuccessful()
+            is LoginViewModel.LoginViewState.Kill -> kill()
         }
 
     private fun kill() {
@@ -72,7 +72,7 @@ class SplashActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === REQUEST_CODE) {
             if (resultCode === Activity.RESULT_OK) {
-                viewActions.accept(LoginViewModel.ViewAction.UserLoggedInSuccessfully)
+                viewActions.accept(LoginViewModel.LoginViewAction.UserLoggedInSuccessfully)
                 return
             }
         }

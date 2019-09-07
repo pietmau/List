@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist
+package com.pppp.travelchecklist.utils
 
 import android.app.Activity
 import android.content.Context
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable
 import android.net.ConnectivityManager
 import androidx.annotation.StringRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
+import com.pppp.travelchecklist.R
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)

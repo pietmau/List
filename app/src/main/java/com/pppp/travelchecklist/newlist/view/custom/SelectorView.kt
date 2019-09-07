@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.findViewByIdLazy
+import com.pppp.travelchecklist.utils.findViewByIdLazy
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.newlist.di.NewListModule
 import com.pppp.travelchecklist.newlist.view.NewListCallback

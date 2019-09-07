@@ -3,14 +3,16 @@ package com.pppp.travelchecklist.login.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.ViewAction
+import com.pppp.travelchecklist.ViewActionsConsumer
+import com.pppp.travelchecklist.ViewState
+import com.pppp.travelchecklist.ViewStatesProducer
 
 class LoginViewModel(
     private val killSwitch: KillSwitch
-) : Consumer<LoginViewModel.ViewAction>, Producer<LoginViewModel.ViewState>, ViewModel() {
+) : ViewActionsConsumer<LoginViewModel.LoginViewAction>, ViewStatesProducer<LoginViewModel.LoginViewState>, ViewModel() {
 
-    override val states: LiveData<ViewState> = MutableLiveData<ViewState>()
+    override val states: LiveData<LoginViewState> = MutableLiveData<LoginViewState>()
 
     init {
         checkIfUserIsLoggedIn()
@@ -18,9 +20,9 @@ class LoginViewModel(
 
     private fun checkIfAppEnabled() {
         killSwitch.shouldAppBeEnabled({
-            emit(ViewState.AppEnabled)
+            emit(LoginViewState.AppEnabled)
         }, {
-            emit(ViewState.Kill)
+            emit(LoginViewState.Kill)
         })
     }
 
@@ -28,26 +30,26 @@ class LoginViewModel(
         if (killSwitch.isUserLoggedIn()) {
             checkIfAppEnabled()
         } else {
-            emit(ViewState.UserNotLoggedIn)
+            emit(LoginViewState.UserNotLoggedIn)
         }
     }
 
-    private fun emit(userNotLoggedIn: ViewState) {
-        (states as MutableLiveData<ViewState>).postValue(userNotLoggedIn)
+    private fun emit(userNotLoggedIn: LoginViewState) {
+        (states as MutableLiveData<LoginViewState>).postValue(userNotLoggedIn)
     }
 
-    override fun accept(action: ViewAction) = when (action) {
-        is ViewAction.UserLoggedInSuccessfully -> checkIfAppEnabled()
+    override fun accept(action: LoginViewAction) = when (action) {
+        is LoginViewAction.UserLoggedInSuccessfully -> checkIfAppEnabled()
     }
 
-    sealed class ViewState {
-        object UserNotLoggedIn : ViewState()
-        object AppEnabled : ViewState()
-        object Kill : ViewState()
+    sealed class LoginViewState : ViewState {
+        object UserNotLoggedIn : LoginViewState()
+        object AppEnabled : LoginViewState()
+        object Kill : LoginViewState()
     }
 
-    sealed class ViewAction {
-        object UserLoggedInSuccessfully : ViewAction()
+    sealed class LoginViewAction : ViewAction {
+        object UserLoggedInSuccessfully : LoginViewAction()
     }
 }
 

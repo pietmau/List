@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.editcard
 
-import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.ViewActionsConsumer
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,11 +11,11 @@ object EditCardModule {
 
     @Provides
     @JvmStatic
-    fun provideConsumer(presenter: EditCardPresenter): Consumer<EditCardPresenter.ViewAction> = presenter
+    fun provideConsumer(viewModel: EditCardViewModel): ViewActionsConsumer<EditCardViewAction> = viewModel
 
     @Singleton
     @Provides
     @JvmStatic
-    fun provideEditCardPresenter(): EditCardPresenter = EditCardPresenter()
+    fun provideEditCardPresenter(): EditCardViewModel = EditCardViewModel()
 
 }

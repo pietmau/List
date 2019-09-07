@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.appComponent
-import com.pppp.travelchecklist.getLong
-import com.pppp.travelchecklist.getString
+import com.pppp.travelchecklist.utils.appComponent
+import com.pppp.travelchecklist.utils.getLong
+import com.pppp.travelchecklist.utils.getString
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.menu.BetterMenuItem
-import com.pppp.travelchecklist.showDialog
+import com.pppp.travelchecklist.utils.showDialog
 import kotlinx.android.synthetic.main.fragment_dialog_editcategory.menu
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
     private val DELETE = "delete"
 
     @Inject
-    internal lateinit var consumer: Consumer<EditCardPresenter.ViewAction>
+    internal lateinit var editCardViewActionsConsumer: ViewActionsConsumer<EditCardViewAction>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +46,8 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
 
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            consumer.accept(EditCardPresenter.ViewAction.DeleteCard(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!))
+            editCardViewActionsConsumer.accept(EditCardViewAction.DeleteCard(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!))
+            dismiss()
         }
     }
 
@@ -66,7 +67,6 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
             }
 
         val LIST_ID = "list_id"
-        val TAG = EditCategoryBottomDialog::class.simpleName!!
         val CATEGORY_ID = "category_id"
     }
 }

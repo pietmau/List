@@ -6,7 +6,7 @@ import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
-import com.pppp.travelchecklist.isMarshmallowOrAbove
+import com.pppp.travelchecklist.utils.isMarshmallowOrAbove
 import com.pppp.travelchecklist.newlist.view.viewpager.fragments.NameFragment
 
 class SelectorViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :

@@ -6,36 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.appComponent
+import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.done
-import kotlinx.android.synthetic.main.fragment_dialog_addcategory.name
+import kotlinx.android.synthetic.main.fragment_dialog_addcategory.input
+import kotlinx.android.synthetic.main.fragment_dialog_addcategory.title
+import kotlinx.android.synthetic.main.fragment_dialog_addcategory.view.done
 import javax.inject.Inject
 
-class AddCategoryBottomDialog : BottomSheetDialogFragment() {
+class AddCategoryBottomDialog : AddBottomDialog() {
+
     @Inject
     internal lateinit var categoryAdder: CategoryAdder
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.fragment_dialog_addcategory, container, false)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this@AddCategoryBottomDialog)
+    override fun performInjection() {
+        appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        done.setOnClickListener {
-            val text = name.text?.toString()
-            val listId = arguments?.getString(LIST_ID)
-            if (!text.isNullOrBlank() && !listId.isNullOrBlank()) {
-                categoryAdder.addCategory(listId, text.capitalize())
-            }
-            dismiss()
-        }
+    override fun setUpViews() {
+        title.setText(R.string.add_new_card)
+        input.setHint(R.string.card_title)
+    }
+
+    override fun add(listId: String, text: String) {
+        categoryAdder.addCategory(listId, text.capitalize())
     }
 
     companion object {
@@ -47,6 +41,5 @@ class AddCategoryBottomDialog : BottomSheetDialogFragment() {
             }
 
         val TAG = AddCategoryBottomDialog::class.java.simpleName
-        val LIST_ID = "list_id"
     }
 }

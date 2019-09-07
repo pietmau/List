@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.appComponent
+import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
@@ -46,19 +46,19 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
-        sendToViewModel(SingleCheckListViewModel.ViewEvent.DeleteItem(cardId, itemId))
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.DeleteItem(cardId, itemId))
     }
 
-    private fun sendToViewModel(viewEvent: SingleCheckListViewModel.ViewEvent) {
-        viewModel.accept(viewEvent)
+    private fun sendToViewModel(singleListViewEvent: SingleCheckListViewModel.SingleListViewEvent) {
+        viewModel.accept(singleListViewEvent)
     }
 
     override fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean) {
-        sendToViewModel(SingleCheckListViewModel.ViewEvent.ItemChecked(cardId, itemId, checked))
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(cardId, itemId, checked))
     }
 
     override fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int) {
-        sendToViewModel(SingleCheckListViewModel.ViewEvent.MoveItem(cardId, fromPosition, toPosition))
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.MoveItem(cardId, fromPosition, toPosition))
     }
 
     fun addCategory() {

@@ -8,7 +8,7 @@ import android.widget.ToggleButton
 import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.getChildren
+import com.pppp.travelchecklist.utils.getChildren
 import kotlinx.android.synthetic.main.button_strip.view.*
 
 class ButtonsStripGroup @JvmOverloads constructor(

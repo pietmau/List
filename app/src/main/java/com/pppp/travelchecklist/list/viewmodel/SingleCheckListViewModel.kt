@@ -2,10 +2,10 @@ package com.pppp.travelchecklist.list.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.ViewAction
+import com.pppp.travelchecklist.ViewActionsConsumer
 
-interface SingleCheckListViewModel : Consumer<SingleCheckListViewModel.ViewEvent> {
+interface SingleCheckListViewModel : ViewActionsConsumer<SingleCheckListViewModel.SingleListViewEvent> {
 
     fun states(listId: String): LiveData<ViewState>
 
@@ -17,10 +17,10 @@ interface SingleCheckListViewModel : Consumer<SingleCheckListViewModel.ViewEvent
         data class Data(val travelCheckList: TravelCheckList) : ViewState()
     }
 
-    sealed class ViewEvent {
-        data class DeleteItem(val categortyId: Long, val itemId: Long) : ViewEvent()
-        data class MoveItem(val cardId: Long, val fromPosition: Int, val toPosition: Int) : ViewEvent()
-        class ItemChecked(val cardId: Long, val itemId: Long, val isChecked: Boolean) : ViewEvent()
+    sealed class SingleListViewEvent : ViewAction {
+        data class DeleteItem(val categortyId: Long, val itemId: Long) : SingleListViewEvent()
+        data class MoveItem(val cardId: Long, val fromPosition: Int, val toPosition: Int) : SingleListViewEvent()
+        class ItemChecked(val cardId: Long, val itemId: Long, val isChecked: Boolean) : SingleListViewEvent()
     }
 
     var listId: String

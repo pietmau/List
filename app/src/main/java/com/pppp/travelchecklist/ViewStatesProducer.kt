@@ -2,6 +2,6 @@ package com.pppp.travelchecklist
 
 import androidx.lifecycle.LiveData
 
-interface Producer<T> {
+interface ViewStatesProducer<T : ViewState> {
     val states: LiveData<T>
 }

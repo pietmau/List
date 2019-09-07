@@ -3,8 +3,8 @@ package com.pppp.travelchecklist.login.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.ViewActionsConsumer
+import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.login.viewmodel.FirebaseKillSwitch
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
 import dagger.Module
@@ -16,10 +16,10 @@ import javax.inject.Singleton
 class LoginModule(private val activity: androidx.fragment.app.FragmentActivity) {
 
     @Provides
-    fun provideProducer(loginViewModel: LoginViewModel): Producer<LoginViewModel.ViewState> = loginViewModel
+    fun provideProducer(loginViewModel: LoginViewModel): ViewStatesProducer<LoginViewModel.LoginViewState> = loginViewModel
 
     @Provides
-    fun provideConsumer(loginViewModel: LoginViewModel): Consumer<LoginViewModel.ViewAction> = loginViewModel
+    fun provideConsumer(loginViewModel: LoginViewModel): ViewActionsConsumer<LoginViewModel.LoginViewAction> = loginViewModel
 
     @Singleton
     @Provides

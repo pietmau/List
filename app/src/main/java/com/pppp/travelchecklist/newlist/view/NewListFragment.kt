@@ -34,7 +34,7 @@ class NewListFragment : Fragment(), NewListCallback {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
         appComponent?.with(NewListModule(requireActivity() as NewListActivity))?.inject(this)
-        presenter.states.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.ViewState ->
+        presenter.states.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.NewListViewState ->
             render(viewState)
         })
         presenter.transientStates = ::showTransientState
@@ -113,7 +113,7 @@ class NewListFragment : Fragment(), NewListCallback {
 
     override fun navigateBack() = selectorView.goBack()
 
-    private fun render(viewState: NewListPresenter.ViewState) {
+    private fun render(viewState: NewListPresenter.NewListViewState) {
         selectorView.enableFinish(viewState.enableFinish)
 
         if (viewState.showPreogress) {

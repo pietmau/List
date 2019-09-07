@@ -4,17 +4,18 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.pppp.travelchecklist.Consumer
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.ViewActionsConsumer
+import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.main.model.MainModelImpl
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
-import com.pppp.travelchecklist.TransientEvents
+import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCaseImpl
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.main.model.NavigatorImpl
 import com.pppp.travelchecklist.main.view.MenuCreator
 import com.pppp.travelchecklist.main.view.MenuCreatorImpl
+import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import dagger.Module
 import dagger.Provides
@@ -31,20 +32,19 @@ class MainModule(private val activity: FragmentActivity) {
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
 
     @Provides
-    fun provideProducer(viewModel: MainViewModel): Producer<MainViewModel.ViewState> = viewModel
+    fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel
 
     @Provides
-    fun provideConsumer(viewModel: MainViewModel): Consumer<MainViewModel.ViewEvent> = viewModel
+    fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewModel.MainViewAction> = viewModel
 
     @Provides
-    fun provideTransientEvdents(viewModel: MainViewModel): TransientEvents<MainViewModel.TransientEvent> = viewModel
+    fun provideTransientEvdents(viewModel: MainViewModel): TransientEventsProducer<MainViewModel.MainTransientEvent> = viewModel
 
     @Provides
     fun provideNavigationActionMapper(): Navigator = NavigatorImpl
 
     @Provides
     fun provideTitleUseCase(): TitleUseCase = TitleUseCaseImpl
-
 
     class MainViewModelFactory(private val repo: TravelChecklistRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(MainModelImpl(repo)) as T

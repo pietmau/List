@@ -9,23 +9,21 @@
     >
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/title"
         style="@style/BottomsheetTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_new_card"
-        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintBottom_toTopOf="@+id/input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/big_margin"
-        android:hint="@string/card_title"
         android:textAppearance="?android:textAppearanceSmall"
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +38,7 @@
         android:text="@string/done"
         android:textColor="@color/done_textcolor"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintBottom_toTopOf="@+id/input"
         app:layout_constraintEnd_toEndOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

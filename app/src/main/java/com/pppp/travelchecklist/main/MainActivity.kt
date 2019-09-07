@@ -13,13 +13,14 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
-import com.pppp.travelchecklist.TransientEvents
-import com.pppp.travelchecklist.findFragmentById
+import com.pppp.travelchecklist.TransientEventsProducer
+import com.pppp.travelchecklist.utils.findFragmentById
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.model.Navigator
+import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
-import com.pppp.travelchecklist.showConfirmationDialog
+import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     @Inject
     lateinit var viewModel: MainViewModel
     @Inject
-    lateinit var transientEvents: TransientEvents<MainViewModel.TransientEvent>
+    lateinit var transientEventsProducer: TransientEventsProducer<MainViewModel.MainTransientEvent>
     @Inject
     lateinit var navigator: Navigator
 
@@ -37,9 +38,9 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
         setUpViews()
         viewModel.states.observe(this, Observer { render(it) })
-        transientEvents.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
+        transientEventsProducer.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
         if (savedInstanceState == null) {
-            emit(MainViewModel.ViewEvent.GetLatestListVisited)
+            emit(MainViewModel.MainViewAction.GetLatestListVisited)
         }
     }
 
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
             onFabClicked()
         }
         setSupportActionBar(bottom_bar)
-        button.setOnClickListener { emit(MainViewModel.ViewEvent.GoMakeNewList) }
+        button.setOnClickListener { emit(MainViewModel.MainViewAction.GoMakeNewList) }
         collapsing.isTitleEnabled = false
     }
 
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         if (frag != null && frag.isAdded) {
             frag.addCategory()
         } else {
-            emit(MainViewModel.ViewEvent.GoMakeNewList)
+            emit(MainViewModel.MainViewAction.GoMakeNewList)
         }
     }
 
@@ -68,16 +69,16 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> emit(MainViewModel.ViewEvent.NavMenuOpenSelected)
-            R.id.add -> showConfirmationDialog({ emit(MainViewModel.ViewEvent.GoMakeNewList) })
+            android.R.id.home -> emit(MainViewModel.MainViewAction.NavMenuOpenSelected)
+            R.id.add -> showConfirmationDialog({ emit(MainViewModel.MainViewAction.GoMakeNewList) })
         }
         return true
     }
 
-    private fun render(viewState: MainViewModel.ViewState) = when (viewState) {
-        is MainViewModel.ViewState.Empty -> onNoListPresent()
-        is MainViewModel.ViewState.Content -> onContentPresent()
-        is MainViewModel.ViewState.Loading -> onLoading()
+    private fun render(viewState: MainViewState) = when (viewState) {
+        is MainViewState.Empty -> onNoListPresent()
+        is MainViewState.Content -> onContentPresent()
+        is MainViewState.Loading -> onLoading()
     }
 
     private fun onLoading() {
@@ -95,15 +96,15 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         bottom_bar.navigationIcon = null
     }
 
-    private fun onTransientEventReceived(transientEvent: MainViewModel.TransientEvent) = when (transientEvent) {
-        is MainViewModel.TransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists, transientEvent.lastList)
-        is MainViewModel.TransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
-        is MainViewModel.TransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
-        is MainViewModel.TransientEvent.Error -> onError(transientEvent.message)
+    private fun onTransientEventReceived(transientEvent: MainViewModel.MainTransientEvent) = when (transientEvent) {
+        is MainViewModel.MainTransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists, transientEvent.lastList)
+        is MainViewModel.MainTransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
+        is MainViewModel.MainTransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
+        is MainViewModel.MainTransientEvent.Error -> onError(transientEvent.message)
     }
 
-    private fun emit(viewEvent: MainViewModel.ViewEvent) {
-        viewModel.accept(viewEvent)
+    private fun emit(mainViewAction: MainViewModel.MainViewAction) {
+        viewModel.accept(mainViewAction)
     }
 
     private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: String?) {
@@ -113,7 +114,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CREATE_NEW_LIST && resultCode == RESULT_OK) {
             val checkListId = data?.extras?.getString(CHECKLIST_ID) ?: return
-            emit(MainViewModel.ViewEvent.NewListGenerated(checkListId))
+            emit(MainViewModel.MainViewAction.NewListGenerated(checkListId))
         }
     }
 

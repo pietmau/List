@@ -6,16 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.Producer
+import com.pppp.travelchecklist.ViewState
+import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.newlist.model.Destination
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 
 class NewListPresenter(
     private val model: Model,
     private val resourcesWrapper: ResourcesWrapper
-) : ViewModel(), Producer<NewListPresenter.ViewState> {
+) : ViewModel(), ViewStatesProducer<NewListPresenter.NewListViewState> {
 
-    override val states: LiveData<ViewState> = MutableLiveData()
+    override val states: LiveData<NewListViewState> = MutableLiveData()
     lateinit var transientStates: (TransientState) -> Unit
 
     fun onNameChanged(name: String) {
@@ -102,14 +103,14 @@ class NewListPresenter(
 
     private fun updateUi(progress: Boolean = false, listId: String? = null) {
         val enableFinish = model.isDataComplete()
-        (states as MutableLiveData).postValue(ViewState(progress, enableFinish, listId))
+        (states as MutableLiveData).postValue(NewListViewState(progress, enableFinish, listId))
     }
 
     fun onPageChanged() {
         updateUi()
     }
 
-    data class ViewState(val showPreogress: Boolean, val enableFinish: Boolean, val listId: String?)
+    data class NewListViewState(val showPreogress: Boolean, val enableFinish: Boolean, val listId: String?) : ViewState
 
     data class TransientState(val genericError: Error.GenericError? = null, val noName: Error.NoNameError? = null) {
         sealed class Error {

@@ -20,16 +20,16 @@ object NavigatorImpl : Navigator {
         activity.overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 
-    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.ViewEvent =
+    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.MainViewAction =
         when (navigationAction) {
-            is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewModel.ViewEvent.GoMakeNewList
-            is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewModel.ViewEvent.NavItemSelected(navigationAction.id)
+            is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewModel.MainViewAction.GoMakeNewList
+            is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewModel.MainViewAction.NavItemSelected(navigationAction.id)
         }
 }
 
-interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewModel.ViewEvent> {
+interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewModel.MainViewAction> {
 
-    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.ViewEvent
+    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.MainViewAction
 
     fun startCreateChecklistActivity(activity: Activity)
 

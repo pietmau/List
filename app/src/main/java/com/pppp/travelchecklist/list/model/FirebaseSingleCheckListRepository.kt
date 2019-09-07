@@ -20,28 +20,24 @@ class FirebaseSingleCheckListRepository(
     override fun addCategory(listId: String, name: String) {
         db.collection(USERS)
             .document(getUserId())
-            .collection(USERS_CHECKLISTS).document(listId).update("categories", FieldValue.arrayUnion(CategoryImpl(title = name)))
-            .addOnSuccessListener {
-
-            }
-            .addOnFailureListener {
-
-            }
+            .collection(USERS_CHECKLISTS)
+            .document(listId)
+            .update("categories", FieldValue.arrayUnion(CategoryImpl(title = name)))
     }
 
-    override fun updateList(listId: String, travelCheckList: TravelCheckList) {
+    override fun updateCategories(listId: String, travelCheckList: TravelCheckList) {
         db.collection(USERS)
             .document(getUserId())
-            .collection(USERS_CHECKLISTS).document(listId).update("categories", travelCheckList.categories)
-            .addOnSuccessListener {
-
-            }
-            .addOnFailureListener {
-
-            }
+            .collection(USERS_CHECKLISTS)
+            .document(listId)
+            .update("categories", travelCheckList.categories)
     }
 
-    override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
+    override fun getUserCheckListAndUpdates(
+        listId: String,
+        failure: ((Throwable) -> Unit)?,
+        success: ((TravelCheckList) -> Unit)?
+    ) {
         db.collection(USERS)
             .document(getUserId())
             .collection(USERS_CHECKLISTS).document(listId).addSnapshotListener { documentSnapshot, exception ->

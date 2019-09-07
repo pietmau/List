@@ -27,13 +27,14 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
     }
 
     override fun deleteItem(listId: String, categoryId: Long, itemId: Long) {
-        val indexedCategory = findCategoryById(travelCheckList.categories, categoryId) ?: return
+        val category = (findCategoryById(travelCheckList.categories, categoryId) ?: return).value
+        val index = (findCategoryById(travelCheckList.categories, categoryId) ?: return).index
         val categories = travelCheckList.categories.toMutableList()
-        val copy = removeItem(indexedCategory, itemId)
+        val copy = removeItem(category, itemId)
         if (copy.items.isNullOrEmpty()) {
-            categories.removeAt(indexedCategory.index)
+            categories.removeAt(index)
         } else {
-            categories.set(indexedCategory.index, copy)
+            categories.set(index, copy)
         }
         saveChanges(categories, listId)
     }
@@ -63,11 +64,11 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         return indexedCategory.value.copy(items = items)
     }
 
-    private fun removeItem(category: IndexedValue<CategoryImpl>, itemId: Long) = category.value.copy(items = category.value.items.filter { it.id != itemId })
+    private fun removeItem(category: CategoryImpl, itemId: Long) = category.copy(items = category.items.filter { it.id != itemId })
 
-    private fun saveChanges(categories: MutableList<CategoryImpl>, listId: String) {
+    private fun saveChanges(categories: List<CategoryImpl>, listId: String) {
         val travelCheckList = travelCheckList.copy(categories = categories.toList())
-        repository.updateList(listId, travelCheckList)
+        repository.updateCategories(listId, travelCheckList)
     }
 
     private fun findCategoryById(categories: List<CategoryImpl>, categoryId: Long) = categories.withIndex().find { it.value.id == categoryId }

@@ -21,7 +21,7 @@ class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     fun bind(betterMenuItem: BetterMenuItem, callback: (Int) -> Unit) {
         title.text = betterMenuItem.title
         seticon(betterMenuItem)
-        title.isSelected = betterMenuItem.selected
+        itemView.isSelected = betterMenuItem.selected
         itemView.setOnClickListener {
             callback(adapterPosition)
         }

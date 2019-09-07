@@ -10,7 +10,6 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.getLong
 import com.pppp.travelchecklist.getString
-import com.pppp.travelchecklist.list.bottomdialog.CategoryAdder
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.menu.BetterMenuItem
 import com.pppp.travelchecklist.showDialog
@@ -21,6 +20,7 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
     private val ADD = "add"
     private val DELETE = "delete"
 
+    @Inject
     internal lateinit var consumer: Consumer<EditCardPresenter.ViewAction>
 
     override fun onCreateView(
@@ -46,9 +46,7 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
 
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            val listId = getString(LIST_ID) ?: return@showDialog
-            val categoryId = getLong(CATEGORY_ID) ?: return@showDialog
-            consumer.accept(EditCardPresenter.ViewAction.DeleteCard(listId, categoryId))
+            consumer.accept(EditCardPresenter.ViewAction.DeleteCard(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!))
         }
     }
 

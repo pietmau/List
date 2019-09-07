@@ -22,9 +22,9 @@ interface TravelChecklistRepository {
 
 interface SingleCheckListRepository {
 
-    fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
+    fun getUserCheckListAndUpdates(listId: String, failure: ((Throwable) -> Unit)? = null, success: ((TravelCheckList) -> Unit)? = null)
 
-    fun updateList(listId: String, travelCheckList: TravelCheckList)
+    fun updateCategories(listId: String, travelCheckList: TravelCheckList)
 
     fun getUserCheckList(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 

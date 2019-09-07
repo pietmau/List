@@ -1,12 +1,15 @@
 package com.pppp.travelchecklist.editcard
 
 import com.pppp.travelchecklist.Consumer
+import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 
-class EditCardPresenter : Consumer<EditCardPresenter.ViewAction> {
+class EditCardPresenter(private val model: EditCardModel = FirebaseEditCardModel(FirebaseSingleCheckListRepository())) :
+    Consumer<EditCardPresenter.ViewAction> {
 
-    override fun accept(viewAction: ViewAction) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun accept(viewAction: ViewAction) =
+        when (viewAction) {
+            is ViewAction.DeleteCard -> model.deleteCategory(viewAction.listId, viewAction.categoryId)
+        }
 
     sealed class ViewAction {
         data class DeleteCard(val listId: String, val categoryId: Long) : ViewAction()

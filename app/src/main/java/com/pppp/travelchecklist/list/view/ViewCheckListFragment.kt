@@ -10,7 +10,7 @@ import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.appComponent
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
-import com.pppp.travelchecklist.list.bottomdialog.EditCategoryBottomDialog
+import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel

@@ -10,7 +10,7 @@ import java.lang.UnsupportedOperationException
 class BetterMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs, defStyle),
     BetterMenuAdapter.Callback {
 
-    var callback: BetterMenuAdapter.Callback? = null
+    var callback: ((BetterMenuItem) -> Unit)? = null
 
     var items: List<BetterMenuItem>
         set(value) {
@@ -23,6 +23,6 @@ class BetterMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     override fun onItemClicked(item: BetterMenuItem) {
-        callback?.onItemClicked(item)
+        callback?.invoke(item)
     }
 }

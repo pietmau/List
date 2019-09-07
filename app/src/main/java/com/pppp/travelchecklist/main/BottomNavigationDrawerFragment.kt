@@ -15,7 +15,7 @@ import com.pppp.travelchecklist.menu.BetterMenuItem
 import kotlinx.android.synthetic.main.fragment_dialog_navigation.nav_view
 import javax.inject.Inject
 
-class BottomNavigationDrawerFragment : BottomSheetDialogFragment(), BetterMenuAdapter.Callback {
+class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
     @Inject
     lateinit var menuCreator: MenuCreator
@@ -37,10 +37,10 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment(), BetterMenuAd
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         nav_view.items = menuCreator.getItems(checkLists, arguments?.getString(LAST_VISITED))
-        nav_view.callback = this
+        nav_view.callback = ::onItemClicked
     }
 
-    override fun onItemClicked(item: BetterMenuItem) {
+    private fun onItemClicked(item: BetterMenuItem) {
         onNavigateToExistingListClicked(item.id)
         dismiss()
     }

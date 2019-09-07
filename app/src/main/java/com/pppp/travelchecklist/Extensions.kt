@@ -20,6 +20,7 @@ import io.reactivex.disposables.Disposable
 import android.net.ConnectivityManager
 import androidx.annotation.StringRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)
@@ -102,26 +103,33 @@ fun Activity.showConfirmationDialog(yes: (() -> Unit)?) {
 }
 
 fun Activity.showDialog(
-    positive: (() -> Unit)?,
-    negative: (() -> Unit)?,
     @StringRes title: Int,
-    @StringRes message: Int?,
+    @StringRes message: Int? = null,
     @StringRes ok: Int = R.string.ok,
-    @StringRes cancel: Int?
+    @StringRes cancel: Int = R.string.cancel,
+    negative: (() -> Unit)? = null,
+    positive: (() -> Unit)?
 ) {
     val dialogBuilder = MaterialAlertDialogBuilder(this)
         .setTitle(title)
         .setPositiveButton(ok, { _, _ -> positive?.invoke() })
+        .setNegativeButton(cancel, { _, _ -> negative?.invoke() })
     message?.let { dialogBuilder.setMessage(message) }
-    cancel?.let { dialogBuilder.setNegativeButton(cancel, { _, _ -> negative?.invoke() }) }
     dialogBuilder.create().show()
 }
 
 fun Fragment.showDialog(
-    positive: (() -> Unit)?,
-    negative: (() -> Unit)?,
     @StringRes title: Int,
-    @StringRes message: Int?,
+    @StringRes message: Int? = null,
     @StringRes ok: Int = R.string.ok,
-    @StringRes cancel: Int?
-) = requireActivity().showDialog(positive, negative, title, message, ok, cancel)
+    @StringRes cancel: Int = R.string.cancel,
+    negative: (() -> Unit)? = null,
+    positive: (() -> Unit)?
+) = requireActivity().showDialog(title, message, ok, cancel, negative, positive)
+
+val <T> T.exhaustive: T
+    get() = this
+
+fun Fragment.getString(key: String) = arguments?.getString(key)
+
+fun Fragment.getLong(key: String) = arguments?.getLong(key)

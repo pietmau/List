@@ -17,9 +17,9 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import android.content.DialogInterface
 import android.net.ConnectivityManager
-import androidx.appcompat.app.AlertDialog
+import androidx.annotation.StringRes
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)
@@ -90,13 +90,38 @@ fun <K, V> lazyMap(initializer: (K) -> V): Map<K, V> {
     }
 }
 
-fun Activity.showConfirmationDialog(yes: () -> Unit) {
-    AlertDialog.Builder(this)
+fun Activity.showConfirmationDialog(yes: (() -> Unit)?) {
+    MaterialAlertDialogBuilder(this)
         .setTitle(R.string.add_list)
         .setMessage(R.string.confirm_add_new_list)
-        .setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+        .setPositiveButton(R.string.yes, { _, _ ->
             yes?.invoke()
         })
-        .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, which -> })
+        .setNegativeButton(android.R.string.cancel, { _, _ -> })
         .create().show()
 }
+
+fun Activity.showDialog(
+    positive: (() -> Unit)?,
+    negative: (() -> Unit)?,
+    @StringRes title: Int,
+    @StringRes message: Int?,
+    @StringRes ok: Int = R.string.ok,
+    @StringRes cancel: Int?
+) {
+    val dialogBuilder = MaterialAlertDialogBuilder(this)
+        .setTitle(title)
+        .setPositiveButton(ok, { _, _ -> positive?.invoke() })
+    message?.let { dialogBuilder.setMessage(message) }
+    cancel?.let { dialogBuilder.setNegativeButton(cancel, { _, _ -> negative?.invoke() }) }
+    dialogBuilder.create().show()
+}
+
+fun Fragment.showDialog(
+    positive: (() -> Unit)?,
+    negative: (() -> Unit)?,
+    @StringRes title: Int,
+    @StringRes message: Int?,
+    @StringRes ok: Int = R.string.ok,
+    @StringRes cancel: Int?
+) = requireActivity().showDialog(positive, negative, title, message, ok, cancel)

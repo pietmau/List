@@ -15,7 +15,6 @@ import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEvents
 import com.pppp.travelchecklist.findFragmentById
-import com.pppp.travelchecklist.findFragmentByTag
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID

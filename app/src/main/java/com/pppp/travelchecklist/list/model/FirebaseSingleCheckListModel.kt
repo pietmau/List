@@ -8,9 +8,8 @@ import java.util.Collections
 
 class FirebaseSingleCheckListModel(private val repository: SingleCheckListRepository) : SingleCheckListModel {
     private lateinit var travelCheckList: TravelCheckListImpl
-    private lateinit var listId: String
 
-    override fun checkItem(cardId: Long, itemId: Long, checked: Boolean) {
+    override fun checkItem(listId: String, cardId: Long, itemId: Long, checked: Boolean) {
         val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
         val categories = travelCheckList.categories.toMutableList()
         val copy = checkItemInternal(indexedCategory, itemId, checked)
@@ -19,7 +18,6 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
     }
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?) {
-        this.listId = listId
         repository.getUserCheckListAndUpdates(listId, success = {
             this@FirebaseSingleCheckListModel.travelCheckList = it as TravelCheckListImpl
             success?.invoke(it)
@@ -39,7 +37,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         saveChanges(categories, listId)
     }
 
-    override fun moveItem(cardId: Long, fromPosition: Int, toPosition: Int) {
+    override fun moveItem(listId: String, cardId: Long, fromPosition: Int, toPosition: Int) {
         val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
         val categories = travelCheckList.categories.toMutableList()
         val copy = swapItems(indexedCategory, fromPosition, toPosition)

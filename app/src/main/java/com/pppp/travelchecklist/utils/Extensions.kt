@@ -130,6 +130,6 @@ fun Fragment.showDialog(
 val <T> T.exhaustive: T
     get() = this
 
-fun Fragment.getString(key: String) = arguments?.getString(key)
+fun Fragment.getStringArgument(key: String) = arguments?.getString(key)
 
-fun Fragment.getLong(key: String) = arguments?.getLong(key)
+fun Fragment.getLongArgument(key: String) = arguments?.getLong(key)

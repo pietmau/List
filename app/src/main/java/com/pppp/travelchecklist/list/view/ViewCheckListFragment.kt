@@ -22,6 +22,9 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     @Inject
     internal lateinit var viewModel: SingleCheckListViewModel
 
+    private val listId
+        get() = arguments?.getString(LIST_ID)!!// Let it crash!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_checlist, container, false);
 
@@ -32,7 +35,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recycler.chackListCardCallback = this
-        viewModel.states(arguments?.getString(LIST_ID)!!).observe(viewLifecycleOwner, Observer { render(it) })
+        viewModel.states(listId).observe(viewLifecycleOwner, Observer { render(it) })
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) =
@@ -46,7 +49,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
-        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.DeleteItem(cardId, itemId))
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.DeleteItem(listId, cardId, itemId))
     }
 
     private fun sendToViewModel(singleListViewEvent: SingleCheckListViewModel.SingleListViewEvent) {
@@ -54,19 +57,19 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean) {
-        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(cardId, itemId, checked))
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(listId, cardId, itemId, checked))
     }
 
     override fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int) {
-        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.MoveItem(cardId, fromPosition, toPosition))
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.MoveItem(listId, cardId, fromPosition, toPosition))
     }
 
     fun addCategory() {
-        AddCategoryBottomDialog.newInstance(viewModel.listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        AddCategoryBottomDialog.newInstance(listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     override fun onCardOptionsClicked(cardId: Long) {
-        EditCategoryBottomDialog.newInstance(viewModel.listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        EditCategoryBottomDialog.newInstance(listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     companion object {

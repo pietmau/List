@@ -18,12 +18,10 @@ interface SingleCheckListViewModel : ViewActionsConsumer<SingleCheckListViewMode
     }
 
     sealed class SingleListViewEvent : ViewAction {
-        data class DeleteItem(val categortyId: Long, val itemId: Long) : SingleListViewEvent()
-        data class MoveItem(val cardId: Long, val fromPosition: Int, val toPosition: Int) : SingleListViewEvent()
-        class ItemChecked(val cardId: Long, val itemId: Long, val isChecked: Boolean) : SingleListViewEvent()
+        data class DeleteItem(val listId: String, val cardId: Long, val itemId: Long) : SingleListViewEvent()
+        data class MoveItem(val listId: String, val cardId: Long, val fromPosition: Int, val toPosition: Int) : SingleListViewEvent()
+        class ItemChecked(val listId: String, val cardId: Long, val itemId: Long, val isChecked: Boolean) : SingleListViewEvent()
     }
-
-    var listId: String
 }
 
 

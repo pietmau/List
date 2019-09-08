@@ -8,7 +8,7 @@ interface SingleCheckListModel {
 
     fun deleteItem(listId: String, categoryId: Long, itemId: Long)
 
-    fun moveItem(cardId: Long, fromPosition: Int, toPosition: Int)
+    fun moveItem(listId: String, cardId: Long, fromPosition: Int, toPosition: Int)
 
-    fun checkItem(cardId: Long, itemId: Long, checked: Boolean)
+    fun checkItem(listId: String, cardId: Long, itemId: Long, checked: Boolean)
 }

@@ -12,10 +12,7 @@ class FirebaseSingleCheckListViewModel(
     private val titleUsecase: TitleUseCase = TitleUseCaseImpl
 ) : SingleCheckListViewModel, ViewModel() {
 
-    override lateinit var listId: String // TODO remove!!!
-
     private val viewStates: Map<String, LiveData<SingleCheckListViewModel.ViewState>> = lazyMap { listId ->
-        this@FirebaseSingleCheckListViewModel.listId = listId
         val liveData = MutableLiveData<SingleCheckListViewModel.ViewState>()
         model.getUserCheckListAndUpdates(listId, success = { liveData.postValue(SingleCheckListViewModel.ViewState.Data(it)) })
         return@lazyMap liveData
@@ -25,9 +22,23 @@ class FirebaseSingleCheckListViewModel(
 
     override fun accept(eventSingleList: SingleCheckListViewModel.SingleListViewEvent) =
         when (eventSingleList) {
-            is SingleCheckListViewModel.SingleListViewEvent.DeleteItem -> model.deleteItem(listId, eventSingleList.categortyId, eventSingleList.itemId)
-            is SingleCheckListViewModel.SingleListViewEvent.MoveItem -> model.moveItem(eventSingleList.cardId, eventSingleList.fromPosition, eventSingleList.toPosition)
-            is SingleCheckListViewModel.SingleListViewEvent.ItemChecked -> model.checkItem(eventSingleList.cardId, eventSingleList.itemId, eventSingleList.isChecked)
+            is SingleCheckListViewModel.SingleListViewEvent.DeleteItem -> model.deleteItem(
+                eventSingleList.listId,
+                eventSingleList.cardId,
+                eventSingleList.itemId
+            )
+            is SingleCheckListViewModel.SingleListViewEvent.MoveItem -> model.moveItem(
+                eventSingleList.listId,
+                eventSingleList.cardId,
+                eventSingleList.fromPosition,
+                eventSingleList.toPosition
+            )
+            is SingleCheckListViewModel.SingleListViewEvent.ItemChecked -> model.checkItem(
+                eventSingleList.listId,
+                eventSingleList.cardId,
+                eventSingleList.itemId,
+                eventSingleList.isChecked
+            )
         }
 
     override fun getTitle(travelCheckList: TravelCheckList) = titleUsecase.getTitle(travelCheckList)

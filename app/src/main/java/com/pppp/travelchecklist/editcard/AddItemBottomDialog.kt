@@ -6,7 +6,7 @@ import com.pppp.travelchecklist.list.bottomdialog.AddBottomDialog
 import com.pppp.travelchecklist.list.bottomdialog.CategoryAdder
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
-import com.pppp.travelchecklist.utils.getLong
+import com.pppp.travelchecklist.utils.getLongArgument
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.input
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.title
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class AddItemBottomDialog : AddBottomDialog() {
     }
 
     override fun add(listId: String, name: String) {
-        categoryAdder.addItem(listId, getLong(CATEGORY_ID)!!, name)
+        categoryAdder.addItem(listId, getLongArgument(CATEGORY_ID)!!, name)
     }
 
     companion object {

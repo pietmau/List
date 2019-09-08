@@ -9,8 +9,8 @@ import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.utils.appComponent
-import com.pppp.travelchecklist.utils.getLong
-import com.pppp.travelchecklist.utils.getString
+import com.pppp.travelchecklist.utils.getLongArgument
+import com.pppp.travelchecklist.utils.getStringArgument
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.menu.BetterMenuItem
 import com.pppp.travelchecklist.utils.showDialog
@@ -46,13 +46,13 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
     }
 
     private fun onAddClickad() {
-        AddItemBottomDialog.newInstance(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        AddItemBottomDialog.newInstance(getStringArgument(LIST_ID)!!, getLongArgument(CATEGORY_ID)!!).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
         dismiss()
     }
 
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            emit(EditCardViewAction.DeleteCard(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!))
+            emit(EditCardViewAction.DeleteCard(getStringArgument(LIST_ID)!!, getLongArgument(CATEGORY_ID)!!))
         }
     }
 

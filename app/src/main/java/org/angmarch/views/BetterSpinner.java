@@ -140,7 +140,7 @@ public class BetterSpinner extends AppCompatTextView {
         setTextColor(textColor);
 
         listView = new ListView(context);
-        // Set the spinner's id into the listview to make it pretend to be the right parent in
+        // Set the spinner'CATEGORIES id into the listview to make it pretend to be the right parent in
         // onItemClick
         listView.setId(getId());
         listView.setDivider(null);
@@ -283,7 +283,7 @@ public class BetterSpinner extends AppCompatTextView {
     /**
      * Set the default spinner item using its index
      *
-     * @param position the item's itemId
+     * @param position the item'CATEGORIES itemId
      */
     public void setSelectedIndex(int position) {
         if (adapter != null) {

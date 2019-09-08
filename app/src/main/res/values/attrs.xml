@@ -5,6 +5,7 @@
     <attr name="itemBackground" format="reference"/>
     <attr name="customDividerColor" format="reference"/>
     <attr name="customDividerHeight" format="reference"/>
+    <attr name="betterMenuDrawableTint" format="reference"/>
 
     <declare-styleable name="NoCardCheckListCard">
         <attr name="margin" format="dimension"/>

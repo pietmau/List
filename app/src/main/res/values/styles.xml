@@ -16,6 +16,7 @@
         <item name="android:actionMenuTextColor">@color/orange</item>
         <item name="customDividerColor">@color/separatorLineColor</item>
         <item name="customDividerHeight">@dimen/very_small_margin</item>
+        <item name="betterMenuDrawableTint">@color/lilla_dark</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>

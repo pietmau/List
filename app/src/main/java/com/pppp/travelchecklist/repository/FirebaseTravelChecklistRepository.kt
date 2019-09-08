@@ -12,7 +12,6 @@ import io.reactivex.Single
 import java.lang.Exception
 
 private const val LAST_VISITED_LIST = "last_visited_list"
-
 private const val CATEGORIES = "categories"
 
 class FirebaseTravelChecklistRepository(
@@ -22,15 +21,13 @@ class FirebaseTravelChecklistRepository(
 ) : TravelChecklistRepository {
 
     override fun saveLastVisitedList(listId: String) {
-        db.collection(USERS)
-            .document(getUserId())
+        user()
             .set(mapOf(LAST_VISITED_LIST to listId), SetOptions.merge())
     }
 
     override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
-        db.collection(USERS)
-            .document(getUserId())
-            .get().addOnSuccessListener {
+        user().get()
+            .addOnSuccessListener {
                 success?.invoke(it[LAST_VISITED_LIST] as? String)
             }
             .addOnFailureListener {
@@ -39,9 +36,7 @@ class FirebaseTravelChecklistRepository(
     }
 
     override fun saveAndGet(list: List<Category>, model: Model): Single<String> = Single.create { emitter ->
-        db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS)
+        userChecklists()
             .add(mapper.map(model))
             .addOnSuccessListener { travelList ->
                 val collection = travelList.collection(CATEGORIES)
@@ -54,12 +49,13 @@ class FirebaseTravelChecklistRepository(
     }
 
     override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS)
-            .document(listId).get()
+        userCheckListById(listId)
+            .get()
             .addOnSuccessListener { documentSnapshot ->
                 val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
+                userCheckListById(listId).collection(CATEGORIES)
+                    .addSnapshotListener { querySnapshot, firebaseFirestoreException -> }
+
                 if (checkList != null) {
                     success?.invoke(checkList)
                 } else {
@@ -71,9 +67,8 @@ class FirebaseTravelChecklistRepository(
     }
 
     override fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS).addSnapshotListener { snapshot, error ->
+        userChecklists()
+            .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     failure?.invoke(error)
                     return@addSnapshotListener
@@ -84,7 +79,6 @@ class FirebaseTravelChecklistRepository(
                         .filterNotNull()
                     success?.invoke(result)
                 }
-
             }
     }
 
@@ -94,12 +88,14 @@ class FirebaseTravelChecklistRepository(
         }
 
     override fun setName(listId: String, name: String?) {
-        db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS).document(listId).update("name", name)
-            .addOnSuccessListener { }
-            .addOnFailureListener { }
+        userCheckListById(listId).update("name", name)
     }
+
+    private fun userCheckListById(listId: String) = userChecklists().document(listId)
+
+    private fun userChecklists() = user().collection(USERS_CHECKLISTS)
+
+    private fun user() = db.collection(USERS).document(getUserId())
 
     private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(getUserId(), listId))
 

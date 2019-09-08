@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.di.ViewCheckListModule
-import com.pppp.travelchecklist.utils.appComponent
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.done
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.input
 
 abstract class AddBottomDialog : BottomSheetDialogFragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

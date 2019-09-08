@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.utils.getLong
 import com.pppp.travelchecklist.utils.getString
@@ -38,17 +39,26 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
         menu.items = createOptions()
         menu.callback = { item ->
             when (item.id) {
-                ADD -> TODO()
+                ADD -> onAddClickad()
                 DELETE -> onDeleteClicked()
             }
         }
     }
 
+    private fun onAddClickad() {
+        AddItemBottomDialog.newInstance(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        dismiss()
+    }
+
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            editCardViewActionsConsumer.accept(EditCardViewAction.DeleteCard(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!))
-            dismiss()
+            emit(EditCardViewAction.DeleteCard(getString(LIST_ID)!!, getLong(CATEGORY_ID)!!))
         }
+    }
+
+    private fun emit(deleteCard: EditCardViewAction) {
+        editCardViewActionsConsumer.accept(deleteCard)
+        dismiss()
     }
 
     private fun createOptions(): List<BetterMenuItem> =

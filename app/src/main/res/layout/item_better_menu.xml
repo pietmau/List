@@ -12,7 +12,7 @@
         android:id="@+id/icon"
         android:layout_width="36dp"
         android:layout_height="28dp"
-        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
         android:tint="@color/lilla_dark"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

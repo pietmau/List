@@ -13,8 +13,6 @@ import java.lang.Exception
 
 private const val LAST_VISITED_LIST = "last_visited_list"
 
-private const val CATEGORIES = "categories"
-
 class FirebaseTravelChecklistRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
@@ -42,11 +40,9 @@ class FirebaseTravelChecklistRepository(
         db.collection(USERS)
             .document(getUserId())
             .collection(USERS_CHECKLISTS)
-            .add(mapper.map(model))
-            .addOnSuccessListener { travelList ->
-                val collection = travelList.collection(CATEGORIES)
-                list.forEach { collection.add(it) }
-                emitter.onSuccess(travelList.id)
+            .add(mapper.map(list, model))
+            .addOnSuccessListener {
+                emitter.onSuccess(it.id)
             }
             .addOnFailureListener {
                 emitter.onError(Exception("Unable to save"))

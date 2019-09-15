@@ -1,18 +1,21 @@
 package com.pppp.travelchecklist.repository
 
+import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.newlist.presenter.Model
 
 interface TravelCheckListMapper {
 
-    fun map(model: Model): TravelCheckList
+    fun map(list: List<Category>, model: Model): TravelCheckList
 
 }
 
 object TravelCheckListMapperImpl : TravelCheckListMapper {
 
-    override fun map(model: Model): TravelCheckListImpl {
+    override fun map(list: List<Category>, model: Model): TravelCheckListImpl {
+        val categories = list as List<CategoryImpl>
         val accomodation = model.accomodation?.title
         val weather = model.weather?.title
         val name = model.listName
@@ -20,7 +23,7 @@ object TravelCheckListMapperImpl : TravelCheckListMapper {
         val plannedActivities = model.plannedActivities.map { it.title }
         val travellers = model.travellers.map { it.title }
         return TravelCheckListImpl(
-            categories = emptyList(),
+            categories = categories,
             name = name,
             accomodation = accomodation,
             weather = weather,

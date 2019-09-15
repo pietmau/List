@@ -28,12 +28,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         val category = (findCategoryById(travelCheckList.categories, categoryId) ?: return).value
         val index = (findCategoryById(travelCheckList.categories, categoryId) ?: return).index
         val categories = travelCheckList.categories.toMutableList()
-        val copy = removeItem(category, itemId)
-        if (copy.items.isNullOrEmpty()) {
-            categories.removeAt(index)
-        } else {
-            categories.set(index, copy)
-        }
+        categories.set(index, removeItem(category, itemId))
         saveChanges(categories, listId)
     }
 

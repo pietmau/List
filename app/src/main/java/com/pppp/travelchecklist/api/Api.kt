@@ -16,12 +16,12 @@ import retrofit2.http.POST
 
 interface Api {
 
-    @POST("prod/items/bytag")
+    @POST("prod/mock/bytag")
     fun generateChecklist(@Body tags: List<TagImpl>): Single<List<CategoryImpl>>
 
-    @GET("prod/tags-groups")
+    @GET("prod/mock/tags-group")
     fun getTagsGroup(): Single<List<TagsGroupImpl>>
 
-    @GET("prod/tags-groups")
+    @GET("prod/mock/tags-group")
     fun getTagsGroupCall(): Call<List<TagsGroupImpl>>
 }

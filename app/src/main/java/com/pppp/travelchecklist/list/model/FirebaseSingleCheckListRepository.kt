@@ -34,8 +34,13 @@ class FirebaseSingleCheckListRepository(
         }
     }
 
-    override fun addCategory(listId: String, name: String) {
-        getList(listId).update("categories", FieldValue.arrayUnion(CategoryImpl(title = name)))
+    override fun addCategory(listId: String, name: String, callback: (() -> Unit)?) {
+        getUserCheckList(listId) { travelCheckslist ->
+            val categoryId = travelCheckslist.categories.map { it.id }.max()!! + 1
+            getList(listId)
+                .update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
+                .addOnSuccessListener { callback?.invoke() }
+        }
     }
 
     override fun updateCategories(listId: String, travelCheckList: TravelCheckList) {

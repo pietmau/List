@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.editcard
 
 import android.os.Bundle
+import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.bottomdialog.AddBottomDialog
 import com.pppp.travelchecklist.list.bottomdialog.CategoryAdder
@@ -24,21 +25,17 @@ class AddItemBottomDialog : AddBottomDialog() {
         input.setHint(R.string.item_name)
     }
 
-    override fun add(listId: String, name: String) {
-        categoryAdder.addItem(listId, getLongArgument(CATEGORY_ID)!!, name)
+    override fun add(travelCheckList: TravelCheckListImpl, name: String) {
+        categoryAdder.addItem(travelCheckList.id!!, getLongArgument(CATEGORY_ID)!!, name)
     }
 
     companion object {
-        fun newInstance(listId: String, categoryId: Long) =
+        fun newInstance(list: TravelCheckListImpl, categoryId: Long) =
             AddItemBottomDialog().apply {
                 arguments = Bundle().apply {
-                    putString(LIST_ID, listId)
+                    putParcelable(LIST, list)
                     putLong(CATEGORY_ID, categoryId)
                 }
             }
-
-        val TAG = AddItemBottomDialog::class.java.simpleName
-        val CATEGORY_ID = "category"
-
     }
 }

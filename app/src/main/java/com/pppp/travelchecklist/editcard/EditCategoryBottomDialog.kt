@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
@@ -13,6 +14,7 @@ import com.pppp.travelchecklist.utils.getLongArgument
 import com.pppp.travelchecklist.utils.getStringArgument
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.menu.BetterMenuItem
+import com.pppp.travelchecklist.utils.getParcelableArgument
 import com.pppp.travelchecklist.utils.showDialog
 import kotlinx.android.synthetic.main.fragment_dialog_editcategory.menu
 import javax.inject.Inject
@@ -46,13 +48,14 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
     }
 
     private fun onAddClickad() {
-        AddItemBottomDialog.newInstance(getStringArgument(LIST_ID)!!, getLongArgument(CATEGORY_ID)!!).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        AddItemBottomDialog.newInstance(getParcelableArgument(LIST)!!, getLongArgument(CATEGORY_ID)!!)
+            .show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
         dismiss()
     }
 
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            emit(EditCardViewAction.DeleteCard(getStringArgument(LIST_ID)!!, getLongArgument(CATEGORY_ID)!!))
+            emit(EditCardViewAction.DeleteCard(getParcelableArgument<TravelCheckListImpl>(LIST)?.id!!, getLongArgument(CATEGORY_ID)!!))
         }
     }
 
@@ -68,15 +71,15 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
         )
 
     companion object {
-        fun newInstance(listId: String, categoryId: Long) =
+        fun newInstance(checkList: TravelCheckListImpl, categoryId: Long) =
             EditCategoryBottomDialog().apply {
                 arguments = Bundle().apply {
-                    putString(LIST_ID, listId)
+                    putParcelable(LIST, checkList)
                     putLong(CATEGORY_ID, categoryId)
                 }
             }
 
-        val LIST_ID = "list_id"
+        val LIST = "list"
         val CATEGORY_ID = "category_id"
     }
 }

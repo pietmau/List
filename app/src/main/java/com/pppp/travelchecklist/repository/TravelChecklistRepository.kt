@@ -32,7 +32,7 @@ interface SingleCheckListRepository {
         success: ((TravelCheckList) -> Unit)? = null
     )
 
-    fun addCategory(listId: String, name: String)
+    fun addCategory(listId: String, categoryId: Long, name: String)
 
     fun addItem(listId: String, categoryId: Long, name: String)
 }

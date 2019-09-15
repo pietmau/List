@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 data class TravelCheckListImpl @JvmOverloads constructor(
     override var categories: List<CategoryImpl> = emptyList(),
     override val name: String? = null,
-    override var id: String? = null,
+    override var id: String? = null, // TODO remove this
     override val accomodation: String? = null,
     override val weather: String? = null,
     override val duration: String? = null,

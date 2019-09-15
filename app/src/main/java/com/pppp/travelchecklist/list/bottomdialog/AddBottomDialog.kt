@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.done
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.input
@@ -27,9 +26,9 @@ abstract class AddBottomDialog : BottomSheetDialogFragment() {
         setUpViews()
         done.setOnClickListener {
             val text = input.text?.toString()
-            val travelCheckListImpl = arguments?.getParcelable<TravelCheckListImpl>(LIST)
-            if (!text.isNullOrBlank()) {
-                add(travelCheckListImpl!!, text)
+            val listId = arguments?.getString(LIST_ID)
+            if (!text.isNullOrBlank() && !listId.isNullOrBlank()) {
+                add(listId, text)
             }
             dismiss()
         }
@@ -37,12 +36,11 @@ abstract class AddBottomDialog : BottomSheetDialogFragment() {
 
     abstract fun performInjection()
 
-    abstract fun add(listId: TravelCheckListImpl, text: String)
+    abstract fun add(listId: String, text: String)
 
     abstract fun setUpViews()
 
     companion object {
-        val LIST = "list"
-        val CATEGORY_ID = "category"
+        val LIST_ID = "list_id"
     }
 }

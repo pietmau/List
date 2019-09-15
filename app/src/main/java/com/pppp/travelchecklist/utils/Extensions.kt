@@ -18,7 +18,6 @@ import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import android.net.ConnectivityManager
-import android.os.Parcelable
 import androidx.annotation.StringRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pppp.travelchecklist.R
@@ -134,5 +133,3 @@ val <T> T.exhaustive: T
 fun Fragment.getStringArgument(key: String) = arguments?.getString(key)
 
 fun Fragment.getLongArgument(key: String) = arguments?.getLong(key)
-
-inline fun <T : Parcelable> Fragment.getParcelableArgument(key: String) = arguments?.getParcelable<T>(key)

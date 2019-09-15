@@ -15,7 +15,6 @@ import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.main.MainActivity
-import com.pppp.travelchecklist.utils.getStringArgument
 import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     internal lateinit var viewModel: SingleCheckListViewModel
 
     private val listId
-        get() = getStringArgument(LIST_ID)!!// Let it crash!
+        get() = arguments?.getString(LIST_ID)!!// Let it crash!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_checlist, container, false);

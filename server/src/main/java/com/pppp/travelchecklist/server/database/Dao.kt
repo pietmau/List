@@ -6,11 +6,14 @@ import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag
 import com.pietrantuono.entities.TagsGroup
 
-interface Dao {
+interface TagGroups {
+    fun getTagsGroup(): List<TagsGroup>
+}
+
+interface Dao : TagGroups {
     fun getCategories(tags: List<Tag>): List<Category>
     fun getTags(): List<Tag>
     fun getItems(): List<CheckListItem>
     fun getAllItems(): List<CheckListItem>
-    fun getTagsGroup(): List<TagsGroup>
     fun getItemsByTag(tags: List<ServerTag>): List<Category>
 }

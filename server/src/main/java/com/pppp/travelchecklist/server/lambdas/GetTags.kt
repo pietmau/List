@@ -5,11 +5,10 @@ import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.s3.AmazonS3
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.server.database.Dao
-import com.pppp.travelchecklist.server.database.DaoImpl
 
 class GetTags @JvmOverloads constructor(s3: AmazonS3? = null) :
     RequestHandler<Any?, List<Tag>> {
-    private val dao: Dao = DaoImpl()
+    private val dao: Dao = TODO()
 
     override fun handleRequest(any: Any?, context: Context): List<Tag> {
         val logger = context.logger

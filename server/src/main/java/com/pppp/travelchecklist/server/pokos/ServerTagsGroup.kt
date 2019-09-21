@@ -5,8 +5,8 @@ import com.pietrantuono.entities.TagsGroup
 
 data class ServerTagsGroup(
     override val title: String,
-    override val description: String?,
+    override val description: String? = null,
     override val tags: MutableList<Tag>,
-    override val exclusive: Boolean,
-    override val id: Long
+    override val exclusive: Boolean = false,
+    override val id: String
 ) : TagsGroup

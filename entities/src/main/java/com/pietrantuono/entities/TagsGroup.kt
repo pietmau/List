@@ -6,5 +6,5 @@ interface TagsGroup {
     val description: String?
     val tags: List<Tag>
     val exclusive: Boolean
-    val id: Long // Unused
+    val id: String // Unused
 }

@@ -6,11 +6,12 @@ import com.amazonaws.services.s3.AmazonS3
 import com.pietrantuono.entities.Tag
 import com.pietrantuono.entities.TagsGroup
 import com.pppp.travelchecklist.server.database.Dao
-import com.pppp.travelchecklist.server.database.DaoImpl
+import com.pppp.travelchecklist.server.database.TagGroups
+import com.pppp.travelchecklist.server.dynamodatabase.DynamoTagGroups
 
 class GetTagsGroup @JvmOverloads constructor(s3: AmazonS3? = null) :
     RequestHandler<Any?, List<TagsGroup>> {
-    private val dao: Dao = DaoImpl()
+    private val dao: TagGroups = DynamoTagGroups()
 
     override fun handleRequest(any: Any?, context: Context): List<TagsGroup> {
         val logger = context.logger

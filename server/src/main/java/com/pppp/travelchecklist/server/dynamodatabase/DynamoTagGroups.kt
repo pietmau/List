@@ -1,14 +1,13 @@
+package com.pppp.travelchecklist.server.dynamodatabase
+
 import com.amazonaws.lambda.demo.ServerTag
 import com.amazonaws.regions.Regions
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
-import com.amazonaws.services.dynamodbv2.document.DynamoDB
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
 import com.amazonaws.services.dynamodbv2.model.ScanRequest
-import com.pietrantuono.entities.Tag
+import com.pietrantuono.entities.TagsGroup
+import com.pppp.travelchecklist.server.database.TagGroups
 import com.pppp.travelchecklist.server.pokos.ServerTagsGroup
-import org.junit.Before
-import org.junit.Test
 
 private val GROUP_TITLE = "group_title"
 private val GROUP_ID = "group_id"
@@ -17,25 +16,18 @@ private val TAG_HIDDEN = "tag_hidden"
 private val TAG_ID = "tag_id"
 private val GROUP_EXCLUSIVE = "group_exclusive"
 
-class DynamoServer {
-    private lateinit var docClient: DynamoDB
-    private lateinit var client: AmazonDynamoDB
+class DynamoTagGroups : TagGroups {
+    private val client = AmazonDynamoDBClientBuilder.standard()
+        .withRegion(Regions.EU_WEST_1)
+        .build()
 
-    @Before
-    fun setUp() {
-        client = AmazonDynamoDBClientBuilder.standard()
-            .withRegion(Regions.EU_WEST_1)
-            .build()
-        docClient = DynamoDB(client)
-    }
-
-    @Test
-    fun getTagGroups() {
+    override fun getTagsGroup(): List<TagsGroup> {
         val request = ScanRequest("tag_groups")
         val result = client.scan(request)
         val z = result.items
             .groupBy { it[GROUP_ID]?.s }
             .map { getGroup(it) }
+        return z
     }
 
     private fun getGroup(entry: Map.Entry<String?, List<MutableMap<String, AttributeValue>>>): ServerTagsGroup {

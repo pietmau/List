@@ -8,11 +8,10 @@ import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.server.categories.ServerCategory
 import com.pppp.travelchecklist.server.database.Dao
-import com.pppp.travelchecklist.server.database.DaoImpl
 
 class GetItemsByTag @JvmOverloads constructor(s3: AmazonS3? = null) :
     RequestHandler<List<ServerTag>, List<Category>> {
-    private val dao: Dao = DaoImpl()
+    private val dao: Dao = TODO()
 
     override fun handleRequest(tags: List<ServerTag>, context: Context): List<Category> {
         val logger = context.logger

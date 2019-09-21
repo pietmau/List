@@ -5,8 +5,8 @@ interface CheckListItem {
     var checked: Boolean
     var priority: Int
     var description: String?
-    val category_id: Long
+    val category_id: String
     val tags: List<Tag>
     var optional: Boolean
-    var id: Long
+    var id: String
 }

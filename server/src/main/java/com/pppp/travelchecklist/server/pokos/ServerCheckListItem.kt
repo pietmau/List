@@ -6,10 +6,10 @@ import com.pietrantuono.entities.Tag
 data class ServerCheckListItem(
     override var title: String,
     override var checked: Boolean = false,
-    override var priority: Int,
+    override var priority: Int = 6,
     override var description: String? = null,
-    override val category_id: Long,
+    override val category_id: String,
     override val tags: List<Tag> = emptyList(),
     override var optional: Boolean = false,
-    override var id: Long
+    override var id: String
 ) : CheckListItem

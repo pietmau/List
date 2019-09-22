@@ -1,0 +1,16 @@
+package com.pppp.travelchecklist.server.dynamodatabase
+
+internal val GROUP_TITLE = "group_title"
+internal val GROUP_ID = "group_id"
+internal val TAG_TITLE = "tag_title"
+internal val TAG_HIDDEN = "tag_hidden"
+internal val TAG_ID = "tag_id"
+internal val GROUP_EXCLUSIVE = "group_exclusive"
+internal val TAGS_TABLE_NAME = "tag_groups"
+internal val ITEM_TABLE_NAME = "items"
+internal val ITEM_ID = "item_id"
+internal val ITEM_TITLE = "item_title"
+internal val CATEGORY_TITLE = "category_title"
+internal val CATEGORY_ID = "category_id"
+internal val ITEM_IDS = "item_ids"
+internal val SEPARATOR = ","

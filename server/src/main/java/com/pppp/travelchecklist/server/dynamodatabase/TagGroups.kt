@@ -6,22 +6,11 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
 import com.amazonaws.services.dynamodbv2.model.ScanRequest
 import com.pietrantuono.entities.TagsGroup
-import com.pppp.travelchecklist.server.database.TagGroups
 import com.pppp.travelchecklist.server.pokos.ServerTagsGroup
 
-internal val GROUP_TITLE = "group_title"
-internal val GROUP_ID = "group_id"
-internal val TAG_TITLE = "tag_title"
-internal val TAG_HIDDEN = "tag_hidden"
-internal val TAG_ID = "tag_id"
-internal val GROUP_EXCLUSIVE = "group_exclusive"
-internal val TAGS_TABLE_NAME = "tag_groups"
-internal val ITEM_TABLE_NAME = "items"
-internal val ITEM_ID = "item_id"
-internal val ITEM_TITLE = "item_title"
-internal val CATEGORY_TITLE = "category_title"
-internal val CATEGORY_ID = "category_id"
-
+interface TagGroups {
+    fun getTagsGroup(): List<TagsGroup>
+}
 
 class DynamoTagGroups : TagGroups {
     private val client = AmazonDynamoDBClientBuilder.standard()

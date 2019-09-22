@@ -16,7 +16,7 @@ class MenuCreatorImpl @Inject constructor(private val titleUseCase: TitleUseCase
     override fun getItems(checkLists: List<TravelCheckListImpl>, lastVisited: String?) =
         checkLists.map {
             val title = titleUseCase.getTitleForMenu(it)
-            val id = it.id?:throw IllegalArgumentException("ID cannot be null here")
+            val id = it.id ?: throw IllegalArgumentException("ID cannot be null here")
             val selected = id?.equals(lastVisited) == true
             BetterMenuItem(title = title, id = id, selected = selected)
         }

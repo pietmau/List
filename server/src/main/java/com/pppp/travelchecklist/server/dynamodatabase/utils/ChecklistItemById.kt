@@ -7,12 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue
 import com.amazonaws.services.dynamodbv2.model.GetItemRequest
 import com.pietrantuono.entities.Category
 import com.pppp.travelchecklist.server.categories.ServerCategory
-import com.pppp.travelchecklist.server.dynamodatabase.CATEGORY_ID
-import com.pppp.travelchecklist.server.dynamodatabase.CATEGORY_TITLE
-import com.pppp.travelchecklist.server.dynamodatabase.ITEM_ID
-import com.pppp.travelchecklist.server.dynamodatabase.ITEM_TABLE_NAME
-import com.pppp.travelchecklist.server.dynamodatabase.ITEM_TITLE
-import com.pppp.travelchecklist.server.pokos.ServerCheckListItem
+import com.pppp.travelchecklist.server.entities.ServerCheckListItem
 
 interface ChecklistItemById {
     fun findItemById(itemId: String): Category?

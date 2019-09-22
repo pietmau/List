@@ -34,5 +34,5 @@ interface SingleCheckListRepository {
 
     fun addCategory(listId: String, name: String, callback: (() -> Unit)? = null)
 
-    fun addItem(listId: String, categoryId: Long, name: String)
+    fun addItem(listId: String, categoryId: String, name: String)
 }

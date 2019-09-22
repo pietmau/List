@@ -6,7 +6,14 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
 import com.amazonaws.services.dynamodbv2.model.ScanRequest
 import com.pietrantuono.entities.TagsGroup
-import com.pppp.travelchecklist.server.pokos.ServerTagsGroup
+import com.pppp.travelchecklist.server.dynamodatabase.utils.GROUP_EXCLUSIVE
+import com.pppp.travelchecklist.server.dynamodatabase.utils.GROUP_ID
+import com.pppp.travelchecklist.server.dynamodatabase.utils.GROUP_TITLE
+import com.pppp.travelchecklist.server.dynamodatabase.utils.TAGS_TABLE_NAME
+import com.pppp.travelchecklist.server.dynamodatabase.utils.TAG_HIDDEN
+import com.pppp.travelchecklist.server.dynamodatabase.utils.TAG_ID
+import com.pppp.travelchecklist.server.dynamodatabase.utils.TAG_TITLE
+import com.pppp.travelchecklist.server.entities.ServerTagsGroup
 
 interface TagGroups {
     fun getTagsGroup(): List<TagsGroup>
@@ -20,10 +27,9 @@ class DynamoTagGroups : TagGroups {
     override fun getTagsGroup(): List<TagsGroup> {
         val request = ScanRequest(TAGS_TABLE_NAME)
         val result = client.scan(request)
-        val z = result.items
+        return result.items
             .groupBy { it[GROUP_ID]?.s }
-            .map { getGroup(it) }
-        return z
+            .map<String?, List<MutableMap<String, AttributeValue>>, ServerTagsGroup> { getGroup(it) }
     }
 
     private fun getGroup(entry: Map.Entry<String?, List<MutableMap<String, AttributeValue>>>): ServerTagsGroup {

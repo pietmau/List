@@ -9,7 +9,7 @@ import java.util.Collections
 class FirebaseSingleCheckListModel(private val repository: SingleCheckListRepository) : SingleCheckListModel {
     private lateinit var travelCheckList: TravelCheckListImpl
 
-    override fun checkItem(listId: String, cardId: Long, itemId: Long, checked: Boolean) {
+    override fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean) {
         val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
         val categories = travelCheckList.categories.toMutableList()
         val copy = checkItemInternal(indexedCategory, itemId, checked)
@@ -24,7 +24,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         })
     }
 
-    override fun deleteItem(listId: String, categoryId: Long, itemId: Long) {
+    override fun deleteItem(listId: String, categoryId: String, itemId: String) {
         val category = (findCategoryById(travelCheckList.categories, categoryId) ?: return).value
         val index = (findCategoryById(travelCheckList.categories, categoryId) ?: return).index
         val categories = travelCheckList.categories.toMutableList()
@@ -32,7 +32,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         saveChanges(categories, listId)
     }
 
-    override fun moveItem(listId: String, cardId: Long, fromPosition: Int, toPosition: Int) {
+    override fun moveItem(listId: String, cardId: String, fromPosition: Int, toPosition: Int) {
         val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
         val categories = travelCheckList.categories.toMutableList()
         val copy = swapItems(indexedCategory, fromPosition, toPosition)
@@ -46,7 +46,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         return category.value.copy(items = items.toList())
     }
 
-    private fun checkItemInternal(indexedCategory: IndexedValue<CategoryImpl>, itemId: Long, checked: Boolean): CategoryImpl {
+    private fun checkItemInternal(indexedCategory: IndexedValue<CategoryImpl>, itemId: String, checked: Boolean): CategoryImpl {
         val items = indexedCategory.value.items.map { item ->
             if (item.id.equals(itemId)) {
                 item.copy(checked = checked)
@@ -57,12 +57,12 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
         return indexedCategory.value.copy(items = items)
     }
 
-    private fun removeItem(category: CategoryImpl, itemId: Long) = category.copy(items = category.items.filter { it.id != itemId })
+    private fun removeItem(category: CategoryImpl, itemId: String) = category.copy(items = category.items.filter { !it.id.equals(itemId) })
 
     private fun saveChanges(categories: List<CategoryImpl>, listId: String) {
         val travelCheckList = travelCheckList.copy(categories = categories.toList())
         repository.updateCategories(listId, travelCheckList)
     }
 
-    private fun findCategoryById(categories: List<CategoryImpl>, categoryId: Long) = categories.withIndex().find { it.value.id == categoryId }
+    private fun findCategoryById(categories: List<CategoryImpl>, categoryId: String) = categories.withIndex().find { it.value.id == categoryId }
 }

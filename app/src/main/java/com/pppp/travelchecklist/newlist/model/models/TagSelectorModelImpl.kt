@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class TagSelectorModelImpl(
     private val tagsCache: TagsCache,
-    private val groupId: Long
+    private val groupId: String
 ) :
     ViewModel(), TagSelectorModel {
 

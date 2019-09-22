@@ -19,7 +19,7 @@ class NoCardCheckListCard @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), CheckListCard {
-    private var cardId: Long by Delegates.notNull()
+    private var cardId: String by Delegates.notNull()
     override lateinit var checkListCardCallback: ChackListCardCallback
 
     private val cardItemCallback = object : CardItemView.Callback {
@@ -27,11 +27,11 @@ class NoCardCheckListCard @JvmOverloads constructor(
             checkListCardCallback.onItemMoved(cardId, fromPosition, toPosition)
         }
 
-        override fun onItemChecked(itemId: Long, checked: Boolean) {
+        override fun onItemChecked(itemId: String, checked: Boolean) {
             checkListCardCallback.onItemChecked(cardId, itemId, checked)
         }
 
-        override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
+        override fun onDeleteRequested(itemId: String, data: CheckListItem) {
             checkListCardCallback.onItemDeleteRequested(cardId, itemId, data)
         }
     }

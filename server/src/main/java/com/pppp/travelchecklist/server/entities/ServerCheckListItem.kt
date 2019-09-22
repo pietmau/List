@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.server.pokos
+package com.pppp.travelchecklist.server.entities
 
 import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag

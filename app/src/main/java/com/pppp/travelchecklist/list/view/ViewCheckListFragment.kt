@@ -48,7 +48,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
         (activity as? MainActivity)?.setListTitle(viewModel.getTitle(state.travelCheckList), viewModel.getSubTitle(state.travelCheckList))
     }
 
-    override fun onItemDeleteRequested(cardId: Long, itemId: Long, data: CheckListItem) {
+    override fun onItemDeleteRequested(cardId: String, itemId: String, data: CheckListItem) {
         sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.DeleteItem(listId, cardId, itemId))
     }
 
@@ -56,11 +56,11 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
         viewModel.accept(singleListViewEvent)
     }
 
-    override fun onItemChecked(cardId: Long, itemId: Long, checked: Boolean) {
+    override fun onItemChecked(cardId: String, itemId: String, checked: Boolean) {
         sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(listId, cardId, itemId, checked))
     }
 
-    override fun onItemMoved(cardId: Long, fromPosition: Int, toPosition: Int) {
+    override fun onItemMoved(cardId: String, fromPosition: Int, toPosition: Int) {
         sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.MoveItem(listId, cardId, fromPosition, toPosition))
     }
 
@@ -68,7 +68,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
         AddCategoryBottomDialog.newInstance(listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
-    override fun onCardOptionsClicked(cardId: Long) {
+    override fun onCardOptionsClicked(cardId: String) {
         EditCategoryBottomDialog.newInstance(listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 

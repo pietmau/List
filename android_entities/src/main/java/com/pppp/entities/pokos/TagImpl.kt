@@ -13,5 +13,5 @@ data class TagImpl @JvmOverloads constructor(
     override var hidden: Boolean = false
 ) : Parcelable, Tag {
     @get:[Exclude]
-    override var id: Long = -1
+    override var id: String = ""
 }

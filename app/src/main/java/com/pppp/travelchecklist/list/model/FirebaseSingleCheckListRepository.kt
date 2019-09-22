@@ -21,7 +21,7 @@ class FirebaseSingleCheckListRepository(
 
 ) : SingleCheckListRepository {
 
-    override fun addItem(listId: String, categoryId: Long, name: String) {
+    override fun addItem(listId: String, categoryId: String, name: String) {
         getUserCheckList(listId) { list ->
             val updated = list.categories.map {
                 if (it.id == categoryId) {

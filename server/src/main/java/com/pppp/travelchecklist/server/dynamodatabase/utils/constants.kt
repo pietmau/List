@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.server.dynamodatabase
+package com.pppp.travelchecklist.server.dynamodatabase.utils
 
 internal val GROUP_TITLE = "group_title"
 internal val GROUP_ID = "group_id"

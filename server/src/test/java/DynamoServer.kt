@@ -12,14 +12,8 @@ class DynamoServer {
     private val categoriesFromTags: CategoriesFromTags = DynamoCategoriesFromTags()
     private val tags = mutableListOf<Tag>(ServerTag(id = "3", title = ""))
 
-    @Before
-    fun setUp() {
-
-    }
-
     @Test
     fun `when get items id by tags returns ids`() {
-
         val itemIds = itemIdsFromTags.getItemIdsFromTags(tags)
     }
 
@@ -28,4 +22,9 @@ class DynamoServer {
         val categories = categoriesFromTags.getCategoriesBasedOnTags(tags)
     }
 
+    @Test
+    fun `get categoryes by tag 1`() {
+        val tags = mutableListOf<Tag>(ServerTag(id = "1", title = ""))
+        val categories = categoriesFromTags.getCategoriesBasedOnTags(tags)
+    }
 }

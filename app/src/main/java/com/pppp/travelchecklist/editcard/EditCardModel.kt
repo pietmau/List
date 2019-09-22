@@ -2,5 +2,5 @@ package com.pppp.travelchecklist.editcard
 
 interface EditCardModel {
 
-    fun deleteCategory(listId: String, categoryId: Long)
+    fun deleteCategory(listId: String, categoryId: String)
 }

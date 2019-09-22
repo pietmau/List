@@ -22,7 +22,7 @@ class CardItemView @JvmOverloads constructor(
             check.isChecked = value?.checked == true
         }
 
-    var itemId: Long? = null
+    var itemId: String? = null
     var callback: Callback? = null
 
     init {
@@ -30,15 +30,15 @@ class CardItemView @JvmOverloads constructor(
         inflater.inflate(R.layout.custom_check_list_card_item, this, true)
         check.setOnCheckedChangeListener { buttonView, isChecked ->
             buttonView.setPaintFlags(getPaint(isChecked));
-            callback?.onItemChecked(data?.id!!, isChecked)
+            callback?.onItemChecked(requireNotNull(data?.id), isChecked)
         }
     }
 
     private fun getPaint(checked: Boolean) = if (checked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.LINEAR_TEXT_FLAG
 
     interface Callback {
-        fun onDeleteRequested(position: Long, data: CheckListItem)
-        fun onItemChecked(id: Long, checked: Boolean)
+        fun onDeleteRequested(position: String, data: CheckListItem)
+        fun onItemChecked(id: String, checked: Boolean)
         fun onItemMoved(fromPosition: Int, toPosition: Int)
     }
 }

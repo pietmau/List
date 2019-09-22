@@ -7,10 +7,10 @@ import com.pppp.travelchecklist.repository.SingleCheckListRepository
 
 class FirebaseEditCardModel(private val repository: SingleCheckListRepository) : EditCardModel {
 
-    override fun deleteCategory(listId: String, categoryId: Long) {
+    override fun deleteCategory(listId: String, categoryId: String) {
         repository.getUserCheckListAndUpdates(listId) { list ->
             val categories = list.categories
-                .filter { it.id != categoryId }
+                .filter { !it.id.equals(categoryId) }
                 .map { it as CategoryImpl }
             val copy = (list as TravelCheckListImpl).copy(categories = categories)
             repository.updateCategories(listId, copy)

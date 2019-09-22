@@ -133,3 +133,5 @@ val <T> T.exhaustive: T
 fun Fragment.getStringArgument(key: String) = arguments?.getString(key)
 
 fun Fragment.getLongArgument(key: String) = arguments?.getLong(key)
+
+fun Fragment.requireStringArgument(key: String) = requireNotNull(arguments?.getString(key))

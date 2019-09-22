@@ -14,5 +14,5 @@ class EditCardViewModel(private val model: EditCardModel = FirebaseEditCardModel
 }
 
 sealed class EditCardViewAction : ViewAction {
-    data class DeleteCard(val listId: String, val categoryId: Long) : EditCardViewAction()
+    data class DeleteCard(val listId: String, val categoryId: String) : EditCardViewAction()
 }

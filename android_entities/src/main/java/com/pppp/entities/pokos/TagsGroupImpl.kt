@@ -15,5 +15,5 @@ data class TagsGroupImpl @JvmOverloads constructor(
     override var exclusive: Boolean = false
 ) : Parcelable, TagsGroup {
     @get:[Exclude]
-    override var id: Long = -1
+    override var id: String = ""
 }

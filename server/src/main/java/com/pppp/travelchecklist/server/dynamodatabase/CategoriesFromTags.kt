@@ -19,11 +19,10 @@ class DynamoCategoriesFromTags(
 ) :
     CategoriesFromTags {
 
-    override fun getCategoriesBasedOnTags(tags: List<Tag>): List<Category> {
-        return itemIdsFromTags.getItemIdsFromTags(tags).distinct()
+    override fun getCategoriesBasedOnTags(tags: List<Tag>) =
+        itemIdsFromTags.getItemIdsFromTags(tags).distinct()
             .map { itemId -> checklistItemById.findItemById(itemId) as ServerCategory }
             .map { category: ServerCategory -> category.copy(items = mutableListOf()) to category.items.toSet() }
             .toMap()
             .map { (category: ServerCategory, items: Set<CheckListItem>) -> category.copy(items = items.toMutableList()) }
-    }
 }

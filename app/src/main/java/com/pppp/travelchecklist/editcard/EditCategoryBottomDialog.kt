@@ -13,6 +13,7 @@ import com.pppp.travelchecklist.utils.getLongArgument
 import com.pppp.travelchecklist.utils.getStringArgument
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.menu.BetterMenuItem
+import com.pppp.travelchecklist.utils.requireStringArgument
 import com.pppp.travelchecklist.utils.showDialog
 import kotlinx.android.synthetic.main.fragment_dialog_editcategory.menu
 import javax.inject.Inject
@@ -46,13 +47,14 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
     }
 
     private fun onAddClickad() {
-        AddItemBottomDialog.newInstance(getStringArgument(LIST_ID)!!, getLongArgument(CATEGORY_ID)!!).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        AddItemBottomDialog.newInstance(getStringArgument(LIST_ID)!!, requireStringArgument(CATEGORY_ID))
+            .show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
         dismiss()
     }
 
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            emit(EditCardViewAction.DeleteCard(getStringArgument(LIST_ID)!!, getLongArgument(CATEGORY_ID)!!))
+            emit(EditCardViewAction.DeleteCard(getStringArgument(LIST_ID)!!, requireStringArgument(CATEGORY_ID)))
         }
     }
 
@@ -68,11 +70,11 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
         )
 
     companion object {
-        fun newInstance(listId: String, categoryId: Long) =
+        fun newInstance(listId: String, categoryId: String) =
             EditCategoryBottomDialog().apply {
                 arguments = Bundle().apply {
                     putString(LIST_ID, listId)
-                    putLong(CATEGORY_ID, categoryId)
+                    putString(CATEGORY_ID, categoryId)
                 }
             }
 

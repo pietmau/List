@@ -15,7 +15,7 @@ class GetCategories @JvmOverloads constructor(s3: AmazonS3? = null) :
         val logger = context.logger
         logger.log("Received event: " + tags);
         return try {
-            dao.getCategories(tags)
+            dao.getCategoriesBasedOnTags(tags)
         } catch (exception: Exception) {
             logger.log(exception.stackTrace.toString())
             throw exception

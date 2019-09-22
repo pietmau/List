@@ -7,5 +7,5 @@ data class ServerCategory(
     override val title: String,
     override val description: String? = null,
     override val items: MutableList<CheckListItem> = mutableListOf(),
-    override var id: Long
+    override var id: String
 ) : Category

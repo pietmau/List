@@ -8,7 +8,7 @@ data class ServerCheckListItem(
     override var checked: Boolean = false,
     override var priority: Int = 6,
     override var description: String? = null,
-    override val category_id: String,
+    override val categoryId: String,
     override val tags: List<Tag> = emptyList(),
     override var optional: Boolean = false,
     override var id: String

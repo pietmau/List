@@ -9,12 +9,19 @@ import com.pietrantuono.entities.TagsGroup
 import com.pppp.travelchecklist.server.database.TagGroups
 import com.pppp.travelchecklist.server.pokos.ServerTagsGroup
 
-private val GROUP_TITLE = "group_title"
-private val GROUP_ID = "group_id"
-private val TAG_TITLE = "tag_title"
-private val TAG_HIDDEN = "tag_hidden"
-private val TAG_ID = "tag_id"
-private val GROUP_EXCLUSIVE = "group_exclusive"
+internal val GROUP_TITLE = "group_title"
+internal val GROUP_ID = "group_id"
+internal val TAG_TITLE = "tag_title"
+internal val TAG_HIDDEN = "tag_hidden"
+internal val TAG_ID = "tag_id"
+internal val GROUP_EXCLUSIVE = "group_exclusive"
+internal val TAGS_TABLE_NAME = "tag_groups"
+internal val ITEM_TABLE_NAME = "items"
+internal val ITEM_ID = "item_id"
+internal val ITEM_TITLE = "item_title"
+internal val CATEGORY_TITLE = "category_title"
+internal val CATEGORY_ID = "category_id"
+
 
 class DynamoTagGroups : TagGroups {
     private val client = AmazonDynamoDBClientBuilder.standard()
@@ -22,7 +29,7 @@ class DynamoTagGroups : TagGroups {
         .build()
 
     override fun getTagsGroup(): List<TagsGroup> {
-        val request = ScanRequest("tag_groups")
+        val request = ScanRequest(TAGS_TABLE_NAME)
         val result = client.scan(request)
         val z = result.items
             .groupBy { it[GROUP_ID]?.s }

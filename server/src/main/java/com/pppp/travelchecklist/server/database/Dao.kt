@@ -10,8 +10,15 @@ interface TagGroups {
     fun getTagsGroup(): List<TagsGroup>
 }
 
-interface Dao : TagGroups {
-    fun getCategories(tags: List<Tag>): List<Category>
+interface CategoriesFromTags {
+    fun getCategoriesBasedOnTags(tags: List<Tag>): List<Category>
+}
+
+interface ChecklistItemById {
+    fun findItemById(itemId: String): Category?
+}
+
+interface Dao : TagGroups, CategoriesFromTags {
     fun getTags(): List<Tag>
     fun getItems(): List<CheckListItem>
     fun getAllItems(): List<CheckListItem>

@@ -77,6 +77,6 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
             }
 
         val LIST_ID = "list_id"
-        val CATEGORY_ID = "category_id"
+        val CATEGORY_ID = "categoryId"
     }
 }

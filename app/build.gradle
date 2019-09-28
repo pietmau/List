@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -13,8 +12,8 @@ android {
     defaultConfig {
         applicationId "com.pppp.travelchecklist"
         minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 1
+        targetSdkVersion 28
+        versionCode 3
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs "en"

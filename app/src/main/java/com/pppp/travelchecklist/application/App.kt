@@ -31,7 +31,7 @@ class App : Application() {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     //.detectDiskReads()
-                    .detectDiskWrites()
+                    //.detectDiskWrites()
                     .detectNetwork()
                     .penaltyLog()
                     .penaltyDeath()

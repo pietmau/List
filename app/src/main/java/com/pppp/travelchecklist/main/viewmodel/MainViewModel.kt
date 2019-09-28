@@ -12,8 +12,11 @@ import com.pppp.travelchecklist.ViewAction
 import com.pppp.travelchecklist.main.model.MainModel
 import com.pppp.travelchecklist.TransientEvent
 import com.pppp.travelchecklist.ViewState
+import com.pppp.travelchecklist.analytics.AnalyticsLogger
+import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
 
-class MainViewModel(private val model: MainModel) : ViewStatesProducer<MainViewState>, ViewActionsConsumer<MainViewModel.MainViewAction>,
+class MainViewModel(private val model: MainModel, private val analytics: MainAnalyticsLogger) : ViewStatesProducer<MainViewState>,
+    ViewActionsConsumer<MainViewModel.MainViewAction>,
     TransientEventsProducer<MainViewModel.MainTransientEvent>, ViewModel() {
     override val transientEvents: LiveData<MainTransientEvent> = TransientLiveData()
     override val states: LiveData<MainViewState> = MutableLiveData()
@@ -27,6 +30,7 @@ class MainViewModel(private val model: MainModel) : ViewStatesProducer<MainViewS
     }
 
     private fun openNavMenu() {
+        analytics.onMainMenuOpen()
         model.getLastVisitedList(success = { lastList ->
             val userChecklists = model.checkLists as List<TravelCheckListImpl>
             val transientEvent = MainTransientEvent.OpenNavMenu(userChecklists, lastList)
@@ -36,14 +40,8 @@ class MainViewModel(private val model: MainModel) : ViewStatesProducer<MainViewS
         })
     }
 
-    private fun onFabClicked() {
-        if (model.isEmpty) {
-            goToCreateNewList()
-        } else {
-        }
-    }
-
     private fun getLatestListVisited() {
+        analytics.getLatestListVisited()
         emitViewState(MainViewState.Loading)
         model.getLastVisitedList({ listId ->
             if (listId != null) {
@@ -68,12 +66,14 @@ class MainViewModel(private val model: MainModel) : ViewStatesProducer<MainViewS
     private fun onNavItemSelected(mainViewAction: MainViewAction.NavItemSelected) = goToList(mainViewAction.id)
 
     private fun goToList(listId: String) {
+        analytics.goToList(listId)
         model.saveLastVisitedList(listId)
         emitViewState(MainViewState.Content)
         emitTransientEvent(MainTransientEvent.GoToList(listId))
     }
 
     private fun goToCreateNewList() {
+        analytics.goToCreateNewList()
         emitTransientEvent(MainTransientEvent.GoToCreateNewList)
     }
 

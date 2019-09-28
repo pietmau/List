@@ -3,8 +3,8 @@ package com.pppp.travelchecklist.application.di
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
-import com.pppp.travelchecklist.analytics.FirebaseLogger
-import com.pppp.travelchecklist.analytics.Logger
+import com.pppp.travelchecklist.analytics.FirebaseAnalyticsLogger
+import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
@@ -54,7 +54,7 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
 
     @Provides
-    fun provideLogger(): Logger = FirebaseLogger(firebaseAnalytics)
+    fun provideLogger(): AnalyticsLogger = FirebaseAnalyticsLogger(firebaseAnalytics)
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

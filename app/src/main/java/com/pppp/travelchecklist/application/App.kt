@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.application
 
 import android.app.Application
 import android.os.StrictMode
-import com.crashlytics.android.Crashlytics
+import android.provider.Settings
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.BuildConfig
@@ -10,7 +10,6 @@ import com.pppp.travelchecklist.application.di.AppComponent
 import com.pppp.travelchecklist.application.di.AppModule
 import com.pppp.travelchecklist.application.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
-import io.fabric.sdk.android.Fabric
 import com.instabug.library.invocation.InstabugInvocationEvent
 import com.instabug.library.Instabug
 
@@ -51,5 +50,12 @@ class App : Application() {
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build()
     }
 
-    private fun setUpAnalytics() = FirebaseAnalytics.getInstance(this).apply { setAnalyticsCollectionEnabled(!BuildConfig.DEBUG) }
+    private fun setUpAnalytics() =
+        FirebaseAnalytics.getInstance(this).apply {
+            val isDev = Settings.Secure.getInt(contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+            if (isDev) {
+                setUserProperty("is dev", "is dev")
+            }
+            setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
+        }
 }

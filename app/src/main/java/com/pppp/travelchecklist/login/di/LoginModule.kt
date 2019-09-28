@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
-import com.pppp.travelchecklist.analytics.Logger
+import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.login.viewmodel.FirebaseKillSwitch
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
 import dagger.Module
@@ -24,10 +24,10 @@ class LoginModule(private val activity: androidx.fragment.app.FragmentActivity) 
 
     @Singleton
     @Provides
-    fun getLoginViewModel(logger: Logger) = ViewModelProviders.of(activity, LoginViewModelFactory(logger)).get(LoginViewModel::class.java)
+    fun getLoginViewModel(analyticsLogger: AnalyticsLogger) = ViewModelProviders.of(activity, LoginViewModelFactory(analyticsLogger)).get(LoginViewModel::class.java)
 }
 
-class LoginViewModelFactory(val logger: Logger) : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory(val analyticsLogger: AnalyticsLogger) : ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = LoginViewModel(FirebaseKillSwitch(), logger) as T
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T = LoginViewModel(FirebaseKillSwitch(), analyticsLogger) as T
 }

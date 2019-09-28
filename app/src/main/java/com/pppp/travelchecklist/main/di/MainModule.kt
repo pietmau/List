@@ -9,6 +9,8 @@ import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.main.model.MainModelImpl
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.TransientEventsProducer
+import com.pppp.travelchecklist.analytics.AnalyticsLogger
+import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCaseImpl
 import com.pppp.travelchecklist.main.model.Navigator
@@ -26,7 +28,9 @@ class MainModule(private val activity: FragmentActivity) {
 
     @Singleton
     @Provides
-    fun providePresenter(repo: TravelChecklistRepository) = ViewModelProviders.of(activity, MainViewModelFactory(repo)).get(MainViewModel::class.java)
+    fun providePresenter(repo: TravelChecklistRepository, logger: AnalyticsLogger) = ViewModelProviders.of(activity, MainViewModelFactory(repo, logger)).get(
+        MainViewModel::class.java
+    )
 
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
@@ -46,7 +50,9 @@ class MainModule(private val activity: FragmentActivity) {
     @Provides
     fun provideTitleUseCase(): TitleUseCase = TitleUseCaseImpl
 
-    class MainViewModelFactory(private val repo: TravelChecklistRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(MainModelImpl(repo)) as T
+    class MainViewModelFactory(
+        private val repo: TravelChecklistRepository, val logger: MainAnalyticsLogger
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(MainModelImpl(repo), logger) as T
     }
 }

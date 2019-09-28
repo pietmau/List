@@ -11,9 +11,9 @@ private val LOGIN_FLOW_START: String = "login_flow_start"
 private val LOGIN_FLOW_SUCCESS: String = "login_flow_success"
 private val USER_IS_ALREDY_LOGGED_IN: String = "user_already_loggedin"
 
-class FirebaseLogger(
+class FirebaseAnalyticsLogger(
     private val firebaseAnalytics: FirebaseAnalytics
-) : Logger {
+) : AnalyticsLogger {
 
     override fun logEvent(tag: String, bundle: Bundle?) = firebaseAnalytics.logEvent(tag, bundle)
 

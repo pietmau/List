@@ -14,6 +14,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
 import com.pppp.travelchecklist.ViewStatesProducer
+import com.pppp.travelchecklist.analytics.Logger
 import com.pppp.travelchecklist.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -21,6 +22,9 @@ class SplashActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewStates: ViewStatesProducer<LoginViewModel.LoginViewState>
+
+    @Inject
+    lateinit var logger: Logger
 
     @Inject
     lateinit var viewActions: ViewActionsConsumer<LoginViewModel.LoginViewAction>
@@ -75,6 +79,7 @@ class SplashActivity : AppCompatActivity() {
                 viewActions.accept(LoginViewModel.LoginViewAction.UserLoggedInSuccessfully)
                 return
             }
+            logger.onLoginFlowFailure(resultCode)
         }
         finish()
     }

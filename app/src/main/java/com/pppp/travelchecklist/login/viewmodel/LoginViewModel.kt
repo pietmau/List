@@ -7,9 +7,11 @@ import com.pppp.travelchecklist.ViewAction
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewState
 import com.pppp.travelchecklist.ViewStatesProducer
+import com.pppp.travelchecklist.analytics.Logger
 
 class LoginViewModel(
-    private val killSwitch: KillSwitch
+    private val killSwitch: KillSwitch,
+    private val logger: Logger
 ) : ViewActionsConsumer<LoginViewModel.LoginViewAction>, ViewStatesProducer<LoginViewModel.LoginViewState>, ViewModel() {
 
     override val states: LiveData<LoginViewState> = MutableLiveData<LoginViewState>()
@@ -22,14 +24,17 @@ class LoginViewModel(
         killSwitch.shouldAppBeEnabled({
             emit(LoginViewState.AppEnabled)
         }, {
+            logger.onAppNotEnabled()
             emit(LoginViewState.Kill)
         })
     }
 
     private fun checkIfUserIsLoggedIn() {
         if (killSwitch.isUserLoggedIn()) {
+            logger.onUserAlreadyLoggedIn()
             checkIfAppEnabled()
         } else {
+            logger.onLoginFlowStart()
             emit(LoginViewState.UserNotLoggedIn)
         }
     }
@@ -39,7 +44,10 @@ class LoginViewModel(
     }
 
     override fun accept(action: LoginViewAction) = when (action) {
-        is LoginViewAction.UserLoggedInSuccessfully -> checkIfAppEnabled()
+        is LoginViewAction.UserLoggedInSuccessfully -> {
+            logger.onLoginFlowSuccess()
+            checkIfAppEnabled()
+        }
     }
 
     sealed class LoginViewState : ViewState {

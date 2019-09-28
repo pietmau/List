@@ -23,9 +23,10 @@ class App : Application() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        firebaseAnalytics = setUpAnalytics()
         LeakCanary.install(this);
         Instabug.Builder(this, BuildConfig.instabug)
+            .setInvocationEvents(InstabugInvocationEvent.NONE)
             .build()
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
@@ -39,7 +40,7 @@ class App : Application() {
             )
             StrictMode.setVmPolicy(
                 StrictMode.VmPolicy.Builder()
-                         .detectLeakedSqlLiteObjects()
+                    .detectLeakedSqlLiteObjects()
                     //.detectLeakedClosableObjects()
                     .penaltyLog()
                     .penaltyDeath()
@@ -49,4 +50,6 @@ class App : Application() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build()
     }
+
+    private fun setUpAnalytics() = FirebaseAnalytics.getInstance(this).apply { setAnalyticsCollectionEnabled(!BuildConfig.DEBUG) }
 }

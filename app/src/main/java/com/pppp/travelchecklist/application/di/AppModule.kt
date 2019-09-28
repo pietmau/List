@@ -3,6 +3,8 @@ package com.pppp.travelchecklist.application.di
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
+import com.pppp.travelchecklist.analytics.FirebaseLogger
+import com.pppp.travelchecklist.analytics.Logger
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
@@ -19,7 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @Module
-class AppModule(private val context: Context, firebaseAnalytics: FirebaseAnalytics) {
+class AppModule(private val context: Context, private val firebaseAnalytics: FirebaseAnalytics) {
 
     @Provides
     fun provideTravelChecklistDatabase(firebaseDatabase: FirebaseDatabase): DestinationPresenter =
@@ -50,6 +52,9 @@ class AppModule(private val context: Context, firebaseAnalytics: FirebaseAnalyti
 
     @Provides
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
+
+    @Provides
+    fun provideLogger(): Logger = FirebaseLogger(firebaseAnalytics)
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pppp.travelchecklist.BuildConfig
 
-private val TWETNTYFOUR_HOURS = 24L
 
 class FirebaseKillSwitch(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(), val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()

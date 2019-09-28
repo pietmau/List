@@ -26,7 +26,6 @@ class App : Application() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         LeakCanary.install(this);
         Instabug.Builder(this, BuildConfig.instabug)
-            .setInvocationEvents(InstabugInvocationEvent.SHAKE)
             .build()
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(

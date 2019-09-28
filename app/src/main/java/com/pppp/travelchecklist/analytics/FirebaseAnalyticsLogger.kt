@@ -14,6 +14,21 @@ private val USER_IS_ALREDY_LOGGED_IN: String = "user_already_loggedin"
 class FirebaseAnalyticsLogger(
     private val firebaseAnalytics: FirebaseAnalytics
 ) : AnalyticsLogger {
+    override fun onMainMenuOpen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun goToList(listId: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun goToCreateNewList() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getLatestListVisited() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun logEvent(tag: String, bundle: Bundle?) = firebaseAnalytics.logEvent(tag, bundle)
 

@@ -30,8 +30,6 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
-                    //.detectDiskReads()
-                    //.detectDiskWrites()
                     .detectNetwork()
                     .penaltyLog()
                     .penaltyDeath()

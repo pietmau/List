@@ -1,3 +1,5 @@
+import io.github.httpbuilderng.http.HttpTask
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -122,3 +124,18 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+apply plugin: "io.github.http-builder-ng.http-plugin"
+
+task notify(type: HttpTask) {
+    enabled = false
+    config {
+        request.uri = 'https://maker.ifttt.com/trigger/app_build/with/key/ezx1FbpWrA9uEoYuj0HXlz9i3gp64jRL00H-djnvJLS'
+    }
+    get {}
+}
+
+afterEvaluate {
+    assembleDevDebug.dependsOn notify
+}
+

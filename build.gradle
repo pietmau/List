@@ -1,4 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+import io.github.httpbuilderng.http.HttpTask
 
 buildscript {
     ext.kotlin_version = '1.2.61'
@@ -14,6 +15,9 @@ buildscript {
         maven {
             url 'https://maven.fabric.io/public'
         }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
 
     }
     dependencies {
@@ -23,6 +27,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1+'  // Crashlytics plugin
         classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+        classpath "gradle.plugin.io.github.http-builder-ng:http-plugin:0.1.1"
     }
 }
 
@@ -43,3 +48,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+

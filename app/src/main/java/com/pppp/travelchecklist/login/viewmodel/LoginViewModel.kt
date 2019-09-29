@@ -14,7 +14,7 @@ class LoginViewModel(
     private val analytics: LoginAnalyticsLogger
 ) : ViewActionsConsumer<LoginViewModel.LoginViewAction>, ViewStatesProducer<LoginViewModel.LoginViewState>, ViewModel() {
 
-    override val states: LiveData<LoginViewState> = MutableLiveData<LoginViewState>()
+    override val states: LiveData<LoginViewState> = MutableLiveData()
 
     init {
         checkIfUserIsLoggedIn()

@@ -1,5 +1,7 @@
 package com.pppp.travelchecklist.login.di
 
+import android.app.Activity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -14,7 +16,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Module
-class LoginModule(private val activity: androidx.fragment.app.FragmentActivity) {
+class LoginModule(private val activity: FragmentActivity) {
 
     @Provides
     fun provideProducer(loginViewModel: LoginViewModel): ViewStatesProducer<LoginViewModel.LoginViewState> = loginViewModel
@@ -24,10 +26,16 @@ class LoginModule(private val activity: androidx.fragment.app.FragmentActivity) 
 
     @Singleton
     @Provides
-    fun getLoginViewModel(analyticsLogger: AnalyticsLogger) = ViewModelProviders.of(activity, LoginViewModelFactory(analyticsLogger)).get(LoginViewModel::class.java)
+    fun getLoginViewModel(analyticsLogger: AnalyticsLogger) = ViewModelProviders.of(
+        activity, LoginViewModelFactory(analyticsLogger, activity)
+    ).get(LoginViewModel::class.java)
 }
 
-class LoginViewModelFactory(val analyticsLogger: AnalyticsLogger) : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory(private val analyticsLogger: AnalyticsLogger, private val activity: Activity) : ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = LoginViewModel(FirebaseKillSwitch(), analyticsLogger) as T
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        val packageName = activity.applicationContext.getPackageName()
+        val installationSource = activity.applicationContext.getPackageManager().getInstallerPackageName(packageName)
+        return LoginViewModel(FirebaseKillSwitch(source = installationSource), analyticsLogger) as T
+    }
 }

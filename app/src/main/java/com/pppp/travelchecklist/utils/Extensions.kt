@@ -18,6 +18,7 @@ import com.pppp.travelchecklist.application.di.AppComponent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import android.net.ConnectivityManager
+import android.provider.Settings
 import androidx.annotation.StringRes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pppp.travelchecklist.R
@@ -135,3 +136,5 @@ fun Fragment.getStringArgument(key: String) = arguments?.getString(key)
 fun Fragment.getLongArgument(key: String) = arguments?.getLong(key)
 
 fun Fragment.requireStringArgument(key: String) = requireNotNull(arguments?.getString(key))
+
+val Context.isDev get() = Settings.Secure.getInt(contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1

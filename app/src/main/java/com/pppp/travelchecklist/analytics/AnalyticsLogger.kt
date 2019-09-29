@@ -8,6 +8,7 @@ interface AnalyticsLogger : LoginAnalyticsLogger, MainAnalyticsLogger {
 }
 
 interface LoginAnalyticsLogger {
+    fun onAppOnCreate()
     fun onLoginFlowSuccess()
     fun onLoginFlowFailure(reason: Int)
     fun onAppNotEnabled()

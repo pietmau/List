@@ -12,10 +12,14 @@ import com.pppp.travelchecklist.application.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 import com.instabug.library.invocation.InstabugInvocationEvent
 import com.instabug.library.Instabug
+import com.pppp.travelchecklist.analytics.AnalyticsLogger
+import javax.inject.Inject
 
 class App : Application() {
     lateinit var appComponent: AppComponent
     lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject
+    lateinit var analytics: AnalyticsLogger
 
     override fun onCreate() {
         super.onCreate()
@@ -46,14 +50,16 @@ class App : Application() {
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build()
+        appComponent.inject(this)
+        analytics.onAppOnCreate()
     }
 
     private fun setUpAnalytics() =
         FirebaseAnalytics.getInstance(this).apply {
-            val isDev = Settings.Secure.getInt(contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
-            if (isDev) {
+            setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
+            if (Settings.Secure.getInt(contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1) {
                 setUserProperty("is dev", "is dev")
             }
-            setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
         }
+
 }

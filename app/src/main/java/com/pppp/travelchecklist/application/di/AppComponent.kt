@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.application.di
 
+import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.list.di.ViewCheckListComponent
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.login.di.LoginComponent
@@ -21,5 +22,7 @@ interface AppComponent {
     fun with(module: LoginModule): LoginComponent
 
     fun with(module: ViewCheckListModule): ViewCheckListComponent
+
+    fun inject(app: App)
 
 }

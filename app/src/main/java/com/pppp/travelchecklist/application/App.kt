@@ -49,8 +49,7 @@ class App : Application() {
             )
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build()
-        appComponent.inject(this)
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build().also { it.inject(this) }
         analytics.onAppOnCreate()
     }
 

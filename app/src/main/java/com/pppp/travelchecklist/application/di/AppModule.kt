@@ -4,11 +4,12 @@ import android.content.Context
 import android.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
+import com.pppp.travelchecklist.BuildConfig
 import com.pppp.travelchecklist.analytics.FirebaseAnalyticsLogger
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
-import com.pppp.travelchecklist.analytics.CustomAnalytics
-import com.pppp.travelchecklist.analytics.CustomAnalyticsClientImpl
-import com.pppp.travelchecklist.analytics.CustomAnalyticsImpl
+import com.pppp.travelchecklist.analytics.customanalytics.CustomAnalytics
+import com.pppp.travelchecklist.analytics.customanalytics.IftttCustomAnalyticsClient
+import com.pppp.travelchecklist.analytics.customanalytics.IftttAnalytics
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
@@ -60,14 +61,15 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
 
     @Provides
-    fun provideLogger(prefs: PreferencesWrapper, customAnalytics: CustomAnalytics): AnalyticsLogger = FirebaseAnalyticsLogger(
-        firebaseAnalytics,
-        prefs,
-        customAnalytics
-    )
+    fun provideLogger(prefs: PreferencesWrapper, customAnalytics: CustomAnalytics): AnalyticsLogger =
+        FirebaseAnalyticsLogger(firebaseAnalytics, customAnalytics)
 
     @Provides
-    fun provideCustomAnalytics(): CustomAnalytics = CustomAnalyticsImpl(context, CustomAnalyticsClientImpl("ezx1FbpWrA9uEoYuj0HXlz9i3gp64jRL00H-djnvJLS"))
+    fun provideCustomAnalytics(wrapper: PreferencesWrapper): CustomAnalytics = IftttAnalytics(
+        context,
+        IftttCustomAnalyticsClient(BuildConfig.ifttt_key),
+        wrapper
+    )
 
     @Provides
     fun providePreferences(): PreferencesWrapper = PreferencesWrapperImpl(PreferenceManager.getDefaultSharedPreferences(context))

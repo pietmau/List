@@ -17,11 +17,8 @@
         <item name="customDividerColor">@color/separatorLineColor</item>
         <item name="customDividerHeight">@dimen/very_small_margin</item>
         <item name="betterMenuDrawableTint">@color/lilla_dark</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat"/>
+        <item name="android:textColor">@android:color/black</item>
+f    </style>
 
     <style name="CustomToggleButton">
         <item name="android:background">@drawable/selector_bg_radio_button</item>

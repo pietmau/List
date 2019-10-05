@@ -37,7 +37,11 @@ class FirebaseAnalyticsLogger(
 
     override fun onLoginFlowFailure(reason: Int) = firebaseAnalytics.logEvent(LOGIN_FLOW_FAILURE, Bundle().apply { putInt(LOGIN_FAILURE_REASON, reason) })
 
-    override fun onAppNotEnabled() = firebaseAnalytics.logEvent(APP_DISABLED, null)
+    override fun onAppNotEnabled(message: String?) {
+        firebaseAnalytics.logEvent(APP_DISABLED, Bundle().apply {
+            putString("MESSAGE", message)
+        })
+    }
 
     override fun onLoginFlowStart() = firebaseAnalytics.logEvent(LOGIN_FLOW_START, null)
 

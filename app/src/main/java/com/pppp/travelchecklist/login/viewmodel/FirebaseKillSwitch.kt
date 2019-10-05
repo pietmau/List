@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.login.viewmodel
 
-import android.content.Context
+import com.google.android.play.core.missingsplits.MissingSplitsManager
+import com.google.android.play.core.missingsplits.MissingSplitsManagerFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,7 +12,8 @@ private val GOOGLE_PLAY_PACKAGE_NAME = "com.vending.google"
 class FirebaseKillSwitch(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
-    private val source: String?
+    private val source: String?,
+    private val missingSplitsManager: MissingSplitsManager
 ) : KillSwitch {
 
     override fun shouldAppBeEnabled(isOn: () -> Unit, isOff: (message: String?) -> Unit) {
@@ -40,7 +42,8 @@ class FirebaseKillSwitch(
             }
     }
 
-    private fun isInstalledFromStrangeSource() = !source.equals(GOOGLE_PLAY_PACKAGE_NAME)
+
+    private fun isInstalledFromStrangeSource() = missingSplitsManager.disableAppIfMissingRequiredSplits()
 
     private fun isAppEnabled(document: DocumentSnapshot?) = document?.getBoolean("is_app_enabled") ?: false
 

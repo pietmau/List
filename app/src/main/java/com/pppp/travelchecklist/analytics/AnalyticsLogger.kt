@@ -11,7 +11,7 @@ interface LoginAnalyticsLogger {
     fun onAppOnCreate()
     fun onLoginFlowSuccess()
     fun onLoginFlowFailure(reason: Int)
-    fun onAppNotEnabled()
+    fun onAppNotEnabled(message: String?)
     fun onLoginFlowStart()
     fun onUserAlreadyLoggedIn()
 }

@@ -24,7 +24,7 @@ class LoginViewModel(
         killSwitch.shouldAppBeEnabled({
             emit(LoginViewState.AppEnabled)
         }, {
-            analytics.onAppNotEnabled()
+            analytics.onAppNotEnabled(it)
             emit(LoginViewState.Kill)
         })
     }

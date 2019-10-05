@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.play.core.missingsplits.MissingSplitsManagerFactory
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
@@ -31,11 +32,17 @@ class LoginModule(private val activity: FragmentActivity) {
     ).get(LoginViewModel::class.java)
 }
 
-class LoginViewModelFactory(private val analyticsLogger: AnalyticsLogger, private val activity: Activity) : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory(
+    private val analyticsLogger: AnalyticsLogger,
+    private val activity: Activity
+) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val packageName = activity.applicationContext.getPackageName()
-        val installationSource = activity.applicationContext.getPackageManager().getInstallerPackageName(packageName)
-        return LoginViewModel(FirebaseKillSwitch(source = installationSource), analyticsLogger) as T
+        val applicationContext = activity.applicationContext
+        val packageName = applicationContext.getPackageName()
+        val installationSource = applicationContext.getPackageManager().getInstallerPackageName(packageName)
+        return LoginViewModel(
+            FirebaseKillSwitch(source = installationSource, missingSplitsManager = MissingSplitsManagerFactory.create(applicationContext)), analyticsLogger
+        ) as T
     }
 }

@@ -28,6 +28,7 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1+'  // Crashlytics plugin
         classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
         classpath "gradle.plugin.io.github.http-builder-ng:http-plugin:0.1.1"
+        classpath 'com.android.tools.build:bundletool:0.9.0'
     }
 }
 

@@ -14,13 +14,13 @@ class FirebaseKillSwitch(
     private val source: String?
 ) : KillSwitch {
 
-    override fun shouldAppBeEnabled(isOn: () -> Unit, isOff: () -> Unit) {
+    override fun shouldAppBeEnabled(isOn: () -> Unit, isOff: (message: String?) -> Unit) {
         if (BuildConfig.DEBUG) {
             isOn()
             return
         }
         if (isInstalledFromStrangeSource()) {
-            isOff()
+            isOff("Installed from $source")
             return
         }
         firebaseFirestore
@@ -29,11 +29,11 @@ class FirebaseKillSwitch(
             .addOnSuccessListener { snapshot ->
                 val document = snapshot.documents.firstOrNull()
                 if (!isAppEnabled(document)) {
-                    isOff()
+                    isOff("App not enabled")
                     return@addOnSuccessListener
                 }
                 if (!isVersionEnabled(document)) {
-                    isOff()
+                    isOff("Version not supported ${BuildConfig.VERSION_NAME}")
                     return@addOnSuccessListener
                 }
                 isOn()

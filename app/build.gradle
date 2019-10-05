@@ -15,8 +15,8 @@ android {
         applicationId "com.pppp.travelchecklist"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7.3
-        versionName "1.0.3"
+        versionCode 8
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs "en"
     }

@@ -10,7 +10,6 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.view.MenuCreator
-import com.pppp.travelchecklist.menu.BetterMenuAdapter
 import com.pppp.travelchecklist.menu.BetterMenuItem
 import kotlinx.android.synthetic.main.fragment_dialog_navigation.nav_view
 import javax.inject.Inject

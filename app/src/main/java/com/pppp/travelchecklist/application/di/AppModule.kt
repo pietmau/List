@@ -20,8 +20,8 @@ import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepositoryImpl
-import com.pppp.travelchecklist.prefeerences.PreferencesWrapper
-import com.pppp.travelchecklist.prefeerences.PreferencesWrapperImpl
+import com.pppp.travelchecklist.preferences.PreferencesWrapper
+import com.pppp.travelchecklist.preferences.PreferencesWrapperImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers

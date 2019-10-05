@@ -45,6 +45,15 @@ inline fun <reified T : Fragment> FragmentActivity.findFragmentById(@IdRes id: I
     return null
 }
 
+inline fun <reified T : Fragment> FragmentActivity.findAddedFragment(@IdRes id: Int): T? {
+    val fragment = supportFragmentManager.findFragmentById(id) ?: return null
+    return when {
+        fragment !is T -> null
+        fragment.isAdded -> null
+        else -> fragment
+    }
+}
+
 val AppCompatActivity.fragmentTransaction: FragmentTransaction
     get() = supportFragmentManager.beginTransaction()
 
@@ -138,3 +147,9 @@ fun Fragment.getLongArgument(key: String) = arguments?.getLong(key)
 fun Fragment.requireStringArgument(key: String) = requireNotNull(arguments?.getString(key))
 
 val Context.isDev get() = Settings.Secure.getInt(contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+
+fun <K, V> Map<K, V>.replaceSameKeyItemsWith(newElements: Map<K, V>?): Map<K, V> {
+    val result = this.toMutableMap()
+    newElements?.entries?.forEach { (key, value) -> result[key] = value }
+    return result.toMap()
+}

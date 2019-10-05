@@ -2,16 +2,12 @@ package com.pppp.travelchecklist.analytics.customanalytics
 
 import android.content.Context
 import com.pppp.travelchecklist.BuildConfig
-import com.pppp.travelchecklist.prefeerences.PreferencesWrapper
+import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.utils.isDev
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.RequestBody
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface CustomAnalytics {
     fun logFirstInstall()

@@ -96,7 +96,7 @@
         android:layout_gravity="bottom"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:backgroundTint="@color/green_super_light"
-        app:fabAlignmentMode="center"
+        app:fabAlignmentMode="end"
         app:hideOnScroll="true"
         app:navigationIcon="@drawable/ic_baseline_menu_24px"
         app:fabAnimationMode="slide"

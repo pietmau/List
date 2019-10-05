@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.BottomNavigationDrawerFragment
-import com.pppp.travelchecklist.main.viewmodel.MainViewModel
+import com.pppp.travelchecklist.main.viewmodel.MainViewAction
 import com.pppp.travelchecklist.newlist.NewListActivity
 
 object NavigatorImpl : Navigator {
@@ -20,16 +20,16 @@ object NavigatorImpl : Navigator {
         activity.overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 
-    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.MainViewAction =
+    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewAction =
         when (navigationAction) {
-            is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewModel.MainViewAction.GoMakeNewList
-            is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewModel.MainViewAction.NavItemSelected(navigationAction.id)
+            is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewAction.GoMakeNewList
+            is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewAction.NavItemSelected(navigationAction.id)
         }
 }
 
-interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewModel.MainViewAction> {
+interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewAction> {
 
-    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewModel.MainViewAction
+    override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewAction
 
     fun startCreateChecklistActivity(activity: Activity)
 

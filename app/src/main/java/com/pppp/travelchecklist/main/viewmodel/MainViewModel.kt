@@ -3,72 +3,75 @@ package com.pppp.travelchecklist.main.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.TransientLiveData
-import com.pppp.travelchecklist.ViewAction
-import com.pppp.travelchecklist.main.model.MainModel
-import com.pppp.travelchecklist.TransientEvent
-import com.pppp.travelchecklist.ViewState
-import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
 
-class MainViewModel(private val model: MainModel, private val analytics: MainAnalyticsLogger) : ViewStatesProducer<MainViewState>,
-    ViewActionsConsumer<MainViewModel.MainViewAction>,
-    TransientEventsProducer<MainViewModel.MainTransientEvent>, ViewModel() {
+class MainViewModel(
+    private val mainUseCase: MainUseCase,
+    private val settingsUseCase: SettingsUseCase,
+    private val analytics: MainAnalyticsLogger
+) : ViewStatesProducer<MainViewState>,
+    ViewActionsConsumer<MainViewAction>,
+    TransientEventsProducer<MainTransientEvent>, ViewModel() {
     override val transientEvents: LiveData<MainTransientEvent> = TransientLiveData()
     override val states: LiveData<MainViewState> = MutableLiveData()
 
     override fun accept(mainViewAction: MainViewAction) = when (mainViewAction) {
         is MainViewAction.NavMenuOpenSelected -> openNavMenu()
-        is MainViewAction.NavItemSelected -> onNavItemSelected(mainViewAction)
+        is MainViewAction.NavItemSelected -> goToList(mainViewAction.id)
         is MainViewAction.NewListGenerated -> goToList(mainViewAction.listId)
         is MainViewAction.GetLatestListVisited -> getLatestListVisited()
         is MainViewAction.GoMakeNewList -> goToCreateNewList()
+        is MainViewAction.OnSettingChanged -> settingsUseCase.onUserChangedSettings(mainViewAction.itemId)
+    }
+
+    init {
+        settingsUseCase.subscribeToChanges {
+            updateCurrentViewState(it)
+        }
+    }
+
+    private fun updateCurrentViewState(settings: MainViewState.Settings) {
+        states.value?.withNewSettings(settings)?.let {
+            emitNewViewState(it)
+        }
     }
 
     private fun openNavMenu() {
         analytics.onMainMenuOpen()
-        model.getLastVisitedList(success = { lastList ->
-            val userChecklists = model.checkLists as List<TravelCheckListImpl>
-            val transientEvent = MainTransientEvent.OpenNavMenu(userChecklists, lastList)
-            emitTransientEvent(transientEvent)
-        }, failure = {
+        mainUseCase.getLastVisitedList({ userLists, lastListId ->
+            emitTransientEvent(MainTransientEvent.OpenNavMenu(userLists, lastListId))
+        }, {
             onError(it)
         })
     }
 
     private fun getLatestListVisited() {
         analytics.getLatestListVisited()
-        emitViewState(MainViewState.Loading)
-        model.getLastVisitedList({ listId ->
-            if (listId != null) {
-                goToList(listId)
-            } else {
-                emitViewState(MainViewState.Empty)
-            }
+        emitNewViewState(MainViewState.Loading())
+        mainUseCase.getLastVisitedList({ _, listId ->
+            listId?.let { goToList(listId) } ?: emitNewViewState(MainViewState.Empty())
         }, {
-            emitViewState(MainViewState.Empty)
+            emitNewViewState(MainViewState.Empty())
             onError(it)
         })
     }
 
-    private fun onError(it: Throwable?) {
-        emitTransientEvent(MainTransientEvent.Error(it?.message ?: ""))
-    }
+    private fun onError(it: Throwable?) = emitTransientEvent(MainTransientEvent.Error(it?.message ?: ""))
 
-    private fun emitViewState(viewState: MainViewState) {
+    private fun emitNewViewState(newViewState: MainViewState) {
+        val oldSettings = states.value?.settings
+        val viewState = newViewState.makeCopyReplacingOldSettingsWithNew(oldSettings = oldSettings)
         (states as MutableLiveData<MainViewState>).postValue(viewState)
     }
 
-    private fun onNavItemSelected(mainViewAction: MainViewAction.NavItemSelected) = goToList(mainViewAction.id)
-
     private fun goToList(listId: String) {
         analytics.goToList(listId)
-        model.saveLastVisitedList(listId)
-        emitViewState(MainViewState.Content)
+        mainUseCase.saveLastVisitedList(listId)
+        emitNewViewState(MainViewState.Content())
         emitTransientEvent(MainTransientEvent.GoToList(listId))
     }
 
@@ -77,28 +80,7 @@ class MainViewModel(private val model: MainModel, private val analytics: MainAna
         emitTransientEvent(MainTransientEvent.GoToCreateNewList)
     }
 
-    private fun emitTransientEvent(transientEvent: MainTransientEvent) {
+    private fun emitTransientEvent(transientEvent: MainTransientEvent) =
         (transientEvents as MutableLiveData<MainTransientEvent>).postValue(transientEvent)
-    }
-
-    sealed class MainTransientEvent : TransientEvent {
-        data class OpenNavMenu(val userChecklists: List<TravelCheckListImpl>, val lastList: String?) : MainTransientEvent()
-        object GoToCreateNewList : MainTransientEvent()
-        data class GoToList(val listId: String) : MainTransientEvent()
-        data class Error(val message: String) : MainTransientEvent()
-    }
-
-    sealed class MainViewAction : ViewAction {
-        object NavMenuOpenSelected : MainViewAction()
-        object GoMakeNewList : MainViewAction()
-        data class NavItemSelected(val id: String) : MainViewAction()
-        data class NewListGenerated(val listId: String) : MainViewAction()
-        object GetLatestListVisited : MainViewAction()
-    }
 }
 
-sealed class MainViewState : ViewState {
-    object Empty : MainViewState()
-    object Content : MainViewState()
-    object Loading : MainViewState()
-}

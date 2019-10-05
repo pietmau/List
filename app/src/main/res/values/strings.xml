@@ -71,5 +71,7 @@
     <string name="edit_card">Edit Card</string>
     <string name="delete_card">Delete card</string>
     <string name="do_you_want_to_delete">Do you want to delete this card?</string>
+    <string name="hide_checked">Hide checked items</string>
+    <string name="show_checked">Show checked items</string>
 
 </resources>

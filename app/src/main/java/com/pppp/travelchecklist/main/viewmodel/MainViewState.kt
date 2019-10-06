@@ -7,6 +7,7 @@ sealed class MainViewState(val settings: Settings) : ViewState {
     data class Empty(val prefs: Settings = Settings()) : MainViewState(prefs)
     data class Content(val prefs: Settings = Settings()) : MainViewState(prefs)
     data class Loading(val prefs: Settings = Settings()) : MainViewState(prefs)
+    data class None(val prefs: Settings = Settings()) : MainViewState(prefs)
 
     fun makeCopyReplacingOldSettingsWithNew(oldSettings: Settings?): MainViewState {
         val values = oldSettings?.values?.replaceSameKeyItemsWith(newElements = settings.values) ?: mapOf()
@@ -18,6 +19,7 @@ sealed class MainViewState(val settings: Settings) : ViewState {
             is Empty -> this.copy(newSettings)
             is Content -> this.copy(newSettings)
             is Loading -> this.copy(newSettings)
+            is None -> this.copy(newSettings)
         }
     }
 

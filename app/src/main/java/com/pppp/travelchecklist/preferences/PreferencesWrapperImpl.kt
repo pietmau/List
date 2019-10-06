@@ -4,8 +4,12 @@ import android.content.SharedPreferences
 
 private val IS_FIRST_INSTALL: String? = "first_install"
 
-class PreferencesWrapperImpl(private val preferences: SharedPreferences) : PreferencesWrapper {
-    lateinit var function: (sharedPreferences: SharedPreferences, key: String) -> Unit
+class PreferencesWrapperImpl(private val preferences: SharedPreferences) : PreferencesWrapper, SharedPreferences.OnSharedPreferenceChangeListener {
+    private var callback: (preferences: SharedPreferences, key: String) -> Unit = { _, _ -> }
+
+    init {
+        preferences.registerOnSharedPreferenceChangeListener(this)
+    }
 
     override fun isFirstInstall(): Boolean {
         val firstInstall = preferences.getBoolean(IS_FIRST_INSTALL, true)
@@ -13,11 +17,12 @@ class PreferencesWrapperImpl(private val preferences: SharedPreferences) : Prefe
         return firstInstall
     }
 
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        callback(sharedPreferences, key)
+    }
+
     override fun registerPreferenceChangeListener(callback: ((preferences: SharedPreferences, key: String) -> Unit)) {
-        function = { sharedPreferences, key ->
-            callback(sharedPreferences, key)
-        }
-        preferences.registerOnSharedPreferenceChangeListener(function)
+        this.callback = callback
     }
 
     override fun getBoolean(key: String) = preferences.getBoolean(key, false)

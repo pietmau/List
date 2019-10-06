@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.main
+package com.pppp.travelchecklist.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.view.MenuCreator
 import com.pppp.travelchecklist.menu.BetterMenuItem
 import kotlinx.android.synthetic.main.fragment_dialog_navigation.nav_view
 import javax.inject.Inject

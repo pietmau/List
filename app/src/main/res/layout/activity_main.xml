@@ -23,6 +23,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:titleEnabled="true"
             >
 
             <androidx.appcompat.widget.Toolbar

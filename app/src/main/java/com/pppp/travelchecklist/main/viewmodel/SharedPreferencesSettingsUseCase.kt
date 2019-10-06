@@ -9,6 +9,7 @@ interface SettingsUseCase {
     fun onUserChangedSettings(itemId: Int)
     fun subscribeToChanges(callback: (MainViewState.Settings) -> Unit = {})
     fun onVisualizeCheckedChanged()
+    fun getCheckedVisualizePreference(): MutableMap<Int, Int>
 }
 
 class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapper) : SettingsUseCase {
@@ -23,8 +24,8 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
     override fun subscribeToChanges(callback: ((MainViewState.Settings) -> Unit)) {
         preferences.registerPreferenceChangeListener { prefs, key ->
             val map = when (key) {
-                VISUALIZE_CHECKED_ITEMS -> onCheckedItemsPrefChanged(key)
-                else -> mapOf<Int, Int>()/* NoOp */
+                VISUALIZE_CHECKED_ITEMS -> getCheckedVisualizePreference()
+                else -> mapOf<Int, Int>()
             }
             if (!map.isEmpty()) {
                 callback(MainViewState.Settings(map))
@@ -32,8 +33,8 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
         }
     }
 
-    private fun onCheckedItemsPrefChanged(key: String): MutableMap<Int, Int> {
-        val value = if (preferences.getBoolean(key)) R.string.hide_checked else R.string.show_checked
+    override fun getCheckedVisualizePreference(): MutableMap<Int, Int> {
+        val value = if (preferences.getBoolean(VISUALIZE_CHECKED_ITEMS)) R.string.hide_checked else R.string.show_checked
         return mutableMapOf(R.id.action_show_hide_checked to value)
     }
 

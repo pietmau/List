@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.di
 
-import com.pppp.travelchecklist.main.BottomNavigationDrawerFragment
+import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.newlist.NewListActivity
 import com.pppp.travelchecklist.main.MainActivity
 import dagger.Subcomponent

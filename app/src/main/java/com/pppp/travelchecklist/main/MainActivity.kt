@@ -16,11 +16,14 @@ import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.model.Navigator
+import com.pppp.travelchecklist.main.view.MenuVisualizer
 import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
 import com.pppp.travelchecklist.main.viewmodel.MainViewAction
 import com.pppp.travelchecklist.main.viewmodel.MainViewState
+import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
+import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     lateinit var transientEventsProducer: TransientEventsProducer<MainTransientEvent>
     @Inject
     lateinit var navigator: Navigator
+    @Inject
+    lateinit var menuVisualizer: MenuVisualizer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,15 +57,11 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewAction.GoMakeNewList) }
-        collapsing.isTitleEnabled = false
     }
 
     private fun onFabClicked() = getCheckListFragment()?.addCategory() ?: emit(MainViewAction.GoMakeNewList)
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
+    override fun onCreateOptionsMenu(menu: Menu?) = menuVisualizer.onCreateOptionsMenu(menu, this)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -72,11 +73,14 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun render(viewState: MainViewState) {
+        menuVisualizer.updateMenu(viewState.settings)
         when (viewState) {
             is MainViewState.Empty -> onNoListPresent()
             is MainViewState.Content -> onContentPresent()
             is MainViewState.Loading -> onLoading()
-        }
+            is MainViewState.None -> {/* NoOp */
+            }
+        }.exhaustive
     }
 
     private fun onLoading() {

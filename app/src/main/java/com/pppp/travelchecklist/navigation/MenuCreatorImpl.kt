@@ -1,14 +1,9 @@
-package com.pppp.travelchecklist.main.view
+package com.pppp.travelchecklist.navigation
 
-import android.view.Menu
-import com.google.android.material.internal.NavigationMenu
-import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.TravelCheckListImpl
-import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
 import com.pppp.travelchecklist.menu.BetterMenuItem
 import java.lang.IllegalArgumentException
-import java.security.InvalidParameterException
 import javax.inject.Inject
 
 class MenuCreatorImpl @Inject constructor(private val titleUseCase: TitleUseCase) : MenuCreator {

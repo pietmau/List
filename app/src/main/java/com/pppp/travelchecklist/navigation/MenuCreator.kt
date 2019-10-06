@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.main.view
+package com.pppp.travelchecklist.navigation
 
 import android.view.Menu
 import com.pietrantuono.entities.TravelCheckList

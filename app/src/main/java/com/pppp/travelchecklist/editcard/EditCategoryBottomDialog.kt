@@ -9,7 +9,6 @@ import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.utils.appComponent
-import com.pppp.travelchecklist.utils.getLongArgument
 import com.pppp.travelchecklist.utils.getStringArgument
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.menu.BetterMenuItem

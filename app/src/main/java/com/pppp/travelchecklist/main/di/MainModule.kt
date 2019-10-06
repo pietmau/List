@@ -16,12 +16,13 @@ import com.pppp.travelchecklist.main.model.MainModel
 import com.pppp.travelchecklist.main.model.MainModelImpl
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.main.model.NavigatorImpl
-import com.pppp.travelchecklist.main.view.MenuCreator
-import com.pppp.travelchecklist.main.view.MenuCreatorImpl
+import com.pppp.travelchecklist.navigation.MenuCreator
+import com.pppp.travelchecklist.navigation.MenuCreatorImpl
 import com.pppp.travelchecklist.main.viewmodel.FirebaseMainUseCase
 import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
 import com.pppp.travelchecklist.main.viewmodel.MainViewAction
 import com.pppp.travelchecklist.main.viewmodel.MainViewState
+import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 import com.pppp.travelchecklist.main.viewmodel.SharedPreferencesSettingsUseCase
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
@@ -37,9 +38,9 @@ class MainModule(private val activity: FragmentActivity) {
     fun providePresenter(
         repo: TravelChecklistRepository,
         logger: AnalyticsLogger,
-        prefs: PreferencesWrapper
+        settingsUseCase: SettingsUseCase
     ) =
-        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(repo), prefs)).get(MainViewModel::class.java)
+        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(repo), settingsUseCase)).get(MainViewModel::class.java)
 
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
@@ -59,15 +60,18 @@ class MainModule(private val activity: FragmentActivity) {
     @Provides
     fun provideTitleUseCase(): TitleUseCase = TitleUseCaseImpl
 
+    @Provides
+    fun provideSettingsUseCase(prefs: PreferencesWrapper): SettingsUseCase = SharedPreferencesSettingsUseCase(prefs)
+
     class MainViewModelFactory(
         val logger: MainAnalyticsLogger,
         val model: MainModel,
-        val prefs: PreferencesWrapper
+        val settingsUseCase: SettingsUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(
             FirebaseMainUseCase(model),
-            SharedPreferencesSettingsUseCase(prefs),
+            settingsUseCase,
             logger
         ) as T
     }

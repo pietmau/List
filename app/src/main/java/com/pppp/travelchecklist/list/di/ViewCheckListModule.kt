@@ -10,6 +10,9 @@ import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.list.viewmodel.FirebaseSingleCheckListViewModel
 import com.pppp.travelchecklist.list.bottomdialog.CategoryAdder
 import com.pppp.travelchecklist.list.bottomdialog.CategoryAdderImpl
+import com.pppp.travelchecklist.list.viewmodel.ListSettingsUseCase
+import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
+import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
 import dagger.Module
 import dagger.Provides
@@ -18,9 +21,12 @@ import dagger.Provides
 class ViewCheckListModule(private val activity: FragmentActivity) {
 
     @Provides
-    fun provideSingleCheckListViewModel(repo: SingleCheckListRepository): SingleCheckListViewModel = ViewModelProviders.of(
+    fun provideSingleCheckListViewModel(
+        repo: SingleCheckListRepository,
+        settingsUseCase: ListSettingsUseCase
+    ): SingleCheckListViewModel = ViewModelProviders.of(
         activity,
-        ViewCheckListViewModelFactory(repo)
+        ViewCheckListViewModelFactory(repo, settingsUseCase)
     )
         .get(FirebaseSingleCheckListViewModel::class.java)
 
@@ -29,11 +35,17 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
 
     @Provides
     fun provideFirebaseSingleCheckListRepository(): SingleCheckListRepository = FirebaseSingleCheckListRepository()
+
+    @Provides
+    fun provideListSettingsUseCase(prefreneces: PreferencesWrapper): ListSettingsUseCase = ListSettingsUseCase(prefreneces)
+
 }
 
-class ViewCheckListViewModelFactory(val repo: SingleCheckListRepository) : ViewModelProvider.NewInstanceFactory() {
+class ViewCheckListViewModelFactory(
+    val repo: SingleCheckListRepository,
+    val settingsUseCase: ListSettingsUseCase
+) : ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = FirebaseSingleCheckListViewModel(
-        FirebaseSingleCheckListModel(repo)
-    ) as T
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        FirebaseSingleCheckListViewModel(model = FirebaseSingleCheckListModel(repo), settingsUseCase = settingsUseCase) as T
 }

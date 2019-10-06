@@ -6,16 +6,28 @@ import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.travelchecklist.utils.lazyMap
 import com.pppp.travelchecklist.list.model.SingleCheckListModel
+import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 
 class FirebaseSingleCheckListViewModel(
     private val model: SingleCheckListModel,
-    private val titleUsecase: TitleUseCase = TitleUseCaseImpl
+    private val titleUsecase: TitleUseCase = TitleUseCaseImpl,
+    private val settingsUseCase: ListSettingsUseCase
 ) : SingleCheckListViewModel, ViewModel() {
 
     private val viewStates: Map<String, LiveData<SingleCheckListViewModel.ViewState>> = lazyMap { listId ->
         val liveData = MutableLiveData<SingleCheckListViewModel.ViewState>()
-        model.getUserCheckListAndUpdates(listId, success = { liveData.postValue(SingleCheckListViewModel.ViewState.Data(it)) })
+        initialize(listId, liveData)
         return@lazyMap liveData
+    }
+
+    private fun initialize(
+        listId: String,
+        liveData: MutableLiveData<SingleCheckListViewModel.ViewState>
+    ) {
+        model.getUserCheckListAndUpdates(listId, success = { liveData.postValue(SingleCheckListViewModel.ViewState.Data(it)) })
+        settingsUseCase.registerVisualizationPreferencesListener {
+
+        }
     }
 
     override fun states(listId: String): LiveData<SingleCheckListViewModel.ViewState> = viewStates.getValue(listId)

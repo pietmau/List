@@ -2,8 +2,7 @@ package com.pppp.travelchecklist.main.viewmodel
 
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
-
-const val VISUALIZE_CHECKED_ITEMS = "visualize_checked_item"
+import com.pppp.travelchecklist.preferences.VISUALIZE_CHECKED_ITEMS
 
 interface SettingsUseCase {
     fun onUserChangedSettings(itemId: Int)

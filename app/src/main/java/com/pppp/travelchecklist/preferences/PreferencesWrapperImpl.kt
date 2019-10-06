@@ -2,7 +2,8 @@ package com.pppp.travelchecklist.preferences
 
 import android.content.SharedPreferences
 
-private val IS_FIRST_INSTALL: String? = "first_install"
+private const val IS_FIRST_INSTALL: String = "first_install"
+const val VISUALIZE_CHECKED_ITEMS = "visualize_checked_item"
 
 class PreferencesWrapperImpl(private val preferences: SharedPreferences) : PreferencesWrapper, SharedPreferences.OnSharedPreferenceChangeListener {
     private var callback: (preferences: SharedPreferences, key: String) -> Unit = { _, _ -> }

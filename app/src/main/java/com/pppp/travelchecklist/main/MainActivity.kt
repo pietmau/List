@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
             is MainViewState.Empty -> onNoListPresent()
             is MainViewState.Content -> onContentPresent()
             is MainViewState.Loading -> onLoading()
-            is MainViewState.None -> { /* NoOp */ }
+            is MainViewState.None -> { /* NoOp */
+            }
         }.exhaustive
     }
 

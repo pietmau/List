@@ -8,6 +8,8 @@ import android.widget.RelativeLayout
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 class CardItemView @JvmOverloads constructor(
     context: Context,
@@ -19,7 +21,6 @@ class CardItemView @JvmOverloads constructor(
         set(value) {
             field = value
             check.text = value?.title
-            check.isChecked = value?.checked == true
         }
 
     var itemId: String? = null
@@ -27,7 +28,7 @@ class CardItemView @JvmOverloads constructor(
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.custom_check_list_card_item, this, true)
+        inflater.inflate(com.pppp.travelchecklist.R.layout.custom_check_list_card_item, this, true)
         check.setOnCheckedChangeListener { buttonView, isChecked ->
             buttonView.setPaintFlags(getPaint(isChecked));
             callback?.onItemChecked(requireNotNull(data?.id), isChecked)

@@ -12,5 +12,6 @@ data class CategoryImpl @JvmOverloads constructor(
     override var title: String = "",
     override var description: String? = null,
     override val items: List<CheckListItemImpl> = emptyList(),
-    override var id: String = "" //TODO do we really need it?
+    override var id: String = "" ,//TODO do we really need it?
+    val showChecked:Boolean = true
 ) : Parcelable, Category

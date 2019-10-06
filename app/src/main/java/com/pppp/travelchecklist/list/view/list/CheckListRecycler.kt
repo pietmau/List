@@ -16,11 +16,12 @@ class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: Attri
         layoutManager = LinearLayoutManager(context)
     }
 
-    fun setItems(categories: List<Category>) {
+    fun setItems(categories: List<Category>, showChecked: Boolean) {
         if (adapter == null) {
             adapter = CheckListAdapter(chackListCardCallback)
         }
         checkListAdapter.items = categories.toMutableList()
+        checkListAdapter.setShowChekced(showChecked)
     }
 }
 

@@ -19,5 +19,5 @@ class ListSettingsUseCase(private val preferenceManager: PreferencesWrapper) {
         }
     }
 
-    private fun getShowCheckedPreferences() = preferenceManager.getBoolean(VISUALIZE_CHECKED_ITEMS)
+    fun getShowCheckedPreferences() = preferenceManager.getBoolean(VISUALIZE_CHECKED_ITEMS)
 }

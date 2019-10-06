@@ -10,9 +10,13 @@ class CardHolder(val view: View) : RecyclerView.ViewHolder(view) {
     private val cardItemView
         get() = (view as CardItemView)
 
-    fun bind(checkListItem: CheckListItem, callback: CardItemView.Callback) {
+    fun bind(
+        checkListItem: CheckListItem,
+        callback: CardItemView.Callback
+    ) {
         cardItemView.callback = callback
         cardItemView.itemId = checkListItem.id
         cardItemView.data = checkListItem
+
     }
 }

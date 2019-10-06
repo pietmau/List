@@ -14,7 +14,7 @@ interface SingleCheckListViewModel : ViewActionsConsumer<SingleCheckListViewMode
     fun getSubTitle(travelCheckList: TravelCheckList): String
 
     sealed class ViewState {
-        data class Data(val travelCheckList: TravelCheckList) : ViewState()
+        data class Data(val travelCheckList: TravelCheckList?=null, val showChecked: Boolean) : ViewState()
     }
 
     sealed class SingleListViewEvent : ViewAction {

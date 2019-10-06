@@ -38,5 +38,11 @@ class CheckListAdapter(private val chackListCardCallback: ChackListCardCallback)
         }
         (payloads[0] as Bundle).getParcelable<CategoryImpl>(CATEGORY)?.let { holder.setItems(it.items) }
     }
+
+    fun setShowChekced(showChecked: Boolean) {
+        val temp: MutableList<CategoryImpl> = items as MutableList<CategoryImpl>
+        items = temp.map { item -> item.copy(showChecked = showChecked) }.toMutableList()
+    }
+
 }
 

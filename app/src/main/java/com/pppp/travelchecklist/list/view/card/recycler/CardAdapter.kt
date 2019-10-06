@@ -14,7 +14,7 @@ class CardAdapter(private val callback: CardItemView.Callback, private var showC
 
     override fun getFilter() = CardFilter()
 
-    fun setItem(items: List<CheckListItem>) {
+    fun setItems(items: List<CheckListItem>) {
         allItems = items
         filter.filter(null)
     }

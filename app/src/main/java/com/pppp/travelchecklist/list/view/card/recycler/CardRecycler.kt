@@ -31,13 +31,13 @@ class CardRecycler @JvmOverloads constructor(
             if (adapter == null) {
                 adapter = CardAdapter(callback, showChecked)
             }
-            cardAdapter!!.items = value.toMutableList()
+            (adapter as CardAdapter).setItems(value)
             if (itemTouchHelper == null) {
                 itemTouchHelper = ItemTouchHelper(CustomItemTouchHelperCallback(cardAdapter!!, callback))
                 itemTouchHelper?.attachToRecyclerView(this)
             }
         }
-        get() = cardAdapter!!.items
+        get() = throw UnsupportedOperationException()
 
     init {
         layoutManager = CustomLayoutManager(context)

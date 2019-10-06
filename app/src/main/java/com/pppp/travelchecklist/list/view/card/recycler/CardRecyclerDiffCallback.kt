@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.pietrantuono.entities.CheckListItem
 
 class CardRecyclerDiffCallback(
-    private val old: MutableList<CheckListItem>,
-    private val new: MutableList<CheckListItem>
+    private val old: List<CheckListItem>,
+    private val new: List<CheckListItem>
 ) : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

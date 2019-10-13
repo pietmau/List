@@ -31,7 +31,7 @@ class CardRecycler @JvmOverloads constructor(
             if (adapter == null) {
                 adapter = CardAdapter(callback, showChecked)
             }
-            (adapter as CardAdapter).setItems(value)
+            (adapter as CardAdapter).items = value.toMutableList()
             if (itemTouchHelper == null) {
                 itemTouchHelper = ItemTouchHelper(CustomItemTouchHelperCallback(cardAdapter!!, callback))
                 itemTouchHelper?.attachToRecyclerView(this)

@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.main.viewmodel
 
 import com.pppp.travelchecklist.ViewState
+import com.pppp.travelchecklist.main.view.MenuViewState
 import com.pppp.travelchecklist.utils.replaceSameKeyItemsWith
 
 sealed class MainViewState(val settings: Settings) : ViewState {
@@ -23,5 +24,5 @@ sealed class MainViewState(val settings: Settings) : ViewState {
         }
     }
 
-    data class Settings(val values: Map<Int, Int> = mapOf())
+    data class Settings(val values: Map<Int, MenuViewState> = mapOf())
 }

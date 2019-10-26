@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun render(viewState: MainViewState) {
         menuVisualizer.updateMenu(viewState.settings)
+        invalidateOptionsMenu()
         when (viewState) {
             is MainViewState.Empty -> onNoListPresent()
             is MainViewState.Content -> onContentPresent()

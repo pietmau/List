@@ -8,12 +8,6 @@
         android:title="@string/action_add"
         app:showAsAction="ifRoom" />
 
-    <!-- <item
-         android:id="@+id/action_love"
-         android:icon="@drawable/ic_baseline_favorite_24px"
-         android:title="@string/action_love"
-         app:showAsAction="always"/>
- -->
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_baseline_more_vert_24px"
@@ -22,8 +16,8 @@
 
     <item
         android:id="@+id/action_show_hide_checked"
-        android:icon="@drawable/ic_baseline_more_vert_24px"
+        android:icon="@drawable/ic_check_box_24px"
         android:title="Hide checked"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 </menu>

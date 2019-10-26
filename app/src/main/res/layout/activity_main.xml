@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        >
+        android:layout_height="?attr/actionBarSize">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing"
@@ -23,16 +20,14 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleEnabled="true"
-            >
+            app:titleEnabled="true">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/green_super_light"
-                app:layout_scrollFlags="scroll|enterAlways"
-                />
+                app:layout_scrollFlags="scroll|enterAlways" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -40,23 +35,20 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.pppp.travelchecklist.main.view.LoadingContentErrorView
             android:id="@+id/loading_content_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            >
+            android:layout_gravity="center">
 
             <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:autoStart="true"
-                />
+                android:autoStart="true" />
 
             <LinearLayout
                 android:id="@+id/buttons"
@@ -64,8 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text"
@@ -73,16 +64,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/you_don_t_have_a_list_yet"
-                    />
+                    android:text="@string/you_don_t_have_a_list_yet" />
 
                 <Button
                     android:id="@+id/button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_big"
-                    android:text="@string/add_new_checklist"
-                    />
+                    android:text="@string/add_new_checklist" />
 
             </LinearLayout>
 
@@ -97,11 +86,10 @@
         android:layout_gravity="bottom"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:backgroundTint="@color/green_super_light"
-        app:fabAlignmentMode="end"
-        app:hideOnScroll="true"
-        app:navigationIcon="@drawable/ic_baseline_menu_24px"
+        app:fabAlignmentMode="center"
         app:fabAnimationMode="slide"
-        />
+        app:hideOnScroll="true"
+        app:navigationIcon="@drawable/ic_baseline_menu_24px" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -109,8 +97,8 @@
         android:layout_height="wrap_content"
         android:scaleType="center"
         android:src="@drawable/ic_baseline_add_24px"
+        app:fabSize="mini"
         app:layout_anchor="@id/bottom_bar"
-        app:tint="@android:color/white"
-        />
+        app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

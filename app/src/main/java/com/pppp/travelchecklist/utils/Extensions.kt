@@ -49,7 +49,7 @@ inline fun <reified T : Fragment> FragmentActivity.findAddedFragment(@IdRes id: 
     val fragment = supportFragmentManager.findFragmentById(id) ?: return null
     return when {
         fragment !is T -> null
-        fragment.isAdded -> null
+        !fragment.isAdded -> null
         else -> fragment
     }
 }

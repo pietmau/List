@@ -24,7 +24,7 @@ class FirebaseSingleCheckListViewModel(
         liveData: MutableLiveData<SingleCheckListViewModel.ViewState>
     ) {
         model.getUserCheckListAndUpdates(listId) {
-            val data = SingleCheckListViewModel.ViewState(it, settingsUseCase.getShowCheckedPreferences())
+            val data = SingleCheckListViewModel.ViewState(it, settingsUseCase.getShowCheckedPreferences(), getTitle(it), getSubTitle(it))
             liveData.postValue(data)
         }
         settingsUseCase.registerVisualizationPreferencesListener {

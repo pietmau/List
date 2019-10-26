@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         button.setOnClickListener { emit(MainViewAction.GoMakeNewList) }
     }
 
-    private fun onFabClicked() = getCheckListFragment()?.addCategory() ?: emit(MainViewAction.GoMakeNewList)
+    private fun onFabClicked() = getCheckListFragment()?.apply { addCategory() } ?: emit(MainViewAction.GoMakeNewList)
 
     override fun onCreateOptionsMenu(menu: Menu?) = menuVisualizer.onCreateOptionsMenu(menu, this)
 

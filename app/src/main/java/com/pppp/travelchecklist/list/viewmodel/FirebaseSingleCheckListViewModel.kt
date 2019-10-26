@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.travelchecklist.utils.lazyMap
 import com.pppp.travelchecklist.list.model.SingleCheckListModel
-import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 
 class FirebaseSingleCheckListViewModel(
     private val model: SingleCheckListModel,
@@ -25,35 +24,36 @@ class FirebaseSingleCheckListViewModel(
         liveData: MutableLiveData<SingleCheckListViewModel.ViewState>
     ) {
         model.getUserCheckListAndUpdates(listId) {
-            val data = SingleCheckListViewModel.ViewState.Data(it, settingsUseCase.getShowCheckedPreferences())
+            val data = SingleCheckListViewModel.ViewState(it, settingsUseCase.getShowCheckedPreferences())
             liveData.postValue(data)
         }
         settingsUseCase.registerVisualizationPreferencesListener {
-            val state = liveData.value ?: SingleCheckListViewModel.ViewState.Data(showChecked = it)
+            val value = liveData.value ?: SingleCheckListViewModel.ViewState()
+            val state = value.copy(showChecked = it)
             liveData.postValue(state)
         }
     }
 
     override fun states(listId: String): LiveData<SingleCheckListViewModel.ViewState> = viewStates.getValue(listId)
 
-    override fun accept(eventSingleList: SingleCheckListViewModel.SingleListViewEvent) =
-        when (eventSingleList) {
+    override fun accept(event: SingleCheckListViewModel.SingleListViewEvent) =
+        when (event) {
             is SingleCheckListViewModel.SingleListViewEvent.DeleteItem -> model.deleteItem(
-                eventSingleList.listId,
-                eventSingleList.cardId,
-                eventSingleList.itemId
+                event.listId,
+                event.cardId,
+                event.itemId
             )
             is SingleCheckListViewModel.SingleListViewEvent.MoveItem -> model.moveItem(
-                eventSingleList.listId,
-                eventSingleList.cardId,
-                eventSingleList.fromPosition,
-                eventSingleList.toPosition
+                event.listId,
+                event.cardId,
+                event.fromPosition,
+                event.toPosition
             )
             is SingleCheckListViewModel.SingleListViewEvent.ItemChecked -> model.checkItem(
-                eventSingleList.listId,
-                eventSingleList.cardId,
-                eventSingleList.itemId,
-                eventSingleList.isChecked
+                event.listId,
+                event.cardId,
+                event.itemId,
+                event.isChecked
             )
         }
 

@@ -13,11 +13,6 @@ class CardRecycler @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
-    var showChecked: Boolean = true
-        set(value) {
-            cardAdapter?.setShowChecked(value)
-            field = value
-        }
 
     lateinit var callback: CardItemView.Callback
 
@@ -29,7 +24,7 @@ class CardRecycler @JvmOverloads constructor(
     var items: List<CheckListItem>
         set(value) {
             if (adapter == null) {
-                adapter = CardAdapter(callback, showChecked)
+                adapter = CardAdapter(callback)
             }
             (adapter as CardAdapter).items = value.toMutableList()
             if (itemTouchHelper == null) {

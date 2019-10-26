@@ -38,12 +38,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
         viewModel.states(listId).observe(viewLifecycleOwner, Observer { render(it) })
     }
 
-    private fun render(state: SingleCheckListViewModel.ViewState) =
-        when (state) {
-            is SingleCheckListViewModel.ViewState.Data -> onDataAvailable(state)
-        }
-
-    private fun onDataAvailable(state: SingleCheckListViewModel.ViewState.Data) {
+    private fun render(state: SingleCheckListViewModel.ViewState) {
         state.travelCheckList ?: return
         recycler.setItems(state.travelCheckList.categories, state.showChecked)
         (activity as? MainActivity)?.setListTitle(viewModel.getTitle(state.travelCheckList), viewModel.getSubTitle(state.travelCheckList))

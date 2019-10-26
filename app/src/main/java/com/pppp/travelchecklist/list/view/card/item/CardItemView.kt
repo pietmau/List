@@ -21,6 +21,7 @@ class CardItemView @JvmOverloads constructor(
         set(value) {
             field = value
             check.text = value?.title
+            check.isChecked = value?.checked == true
         }
 
     var itemId: String? = null

@@ -60,7 +60,6 @@ class NoCardCheckListCard @JvmOverloads constructor(
         this.checkListCardCallback = chackListCardCallback
         cardItems.callback = cardItemCallback
         setItems(category.items)
-        cardItems.showChecked = (category as CategoryImpl).showChecked
         title.text = category.title
     }
 

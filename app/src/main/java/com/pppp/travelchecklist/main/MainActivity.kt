@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewAction.GoMakeNewList) }
+        collapsing.isTitleEnabled = false
     }
 
     private fun onFabClicked() = getCheckListFragment()?.apply { addCategory() } ?: emit(MainViewAction.GoMakeNewList)

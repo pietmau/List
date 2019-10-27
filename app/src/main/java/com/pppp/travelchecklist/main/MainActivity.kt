@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
             android.R.id.home -> emit(MainViewAction.NavMenuOpenSelected)
             R.id.add -> showConfirmationDialog({ emit(MainViewAction.GoMakeNewList) })
             R.id.action_show_hide_checked -> emit(MainViewAction.OnSettingChanged(item.itemId))
+            R.id.delete -> emit(MainViewAction.DeleteCurrentList)
         }
         return true
     }
@@ -85,18 +86,21 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun onLoading() {
+        removeListFragment()
         loading_content_error.loading()
-        bottom_bar.navigationIcon = null
     }
 
     private fun onContentPresent() {
-        loading_content_error.hide()
-        bottom_bar.setNavigationIcon(R.drawable.ic_baseline_menu_24px)
+        loading_content_error.content()
     }
 
     private fun onNoListPresent() {
+        removeListFragment()
         loading_content_error.empty()
-        bottom_bar.navigationIcon = null
+    }
+
+    private fun removeListFragment() {
+        navigator.removeListFragment(this)
     }
 
     private fun onTransientEventReceived(transientEvent: MainTransientEvent) = when (transientEvent) {

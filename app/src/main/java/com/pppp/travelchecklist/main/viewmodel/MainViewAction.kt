@@ -10,4 +10,5 @@ sealed class MainViewAction : ViewAction {
     data class NewListGenerated(val listId: String) : MainViewAction()
     class OnSettingChanged(val itemId: Int) : MainViewAction()
     object GetLatestListVisited : MainViewAction()
+    object DeleteCurrentList : MainViewAction()
 }

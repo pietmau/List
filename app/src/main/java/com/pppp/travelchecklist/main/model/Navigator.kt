@@ -11,8 +11,17 @@ import com.pppp.travelchecklist.newlist.NewListActivity
 
 object NavigatorImpl : Navigator {
 
+    override fun removeListFragment(activity: AppCompatActivity) {
+        activity.supportFragmentManager.apply {
+            findFragmentByTag(ViewCheckListFragment.TAG)?.let {
+                this.beginTransaction().remove(it).commitAllowingStateLoss()
+            }
+        }
+    }
+
     override fun goToList(activity: AppCompatActivity, listId: String) {
-        activity.supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId)).commitAllowingStateLoss()
+        activity.supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId), ViewCheckListFragment.TAG)
+            .commitAllowingStateLoss()
     }
 
     override fun startCreateChecklistActivity(activity: Activity) {
@@ -34,6 +43,8 @@ interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, Ma
     fun startCreateChecklistActivity(activity: Activity)
 
     fun goToList(activity: AppCompatActivity, listId: String)
+
+    fun removeListFragment(activity: AppCompatActivity)
 
 }
 

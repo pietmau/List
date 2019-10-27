@@ -34,6 +34,11 @@ class MainViewModel(
         is MainViewAction.GetLatestListVisited -> getLatestListVisited()
         is MainViewAction.GoMakeNewList -> goToCreateNewList()
         is MainViewAction.OnSettingChanged -> settingsUseCase.onUserChangedSettings(mainViewAction.itemId)
+        is MainViewAction.DeleteCurrentList -> deleteCurrentList()
+    }
+
+    private fun deleteCurrentList() {
+        emitNewViewState(MainViewState.Loading())
     }
 
     private fun updateCurrentViewState(settings: MainViewState.Settings) {

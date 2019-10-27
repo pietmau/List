@@ -27,6 +27,7 @@ import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_dialog_navigation.view.nav_view
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
@@ -76,7 +77,6 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun render(viewState: MainViewState) {
         menuVisualizer.updateMenu(viewState.settings)
-        invalidateOptionsMenu()
         when (viewState) {
             is MainViewState.Empty -> onNoListPresent()
             is MainViewState.Content -> onContentPresent()

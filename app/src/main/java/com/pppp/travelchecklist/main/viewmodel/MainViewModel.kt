@@ -38,7 +38,13 @@ class MainViewModel(
     }
 
     private fun deleteCurrentList() {
-        emitNewViewState(MainViewState.Loading())
+        mainUseCase.deleteCurrentList()
+        if (mainUseCase.isEmpty()) {
+            emitNewViewState(MainViewState.Empty())
+        } else {
+            emitNewViewState(MainViewState.Content())
+            openNavMenu()
+        }
     }
 
     private fun updateCurrentViewState(settings: MainViewState.Settings) {

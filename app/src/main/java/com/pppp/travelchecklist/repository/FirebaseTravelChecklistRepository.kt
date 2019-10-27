@@ -19,6 +19,14 @@ class FirebaseTravelChecklistRepository(
     private val mapper: TravelCheckListMapper = TravelCheckListMapperImpl
 ) : TravelChecklistRepository {
 
+    override fun deleteChecklist(listId: String) {
+        db.collection(USERS)
+            .document(getUserId())
+            .collection(USERS_CHECKLISTS)
+            .document(listId)
+            .delete()
+    }
+
     override fun saveLastVisitedList(listId: String) {
         db.collection(USERS)
             .document(getUserId())
@@ -69,7 +77,8 @@ class FirebaseTravelChecklistRepository(
     override fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         db.collection(USERS)
             .document(getUserId())
-            .collection(USERS_CHECKLISTS).addSnapshotListener { snapshot, error ->
+            .collection(USERS_CHECKLISTS)
+            .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     failure?.invoke(error)
                     return@addSnapshotListener

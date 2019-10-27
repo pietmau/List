@@ -9,4 +9,8 @@ interface MainUseCase {
     )
 
     fun saveLastVisitedList(listId: String)
+
+    fun deleteCurrentList()
+
+    fun isEmpty(): Boolean
 }

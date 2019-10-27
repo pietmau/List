@@ -10,11 +10,9 @@ interface MainModel {
 
     fun getLastVisitedList(success: ((String?) -> Unit)? = null, failure: ((Throwable?) -> Unit)? = null)
 
-    var checkLists: List<TravelCheckList>
+    var checkLists: Map<String, TravelCheckList>
 
-    val isEmpty: Boolean
+    fun deleteCurrentList()
 
-    operator fun get(index: Int): TravelCheckList
-
-    operator fun contains(position: Int): Boolean
+    fun isEmpty(): Boolean
 }

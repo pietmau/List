@@ -13,11 +13,7 @@ class FirebaseSingleCheckListViewModel(
     private val settingsUseCase: ListSettingsUseCase
 ) : SingleCheckListViewModel, ViewModel() {
 
-    private val viewStates: Map<String, LiveData<SingleCheckListViewModel.ViewState>> = lazyMap { listId ->
-        val liveData = MutableLiveData<SingleCheckListViewModel.ViewState>()
-        initialize(listId, liveData)
-        return@lazyMap liveData
-    }
+    private val viewStates: MutableLiveData<SingleCheckListViewModel.ViewState> by lazy { MutableLiveData<SingleCheckListViewModel.ViewState>() }
 
     private fun initialize(
         listId: String,
@@ -34,7 +30,7 @@ class FirebaseSingleCheckListViewModel(
         }
     }
 
-    override fun states(listId: String): LiveData<SingleCheckListViewModel.ViewState> = viewStates.getValue(listId)
+    override fun states(listId: String) = viewStates.also { initialize(listId, it) }
 
     override fun accept(event: SingleCheckListViewModel.SingleListViewEvent) =
         when (event) {

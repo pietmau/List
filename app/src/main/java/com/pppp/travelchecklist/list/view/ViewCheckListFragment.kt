@@ -23,7 +23,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     internal lateinit var viewModel: SingleCheckListViewModel
 
     private val listId
-        get() = arguments?.getString(LIST_ID)!!// Let it crash!
+        get() = requireNotNull(arguments?.getString(LIST_ID))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_checlist, container, false);

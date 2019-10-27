@@ -27,8 +27,7 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
     ): SingleCheckListViewModel = ViewModelProviders.of(
         activity,
         ViewCheckListViewModelFactory(repo, settingsUseCase)
-    )
-        .get(FirebaseSingleCheckListViewModel::class.java)
+    ).get(FirebaseSingleCheckListViewModel::class.java)
 
     @Provides
     fun provideCategoryAdder(adder: CategoryAdderImpl): CategoryAdder = adder

@@ -57,12 +57,13 @@ class SplashActivity : AppCompatActivity() {
     private fun login() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder()
+                .setLogo(R.drawable.web_hi_res_512)
+                .setTosAndPrivacyPolicyUrls("dfdsfds","dasdasdasdasda")
                 .setAvailableProviders(
                     listOf(
                         AuthUI.IdpConfig.GoogleBuilder().build(),
                         AuthUI.IdpConfig.EmailBuilder().build(),
-                        AuthUI.IdpConfig.FacebookBuilder().build(),
-                        AuthUI.IdpConfig.AnonymousBuilder().build()
+                        AuthUI.IdpConfig.FacebookBuilder().build()
                     )
                 )
                 .build(), REQUEST_CODE

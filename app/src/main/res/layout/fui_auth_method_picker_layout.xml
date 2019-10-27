@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
-    android:background="?fancyBackgroundColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?fancyBackgroundColor"
     android:clipToPadding="false">
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -15,72 +14,76 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
-    <!-- TODO remove lint ignore once the bug is fixed:
-         https://issuetracker.google.com/issues/38281866-->
-    <ImageView
-        android:id="@+id/logo"
-        style="@style/FirebaseUI.AuthMethodPicker.Logo"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/fui_field_padding_vert"
-        android:layout_marginBottom="@dimen/fui_field_padding_vert"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/container"
-        app:layout_constraintVertical_weight="1"
-        tools:background="#bfbfbf"
-        tools:ignore="ContentDescription"
-        tools:layout_height="100dp"
-        tools:layout_width="100dp" />
-
     <LinearLayout
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:id="@+id/container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/fui_field_padding_vert"
-        android:fillViewport="true"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_gravity="center"
-            style="@style/DefaultTextStyleXL"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/fui_field_padding_vert"
+            android:layout_marginBottom="@dimen/fui_field_padding_vert"
+            app:layout_constraintVertical_weight="1"
+            tools:background="#bfbfbf"
+            tools:ignore="ContentDescription"
+            tools:layout_height="100dp"
+            tools:layout_width="100dp" />
+
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fui_field_padding_vert"
+            android:fillViewport="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <TextView
+                style="@style/DefaultTextStyleXL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_big"
+                android:gravity="center"
+                android:text="@string/welcome" />
+
+            <LinearLayout
+                android:id="@+id/btn_holder"
+                style="@style/FirebaseUI.AuthMethodPicker.ButtonHolder"
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:background="#bfbfbf"
+                tools:layout_height="250dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/main_tos_and_pp"
+            style="@style/FirebaseUI.Text.BodyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fui_field_padding_vert"
             android:gravity="center"
-            android:text="@string/welcome"
-            android:layout_marginBottom="@dimen/spacing_big"
-            />
-        <LinearLayout
-            android:layout_gravity="center"
-            android:id="@+id/btn_holder"
-            style="@style/FirebaseUI.AuthMethodPicker.ButtonHolder"
-            android:gravity="center"
-            tools:background="#bfbfbf"
-            tools:layout_height="250dp" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/by_continuing_you_are_indicating_that_you_accept_our_terms_of_service_and_privacy_policy"
+            android:textColor="?android:textColorTertiary"
+            android:textIsSelectable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/main_tos_and_pp"
-        style="@style/FirebaseUI.Text.BodyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:layout_marginBottom="@dimen/fui_field_padding_vert"
-        android:gravity="center"
-        android:textColor="?android:textColorTertiary"
-        android:textIsSelectable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="By continuing you are indicating that you accept our Terms of Service and Privacy Policy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

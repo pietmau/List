@@ -4,7 +4,7 @@ import com.pietrantuono.entities.TravelCheckList
 
 interface SingleCheckListModel {
 
-    fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?)
+    fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 
     fun deleteItem(listId: String, categoryId: String, itemId: String)
 

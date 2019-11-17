@@ -11,4 +11,6 @@ sealed class MainViewAction : ViewAction {
     class OnSettingChanged(val itemId: Int) : MainViewAction()
     object GetLatestListVisited : MainViewAction()
     object DeleteCurrentList : MainViewAction()
+    object OnNoListFound : MainViewAction()
+
 }

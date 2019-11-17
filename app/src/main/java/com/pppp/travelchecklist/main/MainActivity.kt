@@ -27,7 +27,6 @@ import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_dialog_navigation.view.nav_view
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> emit(MainViewAction.NavMenuOpenSelected)
-            R.id.add -> showConfirmationDialog({ emit(MainViewAction.GoMakeNewList) })
+            R.id.add -> showConfirmationDialog({ emit(MainViewAction.GoMakeNewList) }, R.string.add_list, R.string.confirm_add_new_list)
             R.id.action_show_hide_checked -> emit(MainViewAction.OnSettingChanged(item.itemId))
             R.id.delete -> emit(MainViewAction.DeleteCurrentList)
         }
@@ -77,12 +76,12 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun render(viewState: MainViewState) {
         menuVisualizer.updateMenu(viewState.settings)
-        when (viewState) {
+        return when (viewState) {
             is MainViewState.Empty -> onNoListPresent()
             is MainViewState.Content -> onContentPresent()
             is MainViewState.Loading -> onLoading()
             is MainViewState.None -> Unit
-        }.exhaustive
+        }
     }
 
     private fun onLoading() {
@@ -138,5 +137,10 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         toolbar.subtitle = subTitle
     }
 
+    fun onListNotAvailable() {
+        emit(MainViewAction.OnNoListFound)
+    }
+
     private fun getCheckListFragment() = findAddedFragment<ViewCheckListFragment>(R.id.container)
+
 }

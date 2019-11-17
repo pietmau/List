@@ -28,13 +28,14 @@ class MainViewModel(
         }
 
     override fun accept(mainViewAction: MainViewAction) = when (mainViewAction) {
-        is MainViewAction.NavMenuOpenSelected -> openNavMenu()
+        MainViewAction.NavMenuOpenSelected -> openNavMenu()
         is MainViewAction.NavItemSelected -> goToList(mainViewAction.id)
         is MainViewAction.NewListGenerated -> goToList(mainViewAction.listId)
-        is MainViewAction.GetLatestListVisited -> getLatestListVisited()
-        is MainViewAction.GoMakeNewList -> goToCreateNewList()
+        MainViewAction.GetLatestListVisited -> getLatestListVisited()
+        MainViewAction.GoMakeNewList -> goToCreateNewList()
         is MainViewAction.OnSettingChanged -> settingsUseCase.onUserChangedSettings(mainViewAction.itemId)
-        is MainViewAction.DeleteCurrentList -> deleteCurrentList()
+        MainViewAction.DeleteCurrentList -> deleteCurrentList()
+        MainViewAction.OnNoListFound -> emitNewViewState(MainViewState.Empty())
     }
 
     private fun deleteCurrentList() {

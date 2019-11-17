@@ -101,10 +101,10 @@ fun <K, V> lazyMap(initializer: (K) -> V): Map<K, V> {
     }
 }
 
-fun Activity.showConfirmationDialog(yes: (() -> Unit)?) {
+fun Activity.showConfirmationDialog(yes: (() -> Unit)?, title: Int, message: Int) {
     MaterialAlertDialogBuilder(this)
-        .setTitle(R.string.add_list)
-        .setMessage(R.string.confirm_add_new_list)
+        .setTitle(title)
+        .setMessage(message)
         .setPositiveButton(R.string.yes, { _, _ ->
             yes?.invoke()
         })

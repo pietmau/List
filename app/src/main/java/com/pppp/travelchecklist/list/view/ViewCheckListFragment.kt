@@ -35,7 +35,12 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recycler.chackListCardCallback = this
-        viewModel.states(listId).observe(viewLifecycleOwner, Observer { render(it) })
+        viewModel.viewStates(listId).observe(viewLifecycleOwner, Observer { render(it) })
+        viewModel.events.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is SingleCheckListViewModel.TransientEvent.ListNotFound -> (activity as? MainActivity)?.onListNotAvailable()
+            }
+        })
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) {

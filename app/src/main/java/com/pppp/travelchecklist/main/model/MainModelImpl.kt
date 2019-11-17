@@ -13,7 +13,7 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
         getUsersLists({
             checkLists = it.filter { checklist -> checklist.id != null }
                 .map { checklist -> requireNotNull(checklist.id) to checklist }
-                .toMap()
+                .toMap().toMutableMap()
         }, { /*NoOp*/ })
     }
 

@@ -3,11 +3,10 @@ package com.pppp.travelchecklist.list.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pietrantuono.entities.TravelCheckList
-import com.pppp.travelchecklist.utils.lazyMap
+import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.list.model.SingleCheckListModel
 
-class FirebaseSingleCheckListViewModel(
+class FireBaseSingleCheckListViewModel(
     private val model: SingleCheckListModel,
     private val titleUsecase: TitleUseCase = TitleUseCaseImpl,
     private val settingsUseCase: ListSettingsUseCase
@@ -15,22 +14,26 @@ class FirebaseSingleCheckListViewModel(
 
     private val viewStates: MutableLiveData<SingleCheckListViewModel.ViewState> by lazy { MutableLiveData<SingleCheckListViewModel.ViewState>() }
 
-    private fun initialize(
-        listId: String,
-        liveData: MutableLiveData<SingleCheckListViewModel.ViewState>
-    ) {
-        model.getUserCheckListAndUpdates(listId) {
-            val data = SingleCheckListViewModel.ViewState(it, settingsUseCase.getShowCheckedPreferences(), getTitle(it), getSubTitle(it))
-            liveData.postValue(data)
-        }
+    override val events: LiveData<SingleCheckListViewModel.TransientEvent> by lazy { TransientLiveData<SingleCheckListViewModel.TransientEvent>() }
+
+    private fun initialize(listId: String, liveData: MutableLiveData<SingleCheckListViewModel.ViewState>) {
+        model.getUserCheckListAndUpdates(listId,
+            success = { list ->
+                val settings = settingsUseCase.getShowCheckedPreferences()
+                val title = titleUsecase.getTitle(list)
+                liveData.postValue(SingleCheckListViewModel.ViewState(list, settings, title, titleUsecase.getSubTitle(list)))
+            },
+            failure = {
+                (events as MutableLiveData).postValue(SingleCheckListViewModel.TransientEvent.ListNotFound(it))
+            })
+
         settingsUseCase.registerVisualizationPreferencesListener {
-            val value = liveData.value ?: SingleCheckListViewModel.ViewState()
-            val state = value.copy(showChecked = it)
+            val state = (liveData.value ?: SingleCheckListViewModel.ViewState()).copy(showChecked = it)
             liveData.postValue(state)
         }
     }
 
-    override fun states(listId: String) = viewStates.also { initialize(listId, it) }
+    override fun viewStates(listId: String) = viewStates.also { initialize(listId, it) }
 
     override fun accept(event: SingleCheckListViewModel.SingleListViewEvent) =
         when (event) {
@@ -52,8 +55,4 @@ class FirebaseSingleCheckListViewModel(
                 event.isChecked
             )
         }
-
-    override fun getTitle(travelCheckList: TravelCheckList) = titleUsecase.getTitle(travelCheckList)
-
-    override fun getSubTitle(travelCheckList: TravelCheckList) = titleUsecase.getSubTitle(travelCheckList)
 }

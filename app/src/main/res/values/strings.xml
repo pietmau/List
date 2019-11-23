@@ -11,8 +11,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update item</string>
-    <string name="item_name">Item name</string>
-    <string name="description_additional_info">Description/additional info</string>
+    <string name="item_name">Title</string>
+    <string name="description_additional_info">Description</string>
     <string name="importance">Importance</string>
 
     <!-- TODO: Remove or change this placeholder text -->

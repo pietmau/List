@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.main.viewmodel
 
+import android.os.Parcel
 import android.os.Parcelable
 import com.pppp.travelchecklist.ViewState
 import com.pppp.travelchecklist.main.view.MenuViewState
@@ -10,16 +11,16 @@ import java.io.Serializable
 
 sealed class MainViewState(val settings: Settings = Settings()) : ViewState, Parcelable {
     @Parcelize
-    data class Empty(@IgnoredOnParcel val prefs: Settings = Settings()) : MainViewState(prefs)
+    data class Empty(val prefs: Settings = Settings()) : MainViewState(prefs)
 
     @Parcelize
-    data class Content(@IgnoredOnParcel val prefs: Settings = Settings(), val expandNavigation: Boolean = false) : MainViewState(prefs)
+    data class Content(val prefs: Settings = Settings(), val expandNavigation: Boolean = false) : MainViewState(prefs)
 
     @Parcelize
-    data class Loading(@IgnoredOnParcel val prefs: Settings = Settings()) : MainViewState(prefs)
+    data class Loading(val prefs: Settings = Settings()) : MainViewState(prefs)
 
     @Parcelize
-    data class None(@IgnoredOnParcel val prefs: Settings = Settings()) : MainViewState(prefs)
+    data class None(val prefs: Settings = Settings()) : MainViewState(prefs)
 
     fun makeCopyReplacingOldSettingsWithNew(oldSettings: Settings?): MainViewState {
         val values = oldSettings?.values?.replaceSameKeyItemsWith(newElements = settings.values) ?: mapOf()
@@ -35,5 +36,25 @@ sealed class MainViewState(val settings: Settings = Settings()) : ViewState, Par
         }
     }
 
-    data class Settings(val values: Map<Int, MenuViewState> = mapOf()) :Serializable
+    data class Settings(val values: Map<Int, MenuViewState> = mapOf()) : Parcelable {
+
+        constructor(parcel: Parcel) : this()
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) { /* NoOp */
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<Settings> {
+            override fun createFromParcel(parcel: Parcel): Settings {
+                return Settings(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Settings?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
 }

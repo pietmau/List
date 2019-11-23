@@ -20,7 +20,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleEnabled="true">
+            app:titleEnabled="false">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -88,8 +88,7 @@
         app:backgroundTint="@color/green_super_light"
         app:fabAlignmentMode="center"
         app:fabAnimationMode="slide"
-        app:hideOnScroll="true"
-        app:navigationIcon="@drawable/ic_baseline_menu_24px" />
+        app:hideOnScroll="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

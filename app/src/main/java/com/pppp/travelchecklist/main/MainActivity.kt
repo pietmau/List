@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
@@ -59,7 +60,6 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewAction.GoMakeNewList) }
-        collapsing.isTitleEnabled = false
     }
 
     private fun onFabClicked() = getCheckListFragment()?.apply { addCategory() } ?: emit(MainViewAction.GoMakeNewList)
@@ -93,11 +93,14 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun onContentPresent() {
         loading_content_error.content()
+        bottom_bar.navigationIcon = resources.getDrawable(R.drawable.ic_baseline_menu_24px, theme)
     }
 
     private fun onNoListPresent() {
         removeListFragment()
         loading_content_error.empty()
+        bottom_bar.navigationIcon = null
+
     }
 
     private fun removeListFragment() {

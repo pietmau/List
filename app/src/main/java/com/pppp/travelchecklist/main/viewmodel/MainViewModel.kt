@@ -16,7 +16,7 @@ class MainViewModel(
     private val mainUseCase: MainUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val analytics: MainAnalyticsLogger,
-    private val handle: SavedStateHandle
+    handle: SavedStateHandle
 ) : ViewStatesProducer<MainViewState>,
     ViewActionsConsumer<MainViewAction>,
     TransientEventsProducer<MainTransientEvent>, ViewModel() {

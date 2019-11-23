@@ -16,5 +16,6 @@
     <dimen name="design_fab_image_size" tools:override="true">32dp</dimen>
     <dimen name="profile_image_size">48dp</dimen>
     <dimen name="radius">12dp</dimen>
+    <dimen name="icon_size">18dp</dimen>
 
 </resources>

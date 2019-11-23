@@ -8,7 +8,7 @@ import com.pietrantuono.entities.Category
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 
 class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs) {
-    lateinit var chackListCardCallback: ChackListCardCallback
+    lateinit var checkListCardCallback: ChackListCardCallback
 
     private val checkListAdapter
         get() = adapter as CheckListAdapter
@@ -19,7 +19,7 @@ class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: Attri
 
     fun setItems(categories: List<Category>, showChecked: Boolean) {
         if (adapter == null) {
-            adapter = CheckListAdapter(chackListCardCallback, showChecked)
+            adapter = CheckListAdapter(checkListCardCallback, showChecked)
         }
         checkListAdapter.setItems(categories.toMutableList(), showChecked)
     }

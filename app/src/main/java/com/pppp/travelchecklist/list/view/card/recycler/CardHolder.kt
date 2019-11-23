@@ -17,6 +17,5 @@ class CardHolder(val view: View) : RecyclerView.ViewHolder(view) {
         cardItemView.callback = callback
         cardItemView.itemId = checkListItem.id
         cardItemView.data = checkListItem
-
     }
 }

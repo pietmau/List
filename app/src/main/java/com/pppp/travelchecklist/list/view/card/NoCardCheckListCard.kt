@@ -24,6 +24,10 @@ class NoCardCheckListCard @JvmOverloads constructor(
     override lateinit var checkListCardCallback: ChackListCardCallback
 
     private val cardItemCallback = object : CardItemView.Callback {
+        override fun onSettingsClicked(data: CheckListItem) {
+            checkListCardCallback.onSettingsClicked(cardId, data.id)
+        }
+
         override fun onItemMoved(fromPosition: Int, toPosition: Int) {
             checkListCardCallback.onItemMoved(cardId, fromPosition, toPosition)
         }

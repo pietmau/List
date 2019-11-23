@@ -10,4 +10,6 @@ interface ChackListCardCallback {
     fun onItemMoved(cardId: String, fromPosition: Int, toPosition: Int)
 
     fun onCardOptionsClicked(cardId: String)
+
+    fun onSettingsClicked(cardId: String, itemId: String)
 }

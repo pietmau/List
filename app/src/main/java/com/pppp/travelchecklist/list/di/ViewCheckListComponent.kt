@@ -4,6 +4,7 @@ import com.pppp.travelchecklist.editcard.AddItemBottomDialog
 import com.pppp.travelchecklist.editcard.EditCardModule
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
+import com.pppp.travelchecklist.edititem.EditItemDialogFragment
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import dagger.Subcomponent
 import javax.inject.Singleton
@@ -19,4 +20,6 @@ interface ViewCheckListComponent {
     fun inject(editCategoryBottomDialog: EditCategoryBottomDialog)
 
     fun inject(addItemBottomDialog: AddItemBottomDialog)
+
+    fun inject(editItemDialogFragment: EditItemDialogFragment)
 }

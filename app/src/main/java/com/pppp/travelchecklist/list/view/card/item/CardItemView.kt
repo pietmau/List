@@ -6,10 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 
 class CardItemView @JvmOverloads constructor(
     context: Context,
@@ -34,13 +31,17 @@ class CardItemView @JvmOverloads constructor(
             buttonView.setPaintFlags(getPaint(isChecked));
             callback?.onItemChecked(requireNotNull(data?.id), isChecked)
         }
+        settings.setOnClickListener {
+            callback?.onSettingsClicked(requireNotNull(data))
+        }
     }
 
     private fun getPaint(checked: Boolean) = if (checked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.LINEAR_TEXT_FLAG
 
     interface Callback {
-        fun onDeleteRequested(position: String, data: CheckListItem)
+        fun onDeleteRequested(id: String, data: CheckListItem)
         fun onItemChecked(id: String, checked: Boolean)
         fun onItemMoved(fromPosition: Int, toPosition: Int)
+        fun onSettingsClicked(data: CheckListItem)
     }
 }

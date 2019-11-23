@@ -11,6 +11,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
+import com.pppp.travelchecklist.edititem.EditItemDialogFragment
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
 class ViewCheckListFragment : Fragment(), ChackListCardCallback {
+
     @Inject
     internal lateinit var viewModel: SingleCheckListViewModel
 
@@ -34,7 +36,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recycler.chackListCardCallback = this
+        recycler.checkListCardCallback = this
         viewModel.viewStates(listId).observe(viewLifecycleOwner, Observer { render(it) })
         viewModel.events.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -71,6 +73,10 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
 
     override fun onCardOptionsClicked(cardId: String) {
         EditCategoryBottomDialog.newInstance(listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+    }
+
+    override fun onSettingsClicked(cardId: String, itemId: String) {
+        EditItemDialogFragment.newInstance(cardId, itemId).show(getParentFragmentManager(), EditItemDialogFragment.TAG)
     }
 
     companion object {

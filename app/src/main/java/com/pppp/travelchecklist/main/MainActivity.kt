@@ -11,9 +11,10 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
-import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEventsProducer
+import com.pppp.travelchecklist.ViewActionsConsumer
+import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.main.view.MenuVisualizer
@@ -23,7 +24,6 @@ import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
-import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,7 +31,9 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
-    lateinit var viewModel: MainViewModel
+    lateinit var viewStates: ViewStatesProducer<MainViewState>
+    @Inject
+    lateinit var actions: ViewActionsConsumer<MainViewAction>
     @Inject
     lateinit var transientEventsProducer: TransientEventsProducer<MainTransientEvent>
     @Inject
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         setContentView(R.layout.activity_main)
         (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
         setUpViews()
-        viewModel.states.observe(this, Observer { render(it) })
+        viewStates.states.observe(this, Observer { render(it) })
         transientEventsProducer.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
         if (savedInstanceState == null) {
             emit(MainViewAction.GetLatestListVisited)
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
             android.R.id.home -> emit(MainViewAction.NavMenuOpenSelected)
             R.id.add -> showConfirmationDialog({ emit(MainViewAction.GoMakeNewList) }, R.string.add_list, R.string.confirm_add_new_list)
             R.id.action_show_hide_checked -> emit(MainViewAction.OnSettingChanged(item.itemId))
-            R.id.delete -> emit(MainViewAction.DeleteCurrentList)
+            R.id.delete -> showConfirmationDialog({ emit(MainViewAction.DeleteCurrentList) }, R.string.delete_list, R.string.confirm_delete_list)
         }
         return true
     }
@@ -110,7 +112,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun emit(mainViewAction: MainViewAction) {
-        viewModel.accept(mainViewAction)
+        actions.accept(mainViewAction)
     }
 
     private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: String?) {

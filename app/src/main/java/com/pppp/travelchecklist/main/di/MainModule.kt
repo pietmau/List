@@ -1,9 +1,11 @@
 package com.pppp.travelchecklist.main.di
 
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.savedstate.SavedStateRegistryOwner
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
@@ -40,7 +42,7 @@ class MainModule(private val activity: FragmentActivity) {
         logger: AnalyticsLogger,
         settingsUseCase: SettingsUseCase
     ) =
-        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(repo), settingsUseCase)).get(MainViewModel::class.java)
+        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(repo), settingsUseCase, activity)).get(MainViewModel::class.java)
 
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
@@ -66,13 +68,15 @@ class MainModule(private val activity: FragmentActivity) {
     class MainViewModelFactory(
         val logger: MainAnalyticsLogger,
         val model: MainModel,
-        val settingsUseCase: SettingsUseCase
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(
+        val settingsUseCase: SettingsUseCase,
+        activity: SavedStateRegistryOwner
+    ) : AbstractSavedStateViewModelFactory(activity, null) {
+        override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T = MainViewModel(
             FirebaseMainUseCase(model),
             settingsUseCase,
-            logger
+            logger,
+            handle
         ) as T
+
     }
 }

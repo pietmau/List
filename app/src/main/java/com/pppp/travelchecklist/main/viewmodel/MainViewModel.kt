@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
@@ -9,15 +10,19 @@ import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
 
+private val KEY = MainViewModel::class.simpleName!!
+
 class MainViewModel(
     private val mainUseCase: MainUseCase,
     private val settingsUseCase: SettingsUseCase,
-    private val analytics: MainAnalyticsLogger
+    private val analytics: MainAnalyticsLogger,
+    private val handle: SavedStateHandle
 ) : ViewStatesProducer<MainViewState>,
     ViewActionsConsumer<MainViewAction>,
     TransientEventsProducer<MainTransientEvent>, ViewModel() {
+
     override val transientEvents: LiveData<MainTransientEvent> = TransientLiveData()
-    private val internalStates: MutableLiveData<MainViewState> = MutableLiveData()
+    private val internalStates: MutableLiveData<MainViewState> = handle.getLiveData(KEY)
 
     override val states: LiveData<MainViewState>
         get() {
@@ -93,7 +98,7 @@ class MainViewModel(
         emitTransientEvent(MainTransientEvent.GoToCreateNewList)
     }
 
-    private fun emitTransientEvent(transientEvent: MainTransientEvent) =
-        (transientEvents as MutableLiveData<MainTransientEvent>).postValue(transientEvent)
+    private fun emitTransientEvent(transientEvent: MainTransientEvent) = (transientEvents as MutableLiveData<MainTransientEvent>).postValue(transientEvent)
+
 }
 

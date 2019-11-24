@@ -23,7 +23,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_settings"
-            android:tint="@color/icon_gray" />
+            android:tint="@color/gray" />
     </RelativeLayout>
 
 </RelativeLayout>

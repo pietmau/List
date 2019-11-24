@@ -11,7 +11,7 @@
     <color name="grey">#FFAAAAAA</color>
     <color name="orange">#ffcc99</color>
     <color name="light_yellow">#ffffb3</color>
-    <color name="icon_gray">#FFAAAAAA</color>
+    <color name="gray">#FFAAAAAA</color>
 
     <color name="background">@color/light_yellow</color>
     <color name="very_light_blue">#e6ffff</color>

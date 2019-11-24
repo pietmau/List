@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_dialog_navigation.nav_view
 import javax.inject.Inject
 
 class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
-
     @Inject
     lateinit var menuCreator: MenuCreator
 

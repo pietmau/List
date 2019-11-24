@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.repository
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.travelchecklist.newlist.presenter.Model
+import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
 
 interface TravelChecklistRepository {

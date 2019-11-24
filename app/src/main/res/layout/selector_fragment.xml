@@ -43,7 +43,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.pppp.travelchecklist.newlist.view.custom.SelectorView
+    <com.pppp.travelchecklist.createlist.view.custom.SelectorView
         android:id="@+id/selectorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

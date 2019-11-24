@@ -37,7 +37,7 @@ class FirebaseSingleCheckListRepository(
     override fun addCategory(listId: String, name: String, callback: (() -> Unit)?) {
         getUserCheckList(listId) { travelCheckslist ->
             val categoryId = travelCheckslist.categories.map { it.id }.max()!! + 1
-            getList(listId)
+            db.getList(auth.userId, listId)
                 .update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
                 .addOnSuccessListener { callback?.invoke() }
         }
@@ -48,7 +48,7 @@ class FirebaseSingleCheckListRepository(
     }
 
     private fun updateCategoresInternal(listId: String, categories: List<Category>) {
-        getList(listId).update("categories", categories)
+        db.getList(auth.userId, listId).update("categories", categories)
     }
 
     override fun getUserCheckListAndUpdates(
@@ -56,7 +56,7 @@ class FirebaseSingleCheckListRepository(
         failure: ((Throwable) -> Unit)?,
         success: ((TravelCheckList) -> Unit)?
     ) {
-        getList(listId)
+        db.getList(auth.userId, listId)
             .addSnapshotListener { documentSnapshot, exception ->
                 if (exception != null) {
                     failure?.invoke(exception)
@@ -76,7 +76,7 @@ class FirebaseSingleCheckListRepository(
         failure: ((Throwable) -> Unit)?,
         success: ((TravelCheckList) -> Unit)?
     ) {
-        getList(listId).get()
+        db.getList(auth.userId, listId).get()
             .addOnFailureListener { failure?.invoke(it) }
             .addOnSuccessListener { documentSnapshot ->
                 val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
@@ -88,14 +88,15 @@ class FirebaseSingleCheckListRepository(
             }
     }
 
-    private fun getList(listId: String): DocumentReference {
-        return db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS)
-            .document(listId)
-    }
+    private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(auth.userId, listId))
 
-    private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(getUserId(), listId))
-
-    private fun getUserId() = auth.uid ?: throw UserNotLoggedInException()
 }
+
+fun FirebaseFirestore.getList(userId: String, listId: String): DocumentReference = collection(USERS)
+    .document(userId)
+    .collection(USERS_CHECKLISTS)
+    .document(listId)
+
+val FirebaseAuth.userId
+    get() = uid ?: throw UserNotLoggedInException()
+

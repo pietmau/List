@@ -10,7 +10,7 @@ import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.analytics.customanalytics.CustomAnalytics
 import com.pppp.travelchecklist.analytics.customanalytics.IftttCustomAnalyticsClient
 import com.pppp.travelchecklist.analytics.customanalytics.IftttAnalytics
-import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepository
+import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.database.DestinationPresenter
@@ -19,7 +19,7 @@ import com.pppp.travelchecklist.repository.FirebaseTravelChecklistRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
-import com.pppp.travelchecklist.newlist.model.models.InitialTagsRepositoryImpl
+import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepositoryImpl
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.PreferencesWrapperImpl
 import dagger.Module

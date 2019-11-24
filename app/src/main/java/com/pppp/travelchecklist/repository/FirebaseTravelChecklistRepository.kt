@@ -7,7 +7,7 @@ import com.google.firebase.firestore.SetOptions
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.TravelCheckListImpl
-import com.pppp.travelchecklist.newlist.presenter.Model
+import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
 import java.lang.Exception
 

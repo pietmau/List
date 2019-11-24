@@ -7,8 +7,8 @@ import com.pppp.travelchecklist.login.di.LoginComponent
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.di.MainSubComponent
-import com.pppp.travelchecklist.newlist.di.NewListComponent
-import com.pppp.travelchecklist.newlist.di.NewListModule
+import com.pppp.travelchecklist.createlist.di.NewListComponent
+import com.pppp.travelchecklist.createlist.di.NewListModule
 import com.pppp.travelchecklist.utils.UtilsModule
 import dagger.Component
 

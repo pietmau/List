@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
@@ -23,8 +22,8 @@ import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
 import com.pppp.travelchecklist.main.viewmodel.MainViewAction
 import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
-import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CHECKLIST_ID
-import com.pppp.travelchecklist.newlist.NewListActivity.Companion.CREATE_NEW_LIST
+import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CHECKLIST_ID
+import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CREATE_NEW_LIST
 import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*

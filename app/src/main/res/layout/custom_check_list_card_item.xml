@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?><!-- TODO use merge instead -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?itemBackground">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <CheckBox
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/attributes"
+        android:textAppearance="?android:textAppearanceSmall"
+        tools:text="bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla " />
 
-        <CheckBox
-            android:id="@+id/check"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/settings"
-            android:textAppearance="?android:textAppearanceSmall" />
+    <com.pppp.travelchecklist.list.view.card.item.ItemAttributesView
+        android:id="@+id/attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/activity_vertical_margin"
+        android:layout_toStartOf="@+id/settings" />
 
-        <ImageView
-            android:id="@+id/settings"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_settings"
-            android:tint="@color/gray" />
-    </RelativeLayout>
-
+    <ImageView
+        android:id="@+id/settings"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_settings"
+        android:tint="@color/gray" />
 </RelativeLayout>
+

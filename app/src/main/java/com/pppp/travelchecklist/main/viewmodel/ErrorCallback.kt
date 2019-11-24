@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.viewmodel
 
-import com.pppp.travelchecklist.newlist.view.NewListCallback
+import com.pppp.travelchecklist.createlist.view.NewListCallback
 
 interface ErrorCallback {
 

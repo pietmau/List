@@ -76,7 +76,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onSettingsClicked(cardId: String, itemId: String) {
-        EditItemDialogFragment.newInstance(cardId, itemId).show(getParentFragmentManager(), EditItemDialogFragment.TAG)
+        EditItemDialogFragment.newInstance(listId, cardId, itemId).show(getParentFragmentManager(), EditItemDialogFragment.TAG)
     }
 
     companion object {

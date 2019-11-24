@@ -4,7 +4,7 @@ import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
-import com.pppp.travelchecklist.newlist.presenter.Model
+import com.pppp.travelchecklist.createlist.presenter.Model
 
 interface TravelCheckListMapper {
 

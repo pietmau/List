@@ -76,5 +76,6 @@
     <string name="by_continuing_you_are_indicating_that_you_accept_our_terms_of_service_and_privacy_policy">By continuing you are indicating that you accept our Terms of Service and Privacy Policy</string>
     <string name="delete_list">Delete list</string>
     <string name="confirm_delete_list">Do you want to delete this list?</string>
+    <string name="save">Save</string>
 
 </resources>

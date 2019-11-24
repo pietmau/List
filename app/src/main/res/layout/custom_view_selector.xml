@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.pppp.travelchecklist.newlist.view.viewpager.SelectorViewPager
+    <com.pppp.travelchecklist.createlist.view.viewpager.SelectorViewPager
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             app:tint="@android:color/white"
             />
 
-        <com.pppp.travelchecklist.newlist.view.custom.TwoStatesFab
+        <com.pppp.travelchecklist.createlist.view.custom.TwoStatesFab
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

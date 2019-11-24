@@ -50,7 +50,13 @@ class ProfileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     private fun setNameAndPicture(displayName: String?, photoUrl: Uri?) {
+        val path = photoUrl?.path
+        if (displayName.isNullOrBlank() && path.isNullOrBlank()) {
+            visibility = View.GONE
+        }
+        name.visibility = if (displayName.isNullOrBlank()) GONE else VISIBLE
         name.text = displayName
+        profile_image.visibility = if (path.isNullOrBlank()) GONE else VISIBLE
         Picasso.get().load(photoUrl).into(profile_image);
     }
 }

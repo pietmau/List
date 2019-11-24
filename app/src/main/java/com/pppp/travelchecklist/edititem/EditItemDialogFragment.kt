@@ -6,12 +6,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.utils.appComponent
 import javax.inject.Inject
 
-class EditItemDialogFragment : DialogFragment() {
+class EditItemDialogFragment : BottomSheetDialogFragment() {
     private lateinit var alertDialog: AlertDialog
     @Inject
     lateinit var presenter: EditItemDialogFragmentPresenter

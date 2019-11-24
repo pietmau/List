@@ -4,7 +4,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.pppp.travelchecklist.edititem.EditItemDialogFragmentPresenter
 import com.pppp.travelchecklist.edititem.EditItemModel
 import com.pppp.travelchecklist.edititem.FireBaseEditItemModel
 import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListModel
@@ -41,7 +40,7 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
     fun provideListSettingsUseCase(prefreneces: PreferencesWrapper): ListSettingsUseCase = ListSettingsUseCase(prefreneces)
 
     @Provides
-    fun provideEditItemModel(): EditItemModel = FireBaseEditItemModel()
+    fun provideEditItemModel(singleCheckListRepository: SingleCheckListRepository): EditItemModel = FireBaseEditItemModel(singleCheckListRepository = singleCheckListRepository)
 
 }
 

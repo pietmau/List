@@ -9,7 +9,7 @@
     <CheckBox
         android:id="@+id/check"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="@dimen/item_height"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/attributes"
         android:textAppearance="?android:textAppearanceSmall"
@@ -25,11 +25,12 @@
 
     <ImageView
         android:id="@+id/settings"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
+        android:layout_width="@dimen/item_height"
+        android:layout_height="@dimen/item_height"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+        android:padding="9dp"
         android:src="@drawable/ic_settings"
-        android:tint="@color/gray" />
+        android:tint="?android:textColorSecondaryInverse" />
 </RelativeLayout>
 

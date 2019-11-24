@@ -13,7 +13,7 @@ interface CategoryAdder {
 class CategoryAdderImpl @Inject constructor(private val repo: SingleCheckListRepository) : CategoryAdder {
 
     override fun addItem(listId: String, categoryId: String, name: String) {
-        repo.addItem(listId, categoryId, name)
+        repo.addNewItemFromTitle(listId, categoryId, name)
     }
 
     override fun addCategory(listId: String, name: String) {

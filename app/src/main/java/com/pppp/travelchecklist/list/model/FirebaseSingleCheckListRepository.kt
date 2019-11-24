@@ -1,7 +1,7 @@
 package com.pppp.travelchecklist.list.model
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
@@ -11,27 +11,47 @@ import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.ListNotFoundException
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
-import com.pppp.travelchecklist.repository.USERS
-import com.pppp.travelchecklist.repository.USERS_CHECKLISTS
-import com.pppp.travelchecklist.repository.UserNotLoggedInException
 
 class FirebaseSingleCheckListRepository(
-    val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : SingleCheckListRepository {
 
-    override fun addItem(listId: String, categoryId: String, name: String) {
+    override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = addItem(listId, categoryId, CheckListItemImpl(title = name))
+
+    override fun addItem(listId: String, categoryId: String, element: CheckListItemImpl) {
         getUserCheckList(listId) { list ->
             val updated = list.categories.map {
                 if (it.id == categoryId) {
                     val mutableList = it.items.toMutableList()
-                    mutableList.add(CheckListItemImpl(title = name))
+                    mutableList.add(element)
                     (it as CategoryImpl).copy(items = mutableList.toList() as List<CheckListItemImpl>)
                 } else it
             }
             updateCategoresInternal(listId, updated)
         }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun updateItem(listId: String, categoryId: String, element: CheckListItemImpl) {
+        getUserCheckList(listId) { list ->
+            val updated = list.categories.map { category ->
+                if (category.id == categoryId) {
+                    val updatedCategory = replaceItemInCategory(category, element)
+                    updatedCategory
+                } else {
+                    category
+                }
+            }
+            updateCategoresInternal(listId, updated)
+        }
+    }
+
+    private fun replaceItemInCategory(category: Category, element: CheckListItemImpl): CategoryImpl {
+        val mutableList = category.items
+            .toMutableList()
+            .map { item -> if (item.id == element.id) element else item }
+        return (category as CategoryImpl).copy(items = mutableList.toList() as List<CheckListItemImpl>)
     }
 
     override fun addCategory(listId: String, name: String, callback: (() -> Unit)?) {
@@ -61,12 +81,7 @@ class FirebaseSingleCheckListRepository(
                 if (exception != null) {
                     failure?.invoke(exception)
                 } else {
-                    val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
-                    if (checkList != null) {
-                        success?.invoke(checkList)
-                    } else {
-                        onFailure(failure, listId)
-                    }
+                    onSuccess(documentSnapshot, success, failure, listId)
                 }
             }
     }
@@ -79,24 +94,22 @@ class FirebaseSingleCheckListRepository(
         db.getList(auth.userId, listId).get()
             .addOnFailureListener { failure?.invoke(it) }
             .addOnSuccessListener { documentSnapshot ->
-                val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
-                if (checkList != null) {
-                    success?.invoke(checkList)
-                } else {
-                    onFailure(failure, listId)
-                }
+                onSuccess(documentSnapshot, success, failure, listId)
             }
     }
 
-    private fun onFailure(failure: ((Throwable) -> Unit)?, listId: String) = failure?.invoke(ListNotFoundException(auth.userId, listId))
-
+    private fun onSuccess(
+        documentSnapshot: DocumentSnapshot?,
+        success: ((TravelCheckList) -> Unit)?,
+        failure: ((Throwable) -> Unit)?,
+        listId: String
+    ) {
+        val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
+        if (checkList != null) {
+            success?.invoke(checkList)
+        } else {
+            failure?.invoke(ListNotFoundException(auth.userId, listId))
+        }
+    }
 }
-
-fun FirebaseFirestore.getList(userId: String, listId: String): DocumentReference = collection(USERS)
-    .document(userId)
-    .collection(USERS_CHECKLISTS)
-    .document(listId)
-
-val FirebaseAuth.userId
-    get() = uid ?: throw UserNotLoggedInException()
 

@@ -5,106 +5,17 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/priority"
+        android:id="@+id/priority_flag"
         android:layout_width="@dimen/small_icon_size"
         android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
+        android:src="@drawable/ic_flag_24px"
+        android:visibility="gone"></ImageView>
 
     <ImageView
+        android:id="@+id/description"
         android:layout_width="@dimen/small_icon_size"
         android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_outlined_flag_24px">
-    </ImageView>
+        android:src="@drawable/ic_short_text_24px"
+        android:visibility="gone"></ImageView>
 
 </merge>

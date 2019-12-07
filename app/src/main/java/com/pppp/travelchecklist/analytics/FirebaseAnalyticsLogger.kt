@@ -20,7 +20,7 @@ class FirebaseAnalyticsLogger(
     override fun onMainMenuOpen() {
     }
 
-    override fun goToList(listId: String) {
+    override fun goToList(listId: Long) {
     }
 
     override fun goToCreateNewList() {

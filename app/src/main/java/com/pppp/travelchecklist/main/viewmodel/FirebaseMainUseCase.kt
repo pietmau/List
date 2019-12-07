@@ -9,7 +9,7 @@ class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
 
     @Suppress("UNCHECKED_CAST")
     override fun getLastVisitedList(
-        success: ((userLists: List<TravelCheckListImpl>, lastListId: String?) -> Unit),
+        success: ((userLists: List<TravelCheckListImpl>, lastListId: Long) -> Unit),
         failure: ((Throwable?) -> Unit)
     ) {
         model.getLastVisitedList(success = { lastList ->
@@ -20,7 +20,7 @@ class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
         })
     }
 
-    override fun saveLastVisitedList(listId: String) {
+    override fun saveLastVisitedList(listId: Long) {
         model.saveLastVisitedList(listId)
     }
 

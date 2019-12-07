@@ -60,11 +60,11 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(checkLists: List<TravelCheckListImpl>, lastList: String?) =
+        fun newInstance(checkLists: List<TravelCheckListImpl>, lastList: Long) =
             BottomNavigationDrawerFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ITEMS, ArrayList(checkLists))
-                    putString(LAST_VISITED, lastList)
+                    putLong(LAST_VISITED, lastList)
                 }
             }
 

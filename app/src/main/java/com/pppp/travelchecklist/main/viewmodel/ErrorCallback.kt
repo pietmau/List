@@ -14,6 +14,6 @@ interface CreateChecklistView : ErrorCallback {
 
     fun navigateToSelector()
 
-    fun navigateToNewList(selection: String)
+    fun navigateToNewList(selection: Long?)
 
 }

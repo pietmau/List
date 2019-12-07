@@ -117,13 +117,13 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         actions.accept(mainViewAction)
     }
 
-    private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: String?) {
+    private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: Long) {
         BottomNavigationDrawerFragment.newInstance(checkLists, lastList).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CREATE_NEW_LIST && resultCode == RESULT_OK) {
-            val checkListId = data?.extras?.getString(CHECKLIST_ID) ?: return
+            val checkListId = data?.extras?.getLong(CHECKLIST_ID) ?: return
             emit(MainViewAction.NewListGenerated(checkListId))
         }
     }

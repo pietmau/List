@@ -19,7 +19,7 @@ object NavigatorImpl : Navigator {
         }
     }
 
-    override fun goToList(activity: AppCompatActivity, listId: String) {
+    override fun goToList(activity: AppCompatActivity, listId: Long) {
         activity.supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId), ViewCheckListFragment.TAG)
             .commitAllowingStateLoss()
     }
@@ -32,7 +32,7 @@ object NavigatorImpl : Navigator {
     override fun map(navigationAction: BottomNavigationDrawerFragment.NavigationAction): MainViewAction =
         when (navigationAction) {
             is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewAction.GoMakeNewList
-            is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewAction.NavItemSelected(navigationAction.id)
+            is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewAction.NavItemSelected(navigationAction.id.toLong())
         }
 }
 
@@ -42,7 +42,7 @@ interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, Ma
 
     fun startCreateChecklistActivity(activity: Activity)
 
-    fun goToList(activity: AppCompatActivity, listId: String)
+    fun goToList(activity: AppCompatActivity, listId: Long)
 
     fun removeListFragment(activity: AppCompatActivity)
 

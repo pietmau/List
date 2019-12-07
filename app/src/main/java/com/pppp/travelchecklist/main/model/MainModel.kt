@@ -6,9 +6,9 @@ interface MainModel {
 
     fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 
-    fun saveLastVisitedList(listId: String?)
+    fun saveLastVisitedList(listId: Long?)
 
-    fun getLastVisitedList(success: ((String?) -> Unit)? = null, failure: ((Throwable?) -> Unit)? = null)
+    fun getLastVisitedList(success: ((Long) -> Unit)? = null, failure: ((Throwable?) -> Unit)? = null)
 
     var checkLists: Map<String, TravelCheckList>
 

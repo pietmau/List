@@ -13,10 +13,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CategoryImpl @JvmOverloads constructor(
     override var title: String,
-    override var description: String,
+    override var description: String?,
     @Ignore
     override val items: List<CheckListItemImpl> = emptyList(),
     @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0,
+    override var id: Long?,
     var checkListId: Long
 ) : Parcelable, Category

@@ -83,10 +83,10 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
         val TAG: String? = ViewCheckListFragment::class.simpleName
         val LIST_ID = "list_id"
 
-        fun fromSelection(listId: String) =
+        fun fromSelection(listId: Long) =
             ViewCheckListFragment().apply {
                 arguments = Bundle().apply {
-                    putString(LIST_ID, listId)
+                    putLong(LIST_ID, listId)
                 }
             }
     }

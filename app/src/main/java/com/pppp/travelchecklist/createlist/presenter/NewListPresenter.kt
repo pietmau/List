@@ -101,7 +101,7 @@ class NewListPresenter(
         updateUi()
     }
 
-    private fun updateUi(progress: Boolean = false, listId: String? = null) {
+    private fun updateUi(progress: Boolean = false, listId: Long? = null) {
         val enableFinish = model.isDataComplete()
         (states as MutableLiveData).postValue(NewListViewState(progress, enableFinish, listId))
     }
@@ -110,7 +110,7 @@ class NewListPresenter(
         updateUi()
     }
 
-    data class NewListViewState(val showPreogress: Boolean, val enableFinish: Boolean, val listId: String?) : ViewState
+    data class NewListViewState(val showPreogress: Boolean, val enableFinish: Boolean, val listId: Long?) : ViewState
 
     data class TransientState(val genericError: Error.GenericError? = null, val noName: Error.NoNameError? = null) {
         sealed class Error {

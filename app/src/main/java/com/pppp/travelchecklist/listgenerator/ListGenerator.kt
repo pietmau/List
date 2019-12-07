@@ -8,7 +8,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 
 interface ListGenerator {
-    fun generate(selection: Model, name: String): Single<String>
+    fun generate(selection: Model, name: String): Single<Long>
     fun setName(listid: String, name: String?)
 }
 

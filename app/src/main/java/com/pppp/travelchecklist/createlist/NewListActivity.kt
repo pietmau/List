@@ -31,7 +31,7 @@ class NewListActivity : AppCompatActivity(), CreateChecklistView {
         }
     }
 
-    override fun navigateToNewList(checkListId: String) {
+    override fun navigateToNewList(checkListId: Long?) {
         val data = Intent().apply {
             putExtra(CHECKLIST_ID, checkListId)
         }

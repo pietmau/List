@@ -14,15 +14,17 @@ import io.reactivex.Single
 import java.lang.NullPointerException
 
 class RoomTravelChecklistRepository(val applicationContext: Context) : TravelChecklistRepository {
-    private val db = Room.databaseBuilder(
-        applicationContext,
-        RoomTravelChecklistRepositoryDatabase::class.java, "list_database"
-    ).build()
+    private val db = Room
+        .databaseBuilder(applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
+        .build()
+        .roomTravelChecklistRepositoryDao()
 
-    override fun saveAndGet(list: List<Category>, name: Model): Single<String> {
+    override fun saveAndGet(list: List<Category>, name: Model): Single<Long> {
         return Single.fromCallable {
-            val proxy = CheckListProxy(name.listName ?: "")
-            db.roomTravelChecklistRepositoryDao().insertCheckListImpl(proxy).toString()
+            val proxy = CheckListProxy(name.listName!!)
+            val id = db.insertCheckListImpl(proxy)
+            db.insertCategories((list as List<CategoryImpl>).map { it.copy(checkListId = id, id = null) })
+            id
         }
     }
 
@@ -38,9 +40,7 @@ class RoomTravelChecklistRepository(val applicationContext: Context) : TravelChe
         failure?.invoke(NullPointerException())
     }
 
-    override fun saveLastVisitedList(listId: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun saveLastVisitedList(listId: Long) = db.saveLastVisitedList(ListId(listId))
 
     override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
         failure?.invoke(NullPointerException())

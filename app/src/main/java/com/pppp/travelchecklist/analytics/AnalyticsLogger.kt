@@ -18,7 +18,7 @@ interface LoginAnalyticsLogger {
 
 interface MainAnalyticsLogger {
     fun onMainMenuOpen()
-    fun goToList(listId: String)
+    fun goToList(listId: Long)
     fun goToCreateNewList()
     fun getLatestListVisited()
 

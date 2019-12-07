@@ -58,11 +58,11 @@ class FirebaseSingleCheckListRepository(
 
     override fun addCategory(listId: String, name: String, callback: (() -> Unit)?) {
         getUserCheckList(listId) { travelCheckslist ->
-            val categoryId = travelCheckslist.categories.map { it.id }.max()!! + 1
+            val categoryId = travelCheckslist.categories.map { requireNotNull(it.id) }.max()!! + 1
             db.getList(auth.userId, listId)
             TODO()
-                //.update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
-             //   .addOnSuccessListener { callback?.invoke() }
+            //.update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
+            //   .addOnSuccessListener { callback?.invoke() }
         }
     }
 

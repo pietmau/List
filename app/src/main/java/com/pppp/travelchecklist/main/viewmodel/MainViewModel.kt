@@ -71,7 +71,7 @@ class MainViewModel(
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
         mainUseCase.getLastVisitedList({ _, listId ->
-            listId?.let { goToList(listId) } ?: emitNewViewState(MainViewState.Empty())
+            listId?.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
         }, {
             emitNewViewState(MainViewState.Empty())
             onError(it)
@@ -86,7 +86,7 @@ class MainViewModel(
         internalStates.postValue(viewState)
     }
 
-    private fun goToList(listId: String) {
+    private fun goToList(listId: Long) {
         analytics.goToList(listId)
         mainUseCase.saveLastVisitedList(listId)
         emitNewViewState(MainViewState.Content())

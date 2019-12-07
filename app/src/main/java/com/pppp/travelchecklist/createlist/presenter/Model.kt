@@ -14,7 +14,7 @@ class Model(
     val travellers = mutableListOf<Tag>()
     var destination: Destination? = null
     var listName: String? = null
-    var checkListId: String? = null
+    var checkListId: Long? = null
 
     fun hasValidName() = !listName.isNullOrBlank()
 

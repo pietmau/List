@@ -16,8 +16,10 @@ import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCaseImpl
 import com.pppp.travelchecklist.main.model.MainModel
 import com.pppp.travelchecklist.main.model.MainModelImpl
+import com.pppp.travelchecklist.main.model.MainUseCase
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.main.model.NavigatorImpl
+import com.pppp.travelchecklist.main.model.RoomMainUseCase
 import com.pppp.travelchecklist.navigation.MenuCreator
 import com.pppp.travelchecklist.navigation.MenuCreatorImpl
 import com.pppp.travelchecklist.main.viewmodel.FirebaseMainUseCase
@@ -38,14 +40,17 @@ class MainModule(private val activity: FragmentActivity) {
     @Singleton
     @Provides
     fun providePresenter(
-        repo: TravelChecklistRepository,
+        mainUseCase: MainUseCase,
         logger: AnalyticsLogger,
         settingsUseCase: SettingsUseCase
     ) =
-        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(repo), settingsUseCase, activity)).get(MainViewModel::class.java)
+        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(mainUseCase), settingsUseCase, activity)).get(MainViewModel::class.java)
 
     @Provides
-    fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
+    fun provideMenuCreator(creator: MenuCreatorImpl, repo: TravelChecklistRepository): MainUseCase = RoomMainUseCase(repo)
+
+    @Provides
+    fun provideMainUseCase(creator: MenuCreatorImpl): MenuCreator = creator
 
     @Provides
     fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel

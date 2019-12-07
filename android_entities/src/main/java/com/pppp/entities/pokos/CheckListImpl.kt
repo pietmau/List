@@ -27,5 +27,5 @@ data class CheckListProxy @JvmOverloads constructor(
     @Ignore
     override val categories: List<CategoryImpl> = emptyList(),
     @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0
+    override var id: Long =0
 ) : Parcelable, CheckList

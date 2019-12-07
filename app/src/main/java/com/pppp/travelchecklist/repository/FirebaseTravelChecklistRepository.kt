@@ -27,7 +27,7 @@ class FirebaseTravelChecklistRepository(
             .delete()
     }
 
-    override fun saveLastVisitedList(listId: String) {
+    override fun saveLastVisitedList(listId: Long) {
         db.collection(USERS)
             .document(getUserId())
             .set(mapOf(LAST_VISITED_LIST to listId), SetOptions.merge())
@@ -44,17 +44,18 @@ class FirebaseTravelChecklistRepository(
             }
     }
 
-    override fun saveAndGet(list: List<Category>, model: Model): Single<String> = Single.create { emitter ->
-        db.collection(USERS)
-            .document(getUserId())
-            .collection(USERS_CHECKLISTS)
-            .add(mapper.map(list, model))
-            .addOnSuccessListener {
-                emitter.onSuccess(it.id)
-            }
-            .addOnFailureListener {
-                emitter.onError(Exception("Unable to save"))
-            }
+    override fun saveAndGet(list: List<Category>, model: Model): Single<Long> = Single.create { emitter ->
+        TODO()
+//        db.collection(USERS)
+//            .document(getUserId())
+//            .collection(USERS_CHECKLISTS)
+//            .add(mapper.map(list, model))
+//            .addOnSuccessListener {
+//                emitter.onSuccess(it.id)
+//            }
+//            .addOnFailureListener {
+//                emitter.onError(Exception("Unable to save"))
+//            }
     }
 
     override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {

@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.repository.room
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListImpl
@@ -15,4 +16,7 @@ interface RoomTravelChecklistRepositoryDao {
 
     @Insert
     fun insertCategories(list: List<CategoryImpl>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveLastVisitedList(listId: ListId)
 }

@@ -25,7 +25,8 @@ class FireBaseEditItemModel(
         db.getList(auth.userId, listId).get().continueWith { task ->
             val checkList = task.result?.toObject(TravelCheckListImpl::class.java)
             val categories = checkList?.categories
-            val item = categories?.find { it.id == cardId }?.items?.find { it.id == itemId } ?: throw NullPointerException()
+            //val item = categories?.find { it.id == cardId }?.items?.find { it.id == itemId } ?: throw NullPointerException()
+            TODO()
             this.item = item
             return@continueWith item
         }

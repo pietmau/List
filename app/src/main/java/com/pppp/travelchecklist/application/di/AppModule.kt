@@ -15,13 +15,13 @@ import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.api.RetrofitClient
 import com.pppp.travelchecklist.database.DestinationPresenter
 import com.pppp.travelchecklist.database.DestinationPresenterImpl
-import com.pppp.travelchecklist.repository.FirebaseTravelChecklistRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepositoryImpl
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.PreferencesWrapperImpl
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepository
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -55,7 +55,7 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
     ): ListGenerator = ListGeneratorImpl(client, travelChecklistRepository, AndroidSchedulers.mainThread(), Schedulers.io())
 
     @Provides
-    fun provideListRepository(): TravelChecklistRepository = FirebaseTravelChecklistRepository()
+    fun provideListRepository(): TravelChecklistRepository = RoomTravelChecklistRepository(context.applicationContext)
 
     @Provides
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)

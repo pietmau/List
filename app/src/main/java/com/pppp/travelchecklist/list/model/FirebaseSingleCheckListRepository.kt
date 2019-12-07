@@ -20,31 +20,33 @@ class FirebaseSingleCheckListRepository(
     override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = addItem(listId, categoryId, CheckListItemImpl(title = name))
 
     override fun addItem(listId: String, categoryId: String, element: CheckListItemImpl) {
-        getUserCheckList(listId) { list ->
-            val updated = list.categories.map {
-                if (it.id == categoryId) {
-                    val mutableList = it.items.toMutableList()
-                    mutableList.add(element)
-                    (it as CategoryImpl).copy(items = mutableList.toList() as List<CheckListItemImpl>)
-                } else it
-            }
-            updateCategoresInternal(listId, updated)
-        }
+        TODO()
+//        getUserCheckList(listId) { list ->
+//            val updated = list.categories.map {
+//                if (it.id == categoryId) {
+//                    val mutableList = it.items.toMutableList()
+//                    mutableList.add(element)
+//                    (it as CategoryImpl).copy(items = mutableList.toList() as List<CheckListItemImpl>)
+//                } else it
+//            }
+//            updateCategoresInternal(listId, updated)
+//        }
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun updateItem(listId: String, categoryId: String, element: CheckListItemImpl) {
-        getUserCheckList(listId) { list ->
-            val updated = list.categories.map { category ->
-                if (category.id == categoryId) {
-                    val updatedCategory = replaceItemInCategory(category, element)
-                    updatedCategory
-                } else {
-                    category
-                }
-            }
-            updateCategoresInternal(listId, updated)
-        }
+        TODO()
+//        getUserCheckList(listId) { list ->
+//            val updated = list.categories.map { category ->
+//                if (category.id == categoryId) {
+//                    val updatedCategory = replaceItemInCategory(category, element)
+//                    updatedCategory
+//                } else {
+//                    category
+//                }
+//            }
+//            updateCategoresInternal(listId, updated)
+//        }
     }
 
     private fun replaceItemInCategory(category: Category, element: CheckListItemImpl): CategoryImpl {
@@ -58,8 +60,9 @@ class FirebaseSingleCheckListRepository(
         getUserCheckList(listId) { travelCheckslist ->
             val categoryId = travelCheckslist.categories.map { it.id }.max()!! + 1
             db.getList(auth.userId, listId)
-                .update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
-                .addOnSuccessListener { callback?.invoke() }
+            TODO()
+                //.update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
+             //   .addOnSuccessListener { callback?.invoke() }
         }
     }
 

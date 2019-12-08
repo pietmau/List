@@ -16,7 +16,7 @@ data class TravelCheckListImpl @JvmOverloads constructor(
         parentColumn = "id",
         entityColumn = "checkListId"
     )
-    override var categories: List<CategoryImpl> = emptyList(),
+    override var categories: List<CategoryProxy> = emptyList(),
     @Embedded
     val travelCheckListProxy: TravelCheckListProxy
 ) : TravelCheckList by travelCheckListProxy, Parcelable

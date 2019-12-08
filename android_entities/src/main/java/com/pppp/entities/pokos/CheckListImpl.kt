@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CheckListImpl(
     @Embedded
-    val checkListProxy: CheckListProxy,
+    var checkListProxy: CheckListProxy,
     @Relation(
         parentColumn = "id",
         entityColumn = "checkListId"

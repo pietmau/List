@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.list.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.list.model.SingleCheckListUseCase
@@ -17,9 +18,8 @@ class FireBaseSingleCheckListViewModel(
     override val events: LiveData<SingleCheckListViewModel.TransientEvent> by lazy { TransientLiveData<SingleCheckListViewModel.TransientEvent>() }
 
     private fun initialize(listId: Long, liveData: MutableLiveData<SingleCheckListViewModel.ViewState>) {
-        singleCheckListUseCase.getUserCheckListAndUxxpdates(listId).observeForever{
+        singleCheckListUseCase.getUserCheckListAndUxxpdates(listId).observeForever {
 
-            singleCheckListUseCase.ffff(it)
         }
 //        singleCheckListUseCase.getUserCheckListAndUpdates(listId,
 //            success = { list ->
@@ -60,3 +60,5 @@ class FireBaseSingleCheckListViewModel(
             )
         }
 }
+
+fun <IN, OUT> LiveData<IN>.map(function: (IN) -> OUT) = Transformations.map(this, function)

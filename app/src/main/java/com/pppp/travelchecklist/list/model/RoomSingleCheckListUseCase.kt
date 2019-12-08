@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.pietrantuono.entities.CheckList
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CheckListImpl
+import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,23 +36,5 @@ class RoomSingleCheckListUseCase(val applicationContext: Context) : SingleCheckL
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<out CheckList> = db.getListById(listId)
-
-    override fun ffff(it: CheckList?) {
-        coroutineScope.launch {
-            val title = it!!.title
-            val checkListImpl = it as CheckListImpl
-            val it1 = checkListImpl.categories.first()!!
-            val xx = it1.items.mapIndexed { index, item ->
-                if (index == 0) {
-                    val titlew = item.title
-                    item.copy(title = titlew + "a")
-                } else {
-                    item
-                }
-            }
-            val z = listOf(it1.copy(items = xx))
-            db.ffff(z)
-        }
-    }
+    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl> = db.getListById(listId)
 }

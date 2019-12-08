@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.list.model
 import androidx.lifecycle.LiveData
 import com.pietrantuono.entities.CheckList
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.TravelCheckListImpl
 
 interface SingleCheckListUseCase {
 
@@ -14,7 +15,5 @@ interface SingleCheckListUseCase {
 
     fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean)
 
-    fun getUserCheckListAndUxxpdates(listId: Long): LiveData<out CheckList>
-
-    fun ffff(it: CheckList?)
+    fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl>
 }

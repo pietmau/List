@@ -99,7 +99,7 @@ class FirebaseTravelChecklistRepository(
 
     private fun toTravelChecklist(documentSnapshot: DocumentSnapshot) =
         documentSnapshot.toObject(TravelCheckListImpl::class.java)?.apply {
-            id = documentSnapshot.id
+           // id = documentSnapshot.id
         }
 
     override fun setName(listId: String, name: String?) {

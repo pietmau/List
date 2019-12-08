@@ -1,7 +1,7 @@
 package com.pietrantuono.entities
 
 interface TravelCheckList {
-    val id: String?
+    val id: Long?
     val name: String?
     val categories: List<Category>
     val accomodation: String?
@@ -10,4 +10,5 @@ interface TravelCheckList {
     val plannedActivities: List<String>
     val travellers: List<String>
     val destination: String?
+    var checkListId: Long?
 }

@@ -11,9 +11,10 @@ class MainModelImpl(private val useCase: MainUseCase) : MainModel {
 
     init {
         getUsersLists({
-            checkLists = it.filter { checklist -> checklist.id != null }
-                .map { checklist -> requireNotNull(checklist.id) to checklist }
-                .toMap().toMutableMap()
+            TODO()
+//            checkLists = it.filter { checklist -> checklist.id != null }
+//                .map { checklist -> requireNotNull(checklist.id) to checklist }
+//                .toMap().toMutableMap()
         }, { /*NoOp*/ })
     }
 

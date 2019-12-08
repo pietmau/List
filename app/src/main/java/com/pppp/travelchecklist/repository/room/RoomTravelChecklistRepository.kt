@@ -6,18 +6,17 @@ import android.util.Log
 import androidx.room.Room
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.CategoryImpl
-import com.pppp.entities.pokos.CheckListImpl
-import com.pppp.entities.pokos.CheckListProxy
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.createlist.presenter.Model
+import com.pppp.travelchecklist.repository.TravelCheckListMapper
+import com.pppp.travelchecklist.repository.TravelCheckListMapperImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
-import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.lang.NullPointerException
 
-class RoomTravelChecklistRepository(val applicationContext: Context) : TravelChecklistRepository {
+class RoomTravelChecklistRepository(val applicationContext: Context, private val mapper: TravelCheckListMapper = TravelCheckListMapperImpl) :
+    TravelChecklistRepository {
 
     private val db = Room
         .databaseBuilder(applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
@@ -25,13 +24,12 @@ class RoomTravelChecklistRepository(val applicationContext: Context) : TravelChe
         .roomTravelChecklistRepositoryDao()
 
     @Suppress("UNCHECKED_CAST")
-    override fun saveAndGet(list: List<Category>, name: Model): Single<Long> {
+    override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
         return Single.fromCallable {
-            val proxy = CheckListProxy(requireNotNull(name.listName))
-            //val id = db.insertCheckListImpl(proxy)
-            //db.insertCategories((list as List<CategoryImpl>).map { it.copy(checkListId = id, id = null) })
-            //  id
-            TODO()
+            val checkListImpl = mapper.map(list, model) as TravelCheckListImpl
+            val id = db.saveTravelChecklist(checkListImpl.travelCheckListProxy)
+            db.insertCategories(checkListImpl.categories.map { it.copy(checkListId = id) })
+            id
         }
     }
 

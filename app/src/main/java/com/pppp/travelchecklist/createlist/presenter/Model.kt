@@ -78,7 +78,7 @@ class Model(
 
     fun isDataComplete() = ((!isEmpty) && hasValidName())
 
-    fun generate() = listGenerator.generate(this, listName!!) // Cannot be null, let's crash
+    fun generate() = listGenerator.generate(this, requireNotNull(listName))
 
     val isEmpty: Boolean
         get() = accomodation == null && weather == null && duration == null && destination == null

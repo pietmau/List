@@ -7,9 +7,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListImpl
 import com.pppp.entities.pokos.CheckListProxy
+import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.TravelCheckListProxy
 
 @Dao
 interface RoomTravelChecklistRepositoryDao {
@@ -21,14 +24,14 @@ interface RoomTravelChecklistRepositoryDao {
     suspend fun getLastVisitedId(): ListId
 
     @Insert
-    suspend fun insertCategories(list: List<CategoryImpl>)
+    fun insertCategories(list: List<CategoryImpl>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveLastVisitedList(listId: ListId)
 
     @Transaction
-    @Query("SELECT * FROM CheckListProxy WHERE id=:listId")
-    fun getListById(listId: Long): LiveData<CheckListImpl>
+    @Query("SELECT * FROM TravelCheckListProxy WHERE id=:listId")
+    fun getListById(listId: Long): LiveData<TravelCheckListImpl>
 
     @Transaction
     @Query("SELECT * FROM CheckListProxy")
@@ -37,4 +40,7 @@ interface RoomTravelChecklistRepositoryDao {
     @Transaction
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun ffff(it: List<CategoryImpl>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveTravelChecklist(travelCheckListProxy: TravelCheckListProxy): Long
 }

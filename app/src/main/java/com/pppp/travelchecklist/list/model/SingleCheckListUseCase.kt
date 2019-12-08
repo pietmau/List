@@ -15,5 +15,5 @@ interface SingleCheckListUseCase {
 
     fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean)
 
-    fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl>
+    fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl?>
 }

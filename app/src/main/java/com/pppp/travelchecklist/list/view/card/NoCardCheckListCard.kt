@@ -60,8 +60,7 @@ class NoCardCheckListCard @JvmOverloads constructor(
     }
 
     override fun bind(category: Category, chackListCardCallback: ChackListCardCallback) {
-        TODO()
-        //this.cardId = category.id
+        this.cardId = requireNotNull(category.id).toString()
         this.checkListCardCallback = chackListCardCallback
         cardItems.callback = cardItemCallback
         setItems(category.items)

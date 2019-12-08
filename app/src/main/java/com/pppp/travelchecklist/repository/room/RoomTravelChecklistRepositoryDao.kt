@@ -31,7 +31,7 @@ interface RoomTravelChecklistRepositoryDao {
 
     @Transaction
     @Query("SELECT * FROM TravelCheckListProxy WHERE id=:listId")
-    fun getListById(listId: Long): LiveData<TravelCheckListImpl>
+    fun getListById(listId: Long): LiveData<TravelCheckListImpl?>
 
     @Transaction
     @Query("SELECT * FROM CheckListProxy")

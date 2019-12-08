@@ -9,7 +9,7 @@ import com.pppp.travelchecklist.repository.SingleCheckListRepository
 import java.util.Collections
 
 class FirebaseSingleCheckListUseCase(private val repository: SingleCheckListRepository) : SingleCheckListUseCase {
-    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl> {
+    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl?> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

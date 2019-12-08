@@ -36,5 +36,5 @@ class RoomSingleCheckListUseCase(val applicationContext: Context) : SingleCheckL
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl> = db.getListById(listId)
+    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl?> = db.getListById(listId)
 }

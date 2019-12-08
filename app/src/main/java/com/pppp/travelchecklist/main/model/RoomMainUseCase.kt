@@ -20,7 +20,7 @@ class RoomMainUseCase @Inject constructor(
     override fun saveLastVisitedList(listId: Long) {
         Completable.fromCallable {
             repo.saveLastVisitedList(listId)
-        }.subscribeOn(background)
+        }.subscribeOn(background).subscribe({}, {})
     }
 
     override fun getLastVisitedList(success: (id: Long) -> Unit?, failure: ((Throwable?) -> Unit)?) {

@@ -20,3 +20,4 @@ data class CategoryImpl @JvmOverloads constructor(
     override var id: Long?,
     var checkListId: Long
 ) : Parcelable, Category
+

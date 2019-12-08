@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.application
 import android.app.Application
 import android.os.StrictMode
 import android.provider.Settings
+import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.BuildConfig
@@ -51,6 +52,7 @@ class App : Application() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build().also { it.inject(this) }
         analytics.onAppOnCreate()
+        Stetho.initializeWithDefaults(this);
     }
 
     private fun setUpAnalytics() =

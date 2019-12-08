@@ -19,9 +19,10 @@ class RoomTravelChecklistRepository(val applicationContext: Context) : TravelChe
         .build()
         .roomTravelChecklistRepositoryDao()
 
+    @Suppress("UNCHECKED_CAST")
     override fun saveAndGet(list: List<Category>, name: Model): Single<Long> {
         return Single.fromCallable {
-            val proxy = CheckListProxy(name.listName!!)
+            val proxy = CheckListProxy(requireNotNull(name.listName))
             val id = db.insertCheckListImpl(proxy)
             db.insertCategories((list as List<CategoryImpl>).map { it.copy(checkListId = id, id = null) })
             id

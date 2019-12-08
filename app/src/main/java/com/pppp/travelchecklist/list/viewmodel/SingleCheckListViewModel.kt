@@ -7,7 +7,7 @@ import com.pppp.travelchecklist.ViewActionsConsumer
 
 interface SingleCheckListViewModel : ViewActionsConsumer<SingleCheckListViewModel.SingleListViewEvent> {
 
-    fun viewStates(listId: String): LiveData<ViewState>
+    fun viewStates(listId: Long): LiveData<ViewState>
 
     data class ViewState(val travelCheckList: TravelCheckList? = null, val showChecked: Boolean = true, val title: String = "", val subTitle: String = "")
 

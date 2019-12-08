@@ -1,10 +1,9 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import java.lang.NullPointerException
 
-class MainModelImpl(private val repo: MainUseCase) : MainModel {
+class MainModelImpl(private val useCase: MainUseCase) : MainModel {
 
     override var checkLists: Map<String, TravelCheckList> = mutableMapOf()
 
@@ -19,30 +18,24 @@ class MainModelImpl(private val repo: MainUseCase) : MainModel {
     }
 
     override fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        repo.getUsersListsAndUpdates(success, failure)
+        useCase.getUsersListsAndUpdates(success, failure)
     }
 
     override fun saveLastVisitedList(listId: Long?) {
         lastVisitedList = listId
-        listId?.let { repo.saveLastVisitedList(it) }
+        listId?.let { useCase.saveLastVisitedList(it) }
     }
 
-    override fun getLastVisitedList(success: ((listId: Long) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
-        failure?.invoke(NullPointerException(("TODO")))
-//        if (lastVisitedList == null) {
-//            repo.getLastVisitedList({
-//                lastVisitedList = it
-//                success?.invoke(it)
-//            }, failure)
-//        } else {
-//            success?.invoke(lastVisitedList)
-//        }
+    override fun getLastVisitedList(success: ((listId: Long) -> Unit), failure: ((Throwable?) -> Unit)?) {
+        useCase.getLastVisitedList({ listId ->
+            listId?.let { success(it) } ?: failure?.invoke(LastestListNotFoundException())
+        }, failure)
     }
 
     override fun deleteCurrentList() {
         val listId = requireNotNull(lastVisitedList)
         TODO()
-//        repo.deleteChecklist(listId)
+//        useCase.deleteChecklist(listId)
 //        (checkLists as MutableMap).remove(listId)
 //        lastVisitedList = null
     }
@@ -50,3 +43,5 @@ class MainModelImpl(private val repo: MainUseCase) : MainModel {
     override fun isEmpty() = checkLists.isEmpty()
 
 }
+
+class LastestListNotFoundException : Exception()

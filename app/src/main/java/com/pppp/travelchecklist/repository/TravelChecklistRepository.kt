@@ -20,6 +20,8 @@ interface TravelChecklistRepository {
 
     fun getLastVisitedList(success: ((String?) -> Unit)? = null, failure: ((Throwable?) -> Unit)?)
 
+    suspend fun getLastVisitedList(): Long?
+
     fun deleteChecklist(listId: String)
 }
 

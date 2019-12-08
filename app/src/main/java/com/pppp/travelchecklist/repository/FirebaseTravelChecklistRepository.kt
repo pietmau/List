@@ -18,6 +18,9 @@ class FirebaseTravelChecklistRepository(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
     private val mapper: TravelCheckListMapper = TravelCheckListMapperImpl
 ) : TravelChecklistRepository {
+    override suspend fun getLastVisitedList(): Long? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun deleteChecklist(listId: String) {
         db.collection(USERS)

@@ -9,9 +9,6 @@ import androidx.lifecycle.Observer
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.utils.appComponent
-import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
-import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
-import com.pppp.travelchecklist.edititem.EditItemDialogFragment
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
@@ -25,7 +22,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     internal lateinit var viewModel: SingleCheckListViewModel
 
     private val listId
-        get() = requireNotNull(arguments?.getString(LIST_ID))
+        get() = requireNotNull(arguments?.getLong(LIST_ID))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         inflater.inflate(R.layout.fragment_checlist, container, false);
@@ -52,7 +49,8 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onItemDeleteRequested(cardId: String, itemId: String, data: CheckListItem) {
-        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.DeleteItem(listId, cardId, itemId))
+        TODO()
+        //sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.DeleteItem(listId, cardId, itemId))
     }
 
     private fun sendToViewModel(singleListViewEvent: SingleCheckListViewModel.SingleListViewEvent) {
@@ -60,23 +58,28 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     override fun onItemChecked(cardId: String, itemId: String, checked: Boolean) {
-        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(listId, cardId, itemId, checked))
+        TODO()
+        //sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(listId, cardId, itemId, checked))
     }
 
     override fun onItemMoved(cardId: String, fromPosition: Int, toPosition: Int) {
-        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.MoveItem(listId, cardId, fromPosition, toPosition))
+        TODO()
+        //sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.MoveItem(listId, cardId, fromPosition, toPosition))
     }
 
     fun addCategory() {
-        AddCategoryBottomDialog.newInstance(listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        TODO()
+        //AddCategoryBottomDialog.newInstance(listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     override fun onCardOptionsClicked(cardId: String) {
-        EditCategoryBottomDialog.newInstance(listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        TODO()
+        //EditCategoryBottomDialog.newInstance(listId, cardId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     override fun onSettingsClicked(cardId: String, itemId: String) {
-        EditItemDialogFragment.newInstance(listId, cardId, itemId).show(getParentFragmentManager(), EditItemDialogFragment.TAG)
+        TODO()
+        //EditItemDialogFragment.newInstance(listId, cardId, itemId).show(getParentFragmentManager(), EditItemDialogFragment.TAG)
     }
 
     companion object {

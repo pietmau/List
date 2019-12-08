@@ -1,12 +1,22 @@
 package com.pppp.travelchecklist.list.model
 
+import androidx.lifecycle.LiveData
+import com.pietrantuono.entities.CheckList
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
 import java.util.Collections
 
-class FirebaseSingleCheckListModel(private val repository: SingleCheckListRepository) : SingleCheckListModel {
+class FirebaseSingleCheckListUseCase(private val repository: SingleCheckListRepository) : SingleCheckListUseCase {
+    override fun ffff(it: CheckList?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<out CheckList> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private lateinit var travelCheckList: TravelCheckListImpl
 
     override fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean) {
@@ -20,7 +30,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         repository.getUserCheckListAndUpdates(listId, success = {
-            this@FirebaseSingleCheckListModel.travelCheckList = it as TravelCheckListImpl
+            this@FirebaseSingleCheckListUseCase.travelCheckList = it as TravelCheckListImpl
             success?.invoke(it)
         }, failure = {
             failure?.invoke(it)

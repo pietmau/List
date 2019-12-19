@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.listgenerator
 
-import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.RoomTag
 import com.pppp.travelchecklist.api.Client
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.createlist.presenter.Model
@@ -21,7 +21,7 @@ class ListGeneratorImpl(
 
     override fun generate(selection: Model, name: String) =
         retrofitClient
-            .generateChecklist(selection.toList() as List<TagImpl>)
+            .generateChecklist(selection.toList() as List<RoomTag>)
             .flatMap { items -> travelChecklistRepository.saveAndGet(items, selection) }
             .subscribeOn(workerThread)
             .observeOn(mainThread)

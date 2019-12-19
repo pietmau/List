@@ -3,8 +3,8 @@ package com.pppp.travelchecklist.edititem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.entities.pokos.CheckListItemImpl
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomCheckListItem
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.list.model.getList
 import com.pppp.travelchecklist.list.model.userId
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
@@ -23,7 +23,7 @@ class FireBaseEditItemModel(
         this.listId = listId
         this.cardId = cardId
         db.getList(auth.userId, listId).get().continueWith { task ->
-            val checkList = task.result?.toObject(TravelCheckListImpl::class.java)
+            val checkList = task.result?.toObject(RoomTravelCheckList::class.java)
             val categories = checkList?.categories
             //val item = categories?.find { it.id == cardId }?.items?.find { it.id == itemId } ?: throw NullPointerException()
             TODO()
@@ -35,7 +35,7 @@ class FireBaseEditItemModel(
     }
 
     override fun updateItem(title: String, description: String, priority: Int) {
-        val copy = (item as CheckListItemImpl).copy(title = title, description = description, priority = priority)
+        val copy = (item as RoomCheckListItem).copy(title = title, description = description, priority = priority)
         singleCheckListRepository.updateItem(listId, cardId, copy)
     }
 }

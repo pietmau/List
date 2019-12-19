@@ -1,32 +1,32 @@
 package com.pppp.travelchecklist.list.model
 
 import androidx.lifecycle.LiveData
-import com.pietrantuono.entities.CheckList
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.CategoryImpl
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomCategory
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
 import java.util.Collections
 
 class FirebaseSingleCheckListUseCase(private val repository: SingleCheckListRepository) : SingleCheckListUseCase {
-    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl?> {
+    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<RoomTravelCheckList?> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private lateinit var travelCheckList: TravelCheckListImpl
+    private lateinit var travelCheckList: RoomTravelCheckList
 
     override fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean) {
-        val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
-        val categories = travelCheckList.categories.toMutableList()
-        val copy = checkItemInternal(indexedCategory, itemId, checked)
-        //categories.set(indexedCategory.index, copy)
+//        val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
+//        val categories = travelCheckList.categories.toMutableList()
+//        val copy = checkItemInternal(indexedCategory, itemId, checked)
+//        //categories.set(indexedCategory.index, copy)
+//        TODO()
+//        saveChanges(categories, listId)
         TODO()
-        saveChanges(categories, listId)
     }
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         repository.getUserCheckListAndUpdates(listId, success = {
-            this@FirebaseSingleCheckListUseCase.travelCheckList = it as TravelCheckListImpl
+            this@FirebaseSingleCheckListUseCase.travelCheckList = it as RoomTravelCheckList
             success?.invoke(it)
         }, failure = {
             failure?.invoke(it)
@@ -51,15 +51,15 @@ class FirebaseSingleCheckListUseCase(private val repository: SingleCheckListRepo
 //        saveChanges(categories, listId)
     }
 
-    private fun swapItems(category: IndexedValue<CategoryImpl>, fromPosition: Int, toPosition: Int): CategoryImpl {
+    private fun swapItems(category: IndexedValue<RoomCategory>, fromPosition: Int, toPosition: Int): RoomCategory {
         var items = category.value.items.toMutableList()
         Collections.swap(items, fromPosition, toPosition)
         return category.value.copy(items = items.toList())
     }
 
-    private fun checkItemInternal(indexedCategory: IndexedValue<CategoryImpl>, itemId: String, checked: Boolean): CategoryImpl {
+    private fun checkItemInternal(indexedCategory: IndexedValue<RoomCategory>, itemId: String, checked: Boolean): RoomCategory {
         val items = indexedCategory.value.items.map { item ->
-            if (item.id.equals(itemId)) {
+            if (requireNotNull(item.id).equals(itemId)) {
                 item.copy(checked = checked)
             } else {
                 item
@@ -68,15 +68,15 @@ class FirebaseSingleCheckListUseCase(private val repository: SingleCheckListRepo
         return indexedCategory.value.copy(items = items)
     }
 
-    private fun removeItem(category: CategoryImpl, itemId: String) = category.copy(items = category.items.filter { !it.id.equals(itemId) })
+    private fun removeItem(category: RoomCategory, itemId: String) = category.copy(items = category.items.filter { !requireNotNull(it.id).equals(itemId) })
 
-    private fun saveChanges(categories: List<CategoryImpl>, listId: String) {
-        val travelCheckList = travelCheckList.copy(categories = categories.toList())
+    private fun saveChanges(categories: List<RoomCategory>, listId: String) {
+        //val travelCheckList = travelCheckList.copy(categories = categories.toList())
         repository.updateCategories(listId, travelCheckList)
     }
 
     private fun findCategoryById(
-        categories: List<CategoryImpl>,
+        categories: List<RoomCategory>,
         categoryId: String
     ): Nothing = TODO()//categories.withIndex().find { it.value.id == categoryId }
 }

@@ -57,7 +57,7 @@ class CardRecycler @JvmOverloads constructor(
             val position = viewHolder.adapterPosition
             val item = adapter.items.removeAt(position)
             adapter.notifyItemRemoved(position)
-            callback.onDeleteRequested(item.id, item)
+            //callback.onDeleteRequested(item.id, item)
         }
     }
 }

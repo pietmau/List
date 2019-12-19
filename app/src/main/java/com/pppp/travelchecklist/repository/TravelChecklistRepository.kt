@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.repository
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.entities.pokos.RoomCheckListItem
 import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
 
@@ -41,7 +41,7 @@ interface SingleCheckListRepository {
 
     fun addNewItemFromTitle(listId: String, categoryId: String, name: String)
 
-    fun addItem(listId: String, categoryId: String, element: CheckListItemImpl)
+    fun addItem(listId: String, categoryId: String, element: RoomCheckListItem)
 
-    fun updateItem(listId: String, categoryId: String, element: CheckListItemImpl)
+    fun updateItem(listId: String, categoryId: String, element: RoomCheckListItem)
 }

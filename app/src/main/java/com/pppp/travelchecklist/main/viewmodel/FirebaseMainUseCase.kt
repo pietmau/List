@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.main.viewmodel
 
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.main.model.MainModel
 
 class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
@@ -9,12 +9,12 @@ class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
 
     @Suppress("UNCHECKED_CAST")
     override fun getLastVisitedList(
-        success: ((userLists: List<TravelCheckListImpl>, lastListId: Long) -> Unit),
+        success: ((userLists: List<RoomTravelCheckList>, lastListId: Long) -> Unit),
         failure: ((Throwable?) -> Unit)
     ) {
         model.getLastVisitedList(success = { lastList ->
             val userChecklists = model.checkLists.values.toList()
-            success(userChecklists as List<TravelCheckListImpl>, lastList)
+            success(userChecklists as List<RoomTravelCheckList>, lastList)
         }, failure = {
             failure(it)
         })

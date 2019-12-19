@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.ToggleButton
 import com.pietrantuono.entities.Tag
-import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.RoomTag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.utils.getChildren
 import kotlinx.android.synthetic.main.button_strip.view.*
@@ -33,7 +33,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         deselectAll()
         buttonView?.isChecked = isChecked
-        val item = buttonView?.tag as? TagImpl
+        val item = buttonView?.tag as? RoomTag
         item ?: return
         if (isChecked) {
             listener?.onItemSelected(item)
@@ -53,7 +53,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     }
 
     interface Listener {
-        fun onItemSelected(item: TagImpl)
-        fun onItemDeselected(item: TagImpl)
+        fun onItemSelected(item: RoomTag)
+        fun onItemDeselected(item: RoomTag)
     }
 }

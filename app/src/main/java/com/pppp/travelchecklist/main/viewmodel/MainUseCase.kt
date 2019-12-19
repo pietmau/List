@@ -1,11 +1,11 @@
 package com.pppp.travelchecklist.main.viewmodel
 
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomTravelCheckList
 
 interface MainUseCase {
 
     fun getLastVisitedList(
-        success: (userLists: List<TravelCheckListImpl>, lastListId: Long) -> Unit = { _, _ -> },
+        success: (userLists: List<RoomTravelCheckList>, lastListId: Long) -> Unit = { _, _ -> },
         failure: (Throwable?) -> Unit = {}
     )
 

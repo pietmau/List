@@ -8,7 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.pietrantuono.entities.Tag
-import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.RoomTag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
@@ -54,11 +54,11 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
         strip.setItemsSelected(group)
     }
 
-    override fun onItemSelected(item: TagImpl) {
+    override fun onItemSelected(item: RoomTag) {
         model.onTagSelected(item)
     }
 
-    override fun onItemDeselected(item: TagImpl) {
+    override fun onItemDeselected(item: RoomTag) {
         model.onTagDeSeleected(item)
     }
 

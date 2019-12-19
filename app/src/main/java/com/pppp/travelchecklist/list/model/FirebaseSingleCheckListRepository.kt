@@ -2,13 +2,12 @@ package com.pppp.travelchecklist.list.model
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.CategoryImpl
-import com.pppp.entities.pokos.CheckListItemImpl
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomCategory
+import com.pppp.entities.pokos.RoomCheckListItem
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.repository.ListNotFoundException
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
 
@@ -17,9 +16,9 @@ class FirebaseSingleCheckListRepository(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : SingleCheckListRepository {
 
-    override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = addItem(listId, categoryId, CheckListItemImpl(title = name))
+    override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = addItem(listId, categoryId, RoomCheckListItem(title = name))
 
-    override fun addItem(listId: String, categoryId: String, element: CheckListItemImpl) {
+    override fun addItem(listId: String, categoryId: String, element: RoomCheckListItem) {
         TODO()
 //        getUserCheckList(listId) { list ->
 //            val updated = list.categories.map {
@@ -34,7 +33,7 @@ class FirebaseSingleCheckListRepository(
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun updateItem(listId: String, categoryId: String, element: CheckListItemImpl) {
+    override fun updateItem(listId: String, categoryId: String, element: RoomCheckListItem) {
         TODO()
 //        getUserCheckList(listId) { list ->
 //            val updated = list.categories.map { category ->
@@ -49,11 +48,11 @@ class FirebaseSingleCheckListRepository(
 //        }
     }
 
-    private fun replaceItemInCategory(category: Category, element: CheckListItemImpl): CategoryImpl {
+    private fun replaceItemInCategory(category: Category, element: RoomCheckListItem): RoomCategory {
         val mutableList = category.items
             .toMutableList()
             .map { item -> if (item.id == element.id) element else item }
-        return (category as CategoryImpl).copy(items = mutableList.toList() as List<CheckListItemImpl>)
+        return (category as RoomCategory).copy(items = mutableList.toList() as List<RoomCheckListItem>)
     }
 
     override fun addCategory(listId: String, name: String, callback: (() -> Unit)?) {
@@ -107,7 +106,7 @@ class FirebaseSingleCheckListRepository(
         failure: ((Throwable) -> Unit)?,
         listId: String
     ) {
-        val checkList = documentSnapshot?.toObject(TravelCheckListImpl::class.java)
+        val checkList = documentSnapshot?.toObject(RoomTravelCheckList::class.java)
         if (checkList != null) {
             success?.invoke(checkList)
         } else {

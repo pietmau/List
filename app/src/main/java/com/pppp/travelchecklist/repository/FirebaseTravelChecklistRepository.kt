@@ -6,10 +6,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
-import java.lang.Exception
 
 private const val LAST_VISITED_LIST = "last_visited_list"
 
@@ -67,7 +66,7 @@ class FirebaseTravelChecklistRepository(
             .collection(USERS_CHECKLISTS)
             .document(listId).get()
             .addOnSuccessListener { documentSnapshot ->
-                val checkList = documentSnapshot.toObject(TravelCheckListImpl::class.java)
+                val checkList = documentSnapshot.toObject(RoomTravelCheckList::class.java)
                 if (checkList != null) {
                     success?.invoke(checkList)
                 } else {
@@ -98,7 +97,7 @@ class FirebaseTravelChecklistRepository(
     }
 
     private fun toTravelChecklist(documentSnapshot: DocumentSnapshot) =
-        documentSnapshot.toObject(TravelCheckListImpl::class.java)?.apply {
+        documentSnapshot.toObject(RoomTravelCheckList::class.java)?.apply {
            // id = documentSnapshot.id
         }
 

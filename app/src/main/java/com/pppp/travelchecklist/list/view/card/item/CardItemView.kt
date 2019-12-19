@@ -30,7 +30,7 @@ class CardItemView @JvmOverloads constructor(
         inflater.inflate(com.pppp.travelchecklist.R.layout.custom_check_list_card_item, this, true)
         check.setOnCheckedChangeListener { buttonView, isChecked ->
             buttonView.setPaintFlags(getPaint(isChecked));
-            callback?.onItemChecked(requireNotNull(data?.id), isChecked)
+            //callback?.onItemChecked(requireNotNull(data?.id), isChecked)
         }
         settings.setOnClickListener {
             callback?.onSettingsClicked(requireNotNull(data))

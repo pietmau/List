@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class TagsGroupImpl @JvmOverloads constructor(
     override var title: String = "",
     override var description: String? = null,
-    override var tags: List<TagImpl> = emptyList(),
+    override var tags: List<RoomTag> = emptyList(),
     override var exclusive: Boolean = false
 ) : Parcelable, TagsGroup {
     @get:[Exclude]

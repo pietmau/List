@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.list.view.list
 
 import android.view.View
 import com.pietrantuono.entities.Category
-import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.entities.pokos.RoomCheckListItem
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.view.card.CheckListCard
 
@@ -12,7 +12,7 @@ class CheckListHolder(view: View) : androidx.recyclerview.widget.RecyclerView.Vi
         (itemView as CheckListCard).bind(categoryItemData, chackListCardCallback)
     }
 
-    fun setItems(items: List<CheckListItemImpl>) {
+    fun setItems(items: List<RoomCheckListItem>) {
         (itemView as CheckListCard).setItems(items)
     }
 

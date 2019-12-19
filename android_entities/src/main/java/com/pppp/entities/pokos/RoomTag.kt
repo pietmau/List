@@ -6,12 +6,9 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 import com.pietrantuono.entities.Tag
 import kotlinx.android.parcel.Parcelize
 
-@IgnoreExtraProperties
 @Parcelize
-data class TagImpl @JvmOverloads constructor(
-    override var title: String = "",
-    override var hidden: Boolean = false
-) : Parcelable, Tag {
-    @get:[Exclude]
-    override var id: String = ""
-}
+data class RoomTag @JvmOverloads constructor(
+    override var title: String,
+    override var hidden: Boolean = false,
+    override var id: Long? = null
+) : Parcelable, Tag

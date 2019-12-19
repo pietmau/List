@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
@@ -17,8 +17,8 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var menuCreator: MenuCreator
 
-    private val checkLists: List<TravelCheckListImpl> by lazy {
-        arguments?.getParcelableArrayList(ITEMS) ?: emptyList<TravelCheckListImpl>()
+    private val checkLists: List<RoomTravelCheckList> by lazy {
+        arguments?.getParcelableArrayList(ITEMS) ?: emptyList<RoomTravelCheckList>()
     }
 
     override fun onCreateView(
@@ -60,7 +60,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(checkLists: List<TravelCheckListImpl>, lastList: Long) =
+        fun newInstance(checkLists: List<RoomTravelCheckList>, lastList: Long) =
             BottomNavigationDrawerFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ITEMS, ArrayList(checkLists))

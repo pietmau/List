@@ -8,8 +8,8 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.Category
-import com.pppp.entities.pokos.CategoryImpl
-import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.entities.pokos.RoomCategory
+import com.pppp.entities.pokos.RoomCheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.view.list.ChecklistRecyclerDiffCallback.Companion.CATEGORY
@@ -50,7 +50,7 @@ class CheckListAdapter(private val chackListCardCallback: ChackListCardCallback,
             holder.bind(showingfItems.get(position), chackListCardCallback)
             return
         }
-        (payloads[0] as Bundle).getParcelable<CategoryImpl>(CATEGORY)?.let { holder.setItems(it.items) }
+        (payloads[0] as Bundle).getParcelable<RoomCategory>(CATEGORY)?.let { holder.setItems(it.items) }
     }
 
     inner class CheckedFilter : Filter() {
@@ -58,7 +58,7 @@ class CheckListAdapter(private val chackListCardCallback: ChackListCardCallback,
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val categories = this@CheckListAdapter.categories.map { category ->
                 val checklistItems = category.items.filter { !it.checked || showChecked }
-                (category as CategoryImpl).copy(items = checklistItems as List<CheckListItemImpl>)
+                (category as RoomCategory).copy(items = checklistItems as List<RoomCheckListItem>)
             }
             return FilterResults().apply {
                 values = categories

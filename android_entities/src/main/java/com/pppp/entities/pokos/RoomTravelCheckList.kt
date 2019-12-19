@@ -6,26 +6,26 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class TravelCheckListImpl @JvmOverloads constructor(
+data class RoomTravelCheckList @JvmOverloads constructor(
     @Relation(
         parentColumn = "id",
-        entityColumn = "checkListId"
+        entityColumn = "checkListId",
+        entity = RoomCategoryProxy::class
     )
-    override var categories: List<CategoryProxy> = emptyList(),
+    override var categories: List<RoomCategory> = emptyList(),
     @Embedded
-    val travelCheckListProxy: TravelCheckListProxy
+    val travelCheckListProxy: RoomTravelCheckListProxy
 ) : TravelCheckList by travelCheckListProxy, Parcelable
 
 @Entity
 @Parcelize
-data class TravelCheckListProxy @JvmOverloads constructor(
+data class RoomTravelCheckListProxy @JvmOverloads constructor(
     @Ignore
-    override var categories: List<CategoryImpl> = emptyList(),
+    override var categories: List<RoomCategory> = emptyList(),
     override var name: String? = null,
     @PrimaryKey(autoGenerate = true)
     override var id: Long? = null,

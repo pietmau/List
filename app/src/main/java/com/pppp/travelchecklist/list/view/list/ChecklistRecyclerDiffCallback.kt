@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.list.view.list
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.pietrantuono.entities.Category
-import com.pppp.entities.pokos.CategoryImpl
+import com.pppp.entities.pokos.RoomCategory
 
 class ChecklistRecyclerDiffCallback(
     private val old: List<Category>,
@@ -25,7 +25,7 @@ class ChecklistRecyclerDiffCallback(
     }
 
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Bundle {
-        return Bundle().apply { putParcelable(CATEGORY, this@ChecklistRecyclerDiffCallback.new.get(newItemPosition) as CategoryImpl) }
+        return Bundle().apply { putParcelable(CATEGORY, this@ChecklistRecyclerDiffCallback.new.get(newItemPosition) as RoomCategory) }
     }
 
     companion object {

@@ -3,14 +3,11 @@ package com.pppp.travelchecklist.list.model
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
-import com.pietrantuono.entities.CheckList
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.CheckListImpl
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class RoomSingleCheckListUseCase(val applicationContext: Context) : SingleCheckListUseCase {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -36,5 +33,5 @@ class RoomSingleCheckListUseCase(val applicationContext: Context) : SingleCheckL
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<TravelCheckListImpl?> = db.getListById(listId)
+    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<RoomTravelCheckList?> = db.getListById(listId)
 }

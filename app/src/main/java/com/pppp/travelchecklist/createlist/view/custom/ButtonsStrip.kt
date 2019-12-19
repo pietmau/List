@@ -8,7 +8,7 @@ import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.ToggleButton
 import com.pietrantuono.entities.Tag
-import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.RoomTag
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.button_strip.view.*
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -64,7 +64,7 @@ open class ButtonsStrip @JvmOverloads constructor(
             }
 
     private fun OnCheckedChange(view: CompoundButton?, checked: Boolean) {
-        val item = (view as ToggleButton).getTag() as? TagImpl
+        val item = (view as ToggleButton).getTag() as? RoomTag
         item ?: return
         if (checked) {
             callback?.onItemSelected(item)

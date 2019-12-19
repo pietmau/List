@@ -7,7 +7,7 @@ import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         actions.accept(mainViewAction)
     }
 
-    private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: Long) {
+    private fun openNavMenu(checkLists: List<RoomTravelCheckList>, lastList: Long) {
         BottomNavigationDrawerFragment.newInstance(checkLists, lastList).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 

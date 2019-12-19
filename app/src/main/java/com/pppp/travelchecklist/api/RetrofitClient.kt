@@ -1,11 +1,8 @@
 package com.pppp.travelchecklist.api
 
 import com.pietrantuono.entities.Category
-import com.pietrantuono.entities.CheckList
-import com.pietrantuono.entities.Tag
 import com.pietrantuono.entities.TagsGroup
-import com.pppp.entities.pokos.CheckListImpl
-import com.pppp.entities.pokos.TagImpl
+import com.pppp.entities.pokos.RoomTag
 import com.pppp.entities.pokos.TagsGroupImpl
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -33,7 +30,7 @@ class RetrofitClient(url: String) : Client {
         api = retrofit.create<Api>(Api::class.java)
     }
 
-    override fun generateChecklist(tags: List<TagImpl>): Single<out List<Category>> = api.generateChecklist(tags)
+    override fun generateChecklist(tags: List<RoomTag>): Single<out List<Category>> = api.generateChecklist(tags)
 
     override fun getTagsGroup(): Single<out List<TagsGroup>> = api.getTagsGroup()
 
@@ -42,7 +39,7 @@ class RetrofitClient(url: String) : Client {
 }
 
 interface Client {
-    fun generateChecklist(tags: List<TagImpl>): Single<out List<Category>>
+    fun generateChecklist(tags: List<RoomTag>): Single<out List<Category>>
 
     fun getTagsGroup(): Single<out List<TagsGroup>>
 

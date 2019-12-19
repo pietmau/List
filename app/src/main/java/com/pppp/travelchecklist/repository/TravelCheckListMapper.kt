@@ -8,14 +8,13 @@ import com.pppp.travelchecklist.createlist.presenter.Model
 
 interface TravelCheckListMapper {
 
-    fun map(list: List<Category>, model: Model): TravelCheckList
+    fun getTravelCheckListImpl(list: List<Category>, model: Model): TravelCheckList
 
 }
 
 object TravelCheckListMapperImpl : TravelCheckListMapper {
 
-    override fun map(list: List<Category>, model: Model): TravelCheckListImpl {
-        val categories = list as List<CategoryImpl>
+    override fun getTravelCheckListImpl(list: List<Category>, model: Model): TravelCheckListImpl {
         val accomodation = model.accomodation?.title
         val weather = model.weather?.title
         val name = model.listName
@@ -23,7 +22,6 @@ object TravelCheckListMapperImpl : TravelCheckListMapper {
         val plannedActivities = model.plannedActivities.map { it.title }
         val travellers = model.travellers.map { it.title }
         return TravelCheckListImpl(
-            categories = categories,
             name = name,
             accomodation = accomodation,
             weather = weather,

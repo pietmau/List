@@ -1,11 +1,14 @@
 package com.pppp.travelchecklist.repository
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
@@ -48,13 +51,32 @@ class FirebaseTravelChecklistRepository(
         db.collection(USERS)
             .document(getUserId())
             .collection(USERS_CHECKLISTS)
-            .add(mapper.map(list, model))
+            .add(mapper.getTravelCheckListImpl(list, model))
+            .continueWith { task ->
+                addCategories(task, list)
+            }
             .addOnSuccessListener {
-                emitter.onSuccess(it.id)
+                emitter.onSuccess(it)
             }
             .addOnFailureListener {
                 emitter.onError(Exception("Unable to save"))
             }
+    }
+
+    private fun addCategories(travelChaceckListTask: Task<DocumentReference>, list: List<Category>): String {
+        val travelCheckList = requireNotNull(travelChaceckListTask.result)
+        val chacklistId = travelCheckList.id
+        val categories = travelCheckList.collection("CATEGORIES")
+        list.forEach { category ->
+            val categoryImpl = (category as CategoryImpl).copy(items = emptyList())
+            categories.add(categoryImpl).continueWith { categoryTask ->
+                val checkListItems = requireNotNull(categoryTask.result).collection("CHECKLIST_ITEMS")
+                category.items.forEach{
+                    checkListItems.add(it)
+                }
+            }
+        }
+        return chacklistId
     }
 
     override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {

@@ -21,7 +21,7 @@ object TravelCheckListMapperImpl : TravelCheckListMapper {
 
     override fun map(list: List<Category>, model: Model): RoomTravelCheckList {
         val categories = list.map { category ->
-            RoomCategory(RoomCategoryProxy(title = category.title, description = category.description, items = mapItems(category)))
+            RoomCategoryProxy(title = category.title, description = category.description, items = mapItems(category))
         }
         val accomodation = model.accomodation?.title
         val weather = model.weather?.title
@@ -29,18 +29,19 @@ object TravelCheckListMapperImpl : TravelCheckListMapper {
         val duration = model.accomodation?.title
         val plannedActivities = model.plannedActivities.map { it.title }
         val travellers = model.travellers.map { it.title }
-        return RoomTravelCheckList(
-            categories = categories,
-            travelCheckListProxy = RoomTravelCheckListProxy(
-                name = name,
-                accomodation = accomodation,
-                weather = weather,
-                duration = duration,
-                plannedActivities = plannedActivities,
-                travellers = travellers,
-                destination = model.destination?.name
-            )
-        )
+        TODO()
+//        return RoomTravelCheckList(
+//            categories = categories,
+//            travelCheckListProxy = RoomTravelCheckListProxy(
+//                name = name,
+//                accomodation = accomodation,
+//                weather = weather,
+//                duration = duration,
+//                plannedActivities = plannedActivities,
+//                travellers = travellers,
+//                destination = model.destination?.name
+//            )
+//        )
     }
 
     private fun mapItems(category: Category): List<RoomCheckListItem> = category.items

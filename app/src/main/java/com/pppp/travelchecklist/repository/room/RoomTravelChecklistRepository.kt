@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.room.Room
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
-import com.pppp.entities.pokos.RoomTravelCheckList
+import com.pppp.entities.pokos.RoomTravelCheckListProxy
 import com.pppp.travelchecklist.createlist.presenter.Model
 import com.pppp.travelchecklist.repository.TravelCheckListMapper
 import com.pppp.travelchecklist.repository.TravelCheckListMapperImpl
@@ -26,11 +26,26 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
     @Suppress("UNCHECKED_CAST")
     override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
         return Single.fromCallable {
-            val checkListImpl = mapper.map(list, model) as RoomTravelCheckList
-            val id = db.saveTravelChecklist(checkListImpl.travelCheckListProxy)
-            //db.insertCategories(checkListImpl.categories.map {  })
-            id
+            val travelChecklistId = saveTravelCheckList(model)
+            list.forEach { category ->
+                val catgoryId = saveCategory(travelChecklistId, category)
+                //saveItems(catgoryId, category.items)
+            }
+            travelChecklistId
         }
+    }
+
+    private fun saveCategory(travelChecklistId: Long, category: Category): Long {
+        ///return db.saveTravelChecklist(value)
+        return 0
+    }
+
+    private fun saveTravelCheckList(model: Model): Long {
+        val name = model.listName
+        val accomodation = model.accomodation?.title
+        val weather = model.weather?.title
+        val value = RoomTravelCheckListProxy(name = name, accomodation = accomodation, weather = weather)
+        return db.saveTravelChecklist(value)
     }
 
     override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {

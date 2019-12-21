@@ -28,7 +28,7 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
         return Single.fromCallable {
             val checkListImpl = mapper.map(list, model) as RoomTravelCheckList
             val id = db.saveTravelChecklist(checkListImpl.travelCheckListProxy)
-            db.insertCategories(checkListImpl.categories.map {  })
+            //db.insertCategories(checkListImpl.categories.map {  })
             id
         }
     }

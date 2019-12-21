@@ -11,14 +11,15 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RoomTravelCheckList @JvmOverloads constructor(
+    @Embedded
+    val travelCheckListProxy: RoomTravelCheckListProxy,
     @Relation(
         parentColumn = "id",
         entityColumn = "checkListId",
         entity = RoomCategoryProxy::class
     )
-    override var categories: List<RoomCategory> = emptyList(),
-    @Embedded
-    val travelCheckListProxy: RoomTravelCheckListProxy
+    override var categories: List<RoomCategory> = emptyList()
+
 ) : TravelCheckList by travelCheckListProxy, Parcelable
 
 @Entity

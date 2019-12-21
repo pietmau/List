@@ -15,7 +15,8 @@ data class RoomCategory @JvmOverloads constructor(
     var categoryProxy: RoomCategoryProxy,
     @Relation(
         parentColumn = "id",
-        entityColumn = "categoryId"
+        entityColumn = "categoryId",
+        entity = RoomCheckListItem::class
     )
     override var items: List<RoomCheckListItem> = emptyList()
 ) : Parcelable, Category by categoryProxy

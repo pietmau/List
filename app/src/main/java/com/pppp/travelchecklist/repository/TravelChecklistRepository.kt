@@ -8,7 +8,7 @@ import io.reactivex.Single
 
 interface TravelChecklistRepository {
 
-    fun saveAndGet(list: List<Category>, name: Model): Single<Long>
+    fun saveAndGet(list: List<Category>, model: Model): Single<Long>
 
     fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
 

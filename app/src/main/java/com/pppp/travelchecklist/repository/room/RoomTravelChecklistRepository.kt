@@ -5,7 +5,10 @@ import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import com.pietrantuono.entities.Category
+import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.RoomCategoryProxy
+import com.pppp.entities.pokos.RoomCheckListItem
 import com.pppp.entities.pokos.RoomTravelCheckListProxy
 import com.pppp.travelchecklist.createlist.presenter.Model
 import com.pppp.travelchecklist.repository.TravelCheckListMapper
@@ -23,28 +26,45 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
         .build()
         .roomTravelChecklistRepositoryDao()
 
-    @Suppress("UNCHECKED_CAST")
     override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
         return Single.fromCallable {
             val travelChecklistId = saveTravelCheckList(model)
             list.forEach { category ->
-                val catgoryId = saveCategory(travelChecklistId, category)
-                //saveItems(catgoryId, category.items)
+                val categoryId = saveCategory(travelChecklistId, category)
+                saveItems(categoryId, category.items)
             }
             travelChecklistId
         }
     }
 
+    private fun saveItems(categoryId: Long, items: List<CheckListItem>) {
+        items.forEach { item -> saveSingleItem(categoryId, item) }
+    }
+
+    private fun saveSingleItem(categoryId: Long, item: CheckListItem) {
+        val priority = item.priority
+        val title = item.title
+        val checked = item.checked
+        val description = item.description
+        val optional = item.optional // TODO finish here
+        val value =
+            RoomCheckListItem(title = title, checked = checked, priority = priority, description = description, optional = optional, categoryId = categoryId)
+        db.saveCheckListItem(value)
+    }
+
     private fun saveCategory(travelChecklistId: Long, category: Category): Long {
-        ///return db.saveTravelChecklist(value)
-        return 0
+        val title = category.title
+        val description = category.description
+        val roomCategoryProxy = RoomCategoryProxy(title = title, description = description, checkListId = travelChecklistId)
+        return db.saveCategory(roomCategoryProxy)
     }
 
     private fun saveTravelCheckList(model: Model): Long {
         val name = model.listName
         val accomodation = model.accomodation?.title
         val weather = model.weather?.title
-        val value = RoomTravelCheckListProxy(name = name, accomodation = accomodation, weather = weather)
+        val duration = model.duration?.title
+        val value = RoomTravelCheckListProxy(name = name, accomodation = accomodation, weather = weather, duration = duration)//TODO finish here
         return db.saveTravelChecklist(value)
     }
 

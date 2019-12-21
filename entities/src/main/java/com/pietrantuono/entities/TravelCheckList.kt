@@ -10,5 +10,4 @@ interface TravelCheckList {
     val plannedActivities: List<String>
     val travellers: List<String>
     val destination: String?
-    var checkListId: Long?
 }

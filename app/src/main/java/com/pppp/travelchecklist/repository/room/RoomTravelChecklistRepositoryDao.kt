@@ -8,6 +8,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.pppp.entities.pokos.RoomCategoryProxy
 import com.pppp.entities.pokos.RoomCheckListItem
+import com.pppp.entities.pokos.RoomCheckListItemProxy
+import com.pppp.entities.pokos.RoomTag
 import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.entities.pokos.RoomTravelCheckListProxy
 
@@ -16,12 +18,6 @@ interface RoomTravelChecklistRepositoryDao {
 
     @Query("SELECT * FROM ListId WHERE id=1")
     suspend fun getLastVisitedId(): ListId
-
-    @Insert
-    fun insertCategories(list: List<RoomCategoryProxy>)
-
-    @Insert
-    fun insertItems(list: List<RoomCheckListItem>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveLastVisitedList(listId: ListId)
@@ -37,5 +33,8 @@ interface RoomTravelChecklistRepositoryDao {
     fun saveCategory(roomCategoryProxy: RoomCategoryProxy): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveCheckListItem(roomCheckListItem: RoomCheckListItem)
+    fun saveCheckListItem(roomCheckListItem: RoomCheckListItemProxy): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveTag(roomTag: RoomTag)
 }

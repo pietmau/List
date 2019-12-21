@@ -35,7 +35,8 @@ class FireBaseEditItemModel(
     }
 
     override fun updateItem(title: String, description: String, priority: Int) {
-        val copy = (item as RoomCheckListItem).copy(title = title, description = description, priority = priority)
-        singleCheckListRepository.updateItem(listId, cardId, copy)
+        //val copy = (item as RoomCheckListItem).copy(title = title, description = description, priority = priority)
+        //singleCheckListRepository.updateItem(listId, cardId, copy)
+        TODO()
     }
 }

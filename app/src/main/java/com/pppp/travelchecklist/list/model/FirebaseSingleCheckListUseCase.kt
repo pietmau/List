@@ -60,7 +60,8 @@ class FirebaseSingleCheckListUseCase(private val repository: SingleCheckListRepo
     private fun checkItemInternal(indexedCategory: IndexedValue<RoomCategory>, itemId: String, checked: Boolean): RoomCategory {
         val items = indexedCategory.value.items.map { item ->
             if (requireNotNull(item.id).equals(itemId)) {
-                item.copy(checked = checked)
+                TODO()
+                //item.copy(checked = checked)
             } else {
                 item
             }

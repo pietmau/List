@@ -4,4 +4,5 @@ interface Tag {
     val title: String
     val hidden: Boolean
     val id: Long?
+    var itemId: Long?
 }

@@ -22,4 +22,4 @@ data class NetworkCheckListItem(
     override var id: Long? = null
 ) : CheckListItem
 
-data class NetworkTag(override val title: String, override val hidden: Boolean = false, override val id: Long? = null) : Tag
+data class NetworkTag(override val title: String, override val hidden: Boolean = false, override val id: Long? = null, override var itemId: Long?) : Tag

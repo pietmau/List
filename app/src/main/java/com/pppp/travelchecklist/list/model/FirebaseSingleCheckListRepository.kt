@@ -16,7 +16,7 @@ class FirebaseSingleCheckListRepository(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : SingleCheckListRepository {
 
-    override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = addItem(listId, categoryId, RoomCheckListItem(title = name))
+    override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = TODO()//addItem(listId, categoryId, RoomCheckListItem(title = name))
 
     override fun addItem(listId: String, categoryId: String, element: RoomCheckListItem) {
         TODO()

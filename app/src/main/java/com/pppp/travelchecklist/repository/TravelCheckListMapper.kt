@@ -51,7 +51,8 @@ object TravelCheckListMapperImpl : TravelCheckListMapper {
             val priority = item.priority
             val description = item.description
             val tags = mapTags(item.tags)
-            RoomCheckListItem(title = title, checked = checked, priority = priority, description = description, tags = tags, optional = item.optional)
+            TODO()
+            //RoomCheckListItem(title = title, checked = checked, priority = priority, description = description, tags = tags, optional = item.optional)
         }
 
     private fun mapTags(tags: List<Tag>): List<RoomTag> = tags.map { tag -> RoomTag(tag.title, tag.hidden) }

@@ -4,7 +4,7 @@ interface TravelCheckList {
     val id: Long?
     val name: String?
     val categories: List<Category>
-    val accomodation: String?
+    val accommodation: String?
     val weather: String?
     val duration: String?
     val plannedActivities: List<String>

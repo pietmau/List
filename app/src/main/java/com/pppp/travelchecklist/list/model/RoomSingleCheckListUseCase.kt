@@ -1,21 +1,22 @@
 package com.pppp.travelchecklist.list.model
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.room.Room
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class RoomSingleCheckListUseCase(val applicationContext: Context) : SingleCheckListUseCase {
+class RoomSingleCheckListUseCase(val database: RoomTravelChecklistRepositoryDatabase) : SingleCheckListUseCase {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val repositoryDao = database.roomTravelChecklistRepositoryDao()
 
-    private val db = Room
-        .databaseBuilder(applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
-        .build()
-        .roomTravelChecklistRepositoryDao()
+    override fun checkItem(listId: Long, cardId: String, itemId: Long, checked: Boolean) {
+        coroutineScope.launch {
+            repositoryDao.getChecklistItemById(itemId)?.let { repositoryDao.saveCheckListItem(it.roomCheckListItemProxy.copy(checked = !it.checked)) }
+        }
+    }
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -29,9 +30,5 @@ class RoomSingleCheckListUseCase(val applicationContext: Context) : SingleCheckL
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getUserCheckListAndUxxpdates(listId: Long): LiveData<RoomTravelCheckList?> = db.getListById(listId)
+    override fun getUserCheckListAndUpdates(listId: Long): LiveData<RoomTravelCheckList?> = repositoryDao.getListById(listId)
 }

@@ -71,7 +71,7 @@ class MainViewModel(
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
         mainUseCase.getLastVisitedList({ _, listId ->
-            listId?.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
+            listId.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
         }, {
             emitNewViewState(MainViewState.Empty())
             onError(it)

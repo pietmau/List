@@ -7,6 +7,7 @@
     android:background="?itemBackground">
 
     <CheckBox
+        android:clickable="false"
         android:id="@+id/check"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/item_height"

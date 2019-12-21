@@ -19,7 +19,7 @@ object TitleUseCaseImpl : TitleUseCase {
         travelCheckList.destination?.let {
             travelInfo.add(it)
         }
-        travelCheckList.accomodation?.let {
+        travelCheckList.accommodation?.let {
             travelInfo.add(it)
         }
         travelInfo.addAll(travelCheckList.travellers)

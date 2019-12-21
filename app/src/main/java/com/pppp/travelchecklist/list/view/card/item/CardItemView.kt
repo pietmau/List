@@ -28,9 +28,8 @@ class CardItemView @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(com.pppp.travelchecklist.R.layout.custom_check_list_card_item, this, true)
-        check.setOnCheckedChangeListener { buttonView, isChecked ->
-            buttonView.setPaintFlags(getPaint(isChecked));
-            //callback?.onItemChecked(requireNotNull(data?.id), isChecked)
+        check.setOnClickListener { buttonView ->
+            callback?.onItemChecked(requireNotNull(data?.id), !requireNotNull(data?.checked))
         }
         settings.setOnClickListener {
             callback?.onSettingsClicked(requireNotNull(data))
@@ -40,8 +39,8 @@ class CardItemView @JvmOverloads constructor(
     private fun getPaint(checked: Boolean) = if (checked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.LINEAR_TEXT_FLAG
 
     interface Callback {
-        fun onDeleteRequested(id: String, data: CheckListItem)
-        fun onItemChecked(id: String, checked: Boolean)
+        fun onDeleteRequested(id: Long, data: CheckListItem)
+        fun onItemChecked(id: Long, checked: Boolean)
         fun onItemMoved(fromPosition: Int, toPosition: Int)
         fun onSettingsClicked(data: CheckListItem)
     }

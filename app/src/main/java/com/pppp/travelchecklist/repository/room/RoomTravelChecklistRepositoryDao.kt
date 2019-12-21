@@ -26,6 +26,10 @@ interface RoomTravelChecklistRepositoryDao {
     @Query("SELECT * FROM RoomTravelCheckListProxy WHERE id=:listId")
     fun getListById(listId: Long): LiveData<RoomTravelCheckList?>
 
+    @Transaction
+    @Query("SELECT * FROM RoomCheckListItemProxy WHERE id=:id")
+    suspend fun getChecklistItemById(id: Long): RoomCheckListItem?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveTravelChecklist(travelCheckListProxy: RoomTravelCheckListProxy): Long
 

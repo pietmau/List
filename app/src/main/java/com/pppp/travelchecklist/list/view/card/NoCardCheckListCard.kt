@@ -31,12 +31,13 @@ class NoCardCheckListCard @JvmOverloads constructor(
             checkListCardCallback.onItemMoved(cardId, fromPosition, toPosition)
         }
 
-        override fun onItemChecked(itemId: String, checked: Boolean) {
+        override fun onItemChecked(itemId: Long, checked: Boolean) {
             checkListCardCallback.onItemChecked(cardId, itemId, checked)
         }
 
-        override fun onDeleteRequested(itemId: String, data: CheckListItem) {
-            checkListCardCallback.onItemDeleteRequested(cardId, itemId, data)
+        override fun onDeleteRequested(itemId: Long, data: CheckListItem) {
+            TODO()
+            //checkListCardCallback.onItemDeleteRequested(cardId, itemId, data)
         }
     }
 

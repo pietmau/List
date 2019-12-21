@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.list.model.SingleCheckListUseCase
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel.TransientEvent
@@ -17,15 +18,26 @@ class FireBaseSingleCheckListViewModel(
 
     override val events: LiveData<TransientEvent> by lazy { TransientLiveData<TransientEvent>() }
 
-    override fun viewStates(listId: Long) = singleCheckListUseCase.getUserCheckListAndUxxpdates(listId).map { list ->
-        if (list == null) {
-            (events as MutableLiveData).postValue(TransientEvent.ListNotFound())
-            ViewState()
-        } else {
-            val settings = settingsUseCase.getShowCheckedPreferences()
-            val title = titleUsecase.getTitle(list)
-            ViewState(list, settings, title, titleUsecase.getSubTitle(list))
+    override fun viewStates(listId: Long): LiveData<ViewState> {
+        val liveData = singleCheckListUseCase
+            .getUserCheckListAndUpdates(listId)
+            .map { list -> list?.let { onListFound(it) } ?: onListNotFound() }
+        settingsUseCase.registerVisualizationPreferencesListener {
+            val state = (liveData.value ?: ViewState()).copy(showChecked = it)
+            (liveData as MutableLiveData).postValue(state)
         }
+        return liveData
+    }
+
+    private fun onListFound(list: RoomTravelCheckList): ViewState {
+        val settings = settingsUseCase.getShowCheckedPreferences()
+        val title = titleUsecase.getTitle(list)
+        return ViewState(list, settings, title, titleUsecase.getSubTitle(list))
+    }
+
+    private fun onListNotFound(): ViewState {
+        (events as MutableLiveData).postValue(TransientEvent.ListNotFound())
+        return ViewState()
     }
 
     override fun accept(event: SingleCheckListViewModel.SingleListViewEvent) =

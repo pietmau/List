@@ -15,7 +15,7 @@ data class RoomTravelCheckListProxy @JvmOverloads constructor(
     override var name: String? = null,
     @PrimaryKey(autoGenerate = true)
     override var id: Long? = null,
-    override var accomodation: String? = null,
+    override var accommodation: String? = null,
     override var weather: String? = null,
     override var duration: String? = null,
     override var plannedActivities: List<String> = emptyList(),

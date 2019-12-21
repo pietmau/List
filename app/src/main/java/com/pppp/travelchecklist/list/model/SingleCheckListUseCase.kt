@@ -12,7 +12,7 @@ interface SingleCheckListUseCase {
 
     fun moveItem(listId: String, cardId: String, fromPosition: Int, toPosition: Int)
 
-    fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean)
+    fun checkItem(listId: Long, cardId: String, itemId: Long, checked: Boolean)
 
-    fun getUserCheckListAndUxxpdates(listId: Long): LiveData<RoomTravelCheckList?>
+    fun getUserCheckListAndUpdates(listId: Long): LiveData<RoomTravelCheckList?>
 }

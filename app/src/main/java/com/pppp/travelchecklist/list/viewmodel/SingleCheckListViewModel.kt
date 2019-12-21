@@ -14,7 +14,7 @@ interface SingleCheckListViewModel : ViewActionsConsumer<SingleCheckListViewMode
     sealed class SingleListViewEvent : ViewAction {
         data class DeleteItem(val listId: String, val cardId: String, val itemId: String) : SingleListViewEvent()
         data class MoveItem(val listId: String, val cardId: String, val fromPosition: Int, val toPosition: Int) : SingleListViewEvent()
-        class ItemChecked(val listId: String, val cardId: String, val itemId: String, val isChecked: Boolean) : SingleListViewEvent()
+        class ItemChecked(val listId: Long, val cardId: String, val itemId: Long, val isChecked: Boolean) : SingleListViewEvent()
     }
 
     sealed class TransientEvent {

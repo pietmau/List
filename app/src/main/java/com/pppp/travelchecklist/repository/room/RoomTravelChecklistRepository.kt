@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag
@@ -13,20 +14,14 @@ import com.pppp.entities.pokos.RoomCheckListItemProxy
 import com.pppp.entities.pokos.RoomTag
 import com.pppp.entities.pokos.RoomTravelCheckListProxy
 import com.pppp.travelchecklist.createlist.presenter.Model
-import com.pppp.travelchecklist.repository.TravelCheckListMapper
-import com.pppp.travelchecklist.repository.TravelCheckListMapperImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.lang.NullPointerException
 
-class RoomTravelChecklistRepository(val applicationContext: Context, private val mapper: TravelCheckListMapper = TravelCheckListMapperImpl) :
-    TravelChecklistRepository {
+class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatabase) : TravelChecklistRepository {
 
-    private val db = Room
-        .databaseBuilder(applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
-        .build()
-        .roomTravelChecklistRepositoryDao()
+    private val dao = database.roomTravelChecklistRepositoryDao()
 
     override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
         return Single.fromCallable {
@@ -48,7 +43,7 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
 
     private fun saveTag(itemId: Long, tag: Tag) {
         val value = RoomTag(title = tag.title, hidden = tag.hidden, itemId = itemId)
-        return db.saveTag(value)
+        return dao.saveTag(value)
     }
 
     private fun saveSingleItem(categoryId: Long, item: CheckListItem): Long {
@@ -65,19 +60,19 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
             optional = optional,
             categoryId = categoryId
         )
-        return db.saveCheckListItem(value)
+        return dao.saveCheckListItem(value)
     }
 
     private fun saveCategory(travelChecklistId: Long, category: Category): Long {
         val title = category.title
         val description = category.description
         val roomCategoryProxy = RoomCategoryProxy(title = title, description = description, checkListId = travelChecklistId)
-        return db.saveCategory(roomCategoryProxy)
+        return dao.saveCategory(roomCategoryProxy)
     }
 
     private fun saveTravelCheckList(model: Model): Long {
         val name = model.listName
-        val accomodation = model.accomodation?.title
+        val accommodation = model.accomodation?.title
         val weather = model.weather?.title
         val duration = model.duration?.title
         val destination = model.destination?.name
@@ -85,14 +80,14 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
         val travellers = model.travellers.map { it.title }
         val value = RoomTravelCheckListProxy(
             name = name,
-            accomodation = accomodation,
+            accommodation = accommodation,
             weather = weather,
             duration = duration,
             destination = destination,
             plannedActivities = plannedActivities,
             travellers = travellers
         )
-        return db.saveTravelChecklist(value)
+        return dao.saveTravelChecklist(value)
     }
 
     override fun getUserCheckListById(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
@@ -107,7 +102,7 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
     override fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         Single.fromCallable {
             TODO()
-            // db.geAllLists()
+            // dao.geAllLists()
         }.subscribeOn(Schedulers.io())
             .subscribe({ foo ->
                 Log.e("foo", foo.toString())
@@ -116,7 +111,7 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
             })
     }
 
-    override fun saveLastVisitedList(listId: Long) = db.saveLastVisitedList(ListId(listId))
+    override fun saveLastVisitedList(listId: Long) = dao.saveLastVisitedList(ListId(listId))
 
     override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
         failure?.invoke(NullPointerException())
@@ -127,6 +122,6 @@ class RoomTravelChecklistRepository(val applicationContext: Context, private val
     }
 
     override suspend fun getLastVisitedList(): Long? {
-        return db.getLastVisitedId()?.value
+        return dao.getLastVisitedId()?.value
     }
 }

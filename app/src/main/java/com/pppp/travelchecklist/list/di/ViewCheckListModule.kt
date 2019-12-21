@@ -16,6 +16,7 @@ import com.pppp.travelchecklist.list.model.RoomSingleCheckListUseCase
 import com.pppp.travelchecklist.list.viewmodel.ListSettingsUseCase
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import dagger.Module
 import dagger.Provides
 
@@ -24,12 +25,11 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
 
     @Provides
     fun provideSingleCheckListViewModel(
-        repo: SingleCheckListRepository,
         settingsUseCase: ListSettingsUseCase,
-        context: Context
+        database: RoomTravelChecklistRepositoryDatabase
     ): SingleCheckListViewModel = ViewModelProviders.of(
         activity,
-        ViewCheckListViewModelFactory(repo, settingsUseCase, context)
+        ViewCheckListViewModelFactory(settingsUseCase, database)
     ).get(FireBaseSingleCheckListViewModel::class.java)
 
     @Provides
@@ -47,14 +47,13 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
 }
 
 class ViewCheckListViewModelFactory(
-    val repo: SingleCheckListRepository,
     val settingsUseCase: ListSettingsUseCase,
-    val context: Context
+    val database: RoomTravelChecklistRepositoryDatabase
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         FireBaseSingleCheckListViewModel(
-            singleCheckListUseCase = RoomSingleCheckListUseCase(context.applicationContext),
+            singleCheckListUseCase = RoomSingleCheckListUseCase(database),
             settingsUseCase = settingsUseCase
         ) as T
 }

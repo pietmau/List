@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
 class ViewCheckListFragment : Fragment(), ChackListCardCallback {
-
     @Inject
     internal lateinit var viewModel: SingleCheckListViewModel
 
@@ -57,9 +56,8 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
         viewModel.accept(singleListViewEvent)
     }
 
-    override fun onItemChecked(cardId: String, itemId: String, checked: Boolean) {
-        TODO()
-        //sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(listId, cardId, itemId, checked))
+    override fun onItemChecked(cardId: String, itemId: Long, checked: Boolean) {
+        sendToViewModel(SingleCheckListViewModel.SingleListViewEvent.ItemChecked(listId, cardId, itemId, checked))
     }
 
     override fun onItemMoved(cardId: String, fromPosition: Int, toPosition: Int) {

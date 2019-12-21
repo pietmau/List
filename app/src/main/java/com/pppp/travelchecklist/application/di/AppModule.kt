@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.application.di
 
 import android.content.Context
 import android.preference.PreferenceManager
+import androidx.room.Room
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.BuildConfig
@@ -22,6 +23,7 @@ import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepositoryImp
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.PreferencesWrapperImpl
 import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepository
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -55,7 +57,7 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
     ): ListGenerator = ListGeneratorImpl(client, travelChecklistRepository, AndroidSchedulers.mainThread(), Schedulers.io())
 
     @Provides
-    fun provideListRepository(): TravelChecklistRepository = RoomTravelChecklistRepository(context.applicationContext)
+    fun provideListRepository(database: RoomTravelChecklistRepositoryDatabase): TravelChecklistRepository = RoomTravelChecklistRepository(database)
 
     @Provides
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
@@ -73,6 +75,11 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
 
     @Provides
     fun providePreferences(): PreferencesWrapper = PreferencesWrapperImpl(PreferenceManager.getDefaultSharedPreferences(context))
+
+    @Provides
+    fun database(): RoomTravelChecklistRepositoryDatabase = Room
+        .databaseBuilder(context.applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
+        .build()
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

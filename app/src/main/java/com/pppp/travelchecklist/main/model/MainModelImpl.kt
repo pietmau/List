@@ -1,7 +1,6 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pietrantuono.entities.TravelCheckList
-import java.lang.NullPointerException
 
 class MainModelImpl(private val useCase: MainUseCase) : MainModel {
 
@@ -9,27 +8,14 @@ class MainModelImpl(private val useCase: MainUseCase) : MainModel {
 
     private var lastVisitedList: Long? = null
 
-    init {
-        getUsersLists({
-            TODO()
-//            checkLists = it.filter { checklist -> checklist.id != null }
-//                .map { checklist -> requireNotNull(checklist.id) to checklist }
-//                .toMap().toMutableMap()
-        }, { /*NoOp*/ })
-    }
-
-    override fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        useCase.getUsersListsAndUpdates(success, failure)
-    }
-
     override fun saveLastVisitedList(listId: Long?) {
         lastVisitedList = listId
         listId?.let { useCase.saveLastVisitedList(it) }
     }
 
-    override fun getLastVisitedList(success: ((listId: Long) -> Unit), failure: ((Throwable?) -> Unit)?) {
+    override fun getLastVisitedList(failure: ((Throwable?) -> Unit)?, success: ((listId: Long) -> Unit)) {
         useCase.getLastVisitedList({ listId ->
-            listId?.let { success(it) } ?: failure?.invoke(LastestListNotFoundException())
+            listId?.let { success(it) } ?: failure?.invoke(LatestListNotFoundException())
         }, failure)
     }
 
@@ -45,4 +31,4 @@ class MainModelImpl(private val useCase: MainUseCase) : MainModel {
 
 }
 
-class LastestListNotFoundException : Exception()
+class LatestListNotFoundException : Exception()

@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.navigation
 
 import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
+import com.pppp.travelchecklist.main.model.MainUseCase
 import com.pppp.travelchecklist.menu.BetterMenuItem
 import java.lang.IllegalArgumentException
 import javax.inject.Inject

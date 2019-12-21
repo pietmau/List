@@ -5,7 +5,7 @@ import com.pppp.entities.pokos.RoomTravelCheckList
 interface MainUseCase {
 
     fun getLastVisitedList(
-        success: (userLists: List<RoomTravelCheckList>, lastListId: Long) -> Unit = { _, _ -> },
+        success: (lastListId: Long) -> Unit = { _ -> },
         failure: (Throwable?) -> Unit = {}
     )
 

@@ -1,8 +1,10 @@
 package com.pppp.travelchecklist.repository
 
+import androidx.lifecycle.LiveData
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.RoomCheckListItem
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
 
@@ -23,6 +25,7 @@ interface TravelChecklistRepository {
     suspend fun getLastVisitedList(): Long?
 
     fun deleteChecklist(listId: String)
+    fun cazz(): LiveData<List<RoomTravelCheckList?>>
 }
 
 interface SingleCheckListRepository {

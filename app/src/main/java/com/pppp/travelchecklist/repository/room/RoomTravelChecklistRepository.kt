@@ -98,18 +98,11 @@ class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatab
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @SuppressLint("CheckResult")
     override fun getUsersListsAndUpdates(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
-        Single.fromCallable {
-            TODO()
-            // dao.geAllLists()
-        }.subscribeOn(Schedulers.io())
-            .subscribe({ foo ->
-                Log.e("foo", foo.toString())
-            }, {
-
-            })
+        // TODO
     }
+
+    override fun cazz() = dao.getAllListsAndUpdates()
 
     override fun saveLastVisitedList(listId: Long) = dao.saveLastVisitedList(ListId(listId))
 

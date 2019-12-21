@@ -7,7 +7,6 @@ import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.di.MainModule
@@ -107,7 +106,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     private fun onTransientEventReceived(transientEvent: MainTransientEvent) = when (transientEvent) {
-        is MainTransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists, transientEvent.lastList)
+        is MainTransientEvent.OpenNavMenu -> openNavMenu(transientEvent.lastList)
         is MainTransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
         is MainTransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
         is MainTransientEvent.Error -> onError(transientEvent.message)
@@ -117,8 +116,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         actions.accept(mainViewAction)
     }
 
-    private fun openNavMenu(checkLists: List<RoomTravelCheckList>, lastList: Long) {
-        BottomNavigationDrawerFragment.newInstance(checkLists, lastList).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
+    private fun openNavMenu(lastList: Long) {
+        BottomNavigationDrawerFragment.newInstance(lastList).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

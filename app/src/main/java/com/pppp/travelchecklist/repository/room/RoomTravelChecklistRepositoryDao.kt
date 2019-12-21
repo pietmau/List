@@ -27,6 +27,10 @@ interface RoomTravelChecklistRepositoryDao {
     fun getListById(listId: Long): LiveData<RoomTravelCheckList?>
 
     @Transaction
+    @Query("SELECT * FROM RoomTravelCheckListProxy")
+    fun getAllListsAndUpdates(): LiveData<List<RoomTravelCheckList?>>
+
+    @Transaction
     @Query("SELECT * FROM RoomCheckListItemProxy WHERE id=:id")
     suspend fun getChecklistItemById(id: Long): RoomCheckListItem?
 

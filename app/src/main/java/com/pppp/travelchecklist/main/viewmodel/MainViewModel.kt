@@ -60,8 +60,8 @@ class MainViewModel(
 
     private fun openNavMenu() {
         analytics.onMainMenuOpen()
-        mainUseCase.getLastVisitedList({ userLists, lastListId ->
-            emitTransientEvent(MainTransientEvent.OpenNavMenu(userLists, lastListId))
+        mainUseCase.getLastVisitedList({ lastListId ->
+            emitTransientEvent(MainTransientEvent.OpenNavMenu(lastListId))
         }, {
             onError(it)
         })
@@ -70,7 +70,7 @@ class MainViewModel(
     private fun getLatestListVisited() {
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
-        mainUseCase.getLastVisitedList({ _, listId ->
+        mainUseCase.getLastVisitedList({ listId ->
             listId.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
         }, {
             emitNewViewState(MainViewState.Empty())

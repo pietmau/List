@@ -4,11 +4,9 @@ import com.pietrantuono.entities.TravelCheckList
 
 interface MainModel {
 
-    fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)? = null, failure: ((Throwable) -> Unit)? = null)
-
     fun saveLastVisitedList(listId: Long?)
 
-    fun getLastVisitedList(success: ((Long) -> Unit), failure: ((Throwable?) -> Unit)? = null)
+    fun getLastVisitedList(failure: ((Throwable?) -> Unit)? = null, success: ((Long) -> Unit))
 
     var checkLists: Map<String, TravelCheckList>
 

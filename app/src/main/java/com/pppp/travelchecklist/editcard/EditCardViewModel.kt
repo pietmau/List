@@ -2,10 +2,11 @@ package com.pppp.travelchecklist.editcard
 
 import com.pppp.travelchecklist.ViewAction
 import com.pppp.travelchecklist.ViewActionsConsumer
-import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
+import com.pppp.travelchecklist.list.model.RoomSingleCheckListRepository
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 
-class EditCardViewModel(private val model: EditCardModel = FirebaseEditCardModel(FirebaseSingleCheckListRepository())) :
-    ViewActionsConsumer<EditCardViewAction> {
+class EditCardViewModel(val database: RoomTravelChecklistRepositoryDatabase) : ViewActionsConsumer<EditCardViewAction> {
+    private val model: EditCardModel = TODO()//FirebaseEditCardModel(RoomSingleCheckListRepository(roomTravelChecklistRepositoryDao))
 
     override fun accept(editCardViewAction: EditCardViewAction) =
         when (editCardViewAction) {

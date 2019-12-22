@@ -41,9 +41,9 @@ interface SingleCheckListRepository {
         success: ((TravelCheckList) -> Unit)? = null
     )
 
-    fun addCategory(listId: String, name: String, callback: (() -> Unit)? = null)
+    fun addCategory(listId: Long, name: String)
 
-    fun addNewItemFromTitle(listId: String, categoryId: String, name: String)
+    fun addNewItemFromTitle(listId: Long, categoryId: String, name: String)
 
     fun addItem(listId: String, categoryId: String, element: RoomCheckListItem)
 

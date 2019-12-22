@@ -11,6 +11,7 @@ import com.pppp.travelchecklist.createlist.di.NewListComponent
 import com.pppp.travelchecklist.createlist.di.NewListModule
 import com.pppp.travelchecklist.utils.UtilsModule
 import dagger.Component
+import javax.inject.Singleton
 
 @Component(modules = arrayOf(AppModule::class, UtilsModule::class))
 interface AppComponent {

@@ -1,22 +1,24 @@
 package com.pppp.travelchecklist.list.model
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.RoomCategory
+import com.pppp.entities.pokos.RoomCategoryProxy
 import com.pppp.entities.pokos.RoomCheckListItem
-import com.pppp.entities.pokos.RoomTravelCheckList
-import com.pppp.travelchecklist.repository.ListNotFoundException
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDao
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class FirebaseSingleCheckListRepository(
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+class RoomSingleCheckListRepository(
+    val dao: RoomTravelChecklistRepositoryDao
 ) : SingleCheckListRepository {
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    override fun addNewItemFromTitle(listId: String, categoryId: String, name: String) = TODO()//addItem(listId, categoryId, RoomCheckListItem(title = name))
+    override fun addNewItemFromTitle(listId: Long, categoryId: String, name: String) = TODO()//addItem(listId, categoryId, RoomCheckListItem(title = name))
 
     override fun addItem(listId: String, categoryId: String, element: RoomCheckListItem) {
         TODO()
@@ -55,13 +57,10 @@ class FirebaseSingleCheckListRepository(
         return (category as RoomCategory).copy(items = mutableList.toList() as List<RoomCheckListItem>)
     }
 
-    override fun addCategory(listId: String, name: String, callback: (() -> Unit)?) {
-        getUserCheckList(listId) { travelCheckslist ->
-            val categoryId = travelCheckslist.categories.map { requireNotNull(it.id) }.max()!! + 1
-            db.getList(auth.userId, listId)
-            TODO()
-            //.update("categories", FieldValue.arrayUnion(CategoryImpl(title = name, id = categoryId)))
-            //   .addOnSuccessListener { callback?.invoke() }
+    override fun addCategory(listId: Long, name: String) {
+        val category = RoomCategoryProxy(title = name, checkListId = listId)
+        coroutineScope.launch {
+            dao.insertCategory(category)
         }
     }
 
@@ -70,7 +69,7 @@ class FirebaseSingleCheckListRepository(
     }
 
     private fun updateCategoresInternal(listId: String, categories: List<Category>) {
-        db.getList(auth.userId, listId).update("categories", categories)
+        //db.getList(auth.userId, listId).update("categories", categories)
     }
 
     override fun getUserCheckListAndUpdates(
@@ -78,14 +77,7 @@ class FirebaseSingleCheckListRepository(
         failure: ((Throwable) -> Unit)?,
         success: ((TravelCheckList) -> Unit)?
     ) {
-        db.getList(auth.userId, listId)
-            .addSnapshotListener { documentSnapshot, exception ->
-                if (exception != null) {
-                    failure?.invoke(exception)
-                } else {
-                    onSuccess(documentSnapshot, success, failure, listId)
-                }
-            }
+
     }
 
     override fun getUserCheckList(
@@ -93,11 +85,7 @@ class FirebaseSingleCheckListRepository(
         failure: ((Throwable) -> Unit)?,
         success: ((TravelCheckList) -> Unit)?
     ) {
-        db.getList(auth.userId, listId).get()
-            .addOnFailureListener { failure?.invoke(it) }
-            .addOnSuccessListener { documentSnapshot ->
-                onSuccess(documentSnapshot, success, failure, listId)
-            }
+
     }
 
     private fun onSuccess(
@@ -106,12 +94,7 @@ class FirebaseSingleCheckListRepository(
         failure: ((Throwable) -> Unit)?,
         listId: String
     ) {
-        val checkList = documentSnapshot?.toObject(RoomTravelCheckList::class.java)
-        if (checkList != null) {
-            success?.invoke(checkList)
-        } else {
-            failure?.invoke(ListNotFoundException(auth.userId, listId))
-        }
+
     }
 }
 

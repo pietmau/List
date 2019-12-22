@@ -23,11 +23,13 @@ import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepositoryImp
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.PreferencesWrapperImpl
 import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepository
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDao
 import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Singleton
 
 @Module
 class AppModule(private val context: Context, private val firebaseAnalytics: FirebaseAnalytics) {
@@ -51,13 +53,13 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
 
     @Provides
     fun provideListGenarator(
-        db: InitialTagsRepository,
-        client: Client,
-        travelChecklistRepository: TravelChecklistRepository
+        client: Client, travelChecklistRepository: TravelChecklistRepository
     ): ListGenerator = ListGeneratorImpl(client, travelChecklistRepository, AndroidSchedulers.mainThread(), Schedulers.io())
 
     @Provides
-    fun provideListRepository(database: RoomTravelChecklistRepositoryDatabase): TravelChecklistRepository = RoomTravelChecklistRepository(database)
+    fun provideListRepository(travelChecklistRepositoryDao: RoomTravelChecklistRepositoryDao): TravelChecklistRepository = RoomTravelChecklistRepository(
+        travelChecklistRepositoryDao
+    )
 
     @Provides
     fun provideDb(client: Client): InitialTagsRepository = InitialTagsRepositoryImpl(client)
@@ -77,9 +79,9 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
     fun providePreferences(): PreferencesWrapper = PreferencesWrapperImpl(PreferenceManager.getDefaultSharedPreferences(context))
 
     @Provides
-    fun database(): RoomTravelChecklistRepositoryDatabase = Room
+    fun roomTravelChecklistRepositoryDao(): RoomTravelChecklistRepositoryDao = Room
         .databaseBuilder(context.applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
-        .build()
+        .build().roomTravelChecklistRepositoryDao()
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

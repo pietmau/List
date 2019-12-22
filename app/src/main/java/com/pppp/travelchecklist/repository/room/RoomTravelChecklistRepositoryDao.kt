@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.pppp.entities.pokos.RoomCategoryProxy
 import com.pppp.entities.pokos.RoomCheckListItem
 import com.pppp.entities.pokos.RoomCheckListItemProxy
@@ -43,13 +44,13 @@ interface RoomTravelChecklistRepositoryDao {
     fun saveTravelChecklist(travelCheckListProxy: RoomTravelCheckListProxy): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveCategory(roomCategoryProxy: RoomCategoryProxy): Long
+    fun insertCategory(roomCategoryProxy: RoomCategoryProxy): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveCheckListItem(roomCheckListItem: RoomCheckListItemProxy): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveTag(roomTag: RoomTag)
+    fun saveTag(roomTag: RoomTag): Long
 
     @Delete
     fun deleteList(travelCheckListProxy: RoomTravelCheckListProxy)

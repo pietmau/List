@@ -26,8 +26,8 @@ abstract class AddBottomDialog : BottomSheetDialogFragment() {
         setUpViews()
         done.setOnClickListener {
             val text = input.text?.toString()
-            val listId = arguments?.getString(LIST_ID)
-            if (!text.isNullOrBlank() && !listId.isNullOrBlank()) {
+            val listId = arguments?.getLong(LIST_ID)
+            if (!text.isNullOrBlank() && listId != null) {
                 add(listId, text)
             }
             dismiss()
@@ -36,7 +36,7 @@ abstract class AddBottomDialog : BottomSheetDialogFragment() {
 
     abstract fun performInjection()
 
-    abstract fun add(listId: String, text: String)
+    abstract fun add(listId: Long, text: String)
 
     abstract fun setUpViews()
 

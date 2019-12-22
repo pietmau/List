@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
@@ -66,8 +67,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     fun addCategory() {
-        TODO()
-        //AddCategoryBottomDialog.newInstance(listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
+        AddCategoryBottomDialog.newInstance(listId).show(requireFragmentManager(), AddCategoryBottomDialog.TAG)
     }
 
     override fun onCardOptionsClicked(cardId: String) {

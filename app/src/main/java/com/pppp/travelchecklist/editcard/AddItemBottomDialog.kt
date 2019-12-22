@@ -24,7 +24,7 @@ class AddItemBottomDialog : AddBottomDialog() {
         input.setHint(R.string.item_name)
     }
 
-    override fun add(listId: String, name: String) {
+    override fun add(listId: Long, name: String) {
         categoryAdder.addItem(listId, requireStringArgument(CATEGORY_ID), name)
     }
 

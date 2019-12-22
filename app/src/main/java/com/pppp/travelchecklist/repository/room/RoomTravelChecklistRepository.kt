@@ -17,8 +17,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 
-class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatabase) : TravelChecklistRepository {
-    private val dao = database.roomTravelChecklistRepositoryDao()
+class RoomTravelChecklistRepository(
+    private val dao: RoomTravelChecklistRepositoryDao
+) : TravelChecklistRepository {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
@@ -41,7 +42,7 @@ class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatab
 
     private fun saveTag(itemId: Long, tag: Tag) {
         val value = RoomTag(title = tag.title, hidden = tag.hidden, itemId = itemId)
-        return dao.saveTag(value)
+        dao.saveTag(value)
     }
 
     private fun saveSingleItem(categoryId: Long, item: CheckListItem): Long {
@@ -65,7 +66,7 @@ class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatab
         val title = category.title
         val description = category.description
         val roomCategoryProxy = RoomCategoryProxy(title = title, description = description, checkListId = travelChecklistId)
-        return dao.saveCategory(roomCategoryProxy)
+        return dao.insertCategory(roomCategoryProxy)
     }
 
     private fun saveTravelCheckList(model: Model): Long {
@@ -120,7 +121,7 @@ class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatab
             dao.deleteCategory(category.categoryProxy)
             category.items.forEach { item ->
                 dao.deleteItem(item.roomCheckListItemProxy)
-                item.tags.forEach{
+                item.tags.forEach {
                     dao.deleteTag(it)
                 }
             }

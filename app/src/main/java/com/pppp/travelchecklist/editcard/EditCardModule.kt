@@ -1,6 +1,8 @@
 package com.pppp.travelchecklist.editcard
 
 import com.pppp.travelchecklist.ViewActionsConsumer
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDao
+import com.pppp.travelchecklist.repository.room.RoomTravelChecklistRepositoryDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,6 +18,6 @@ object EditCardModule {
     @Singleton
     @Provides
     @JvmStatic
-    fun provideEditCardPresenter(): EditCardViewModel = EditCardViewModel()
+    fun provideEditCardPresenter(database: RoomTravelChecklistRepositoryDao): EditCardViewModel = TODO()//EditCardViewModel(roomTravelChecklistRepositoryDao)
 
 }

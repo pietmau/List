@@ -12,6 +12,7 @@ import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
+import com.pppp.travelchecklist.application.di.ApplicationScope
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCaseImpl
 import com.pppp.travelchecklist.main.model.MainModel
@@ -34,10 +35,10 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+@ApplicationScope
 @Module
 class MainModule(private val activity: FragmentActivity) {
 
-    @Singleton
     @Provides
     fun providePresenter(
         mainUseCase: MainUseCase,

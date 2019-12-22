@@ -31,6 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
+@ApplicationScope
 @Module
 class AppModule(private val context: Context, private val firebaseAnalytics: FirebaseAnalytics) {
 
@@ -78,10 +79,14 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
     @Provides
     fun providePreferences(): PreferencesWrapper = PreferencesWrapperImpl(PreferenceManager.getDefaultSharedPreferences(context))
 
+    @ApplicationScope
     @Provides
-    fun roomTravelChecklistRepositoryDao(): RoomTravelChecklistRepositoryDao = Room
-        .databaseBuilder(context.applicationContext, RoomTravelChecklistRepositoryDatabase::class.java, "list_database")
-        .build().roomTravelChecklistRepositoryDao()
+    fun roomTravelChecklistRepositoryDao(): RoomTravelChecklistRepositoryDao =
+        Room.databaseBuilder(
+            context.applicationContext,
+            RoomTravelChecklistRepositoryDatabase::class.java,
+            "list_database"
+        ).build().roomTravelChecklistRepositoryDao()
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

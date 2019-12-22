@@ -13,6 +13,7 @@ import com.pppp.travelchecklist.utils.UtilsModule
 import dagger.Component
 import javax.inject.Singleton
 
+@ApplicationScope
 @Component(modules = arrayOf(AppModule::class, UtilsModule::class))
 interface AppComponent {
 

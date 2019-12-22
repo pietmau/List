@@ -8,7 +8,7 @@ interface MainUseCase {
 
     fun saveLastVisitedList(it: Long)
 
-    fun getLastVisitedList(success: (id: Long?) -> Unit, failure: ((Throwable?) -> Unit)?)
+    fun getLastVisitedList(success: (id: Long) -> Unit, failure: ((Throwable?) -> Unit)?)
 
     fun getUsersLists(): LiveData<List<RoomTravelCheckList?>>
 

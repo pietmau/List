@@ -22,7 +22,7 @@ class RoomMainUseCase @Inject constructor(
         }
     }
 
-    override fun getLastVisitedList(success: (id: Long?) -> Unit, failure: ((Throwable?) -> Unit)?) {
+    override fun getLastVisitedList(success: (id: Long) -> Unit, failure: ((Throwable?) -> Unit)?) {
         coroutineScope.launch {
             val id = repo.getLastVisitedList()
             withContext(Dispatchers.Main) {

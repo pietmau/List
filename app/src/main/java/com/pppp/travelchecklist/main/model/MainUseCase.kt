@@ -10,8 +10,12 @@ interface MainUseCase {
 
     fun getLastVisitedList(success: (id: Long) -> Unit, failure: ((Throwable?) -> Unit)?)
 
-    fun getUsersLists(): LiveData<List<RoomTravelCheckList?>>
+    fun getUsersLists(): LiveData<List<RoomTravelCheckList>>
+
+    fun getUsersLists(result: ((List<RoomTravelCheckList>) -> Unit)? = null)
 
     fun deleteList(id: Long, success: (() -> Unit)? = null)
+
+    fun deleteCurrentList(function: (() -> Unit)? = null)
 }
 

@@ -123,6 +123,9 @@ class RoomTravelChecklistRepository(
     }
 
     override suspend fun getLastVisitedList(): Long? {
-        return dao.getLastVisitedId()?.value
+        return dao.getLastVisitedId().value
     }
+
+    override fun getUsersListsSync(): List<RoomTravelCheckList> = dao.getAllLists()
+
 }

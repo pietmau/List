@@ -24,9 +24,11 @@ interface TravelChecklistRepository {
 
     suspend fun getLastVisitedList(): Long?
 
-    fun deleteChecklist(listId: Long)
+    fun deleteChecklist(listId: Long, complete: (() -> Unit)? = null)
 
-    fun getUsersLists(): LiveData<List<RoomTravelCheckList?>>
+    fun getUsersLists(): LiveData<List<RoomTravelCheckList>>
+
+    fun getUsersListsSync(): List<RoomTravelCheckList>
 }
 
 interface SingleCheckListRepository {

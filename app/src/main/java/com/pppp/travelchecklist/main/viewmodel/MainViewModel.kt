@@ -46,15 +46,10 @@ class MainViewModel(
     }
 
     private fun deleteCurrentList() {
-        mainUseCase.deleteCurrentList(){
+        mainUseCase.deleteCurrentList() {
             getLatestListVisited()
         }
-        if (mainUseCase.isEmpty()) {
-            emitNewViewState(MainViewState.Empty())
-        } else {
-            emitNewViewState(MainViewState.Content())
-            openNavMenu()
-        }
+
     }
 
     private fun updateCurrentViewState(settings: MainViewState.Settings) {
@@ -75,11 +70,22 @@ class MainViewModel(
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
         mainUseCase.getLastVisitedList({ listId ->
-            listId.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
-        }, {
-            emitNewViewState(MainViewState.Empty())
-            onError(it)
+            listId.let { goToList(it) }
         })
+        {
+            onLatestListNotAvailable()
+        }
+    }
+
+    private fun onLatestListNotAvailable() {
+        mainUseCase.getUsersLists { lists ->
+            if (lists.isEmpty()) {
+                emitNewViewState(MainViewState.Empty())
+            } else {
+                emitNewViewState(MainViewState.Content())
+                openNavMenu()
+            }
+        }
     }
 
     private fun onError(it: Throwable?) = emitTransientEvent(MainTransientEvent.Error(it?.message ?: ""))

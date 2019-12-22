@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.repository.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -27,6 +28,10 @@ interface RoomTravelChecklistRepositoryDao {
     fun getListById(listId: Long): LiveData<RoomTravelCheckList?>
 
     @Transaction
+    @Query("SELECT * FROM RoomTravelCheckListProxy WHERE id=:listId")
+    fun getListByIdSync(listId: Long): RoomTravelCheckList?
+
+    @Transaction
     @Query("SELECT * FROM RoomTravelCheckListProxy")
     fun getAllListsAndUpdates(): LiveData<List<RoomTravelCheckList?>>
 
@@ -45,4 +50,17 @@ interface RoomTravelChecklistRepositoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveTag(roomTag: RoomTag)
+
+    @Delete
+    fun deleteList(travelCheckListProxy: RoomTravelCheckListProxy)
+
+    @Delete
+    fun deleteCategory(categoryProxy: RoomCategoryProxy)
+
+    @Delete
+    fun deleteItem(roomCheckListItemProxy: RoomCheckListItemProxy)
+
+    @Delete
+    fun deleteTag(tag: RoomTag)
+
 }

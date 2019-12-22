@@ -1,10 +1,5 @@
 package com.pppp.travelchecklist.repository.room
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.util.Log
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.Tag
@@ -12,16 +7,19 @@ import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.RoomCategoryProxy
 import com.pppp.entities.pokos.RoomCheckListItemProxy
 import com.pppp.entities.pokos.RoomTag
+import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.entities.pokos.RoomTravelCheckListProxy
 import com.pppp.travelchecklist.createlist.presenter.Model
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 
 class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatabase) : TravelChecklistRepository {
-
     private val dao = database.roomTravelChecklistRepositoryDao()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
         return Single.fromCallable {
@@ -102,7 +100,7 @@ class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatab
         // TODO
     }
 
-    override fun cazz() = dao.getAllListsAndUpdates()
+    override fun getUsersLists() = dao.getAllListsAndUpdates()
 
     override fun saveLastVisitedList(listId: Long) = dao.saveLastVisitedList(ListId(listId))
 
@@ -110,8 +108,23 @@ class RoomTravelChecklistRepository(database: RoomTravelChecklistRepositoryDatab
         failure?.invoke(NullPointerException())
     }
 
-    override fun deleteChecklist(listId: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun deleteChecklist(listId: Long) {
+        coroutineScope.launch {
+            dao.getListByIdSync(listId)?.let { deleteList(it) }
+        }
+    }
+
+    private fun deleteList(list: RoomTravelCheckList) {
+        dao.deleteList(list.travelCheckListProxy)
+        list.categories.forEach { category ->
+            dao.deleteCategory(category.categoryProxy)
+            category.items.forEach { item ->
+                dao.deleteItem(item.roomCheckListItemProxy)
+                item.tags.forEach{
+                    dao.deleteTag(it)
+                }
+            }
+        }
     }
 
     override suspend fun getLastVisitedList(): Long? {

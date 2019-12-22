@@ -1,7 +1,6 @@
 package com.pppp.travelchecklist.main.model
 
 import androidx.lifecycle.LiveData
-import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.RoomTravelCheckList
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +14,7 @@ class RoomMainUseCase @Inject constructor(
     private val coroutineContext: CoroutineScope = CoroutineScope(Dispatchers.IO)
 ) : MainUseCase {
 
-    override fun getUsersLists(): LiveData<List<RoomTravelCheckList?>> = repo.cazz()
+    override fun getUsersLists(): LiveData<List<RoomTravelCheckList?>> = repo.getUsersLists()
 
     override fun saveLastVisitedList(listId: Long) {
         coroutineContext.launch {
@@ -31,4 +30,9 @@ class RoomMainUseCase @Inject constructor(
             }
         }
     }
+
+    override fun deleteList(id: Long) {
+       repo.deleteChecklist(id)
+    }
+
 }

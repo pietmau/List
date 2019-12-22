@@ -1,16 +1,17 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pietrantuono.entities.TravelCheckList
+import kotlin.properties.Delegates
 
 class MainModelImpl(private val useCase: MainUseCase) : MainModel {
 
     override var checkLists: Map<String, TravelCheckList> = mutableMapOf()
 
-    private var lastVisitedList: Long? = null
+    private var lastVisitedList: Long by Delegates.notNull()
 
     override fun saveLastVisitedList(listId: Long?) {
-        lastVisitedList = listId
-        listId?.let { useCase.saveLastVisitedList(it) }
+        lastVisitedList = requireNotNull(listId)
+        useCase.saveLastVisitedList(lastVisitedList)
     }
 
     override fun getLastVisitedList(failure: ((Throwable?) -> Unit)?, success: ((listId: Long) -> Unit)) {
@@ -20,11 +21,7 @@ class MainModelImpl(private val useCase: MainUseCase) : MainModel {
     }
 
     override fun deleteCurrentList() {
-        val listId = requireNotNull(lastVisitedList)
-        TODO()
-//        useCase.deleteChecklist(listId)
-//        (checkLists as MutableMap).remove(listId)
-//        lastVisitedList = null
+        useCase.deleteList(lastVisitedList)
     }
 
     override fun isEmpty() = checkLists.isEmpty()

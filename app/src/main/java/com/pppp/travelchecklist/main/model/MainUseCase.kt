@@ -11,5 +11,7 @@ interface MainUseCase {
     fun getLastVisitedList(success: (id: Long?) -> Unit, failure: ((Throwable?) -> Unit)?)
 
     fun getUsersLists(): LiveData<List<RoomTravelCheckList?>>
+
+    fun deleteList(id:Long)
 }
 

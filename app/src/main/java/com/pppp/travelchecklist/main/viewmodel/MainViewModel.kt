@@ -9,11 +9,12 @@ import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
+import com.pppp.travelchecklist.main.model.RoomMainUseCase
 
 private val KEY = MainViewModel::class.simpleName!!
 
 class MainViewModel(
-    private val mainUseCase: MainUseCase,
+    private val mainUseCase: RoomMainUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val analytics: MainAnalyticsLogger,
     handle: SavedStateHandle
@@ -44,7 +45,9 @@ class MainViewModel(
     }
 
     private fun deleteCurrentList() {
-        mainUseCase.deleteCurrentList()
+        mainUseCase.deleteCurrentList(){
+            getLatestListVisited()
+        }
         if (mainUseCase.isEmpty()) {
             emitNewViewState(MainViewState.Empty())
         } else {

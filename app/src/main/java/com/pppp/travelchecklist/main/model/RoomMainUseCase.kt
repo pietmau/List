@@ -11,19 +11,19 @@ import javax.inject.Inject
 
 class RoomMainUseCase @Inject constructor(
     private val repo: TravelChecklistRepository,
-    private val coroutineContext: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 ) : MainUseCase {
 
     override fun getUsersLists(): LiveData<List<RoomTravelCheckList?>> = repo.getUsersLists()
 
     override fun saveLastVisitedList(listId: Long) {
-        coroutineContext.launch {
+        coroutineScope.launch {
             repo.saveLastVisitedList(listId)
         }
     }
 
     override fun getLastVisitedList(success: (id: Long?) -> Unit, failure: ((Throwable?) -> Unit)?) {
-        coroutineContext.launch {
+        coroutineScope.launch {
             val id = repo.getLastVisitedList()
             withContext(Dispatchers.Main) {
                 id?.let(success) ?: failure?.invoke(LatestListNotFoundException())
@@ -31,8 +31,12 @@ class RoomMainUseCase @Inject constructor(
         }
     }
 
-    override fun deleteList(id: Long) {
-       repo.deleteChecklist(id)
+    override fun deleteList(id: Long, complete: (() -> Unit)?) {
+        coroutineScope.launch {
+            repo.deleteChecklist(id)
+            withContext(Dispatchers.Main) {
+                complete?.invoke()
+            }
+        }
     }
-
 }

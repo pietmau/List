@@ -20,8 +20,8 @@ class MainModelImpl(private val useCase: MainUseCase) : MainModel {
         }, failure)
     }
 
-    override fun deleteCurrentList() {
-        useCase.deleteList(lastVisitedList)
+    override fun deleteCurrentList(success: (() -> Unit)?) {
+        useCase.deleteList(lastVisitedList, success)
     }
 
     override fun isEmpty() = checkLists.isEmpty()

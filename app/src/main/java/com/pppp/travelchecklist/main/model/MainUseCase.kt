@@ -12,6 +12,6 @@ interface MainUseCase {
 
     fun getUsersLists(): LiveData<List<RoomTravelCheckList?>>
 
-    fun deleteList(id:Long)
+    fun deleteList(id: Long, success: (() -> Unit)? = null)
 }
 

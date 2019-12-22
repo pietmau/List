@@ -12,15 +12,11 @@ import com.pppp.entities.pokos.RoomTravelCheckListProxy
 import com.pppp.travelchecklist.createlist.presenter.Model
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import io.reactivex.Single
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 
 class RoomTravelChecklistRepository(
     private val dao: RoomTravelChecklistRepositoryDao
 ) : TravelChecklistRepository {
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun saveAndGet(list: List<Category>, model: Model): Single<Long> {
         return Single.fromCallable {
@@ -109,10 +105,8 @@ class RoomTravelChecklistRepository(
         failure?.invoke(NullPointerException())
     }
 
-    override fun deleteChecklist(listId: Long) {
-        coroutineScope.launch {
-            dao.getListByIdSync(listId)?.let { deleteList(it) }
-        }
+    override fun deleteChecklist(listId: Long, complete: (() -> Unit)?) {
+        dao.getListByIdSync(listId)?.let { deleteList(it) }
     }
 
     private fun deleteList(list: RoomTravelCheckList) {

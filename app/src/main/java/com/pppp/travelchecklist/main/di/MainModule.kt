@@ -23,7 +23,6 @@ import com.pppp.travelchecklist.main.model.NavigatorImpl
 import com.pppp.travelchecklist.main.model.RoomMainUseCase
 import com.pppp.travelchecklist.navigation.MenuCreator
 import com.pppp.travelchecklist.navigation.MenuCreatorImpl
-import com.pppp.travelchecklist.main.viewmodel.FirebaseMainUseCase
 import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
 import com.pppp.travelchecklist.main.viewmodel.MainViewAction
 import com.pppp.travelchecklist.main.viewmodel.MainViewState
@@ -33,7 +32,6 @@ import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @ApplicationScope
 @Module
@@ -45,7 +43,7 @@ class MainModule(private val activity: FragmentActivity) {
         logger: AnalyticsLogger,
         settingsUseCase: SettingsUseCase
     ) =
-        ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(mainUseCase), settingsUseCase, activity)).get(MainViewModel::class.java)
+        ViewModelProviders.of(activity, MainViewModelFactory(logger, Roo, settingsUseCase, activity,)).get(MainViewModel::class.java)
 
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl, repo: TravelChecklistRepository): MainUseCase = RoomMainUseCase(repo)
@@ -73,12 +71,12 @@ class MainModule(private val activity: FragmentActivity) {
 
     class MainViewModelFactory(
         val logger: MainAnalyticsLogger,
-        val model: MainModel,
         val settingsUseCase: SettingsUseCase,
-        activity: SavedStateRegistryOwner
+        activity: SavedStateRegistryOwner,
+        val repo: TravelChecklistRepository
     ) : AbstractSavedStateViewModelFactory(activity, null) {
         override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T = MainViewModel(
-            FirebaseMainUseCase(model),
+            RoomMainUseCase(repo),
             settingsUseCase,
             logger,
             handle

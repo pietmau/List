@@ -28,9 +28,10 @@ class CardItemView @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(com.pppp.travelchecklist.R.layout.custom_check_list_card_item, this, true)
-        check.setOnCheckedChangeListener { buttonView, isChecked ->
-            buttonView.setPaintFlags(getPaint(isChecked));
-            callback?.onItemChecked(requireNotNull(data?.id), isChecked)
+        check.setOnClickListener { buttonView ->
+            val checked = requireNotNull(data).checked
+            check.setPaintFlags(getPaint(!checked));
+            callback?.onItemChecked(requireNotNull(data?.id), !checked)
         }
         settings.setOnClickListener {
             callback?.onSettingsClicked(requireNotNull(data))

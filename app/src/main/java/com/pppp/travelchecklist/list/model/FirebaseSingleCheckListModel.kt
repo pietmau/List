@@ -7,14 +7,19 @@ import com.pppp.travelchecklist.repository.SingleCheckListRepository
 import java.util.Collections
 
 class FirebaseSingleCheckListModel(private val repository: SingleCheckListRepository) : SingleCheckListModel {
+
     private lateinit var travelCheckList: TravelCheckListImpl
 
+    private fun getChecklistById(listId: String) = repository.getChecklistById(listId)
+
     override fun checkItem(listId: String, cardId: String, itemId: String, checked: Boolean) {
-        val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return
-        val categories = travelCheckList.categories.toMutableList()
-        val copy = checkItemInternal(indexedCategory, itemId, checked)
-        categories.set(indexedCategory.index, copy)
-        saveChanges(categories, listId)
+        repository.getListById(listId) { travelCheckList, documentReference ->
+            val indexedCategory = findCategoryById(travelCheckList.categories, cardId) ?: return@getListById
+            val categories = travelCheckList.categories.toMutableList()
+            val copy = checkItemInternal(indexedCategory, itemId, checked)
+            categories.set(indexedCategory.index, copy)
+            documentReference.update("categories", categories)
+        }
     }
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {

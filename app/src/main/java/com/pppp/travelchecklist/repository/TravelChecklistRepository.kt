@@ -1,8 +1,11 @@
 package com.pppp.travelchecklist.repository
 
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentReference
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.createlist.presenter.Model
 import io.reactivex.Single
 
@@ -42,4 +45,8 @@ interface SingleCheckListRepository {
     fun addItem(listId: String, categoryId: String, element: CheckListItemImpl)
 
     fun updateItem(listId: String, categoryId: String, element: CheckListItemImpl)
+
+    fun getChecklistById(listId: String): DocumentReference
+
+    fun getListById(listId: String, doStuffWithTheList: (list: TravelCheckListImpl, docReference: DocumentReference) -> Unit): Task<Unit>
 }

@@ -18,9 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/description_additional_info"
+        android:imeActionLabel="Done"
         android:imeOptions="actionDone"
-        android:inputType="textMultiLine"
-        android:maxLines="3" />
+        android:singleLine="true" />
 
     <com.pppp.travelchecklist.edititem.SliderWithFlag
         android:id="@+id/slider_with_flag"

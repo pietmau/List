@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:parentTag="android.widget.RelativeLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <TextView
         android:id="@+id/text"
-        style="@style/CustomControlText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="@string/priority" />
+        android:text="@string/schedule"
+        style="@style/CustomControlText" />
 
-    <com.pppp.travelchecklist.list.view.card.item.FlagImageView
+    <ImageView
         android:id="@+id/flag"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -24,14 +24,4 @@
         android:padding="8dp"
         android:visibility="invisible" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/flag"
-        android:stepSize="1"
-        android:valueFrom="0"
-        android:valueTo="3" />
-
-</merge>
+</RelativeLayout>

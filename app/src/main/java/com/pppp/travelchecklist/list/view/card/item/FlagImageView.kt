@@ -15,7 +15,7 @@ class FlagImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     ImageView(context, attrs, defStyleAttr, defStyleRes) {
 
     init {
-        setImageResource(R.drawable.ic_waving_flag_svgrepo_com)
+        setImageResource(R.drawable.ic_flag_svgrepo_com)
     }
 
     fun setFlag(priority: Int) {

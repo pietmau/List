@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!-- TODO use merge instead -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,11 +7,22 @@
 
     <CheckBox
         android:id="@+id/check"
-        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/item_height"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="-10dp"
+        android:clickable="false"
+        android:paddingLeft="-10dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/attributes"
+        android:layout_toEndOf="@+id/check"
         android:textAppearance="?android:textAppearanceSmall"
         tools:text="bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla " />
 
@@ -20,18 +30,9 @@
         android:id="@+id/attributes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/activity_vertical_margin"
-        android:layout_toStartOf="@+id/settings" />
-
-    <ImageView
-        android:id="@+id/settings"
-        android:layout_width="@dimen/item_height"
-        android:layout_height="@dimen/item_height"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:padding="9dp"
-        android:src="@drawable/ic_settings"
-        android:tint="?android:textColorSecondaryInverse" />
+        android:layout_marginStart="@dimen/activity_vertical_margin" />
+
 </RelativeLayout>
 

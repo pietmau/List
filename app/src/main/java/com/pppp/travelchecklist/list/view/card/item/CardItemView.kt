@@ -17,7 +17,7 @@ class CardItemView @JvmOverloads constructor(
     var data: CheckListItem? = null
         set(value) {
             field = value
-            check.text = value?.title
+            title.text = value?.title
             check.isChecked = value?.checked == true
             attributes.setData(requireNotNull(data))
         }
@@ -33,7 +33,7 @@ class CardItemView @JvmOverloads constructor(
             check.setPaintFlags(getPaint(!checked));
             callback?.onItemChecked(requireNotNull(data?.id), !checked)
         }
-        settings.setOnClickListener {
+        setOnClickListener {
             callback?.onSettingsClicked(requireNotNull(data))
         }
     }

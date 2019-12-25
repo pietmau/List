@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="@+id/flag" />
 
     <com.pppp.travelchecklist.list.view.card.item.FlagImageView
+        android:padding="8dp"
         android:visibility="invisible"
-        android:src="@drawable/ic_flag_24px"
         android:id="@+id/flag"
         android:layout_width="48dp"
         android:layout_height="48dp"

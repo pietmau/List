@@ -7,11 +7,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
+import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_item_attrs_view.view.priority_flag
 import java.lang.UnsupportedOperationException
 
 class FlagImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
     ImageView(context, attrs, defStyleAttr, defStyleRes) {
+
+    init {
+        setImageResource(R.drawable.ic_waving_flag_svgrepo_com)
+    }
 
     fun setFlag(priority: Int) {
         when (priority) {
@@ -28,5 +33,4 @@ class FlagImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun setFlagTint(color: Int) {
         ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(color))
     }
-
 }

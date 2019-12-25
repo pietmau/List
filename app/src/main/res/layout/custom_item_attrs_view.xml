@@ -8,8 +8,10 @@
         android:id="@+id/priority_flag"
         android:layout_width="@dimen/small_icon_size"
         android:layout_height="@dimen/small_icon_size"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:src="@drawable/ic_flag_24px"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/description"

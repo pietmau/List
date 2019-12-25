@@ -4,12 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <ImageView
+    <com.pppp.travelchecklist.list.view.card.item.FlagImageView
         android:id="@+id/priority_flag"
         android:layout_width="@dimen/small_icon_size"
         android:layout_height="@dimen/small_icon_size"
         android:src="@drawable/ic_flag_24px"
-        android:visibility="gone"></ImageView>
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/description"

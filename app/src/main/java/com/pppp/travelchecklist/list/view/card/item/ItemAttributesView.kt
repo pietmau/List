@@ -19,7 +19,7 @@ class ItemAttributesView @JvmOverloads constructor(context: Context, attrs: Attr
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_item_attrs_view, this, true)
         orientation = HORIZONTAL
-        layoutParams = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
     }
 
     fun setData(checkListItem: CheckListItem) {
@@ -33,18 +33,6 @@ class ItemAttributesView @JvmOverloads constructor(context: Context, attrs: Attr
 
     private fun setUpPriority(priority: Int) {
         priority_flag.visibility = if (priority > 0) VISIBLE else GONE
-        when (priority) {
-            1 -> setFlagTint(getColor(android.R.color.holo_green_dark))
-            2 -> setFlagTint(getColor(android.R.color.holo_orange_dark))
-            3 -> setFlagTint(getColor(android.R.color.holo_red_dark))
-            else -> priority_flag.visibility = GONE
-        }
+        priority_flag.setFlag(priority)
     }
-
-    private fun getColor(holoBlueDark: Int) = ContextCompat.getColor(context, holoBlueDark)
-
-    private fun setFlagTint(color: Int) {
-        ImageViewCompat.setImageTintList(priority_flag, ColorStateList.valueOf(color))
-    }
-
 }

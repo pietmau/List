@@ -13,8 +13,9 @@ import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.utils.appComponent
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
-import kotlinx.android.synthetic.main.fragment_dialog_edit_item.slider
+import kotlinx.android.synthetic.main.fragment_dialog_edit_item.slider_with_flag
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.title
+import kotlinx.android.synthetic.main.view_slider_with_flag.slider
 import javax.inject.Inject
 
 class EditItemDialogFragment : BottomSheetDialogFragment() {
@@ -36,10 +37,10 @@ class EditItemDialogFragment : BottomSheetDialogFragment() {
         title.setText(checkListItem.title, TextView.BufferType.EDITABLE)
         description.setText(checkListItem.description, TextView.BufferType.EDITABLE)
         save.setOnClickListener {
-            presenter.onSaveClicked(title.textAsAString, description.textAsAString, slider.value.toInt())
+            presenter.onSaveClicked(title.textAsAString, description.textAsAString, slider_with_flag.value.toInt())
             dismiss()
         }
-        slider.value = checkListItem.priority.toFloat()
+        slider_with_flag.value = checkListItem.priority.toFloat()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

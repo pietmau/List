@@ -13,6 +13,7 @@ import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.utils.appComponent
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
+import kotlinx.android.synthetic.main.fragment_dialog_edit_item.schedule
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.slider_with_flag
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.title
 import kotlinx.android.synthetic.main.view_slider_with_flag.slider
@@ -41,6 +42,12 @@ class EditItemDialogFragment : BottomSheetDialogFragment() {
             dismiss()
         }
         slider_with_flag.value = checkListItem.priority.toFloat()
+        schedule.callback = ::showDateAndTimePicker
+    }
+
+    private fun showDateAndTimePicker() {
+        val dateAndTimePickerFragment = DateAndTimePickerFragment()
+        dateAndTimePickerFragment.show(requireActivity().supportFragmentManager, DateAndTimePickerFragment.TAG)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

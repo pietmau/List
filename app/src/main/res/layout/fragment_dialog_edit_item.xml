@@ -10,6 +10,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/title"
         android:imeOptions="actionDone"
         android:singleLine="true" />
 
@@ -30,7 +31,8 @@
     <com.pppp.travelchecklist.edititem.ScheduleView
         android:id="@+id/schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

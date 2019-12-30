@@ -50,9 +50,9 @@ class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: Attribut
     fun setFlag(priority: Int) {
         when (priority) {
             0 -> setTintedDrawable(getColor(android.R.color.transparent))
-            1 -> setTintedDrawable(getColor(android.R.color.holo_green_dark))
-            2 -> setTintedDrawable(getColor(android.R.color.holo_orange_dark))
-            3 -> setTintedDrawable(getColor(android.R.color.holo_red_dark))
+            1 -> setTintedDrawable(getColor(android.R.color.holo_green_light))
+            2 -> setTintedDrawable(getColor(android.R.color.holo_orange_light))
+            3 -> setTintedDrawable(getColor(android.R.color.holo_red_light))
             else -> throw UnsupportedOperationException("Invalid value for priority flag: " + priority)
         }
     }

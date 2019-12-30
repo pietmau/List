@@ -21,9 +21,9 @@ class FlagImageView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setFlag(priority: Int) {
         when (priority) {
             0 -> Unit
-            1 -> setFlagTint(getColor(android.R.color.holo_green_dark))
-            2 -> setFlagTint(getColor(android.R.color.holo_orange_dark))
-            3 -> setFlagTint(getColor(android.R.color.holo_red_dark))
+            1 -> setFlagTint(getColor(android.R.color.holo_green_light))
+            2 -> setFlagTint(getColor(android.R.color.holo_orange_light))
+            3 -> setFlagTint(getColor(android.R.color.holo_red_light))
             else -> throw UnsupportedOperationException("Invalid value for priority flag: " + priority)
         }
     }

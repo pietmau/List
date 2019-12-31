@@ -16,5 +16,7 @@ data class CheckListItemImpl @JvmOverloads constructor(
     override var tags: List<TagImpl> = emptyList(),
     override var optional: Boolean = false,
     override val categoryId: String = "",
-    override var id: String = ""
+    override var id: String = "",
+    val alertTimeInMills: Long? = null,
+    val isAlertOn: Boolean = false
 ) : Parcelable, CheckListItem

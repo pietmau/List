@@ -9,7 +9,18 @@ class EditItemDialogFragmentPresenter @Inject constructor(private val model: Edi
         model.retrieveItem(listId, cardId, itemId, failure, success)
     }
 
-    fun onSaveClicked(title: String, description: String, priority: Int) {
-        model.updateItem(title, description, priority)
+    fun onSaveClicked(
+        title: String,
+        description: String,
+        priority: Int,
+        listId: String,
+        cardId: String,
+        itemId: String
+    ) {
+        model.updateItem(title, description, priority, listId, cardId, itemId)
+    }
+
+    fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

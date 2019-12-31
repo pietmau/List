@@ -19,7 +19,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import android.net.ConnectivityManager
 import android.provider.Settings
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pppp.travelchecklist.R
 
@@ -151,3 +154,5 @@ fun <K, V> Map<K, V>.replaceSameKeyItemsWith(newElements: Map<K, V>?): Map<K, V>
     newElements?.entries?.forEach { (key, value) -> result[key] = value }
     return result.toMap()
 }
+
+fun Fragment.getColor(@ColorRes colour: Int) = ResourcesCompat.getColor(resources, android.R.color.white, context?.theme)

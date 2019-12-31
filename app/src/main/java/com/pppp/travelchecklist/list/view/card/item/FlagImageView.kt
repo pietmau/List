@@ -24,7 +24,7 @@ class FlagImageView @JvmOverloads constructor(context: Context, attrs: Attribute
             1 -> setFlagTint(getColor(android.R.color.holo_green_light))
             2 -> setFlagTint(getColor(android.R.color.holo_orange_light))
             3 -> setFlagTint(getColor(android.R.color.holo_red_light))
-            else -> throw UnsupportedOperationException("Invalid value for priority flag: " + priority)
+            else -> throw UnsupportedOperationException("Invalid priority for priority flag: " + priority)
         }
     }
 

@@ -14,5 +14,13 @@ interface EditItemModel {
         onSuccess: ((CheckListItem) -> Unit)? = null
     )
 
-    fun updateItem(title: String, description: String, priority: Int, itemId: String, listId: String, cardId: String)
+    fun updateItem(
+        title: String,
+        description: String,
+        priority: Int,
+        itemId: String,
+        listId: String,
+        cardId: String,
+        alertTimeInMills: Long?
+    )
 }

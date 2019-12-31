@@ -13,7 +13,7 @@ import java.lang.UnsupportedOperationException
 class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     LinearLayout(context, attrs, defStyleAttr) {
 
-    var value: Float
+    var priority: Float
         get() = slider.value
         set(input) {
             slider.value = input
@@ -42,7 +42,7 @@ class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: Attribut
             1 -> setLabelText(R.string.priority_low)
             2 -> setLabelText(R.string.priority_medium)
             3 -> setLabelText(R.string.priority_high)
-            else -> throw UnsupportedOperationException("Invalid value for priority flag: " + value)
+            else -> throw UnsupportedOperationException("Invalid priority for priority flag: " + value)
         }
     }
 
@@ -52,14 +52,14 @@ class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: Attribut
             1 -> setTintedDrawable(getColor(android.R.color.holo_green_light))
             2 -> setTintedDrawable(getColor(android.R.color.holo_orange_light))
             3 -> setTintedDrawable(getColor(android.R.color.holo_red_light))
-            else -> throw UnsupportedOperationException("Invalid value for priority flag: " + priority)
+            else -> throw UnsupportedOperationException("Invalid priority for priority flag: " + priority)
         }
     }
 
     private fun getColor(holoBlueDark: Int) = ContextCompat.getColor(context, holoBlueDark)
 
     private fun setTintedDrawable(color: Int) {
-        val drawable = label.compoundDrawables.filterNotNull().first().apply { setTint(color) }
+        val drawable = label.compoundDrawablesRelative.filterNotNull().first().apply { setTint(color) }
         label.setCompoundDrawablesRelative(null, null, drawable, null)
     }
 }

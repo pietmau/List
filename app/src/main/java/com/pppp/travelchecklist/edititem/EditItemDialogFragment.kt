@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.utils.appComponent
@@ -33,28 +32,33 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this@EditItemDialogFragment)
-        presenter.getItem(listId, cardId, itemId, { dismiss() }) { populateView(it) }
     }
 
-    private fun populateView(checkListItem: CheckListItem) {
+    private fun populateView(checkListItem: CheckListItem, alert: Alert) {
         title.setText(checkListItem.title, TextView.BufferType.EDITABLE)
         description.setText(checkListItem.description, TextView.BufferType.EDITABLE)
         save.setOnClickListener {
-            presenter.onSaveClicked(title.textAsAString, description.textAsAString, slider_with_flag.value.toInt(), listId, cardId, itemId)
+            presenter.onSaveClicked(title.textAsAString, description.textAsAString, slider_with_flag.priority.toInt(), listId, cardId, itemId)
             dismiss()
         }
-        slider_with_flag.value = checkListItem.priority.toFloat()
         schedule.callback = this
-        schedule.alert = Alert((checkListItem as CheckListItemImpl).alertTimeInMills, checkListItem.isAlertOn)
         schedule.formatter = requireNotNull(appComponent?.with(ViewCheckListModule(requireActivity()))?.formatter)
+        schedule.alert = alert
+        slider_with_flag.priority = checkListItem.priority.toFloat()
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getItem(listId, cardId, itemId, { dismiss() }) { item, alert -> populateView(item, alert) }// TODO use MVVM
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_dialog_edit_item, container, false)
     }
 
-    override fun onAlertActivated(alert: Alert, activated: Boolean) {
-
+    override fun onAlertActivated(activated: Boolean) {
+        presenter.onAlertActivated(activated)
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {

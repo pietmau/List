@@ -50,11 +50,12 @@ class FireBaseEditItemModel(
         priority: Int,
         itemId: String,
         listId: String,
-        cardId: String
+        cardId: String,
+        alertTimeInMills: Long?
     ) {
         db.getList(auth.userId, listId).get().continueWith { task ->
             val item = getItem(task, cardId, itemId)
-            val copy = item.copy(title = title, description = description, priority = priority)
+            val copy = item.copy(title = title, description = description, priority = priority, alertTimeInMills = alertTimeInMills)
             singleCheckListRepository.updateItem(listId, cardId, copy)
         }
     }

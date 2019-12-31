@@ -6,7 +6,7 @@ import javax.inject.Inject
 class EditItemDialogFragmentPresenter @Inject constructor(private val model: EditItemModel) {
 
     fun getItem(listId: String, cardId: String, itemId: String, failure: ((Throwable) -> Unit)? = null, success: ((CheckListItem) -> Unit)? = null) {
-        model.retrieveItem(listId, cardId, itemId, failure, success)
+        model.retrieveItemAndUpdates(listId, cardId, itemId, failure, success)
     }
 
     fun onSaveClicked(
@@ -21,6 +21,5 @@ class EditItemDialogFragmentPresenter @Inject constructor(private val model: Edi
     }
 
     fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

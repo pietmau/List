@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.pppp.travelchecklist.edititem.DateAndTimeFormatter
 import com.pppp.travelchecklist.edititem.EditItemModel
 import com.pppp.travelchecklist.edititem.FireBaseEditItemModel
 import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListModel
@@ -42,6 +43,8 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
     @Provides
     fun provideEditItemModel(singleCheckListRepository: SingleCheckListRepository): EditItemModel = FireBaseEditItemModel(singleCheckListRepository = singleCheckListRepository)
 
+    @Provides
+    fun provideFormatter() = DateAndTimeFormatter
 }
 
 class ViewCheckListViewModelFactory(

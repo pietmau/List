@@ -4,6 +4,7 @@ import com.pppp.travelchecklist.editcard.AddItemBottomDialog
 import com.pppp.travelchecklist.editcard.EditCardModule
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
+import com.pppp.travelchecklist.edititem.DateAndTimeFormatter
 import com.pppp.travelchecklist.edititem.EditItemDialogFragment
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import dagger.Subcomponent
@@ -12,6 +13,8 @@ import javax.inject.Singleton
 @Singleton
 @Subcomponent(modules = arrayOf(ViewCheckListModule::class, EditCardModule::class))
 interface ViewCheckListComponent {
+
+    val formatter: DateAndTimeFormatter
 
     fun inject(viewCheckListFragment: ViewCheckListFragment)
 

@@ -12,7 +12,6 @@ import java.lang.UnsupportedOperationException
 
 class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     LinearLayout(context, attrs, defStyleAttr) {
-    private val ICON_SIZE = context.resources.getDimensionPixelSize(R.dimen.image_size)
 
     var value: Float
         get() = slider.value

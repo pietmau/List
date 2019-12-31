@@ -21,28 +21,19 @@ import javax.inject.Inject
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 
 class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePickerDialog.OnDateSetListener {
-
     @Inject
     lateinit var presenter: EditItemDialogFragmentPresenter
-
     private val listId
         get() = requireNotNull(arguments?.getString(LIST_ID))
-
     private val cardId
         get() = requireNotNull(arguments?.getString(CARD_ID))
-
     private val itemId
         get() = requireNotNull(arguments?.getString(ITEM_ID))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this@EditItemDialogFragment)
-        presenter.getItem(
-            listId,
-            cardId,
-            itemId, { dismiss() }) {
-            populateView(it)
-        }
+        presenter.getItem(listId, cardId, itemId, { dismiss() }) { populateView(it) }
     }
 
     private fun populateView(checkListItem: CheckListItem) {
@@ -55,6 +46,7 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
         slider_with_flag.value = checkListItem.priority.toFloat()
         schedule.callback = this
         schedule.alert = Alert((checkListItem as CheckListItemImpl).alertTimeInMills, checkListItem.isAlertOn)
+        schedule.formatter = requireNotNull(appComponent?.with(ViewCheckListModule(requireActivity()))?.formatter)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

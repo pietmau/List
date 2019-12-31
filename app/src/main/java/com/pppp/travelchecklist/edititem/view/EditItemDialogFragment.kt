@@ -34,7 +34,8 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appComponent?.with(EditItemModule(this))?.inject(this)
+        val module = EditItemModule(this, requireStringArgument(LIST_ID), requireStringArgument(CARD_ID), requireStringArgument(ITEM_ID))
+        appComponent?.with(module)?.inject(this)
     }
 
     private fun populateView(checkListItem: CheckListItem, alert: Alert) {
@@ -65,6 +66,7 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
 //            requireStringArgument(CARD_ID),
 //            requireStringArgument(ITEM_ID),
 //            { dismiss() }) { item, alert -> populateView(item, alert) }// TODO use MVVM
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.edititem.viewmodel
+package com.pppp.travelchecklist.edititem.model
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 import com.pppp.travelchecklist.list.model.getList
 import com.pppp.travelchecklist.list.model.userId
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
@@ -14,7 +15,7 @@ import com.pppp.travelchecklist.repository.SingleCheckListRepository
 class FireBaseEditItemModel(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
-    private val singleCheckListRepository: SingleCheckListRepository
+    private val singleCheckListRepository: FirebaseSingleCheckListRepository
 ) : EditItemModel {
 
     override fun retrieveItemAndUpdates(

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.edititem.viewmodel
+package com.pppp.travelchecklist.edititem.model
 
 import com.pietrantuono.entities.CheckListItem
 

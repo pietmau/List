@@ -9,4 +9,6 @@ interface CheckListItem {
     val tags: List<Tag>
     var optional: Boolean
     var id: String
+    var alertTimeInMills: Long?
+    var isAlertOn: Boolean
 }

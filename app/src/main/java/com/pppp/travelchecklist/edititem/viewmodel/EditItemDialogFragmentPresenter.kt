@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.edititem.viewmodel
 
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.travelchecklist.edititem.model.EditItemModel
 import com.pppp.travelchecklist.edititem.view.Alert
 import javax.inject.Inject
 

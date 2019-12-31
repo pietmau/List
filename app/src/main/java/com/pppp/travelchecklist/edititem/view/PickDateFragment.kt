@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.edititem
+package com.pppp.travelchecklist.edititem.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,7 +1,6 @@
 package com.pppp.travelchecklist.list.viewmodel
 
 import com.pietrantuono.entities.TravelCheckList
-import java.lang.StringBuilder
 
 interface TitleUseCase {
 

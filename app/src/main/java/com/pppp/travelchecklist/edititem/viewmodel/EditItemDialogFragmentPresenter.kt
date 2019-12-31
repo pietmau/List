@@ -1,7 +1,8 @@
-package com.pppp.travelchecklist.edititem
+package com.pppp.travelchecklist.edititem.viewmodel
 
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.travelchecklist.edititem.view.Alert
 import javax.inject.Inject
 
 class EditItemDialogFragmentPresenter @Inject constructor(private val model: EditItemModel, private val timeFormatter: TimeFormatter) {

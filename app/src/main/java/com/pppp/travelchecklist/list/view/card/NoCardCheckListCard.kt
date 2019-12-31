@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.header_layout.view.title
 import kotlin.properties.Delegates
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import com.pppp.entities.pokos.CategoryImpl
 import kotlinx.android.synthetic.main.header_layout.view.overflow
 
 class NoCardCheckListCard @JvmOverloads constructor(

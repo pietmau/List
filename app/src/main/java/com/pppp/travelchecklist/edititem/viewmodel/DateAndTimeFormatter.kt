@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.edititem
+package com.pppp.travelchecklist.edititem.viewmodel
 
 import java.text.SimpleDateFormat
 import java.util.Date

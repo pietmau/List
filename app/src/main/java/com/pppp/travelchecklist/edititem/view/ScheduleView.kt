@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.edititem
+package com.pppp.travelchecklist.edititem.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.edititem.viewmodel.DateAndTimeFormatter
 import kotlinx.android.synthetic.main.view_schedule_view.view.container
 import kotlinx.android.synthetic.main.view_schedule_view.view.date
 import kotlinx.android.synthetic.main.view_schedule_view.view.time
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.view_schedule_view.view.toggle
 
 class ScheduleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     LinearLayout(context, attrs, defStyleAttr) {
-    lateinit var callback: Callback
+    internal var callback: Callback? = null
     lateinit var formatter: DateAndTimeFormatter
     internal var alert: Alert? = null
         set(value) {
@@ -29,11 +30,11 @@ class ScheduleView @JvmOverloads constructor(context: Context, attrs: AttributeS
     init {
         LayoutInflater.from(context).inflate(R.layout.view_schedule_view, this, true);
         toggle.setOnCheckedChangeListener { _, isChecked ->
-            callback.onAlertActivated(isActivated)
+            callback?.onAlertActivated(isActivated)
             setDateAndTimeVisibility(isChecked)
         }
-        date.setOnClickListener { callback.onDateClicked(requireNotNull(alert)) }
-        time.setOnClickListener { callback.onTimeClicked(requireNotNull(alert)) }
+        date.setOnClickListener { callback?.onDateClicked(requireNotNull(alert)) }
+        time.setOnClickListener { callback?.onTimeClicked(requireNotNull(alert)) }
     }
 
     private fun setDateAndTimeVisibility(isChecked: Boolean) {

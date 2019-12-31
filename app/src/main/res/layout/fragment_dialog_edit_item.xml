@@ -23,12 +23,12 @@
         android:imeOptions="actionDone"
         android:singleLine="true" />
 
-    <com.pppp.travelchecklist.edititem.SliderWithFlag
+    <com.pppp.travelchecklist.edititem.view.SliderWithFlag
         android:id="@+id/slider_with_flag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.pppp.travelchecklist.edititem.ScheduleView
+    <com.pppp.travelchecklist.edititem.view.ScheduleView
         android:id="@+id/schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

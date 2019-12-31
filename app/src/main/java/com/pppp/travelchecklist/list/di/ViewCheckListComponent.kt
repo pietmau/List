@@ -4,8 +4,8 @@ import com.pppp.travelchecklist.editcard.AddItemBottomDialog
 import com.pppp.travelchecklist.editcard.EditCardModule
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
-import com.pppp.travelchecklist.edititem.DateAndTimeFormatter
-import com.pppp.travelchecklist.edititem.EditItemDialogFragment
+import com.pppp.travelchecklist.edititem.viewmodel.DateAndTimeFormatter
+import com.pppp.travelchecklist.edititem.view.EditItemDialogFragment
 import com.pppp.travelchecklist.list.view.ViewCheckListFragment
 import dagger.Subcomponent
 import javax.inject.Singleton

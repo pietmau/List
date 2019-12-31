@@ -1,13 +1,10 @@
 package com.pppp.travelchecklist.list.view.card.item
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_item_attrs_view.view.description

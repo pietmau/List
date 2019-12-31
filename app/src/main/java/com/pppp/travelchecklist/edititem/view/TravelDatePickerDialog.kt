@@ -1,8 +1,6 @@
-package com.pppp.travelchecklist.edititem
+package com.pppp.travelchecklist.edititem.view
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.utils.getColor
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.Calendar

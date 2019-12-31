@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.edititem
+package com.pppp.travelchecklist.edititem.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.edititem.viewmodel.EditItemDialogFragmentPresenter
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.utils.appComponent
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
@@ -66,7 +67,8 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
     }
 
     override fun onDateClicked(alert: Alert) {
-        TravelDatePickerDialog.newInstance(this, this).show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
+        TravelDatePickerDialog.newInstance(this, this)
+            .show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
     }
 
     override fun onTimeClicked(alert: Alert) {

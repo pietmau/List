@@ -30,24 +30,6 @@ inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)
 }
 
-inline fun <T : View> Fragment.findViewByIdLazy(@IdRes id: Int): Lazy<T>? = view?.findViewByIdLazy<T>(id)
-
-inline fun <reified T : Fragment> FragmentActivity.findFragmentByTag(tag: String): T? {
-    val fragment = supportFragmentManager.findFragmentByTag(tag)
-    if (fragment is T) {
-        return fragment
-    }
-    return null
-}
-
-inline fun <reified T : Fragment> FragmentActivity.findFragmentById(@IdRes id: Int): T? {
-    val fragment = supportFragmentManager.findFragmentById(id)
-    if (fragment is T) {
-        return fragment
-    }
-    return null
-}
-
 inline fun <reified T : Fragment> FragmentActivity.findAddedFragment(@IdRes id: Int): T? {
     val fragment = supportFragmentManager.findFragmentById(id) ?: return null
     return when {
@@ -77,32 +59,10 @@ val Activity.appComponent: AppComponent?
 val Fragment.appComponent: AppComponent?
     get() = activity?.appComponent
 
-fun EditText.setOnReturnClicked(callback: (TextView.() -> Unit)?) {
-    setOnEditorActionListener { textview, action, _ ->
-        if (action == EditorInfo.IME_ACTION_DONE) {
-            callback?.invoke(textview)
-        }
-        true
-    }
-}
 
 val View.isMarshmallowOrAbove
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
-fun Context.isNetworkAvailable(): Boolean {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-    val activeNetworkInfo = connectivityManager?.getActiveNetworkInfo()
-    return activeNetworkInfo?.isConnected() == true
-}
-
-fun <K, V> lazyMap(initializer: (K) -> V): Map<K, V> {
-    val map = mutableMapOf<K, V>()
-    return map.withDefault { key ->
-        val newValue = initializer(key)
-        map[key] = newValue
-        return@withDefault newValue
-    }
-}
 
 fun Activity.showConfirmationDialog(yes: (() -> Unit)?, title: Int, message: Int) {
     MaterialAlertDialogBuilder(this)
@@ -156,3 +116,7 @@ fun <K, V> Map<K, V>.replaceSameKeyItemsWith(newElements: Map<K, V>?): Map<K, V>
 }
 
 fun Fragment.getColor(@ColorRes colour: Int) = ResourcesCompat.getColor(resources, android.R.color.white, context?.theme)
+
+
+val EditText.textAsAString
+    get() = text?.toString() ?: ""

@@ -23,6 +23,4 @@ interface ViewCheckListComponent {
     fun inject(editCategoryBottomDialog: EditCategoryBottomDialog)
 
     fun inject(addItemBottomDialog: AddItemBottomDialog)
-
-    fun inject(editItemDialogFragment: EditItemDialogFragment)
 }

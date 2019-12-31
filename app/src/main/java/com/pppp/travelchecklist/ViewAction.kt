@@ -1,3 +1,3 @@
 package com.pppp.travelchecklist
 
-interface ViewAction
+interface ViewAction // TODO rename to intent

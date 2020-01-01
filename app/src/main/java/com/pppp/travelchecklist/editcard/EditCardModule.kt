@@ -11,7 +11,7 @@ object EditCardModule {
 
     @Provides
     @JvmStatic
-    fun provideConsumer(viewModel: EditCardViewModel): ViewActionsConsumer<EditCardViewAction> = viewModel
+    fun provideConsumer(viewModel: EditCardViewModel): ViewActionsConsumer<EditCardViewIntent> = viewModel
 
     @Singleton
     @Provides

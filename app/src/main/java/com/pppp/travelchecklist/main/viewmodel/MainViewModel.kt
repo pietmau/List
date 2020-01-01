@@ -18,7 +18,7 @@ class MainViewModel(
     private val analytics: MainAnalyticsLogger,
     handle: SavedStateHandle
 ) : ViewStatesProducer<MainViewState>,
-    ViewActionsConsumer<MainViewAction>,
+    ViewActionsConsumer<MainViewIntent>,
     TransientEventsProducer<MainTransientEvent>, ViewModel() {
 
     override val transientEvents: LiveData<MainTransientEvent> = TransientLiveData()
@@ -32,15 +32,15 @@ class MainViewModel(
             return internalStates
         }
 
-    override fun accept(mainViewAction: MainViewAction) = when (mainViewAction) {
-        MainViewAction.NavMenuOpenSelected -> openNavMenu()
-        is MainViewAction.NavItemSelected -> goToList(mainViewAction.id)
-        is MainViewAction.NewListGenerated -> goToList(mainViewAction.listId)
-        MainViewAction.GetLatestListVisited -> getLatestListVisited()
-        MainViewAction.GoMakeNewList -> goToCreateNewList()
-        is MainViewAction.OnSettingChanged -> settingsUseCase.onUserChangedSettings(mainViewAction.itemId)
-        MainViewAction.DeleteCurrentList -> deleteCurrentList()
-        MainViewAction.OnNoListFound -> emitNewViewState(MainViewState.Empty())
+    override fun accept(mainViewAction: MainViewIntent) = when (mainViewAction) {
+        MainViewIntent.NavMenuOpenSelected -> openNavMenu()
+        is MainViewIntent.NavItemSelected -> goToList(mainViewAction.id)
+        is MainViewIntent.NewListGenerated -> goToList(mainViewAction.listId)
+        MainViewIntent.GetLatestListVisited -> getLatestListVisited()
+        MainViewIntent.GoMakeNewList -> goToCreateNewList()
+        is MainViewIntent.OnSettingChanged -> settingsUseCase.onUserChangedSettings(mainViewAction.itemId)
+        MainViewIntent.DeleteCurrentList -> deleteCurrentList()
+        MainViewIntent.OnNoListFound -> emitNewViewState(MainViewState.Empty())
     }
 
     private fun deleteCurrentList() {

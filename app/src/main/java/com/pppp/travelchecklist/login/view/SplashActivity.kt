@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
     @Inject
     lateinit var analytics: AnalyticsLogger
     @Inject
-    lateinit var viewActions: ViewActionsConsumer<LoginViewModel.LoginViewAction>
+    lateinit var viewActions: ViewActionsConsumer<LoginViewModel.LoginViewIntent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === REQUEST_CODE) {
             if (resultCode === Activity.RESULT_OK) {
-                viewActions.accept(LoginViewModel.LoginViewAction.UserLoggedInSuccessfully)
+                viewActions.accept(LoginViewModel.LoginViewIntent.UserLoggedInSuccessfully)
                 return
             }
             analytics.onLoginFlowFailure(resultCode)

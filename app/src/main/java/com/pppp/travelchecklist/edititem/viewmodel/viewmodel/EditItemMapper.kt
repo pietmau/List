@@ -3,9 +3,15 @@ package com.pppp.travelchecklist.edititem.viewmodel.viewmodel
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.main.model.Mapper
 
-object EditItemMapper : Mapper<CheckListItem, EditItemViewState> {
+class EditItemMapper(private val formatter: DateAndTimeFormatter) : Mapper<CheckListItem, EditItemViewState> {
 
-    override fun map(navigationAction: CheckListItem): EditItemViewState {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun map(checkListItem: CheckListItem): EditItemViewState {
+        val title = checkListItem.title
+        val description = checkListItem.description
+        val priority = checkListItem.priority.toFloat()
+        val date = formatter.getDate(checkListItem.alertTimeInMills)
+        val time: String = formatter.getTime(checkListItem.alertTimeInMills)
+        val isAlertOn: Boolean = checkListItem.isAlertOn
+        return EditItemViewState(title, description, priority, date, time, isAlertOn)
     }
 }

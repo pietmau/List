@@ -22,7 +22,7 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
     private val DELETE = "delete"
 
     @Inject
-    internal lateinit var editCardViewActionsConsumer: ViewActionsConsumer<EditCardViewAction>
+    internal lateinit var editCardViewActionsConsumer: ViewActionsConsumer<EditCardViewIntent>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,11 +53,11 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
 
     private fun onDeleteClicked() {
         showDialog(title = R.string.delete_card, message = R.string.do_you_want_to_delete) {
-            emit(EditCardViewAction.DeleteCard(getStringArgument(LIST_ID)!!, requireStringArgument(CATEGORY_ID)))
+            emit(EditCardViewIntent.DeleteCard(getStringArgument(LIST_ID)!!, requireStringArgument(CATEGORY_ID)))
         }
     }
 
-    private fun emit(deleteCard: EditCardViewAction) {
+    private fun emit(deleteCard: EditCardViewIntent) {
         editCardViewActionsConsumer.accept(deleteCard)
         dismiss()
     }

@@ -1,5 +1,5 @@
 package com.pppp.travelchecklist
 
-interface ViewActionsConsumer<T : ViewAction> {
+interface ViewActionsConsumer<T : ViewIntent> {
     fun accept(t: T)
 }

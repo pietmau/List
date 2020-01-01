@@ -3,7 +3,7 @@ package com.pppp.travelchecklist.login.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pppp.travelchecklist.ViewAction
+import com.pppp.travelchecklist.ViewIntent
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewState
 import com.pppp.travelchecklist.ViewStatesProducer
@@ -12,7 +12,7 @@ import com.pppp.travelchecklist.analytics.LoginAnalyticsLogger
 class LoginViewModel(
     private val killSwitch: KillSwitch,
     private val analytics: LoginAnalyticsLogger
-) : ViewActionsConsumer<LoginViewModel.LoginViewAction>, ViewStatesProducer<LoginViewModel.LoginViewState>, ViewModel() {
+) : ViewActionsConsumer<LoginViewModel.LoginViewIntent>, ViewStatesProducer<LoginViewModel.LoginViewState>, ViewModel() {
 
     override val states: LiveData<LoginViewState> = MutableLiveData()
 
@@ -43,8 +43,8 @@ class LoginViewModel(
         (states as MutableLiveData<LoginViewState>).postValue(userNotLoggedIn)
     }
 
-    override fun accept(action: LoginViewAction) = when (action) {
-        is LoginViewAction.UserLoggedInSuccessfully -> {
+    override fun accept(action: LoginViewIntent) = when (action) {
+        is LoginViewIntent.UserLoggedInSuccessfully -> {
             analytics.onLoginFlowSuccess()
             checkIfAppEnabled()
         }
@@ -56,8 +56,8 @@ class LoginViewModel(
         object Kill : LoginViewState()
     }
 
-    sealed class LoginViewAction : ViewAction {
-        object UserLoggedInSuccessfully : LoginViewAction()
+    sealed class LoginViewIntent : ViewIntent {
+        object UserLoggedInSuccessfully : LoginViewIntent()
     }
 }
 

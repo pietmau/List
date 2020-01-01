@@ -23,7 +23,7 @@ class LoginModule(private val activity: FragmentActivity) {
     fun provideProducer(loginViewModel: LoginViewModel): ViewStatesProducer<LoginViewModel.LoginViewState> = loginViewModel
 
     @Provides
-    fun provideConsumer(loginViewModel: LoginViewModel): ViewActionsConsumer<LoginViewModel.LoginViewAction> = loginViewModel
+    fun provideConsumer(loginViewModel: LoginViewModel): ViewActionsConsumer<LoginViewModel.LoginViewIntent> = loginViewModel
 
     @Singleton
     @Provides

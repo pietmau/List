@@ -5,20 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.edititem.di.EditItemModule
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDateClicked
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.DateSet
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnAlertActivated
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
-import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.utils.requireStringArgument
-import com.pppp.travelchecklist.utils.textAsAString
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
-import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.schedule
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.slider_with_flag
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.title
@@ -38,35 +38,19 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
         appComponent?.with(module)?.inject(this)
     }
 
-    private fun populateView(checkListItem: CheckListItem, alert: Alert) {
-        title.setText(checkListItem.title, TextView.BufferType.EDITABLE)
-        description.setText(checkListItem.description, TextView.BufferType.EDITABLE)
-//        save.setOnClickListener {
-//            viewStatesProducer.onSaveClicked(
-//                title.textAsAString,
-//                description.textAsAString,
-//                slider_with_flag.priority.toInt(),
-//                requireStringArgument(LIST_ID),
-//                requireStringArgument(CARD_ID),
-//                requireStringArgument(ITEM_ID)
-//            )
-//            dismiss()
-//        }
-        schedule.callback = this
-        schedule.formatter = requireNotNull(appComponent?.with(ViewCheckListModule(requireActivity()))?.formatter)
-        schedule.alert = alert
-        slider_with_flag.priority = checkListItem.priority.toFloat()
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewStatesProducer.getItem(
-//            requireStringArgument(LIST_ID),
-//            requireStringArgument(CARD_ID),
-//            requireStringArgument(ITEM_ID),
-//            { dismiss() }) { item, alert -> populateView(item, alert) }// TODO use MVVM
+        viewStatesProducer.states.observe(requireActivity(), Observer { render(it) })
+        schedule.callback = this
+    }
 
+    private fun render(editItemViewState: EditItemViewState) {
+        schedule.checked = editItemViewState.isAlertOn
+        schedule.date = editItemViewState.date
+        schedule.time = editItemViewState.time
+        slider_with_flag.priority = editItemViewState.priority
+        title.setText(editItemViewState.title, TextView.BufferType.EDITABLE)
+        description.setText(editItemViewState.description, TextView.BufferType.EDITABLE)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -74,19 +58,24 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
     }
 
     override fun onAlertActivated(activated: Boolean) {
-        //viewStatesProducer.onAlertActivated(activated)
+        emit(OnAlertActivated(activated))
+    }
+
+    override fun onDateClicked() {
+        emit(OnDateClicked)
+        //TravelDatePickerDialog.newInstance(this, this).show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        //viewStatesProducer.onDateSet(year, monthOfYear, dayOfMonth)
+        emit(DateSet(year, monthOfYear, dayOfMonth))
     }
 
-    override fun onDateClicked(alert: Alert) {
-        TravelDatePickerDialog.newInstance(this, this)
-            .show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
+    private fun emit(intent: EditItemViewIntent) {
+        viewActionsConsumer.accept(intent)
     }
 
-    override fun onTimeClicked(alert: Alert) {
+
+    override fun onTimeClicked() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

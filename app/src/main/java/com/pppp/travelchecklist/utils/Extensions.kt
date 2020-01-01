@@ -59,10 +59,8 @@ val Activity.appComponent: AppComponent?
 val Fragment.appComponent: AppComponent?
     get() = activity?.appComponent
 
-
 val View.isMarshmallowOrAbove
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-
 
 fun Activity.showConfirmationDialog(yes: (() -> Unit)?, title: Int, message: Int) {
     MaterialAlertDialogBuilder(this)
@@ -100,9 +98,6 @@ fun Fragment.showDialog(
     positive: (() -> Unit)?
 ) = requireActivity().showDialog(title, message, ok, cancel, negative, positive)
 
-val <T> T.exhaustive: T
-    get() = this
-
 fun Fragment.getStringArgument(key: String) = arguments?.getString(key)
 
 fun Fragment.requireStringArgument(key: String) = requireNotNull(arguments?.getString(key))
@@ -117,6 +112,8 @@ fun <K, V> Map<K, V>.replaceSameKeyItemsWith(newElements: Map<K, V>?): Map<K, V>
 
 fun Fragment.getColor(@ColorRes colour: Int) = ResourcesCompat.getColor(resources, android.R.color.white, context?.theme)
 
-
 val EditText.textAsAString
     get() = text?.toString() ?: ""
+
+val <T> T.exhaustive: T
+    get() = this

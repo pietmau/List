@@ -22,7 +22,7 @@ import com.pppp.travelchecklist.navigation.MenuCreator
 import com.pppp.travelchecklist.navigation.MenuCreatorImpl
 import com.pppp.travelchecklist.main.viewmodel.FirebaseMainUseCase
 import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
-import com.pppp.travelchecklist.main.viewmodel.MainViewAction
+import com.pppp.travelchecklist.main.viewmodel.MainViewIntent
 import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 import com.pppp.travelchecklist.main.viewmodel.SharedPreferencesSettingsUseCase
@@ -51,7 +51,7 @@ class MainModule(private val activity: FragmentActivity) {
     fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel
 
     @Provides
-    fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewAction> = viewModel
+    fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewIntent> = viewModel
 
     @Provides
     fun provideTransientEvdents(viewModel: MainViewModel): TransientEventsProducer<MainTransientEvent> = viewModel

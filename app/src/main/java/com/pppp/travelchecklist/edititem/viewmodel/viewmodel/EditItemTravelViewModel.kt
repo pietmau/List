@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
+import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.TravelViewModel
 import com.pppp.travelchecklist.edititem.model.EditItemModel
 import com.pppp.travelchecklist.main.model.Mapper
 import com.pppp.travelchecklist.utils.exhaustive
+import  com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
+import  com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectTime
 
 class EditItemTravelViewModel(
     private val listId: String,
@@ -21,9 +24,11 @@ class EditItemTravelViewModel(
     TravelViewModel<EditItemViewState, EditItemViewIntent, EditItemTransientEvent>,
     ViewModel() {
     override val transientEvents: LiveData<EditItemTransientEvent>
-        get() = throw UnsupportedOperationException()
+        get() = transientEventsInternal
 
     private lateinit var item: CheckListItem
+
+    private val transientEventsInternal: MutableLiveData<EditItemTransientEvent> by lazy { TransientLiveData<EditItemTransientEvent>() }
 
     private val statesInternal: MutableLiveData<EditItemViewState> by lazy {
         MutableLiveData<EditItemViewState>().also {
@@ -45,12 +50,35 @@ class EditItemTravelViewModel(
         when (intent) {
             is EditItemViewIntent.OnAlertActivated -> onAlertActivated(intent.activated)
             is EditItemViewIntent.DateSet -> onDateSet(intent.year, intent.monthOfYear, intent.dayOfMonth)
+            EditItemViewIntent.OnDateClicked -> transientEventsInternal.postValue(SelectDate(requireNotNull(item.alertTimeInMills)))
+            EditItemViewIntent.OnTimeClicked -> transientEventsInternal.postValue(SelectTime(requireNotNull(item.alertTimeInMills)))
+            is EditItemViewIntent.OnTimeSet -> onTimeSet(intent.hourOfDay, intent.minute)
+            is EditItemViewIntent.OnDataChanged -> onDataChanged(intent.title, intent.description)
+            EditItemViewIntent.OnSaveClicked -> onSaveClicked()
         }.exhaustive
-
     }
 
-    private fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val alertTimeInMills = dateAndTimeProvider.onDateSet(item.alertTimeInMills, year, monthOfYear, dayOfMonth)
+    private fun onSaveClicked() = model.updateItem(listId, categoryId, itemId, item as CheckListItemImpl)
+
+    private fun onDataChanged(title: String?, description: String?) {
+        val title = title ?: item.title
+        val description = description ?: item.description
+        item = (item as CheckListItemImpl).copy(title = title, description = description)
+        emitItem(item)
+    }
+
+    private fun onTimeSet(hourOfDay: Int, minute: Int) = onDateOrTimeSet(dateAndTimeProvider.onTimeSet(item.alertTimeInMills, hourOfDay, minute))
+
+    private fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) = onDateOrTimeSet(
+        dateAndTimeProvider.onDateSet(
+            item.alertTimeInMills,
+            year,
+            monthOfYear,
+            dayOfMonth
+        )
+    )
+
+    private fun onDateOrTimeSet(alertTimeInMills: Long) {
         val item = (item as CheckListItemImpl).copy(alertTimeInMills = alertTimeInMills)
         emitItem(item)
     }

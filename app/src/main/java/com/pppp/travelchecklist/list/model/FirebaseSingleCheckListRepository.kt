@@ -54,7 +54,7 @@ class FirebaseSingleCheckListRepository(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun replaceItemInCategory(category: Category, element: CheckListItemImpl): CategoryImpl {
+    fun replaceItemInCategory(category: Category, element: CheckListItemImpl): CategoryImpl {
         val mutableList = category.items
             .toMutableList()
             .map { item -> if (item.id == element.id) element else item }

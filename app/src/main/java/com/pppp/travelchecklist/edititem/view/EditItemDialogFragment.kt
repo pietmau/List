@@ -8,29 +8,42 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.edititem.di.EditItemModule
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDateClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.DateSet
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnAlertActivated
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeClicked
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeSet
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDataChanged
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnSaveClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
 import com.pppp.travelchecklist.utils.appComponent
+import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.requireStringArgument
+import com.pppp.travelchecklist.utils.setAfterChangeListener
+import com.pppp.travelchecklist.utils.textAsAString
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.schedule
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.slider_with_flag
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.title
 import javax.inject.Inject
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
 
-class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePickerDialog.OnDateSetListener {
+class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
     @Inject
     lateinit var viewStatesProducer: ViewStatesProducer<EditItemViewState>
-
     @Inject
     lateinit var viewActionsConsumer: ViewActionsConsumer<EditItemViewIntent>
+    @Inject
+    lateinit var transientEventsProducer: TransientEventsProducer<EditItemTransientEvent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +54,33 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewStatesProducer.states.observe(requireActivity(), Observer { render(it) })
+        transientEventsProducer.transientEvents.observe(requireActivity(), Observer { onTransientEventReceived(it) })
         schedule.callback = this
+        title.setAfterChangeListener {
+            emit(OnDataChanged(title = it))
+        }
+        description.setAfterChangeListener {
+            emit(OnDataChanged(description = it))
+        }
+        save.setOnClickListener {
+            emit(OnSaveClicked)
+            dismiss()
+        }
+    }
+
+    private fun onTransientEventReceived(transientEvent: EditItemTransientEvent) {
+        when (transientEvent) {
+            is EditItemTransientEvent.SelectDate -> showDatePicker(transientEvent.timeInMills)
+            is EditItemTransientEvent.SelectTime -> showTimePicker(transientEvent.timeInMills)
+        }.exhaustive
+    }
+
+    private fun showTimePicker(timeInMills: Long) {
+        TravelTimePickerDialog.newInstance(this, this, timeInMills).show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
+    }
+
+    private fun showDatePicker(timeInMills: Long) {
+        TravelDatePickerDialog.newInstance(this, this, timeInMills).show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
     }
 
     private fun render(editItemViewState: EditItemViewState) {
@@ -49,35 +88,27 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
         schedule.date = editItemViewState.date
         schedule.time = editItemViewState.time
         slider_with_flag.priority = editItemViewState.priority
-        title.setText(editItemViewState.title, TextView.BufferType.EDITABLE)
-        description.setText(editItemViewState.description, TextView.BufferType.EDITABLE)
+        title.textAsAString = editItemViewState.title
+        description.textAsAString = editItemViewState.description
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_dialog_edit_item, container, false)
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = inflater.inflate(R.layout.fragment_dialog_edit_item, container, false)
 
-    override fun onAlertActivated(activated: Boolean) {
-        emit(OnAlertActivated(activated))
-    }
+    override fun onAlertActivated(activated: Boolean) = emit(OnAlertActivated(activated))
 
-    override fun onDateClicked() {
-        emit(OnDateClicked)
-        //TravelDatePickerDialog.newInstance(this, this).show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);
-    }
+    override fun onDateClicked() = emit(OnDateClicked)
 
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        emit(DateSet(year, monthOfYear, dayOfMonth))
-    }
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) = emit(DateSet(year, monthOfYear, dayOfMonth))
 
-    private fun emit(intent: EditItemViewIntent) {
-        viewActionsConsumer.accept(intent)
-    }
+    override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) = emit(OnTimeSet(hourOfDay, minute))
 
+    private fun emit(intent: EditItemViewIntent) = viewActionsConsumer.accept(intent)
 
-    override fun onTimeClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onTimeClicked() = emit(OnTimeClicked)
 
     companion object {
         fun newInstance(listId: String, cardId: String, itemId: String) =

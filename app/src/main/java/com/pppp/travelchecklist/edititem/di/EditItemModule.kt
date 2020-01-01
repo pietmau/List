@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.edititem.di
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.edititem.model.EditItemModel
@@ -10,6 +11,7 @@ import com.pppp.travelchecklist.edititem.model.FireBaseEditItemModel
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.DateAndTimeFormatterImpl
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.DateAndTimeProviderImpl
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemMapper
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTravelViewModel
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
@@ -32,6 +34,9 @@ class EditItemModule(
 
     @Provides
     fun provideViewIntentConsumer(editItemViewModel: EditItemTravelViewModel): ViewActionsConsumer<EditItemViewIntent> = editItemViewModel
+
+    @Provides
+    fun provideViewTransientEventProducer(editItemViewModel: EditItemTravelViewModel): TransientEventsProducer<EditItemTransientEvent> = editItemViewModel
 
     @EditItemScope
     @Provides

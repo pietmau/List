@@ -10,7 +10,6 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 import com.pppp.travelchecklist.list.model.getList
 import com.pppp.travelchecklist.list.model.userId
-import com.pppp.travelchecklist.repository.SingleCheckListRepository
 
 class FireBaseEditItemModel(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
@@ -18,23 +17,18 @@ class FireBaseEditItemModel(
     private val singleCheckListRepository: FirebaseSingleCheckListRepository
 ) : EditItemModel {
 
-    override fun retrieveItemAndUpdates(
-        listId: String,
-        cardId: String,
-        itemId: String,
-        onFailure: ((Throwable) -> Unit)?,
-        onSuccess: ((CheckListItem) -> Unit)?
-    ) {
-        db.getList(auth.userId, listId)
-            .addSnapshotListener { snapShot, exception ->
-                if (exception == null) {
-                    val checkList = snapShot?.toObject(TravelCheckListImpl::class.java)
-                    val item = getgItemFromCategories(checkList, cardId, itemId)
-                    onSuccess?.invoke(item)
-                } else {
-                    onFailure?.invoke(exception)
-                }
+    override fun updateItem(listId: String, categoryId: String, itemId: String, item: CheckListItemImpl) {
+        val documentReference = db.getList(auth.userId, listId)
+        documentReference.get().continueWith {
+            val checkList = requireNotNull(it.result?.toObject(TravelCheckListImpl::class.java))
+            val updated = checkList.categories.map { category ->
+                if (category.id == categoryId) {
+                    val items = category.items.map { if (it.id == item.id) item else it }
+                    category.copy(items = items)
+                } else category
             }
+            documentReference.update("categories", updated)
+        }
     }
 
     override fun retrieveItem(listId: String, cardId: String, itemId: String, onFailure: ((Throwable) -> Unit)?, onSuccess: ((CheckListItem) -> Unit)?) {
@@ -45,32 +39,16 @@ class FireBaseEditItemModel(
             .addOnFailureListener { onFailure?.invoke(it) }
     }
 
-    override fun updateItem(
-        title: String,
-        description: String,
-        priority: Int,
-        itemId: String,
-        listId: String,
-        cardId: String,
-        alertTimeInMills: Long?
-    ) {
-        db.getList(auth.userId, listId).get().continueWith { task ->
-            val item = getItem(task, cardId, itemId)
-            val copy = item.copy(title = title, description = description, priority = priority, alertTimeInMills = alertTimeInMills)
-            singleCheckListRepository.updateItem(listId, cardId, copy)
-        }
-    }
-
     private fun getItem(
         task: Task<DocumentSnapshot>,
         cardId: String,
         itemId: String
     ): CheckListItemImpl {
         val checkList = task.result?.toObject(TravelCheckListImpl::class.java)
-        return getgItemFromCategories(checkList, cardId, itemId)
+        return getItemFromCategories(checkList, cardId, itemId)
     }
 
-    private fun getgItemFromCategories(
+    private fun getItemFromCategories(
         checkList: TravelCheckListImpl?,
         cardId: String,
         itemId: String

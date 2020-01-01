@@ -19,6 +19,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import android.net.ConnectivityManager
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -112,8 +114,30 @@ fun <K, V> Map<K, V>.replaceSameKeyItemsWith(newElements: Map<K, V>?): Map<K, V>
 
 fun Fragment.getColor(@ColorRes colour: Int) = ResourcesCompat.getColor(resources, android.R.color.white, context?.theme)
 
-val EditText.textAsAString
+var EditText.textAsAString: String?
     get() = text?.toString() ?: ""
+    set(value) {
+        val currentText = text?.toString()
+        if (currentText != value) {
+            setText(value, TextView.BufferType.EDITABLE)
+        }
+    }
 
 val <T> T.exhaustive: T
     get() = this
+
+fun EditText.setAfterChangeListener(listener: (String?) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            listener(s?.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            /* NoOp */
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            /* NoOp */
+        }
+    })
+}

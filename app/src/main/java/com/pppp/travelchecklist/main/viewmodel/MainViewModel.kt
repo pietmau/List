@@ -2,27 +2,21 @@ package com.pppp.travelchecklist.main.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.TransientEventsProducer
-import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
-
-private val KEY = MainViewModel::class.simpleName!!
 
 class MainViewModel(
     private val mainUseCase: MainUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val analytics: MainAnalyticsLogger,
-    handle: SavedStateHandle
+    override val transientEvents: LiveData<MainTransientEvent>,
+    private val internalStates: MutableLiveData<MainViewState>
 ) : ViewStatesProducer<MainViewState>,
     ViewActionsConsumer<MainViewIntent>,
     TransientEventsProducer<MainTransientEvent>, ViewModel() {
-
-    override val transientEvents: LiveData<MainTransientEvent> = TransientLiveData()
-    private val internalStates: MutableLiveData<MainViewState> = handle.getLiveData(KEY)
 
     override val states: LiveData<MainViewState>
         get() {
@@ -60,21 +54,21 @@ class MainViewModel(
 
     private fun openNavMenu() {
         analytics.onMainMenuOpen()
-        mainUseCase.getLastVisitedList({ userLists, lastListId ->
-            emitTransientEvent(MainTransientEvent.OpenNavMenu(userLists, lastListId))
-        }, {
+        mainUseCase.getLastVisitedList({
             onError(it)
+        }, { userLists, lastListId ->
+            emitTransientEvent(MainTransientEvent.OpenNavMenu(userLists, lastListId))
         })
     }
 
     private fun getLatestListVisited() {
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
-        mainUseCase.getLastVisitedList({ _, listId ->
-            listId?.let { goToList(listId) } ?: emitNewViewState(MainViewState.Empty())
-        }, {
+        mainUseCase.getLastVisitedList({
             emitNewViewState(MainViewState.Empty())
             onError(it)
+        }, { _, listId ->
+            listId?.let { goToList(listId) } ?: emitNewViewState(MainViewState.Empty())
         })
     }
 
@@ -100,5 +94,8 @@ class MainViewModel(
 
     private fun emitTransientEvent(transientEvent: MainTransientEvent) = (transientEvents as MutableLiveData<MainTransientEvent>).postValue(transientEvent)
 
+    companion object {
+        val KEY = MainViewModel::class.simpleName!!
+    }
 }
 

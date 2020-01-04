@@ -46,7 +46,7 @@ class EditItemModule(
     ).get(EditItemTravelViewModel::class.java)
 
     @Provides
-    fun provideEditItemModel(): EditItemModel = FireBaseEditItemModel(singleCheckListRepository = FirebaseSingleCheckListRepository())
+    fun provideEditItemModel(): EditItemModel = FireBaseEditItemModel(listId = listId, categoryId = categoryId, itemId = itemId)
 }
 
 class Factory(
@@ -58,6 +58,6 @@ class Factory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return EditItemTravelViewModel(listId, categoryId, itemId, model, EditItemMapper(DateAndTimeFormatterImpl(resources)), DateAndTimeProviderImpl()) as T
+        return EditItemTravelViewModel(model, EditItemMapper(DateAndTimeFormatterImpl(resources), DateAndTimeProviderImpl())) as T
     }
 }

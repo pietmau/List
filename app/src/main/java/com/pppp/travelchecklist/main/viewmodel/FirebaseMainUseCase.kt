@@ -8,15 +8,15 @@ class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
     override fun deleteCurrentList() = model.deleteCurrentList()
 
     @Suppress("UNCHECKED_CAST")
-    override fun getLastVisitedList(
-        success: ((userLists: List<TravelCheckListImpl>, lastListId: String?) -> Unit),
-        failure: ((Throwable?) -> Unit)
+    override fun  getLastVisitedList(
+        failure: (Throwable?) -> Unit,
+        success: (userLists: List<TravelCheckListImpl>, lastListId: String?) -> Unit
     ) {
-        model.getLastVisitedList(success = { lastList ->
+        model.getLastVisitedList(failure = {
+            failure(it)
+        }, success = { lastList ->
             val userChecklists = model.checkLists.values.toList()
             success(userChecklists as List<TravelCheckListImpl>, lastList)
-        }, failure = {
-            failure(it)
         })
     }
 

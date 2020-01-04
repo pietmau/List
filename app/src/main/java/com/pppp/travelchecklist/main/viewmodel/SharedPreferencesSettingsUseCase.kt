@@ -22,7 +22,7 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
     }
 
     override fun subscribeToChanges(callback: ((MainViewState.Settings) -> Unit)) {
-        preferences.registerPreferenceChangeListener { prefs, key ->
+        preferences.registerPreferenceChangeListener { _, key ->
             val map = when (key) {
                 VISUALIZE_CHECKED_ITEMS -> getCheckedVisualizePreference()
                 else -> emptyMap<Int, MenuViewState>()

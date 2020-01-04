@@ -7,7 +7,7 @@ import com.pppp.travelchecklist.createlist.NewListActivity
 import com.pppp.travelchecklist.createlist.model.TagsCache
 import com.pppp.travelchecklist.createlist.model.TagsCacheFactory
 import com.pppp.travelchecklist.createlist.model.TagsCacheImpl
-import com.pppp.travelchecklist.createlist.presenter.NewListPresenter
+import com.pppp.travelchecklist.createlist.presenter.NewListViewModel
 import com.pppp.travelchecklist.createlist.presenter.SelectorPresenterFactory
 import com.pppp.travelchecklist.createlist.model.models.*
 import com.pppp.travelchecklist.utils.ResourcesWrapper
@@ -19,7 +19,7 @@ class NewListModule(private val newListActivity: NewListActivity) {
 
     @Provides
     fun provideSelectorPresenter(factory: SelectorPresenterFactory) =
-        ViewModelProviders.of(newListActivity, factory).get(NewListPresenter::class.java)
+        ViewModelProviders.of(newListActivity, factory).get(NewListViewModel::class.java)
 
     @Provides
     fun providesWhoIsTravellingModel(factory: WhoIsTravellingModelFactory): WhoIsTravellingModel =

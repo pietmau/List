@@ -4,8 +4,8 @@ import com.pppp.entities.pokos.TravelCheckListImpl
 
 interface MainUseCase {
     fun getLastVisitedList(
-        success: (userLists: List<TravelCheckListImpl>, lastListId: String?) -> Unit = { _, _ -> },
-        failure: (Throwable?) -> Unit = {}
+        failure: (Throwable?) -> Unit = {},
+        success: (userLists: List<TravelCheckListImpl>, lastListId: String?) -> Unit = { _, _ -> }
     )
 
     fun saveLastVisitedList(listId: String)

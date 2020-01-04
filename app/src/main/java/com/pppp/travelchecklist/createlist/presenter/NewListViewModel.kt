@@ -11,14 +11,14 @@ import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.createlist.model.Destination
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 
-class NewListPresenter(
+class NewListViewModel(
     private val model: Model,
-    private val resourcesWrapper: ResourcesWrapper
-) : ViewModel(), ViewStatesProducer<NewListPresenter.NewListViewState> {
+    private val resourcesWrapper: ResourcesWrapper,
+    override val states: LiveData<NewListViewState> = MutableLiveData(),
+    var transientStates: ((TransientState) -> Unit)? = null
+) : ViewModel(), ViewStatesProducer<NewListViewModel.NewListViewState> {
 
-    override val states: LiveData<NewListViewState> = MutableLiveData()
-    lateinit var transientStates: (TransientState) -> Unit
-
+    @SuppressLint("DefaultLocale")
     fun onNameChanged(name: String) {
         model.listName = name.capitalize()
         updateUi()
@@ -30,10 +30,10 @@ class NewListPresenter(
             updateUi(true)
             model.generate()
                 .subscribe({
-                    this@NewListPresenter.model.checkListId = it
+                    this@NewListViewModel.model.checkListId = it
                     updateUi(false, it)
                 }, {
-                    transientStates(TransientState(TransientState.Error.GenericError(it.localizedMessage)))
+                    transientStates?.invoke(TransientState(TransientState.Error.GenericError(it.localizedMessage)))
                 })
         } else {
             emitErrors()
@@ -43,7 +43,7 @@ class NewListPresenter(
     private fun emitErrors() {
         val genericError = if (model.isEmpty) TransientState.Error.GenericError(resourcesWrapper.getString(R.string.must_make_selection)) else null
         val noNameError = if (!model.hasValidName()) TransientState.Error.NoNameError else null
-        transientStates(TransientState(genericError, noNameError))
+        transientStates?.invoke(TransientState(genericError, noNameError))
     }
 
     fun onAccommodationSelected(accomodation: Tag) {
@@ -110,7 +110,7 @@ class NewListPresenter(
         updateUi()
     }
 
-    data class NewListViewState(val showPreogress: Boolean, val enableFinish: Boolean, val listId: String?) : ViewState
+    data class NewListViewState(val showProgress: Boolean, val enableFinish: Boolean, val listId: String?) : ViewState
 
     data class TransientState(val genericError: Error.GenericError? = null, val noName: Error.NoNameError? = null) {
         sealed class Error {

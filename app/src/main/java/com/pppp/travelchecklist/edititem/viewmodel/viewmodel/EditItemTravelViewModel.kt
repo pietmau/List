@@ -8,33 +8,27 @@ import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.TravelViewModel
 import com.pppp.travelchecklist.edititem.model.EditItemModel
-import com.pppp.travelchecklist.main.model.Mapper
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectTime
 import com.pppp.travelchecklist.utils.exhaustive
-import  com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
-import  com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectTime
 
 class EditItemTravelViewModel(
-    private val listId: String,
-    private val categoryId: String,
-    private val itemId: String,
     private val model: EditItemModel,
-    private val mapper: Mapper<CheckListItem, EditItemViewState>,
-    private val dateAndTimeProvider: DateAndTimeProvider
+    private val mapper: EditItemMapper,
+    private val transientEventsInternal: MutableLiveData<EditItemTransientEvent> = TransientLiveData(),
+    private val statesInternal: MutableLiveData<EditItemViewState> = MutableLiveData()
 ) :
     TravelViewModel<EditItemViewState, EditItemViewIntent, EditItemTransientEvent>,
     ViewModel() {
+
     override val transientEvents: LiveData<EditItemTransientEvent>
         get() = transientEventsInternal
 
     private lateinit var item: CheckListItem
 
-    private val transientEventsInternal: MutableLiveData<EditItemTransientEvent> by lazy { TransientLiveData<EditItemTransientEvent>() }
-
-    private val statesInternal: MutableLiveData<EditItemViewState> by lazy {
-        MutableLiveData<EditItemViewState>().also {
-            model.retrieveItem(listId, categoryId, itemId, {}, { item ->
-                emitItem(item)
-            })
+    init {
+        model.retrieveItem { item ->
+            emitItem(item)
         }
     }
 
@@ -58,19 +52,20 @@ class EditItemTravelViewModel(
         }.exhaustive
     }
 
-    private fun onSaveClicked() = model.updateItem(listId, categoryId, itemId, item as CheckListItemImpl)
+    private fun onSaveClicked() = model.updateItem(item as CheckListItemImpl)
 
     private fun onDataChanged(title: String?, description: String?, priority: Int?) {
         val title = title ?: item.title
         val description = description ?: item.description
-        val item = (item as CheckListItemImpl).copy(title = title, description = description, priority = priority ?: item.priority)
+        val newPriority = priority ?: item.priority
+        val item = (item as CheckListItemImpl).copy(title = title, description = description, priority = newPriority)
         emitItem(item)
     }
 
-    private fun onTimeSet(hourOfDay: Int, minute: Int) = onDateOrTimeSet(dateAndTimeProvider.onTimeSet(item.alertTimeInMills, hourOfDay, minute))
+    private fun onTimeSet(hourOfDay: Int, minute: Int) = onDateOrTimeSet(mapper.onTimeSet(item.alertTimeInMills, hourOfDay, minute))
 
     private fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) = onDateOrTimeSet(
-        dateAndTimeProvider.onDateSet(
+        mapper.onDateSet(
             item.alertTimeInMills,
             year,
             monthOfYear,
@@ -84,7 +79,7 @@ class EditItemTravelViewModel(
     }
 
     private fun onAlertActivated(activated: Boolean) {
-        val alertTimeInMills = dateAndTimeProvider.getDefaultAlertTime(item.alertTimeInMills)
+        val alertTimeInMills = mapper.getDefaultAlertTime(item.alertTimeInMills)
         val item = (item as CheckListItemImpl).copy(isAlertOn = activated, alertTimeInMills = alertTimeInMills)
         emitItem(item)
     }

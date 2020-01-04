@@ -5,7 +5,7 @@ import com.pppp.entities.pokos.CheckListItemImpl
 
 interface EditItemModel {
 
-    fun retrieveItem(listId: String, cardId: String, itemId: String, onFailure: ((Throwable) -> Unit)? = null, onSuccess: ((CheckListItem) -> Unit)? = null)
+    fun retrieveItem(onFailure: ((Throwable) -> Unit)? = null, onSuccess: ((CheckListItem) -> Unit)? = null)
 
-    fun updateItem(title: String, description: String, priority: String, itemId: CheckListItemImpl)
+    fun updateItem(item: CheckListItemImpl)
 }

@@ -10,6 +10,7 @@ import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
 import com.pppp.travelchecklist.TransientEventsProducer
+import com.pppp.travelchecklist.TransientLiveData
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
@@ -75,7 +76,8 @@ class MainModule(private val activity: FragmentActivity) {
             FirebaseMainUseCase(model),
             settingsUseCase,
             logger,
-            handle
+            TransientLiveData<MainTransientEvent>(),
+            handle.getLiveData(MainViewModel.KEY)
         ) as T
 
     }

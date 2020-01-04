@@ -3,7 +3,8 @@ package com.pppp.travelchecklist.edititem.viewmodel.viewmodel
 import java.util.Calendar
 
 class DateAndTimeProviderImpl : DateAndTimeProvider {
-    override fun onTimeSet(alertTimeInMills: Long?, hourOfDay: Int, minute: Int): Long {
+
+    override fun setTime(alertTimeInMills: Long?, hourOfDay: Int, minute: Int): Long {
         val mills = getDefaultAlertTime(alertTimeInMills)
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = mills
@@ -12,7 +13,7 @@ class DateAndTimeProviderImpl : DateAndTimeProvider {
         return calendar.timeInMillis
     }
 
-    override fun onDateSet(alertTimeInMills: Long?, year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
+    override fun setDate(alertTimeInMills: Long?, year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
         val mills = getDefaultAlertTime(alertTimeInMills)
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = mills

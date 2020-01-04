@@ -8,7 +8,7 @@ interface MainModel {
 
     fun saveLastVisitedList(listId: String?)
 
-    fun getLastVisitedList(success: ((String?) -> Unit)? = null, failure: ((Throwable?) -> Unit)? = null)
+    fun getLastVisitedList(failure: ((Throwable?) -> Unit)? = null, success: ((String?) -> Unit)? = null)
 
     var checkLists: Map<String, TravelCheckList>
 

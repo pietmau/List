@@ -7,19 +7,22 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
-import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 import com.pppp.travelchecklist.list.model.getList
 import com.pppp.travelchecklist.list.model.userId
+
+internal val CATEGORIES = "categories"
 
 class FireBaseEditItemModel(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance(),
-    private val singleCheckListRepository: FirebaseSingleCheckListRepository
+    private val listId: String,
+    private val categoryId: String,
+    private val itemId: String
 ) : EditItemModel {
 
-    override fun updateItem(listId: String, categoryId: String, itemId: String, item: CheckListItemImpl) {
+    override fun updateItem(item: CheckListItemImpl) {
         val documentReference = db.getList(auth.userId, listId)
-        documentReference.get().continueWith {
+        val task = documentReference.get().continueWith {
             val checkList = requireNotNull(it.result?.toObject(TravelCheckListImpl::class.java))
             val updated = checkList.categories.map { category ->
                 if (category.id == categoryId) {
@@ -27,15 +30,16 @@ class FireBaseEditItemModel(
                     category.copy(items = items)
                 } else category
             }
-            documentReference.update("categories", updated)
+            documentReference.update(CATEGORIES, updated)
         }
     }
 
-    override fun retrieveItem(listId: String, cardId: String, itemId: String, onFailure: ((Throwable) -> Unit)?, onSuccess: ((CheckListItem) -> Unit)?) {
-        db.getList(auth.userId, listId).get().continueWith { task ->
-            return@continueWith getItem(task, cardId, itemId)
+    override fun retrieveItem(onFailure: ((Throwable) -> Unit)?, onSuccess: ((CheckListItem) -> Unit)?) {
+        val task: Task<DocumentSnapshot> = db.getList(auth.userId, listId).get()
+        val task2: Task<CheckListItemImpl> = task.continueWith { task: Task<DocumentSnapshot> ->
+            getItem(task, categoryId, itemId)
         }
-            .addOnSuccessListener { onSuccess?.invoke(it) }
+        task2.addOnSuccessListener { onSuccess?.invoke(it) }
             .addOnFailureListener { onFailure?.invoke(it) }
     }
 

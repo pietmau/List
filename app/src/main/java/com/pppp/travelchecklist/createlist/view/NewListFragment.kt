@@ -17,7 +17,7 @@ import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
 import com.pppp.travelchecklist.createlist.NewListActivity
 import com.pppp.travelchecklist.createlist.di.NewListModule
 import com.pppp.travelchecklist.createlist.model.Destination
-import com.pppp.travelchecklist.createlist.presenter.NewListPresenter
+import com.pppp.travelchecklist.createlist.presenter.NewListViewModel
 import kotlinx.android.synthetic.main.selector_fragment.*
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ private const val DELAY_IN_MILLS = 1000L
 
 class NewListFragment : Fragment(), NewListCallback {
     @Inject
-    lateinit var presenter: NewListPresenter
+    lateinit var viewModel: NewListViewModel
     private val parent
         get() = (activity as? CreateChecklistView)
     private val handler by lazy { Handler() }
@@ -34,10 +34,10 @@ class NewListFragment : Fragment(), NewListCallback {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
         appComponent?.with(NewListModule(requireActivity() as NewListActivity))?.inject(this)
-        presenter.states.observe(activity as AppCompatActivity, Observer { viewState: NewListPresenter.NewListViewState ->
+        viewModel.states.observe(activity as AppCompatActivity, Observer { viewState: NewListViewModel.NewListViewState ->
             render(viewState)
         })
-        presenter.transientStates = ::showTransientState
+        viewModel.transientStates = ::showTransientState
     }
 
     override fun onCreateView(
@@ -51,35 +51,35 @@ class NewListFragment : Fragment(), NewListCallback {
     }
 
     override fun onPlannedActivitySelected(plannedActivity: Tag) {
-        presenter.onPlannedActivitySelected(plannedActivity)
+        viewModel.onPlannedActivitySelected(plannedActivity)
     }
 
     override fun onPlannedActivityDeselected(plannedActivity: Tag) {
-        presenter.onPlannedActivityDeselected(plannedActivity)
+        viewModel.onPlannedActivityDeselected(plannedActivity)
     }
 
     override fun onWhoisTravellingSelected(traveller: Tag) {
-        presenter.onWhoisTravellingSelected(traveller)
+        viewModel.onWhoisTravellingSelected(traveller)
     }
 
     override fun onWhoisTravellingDeSelected(traveller: Tag) {
-        presenter.onWhoisTravellingDeSelected(traveller)
+        viewModel.onWhoisTravellingDeSelected(traveller)
     }
 
     override fun onDurationSelected(duration: Tag) {
-        presenter.onDurationSelected(duration)
+        viewModel.onDurationSelected(duration)
     }
 
     override fun onAccommodationSelected(accomodation: Tag) {
-        presenter.onAccommodationSelected(accomodation)
+        viewModel.onAccommodationSelected(accomodation)
     }
 
     override fun onWeatherSelected(weather: Tag) {
-        presenter.onWeatherSelected(weather)
+        viewModel.onWeatherSelected(weather)
     }
 
     override fun onFinishClicked() {
-        presenter.onFinishClicked()
+        viewModel.onFinishClicked()
     }
 
     override fun onDestroy() {
@@ -88,35 +88,35 @@ class NewListFragment : Fragment(), NewListCallback {
     }
 
     override fun onDestinationSelected(destination: Destination) {
-        presenter.onDestinationSelected(destination)
+        viewModel.onDestinationSelected(destination)
     }
 
     override fun onNameChanged(name: String) {
-        presenter.onNameChanged(name)
+        viewModel.onNameChanged(name)
     }
 
     override fun onDurationDeselected(item: Tag) {
-        presenter.onDurationDeselected(item)
+        viewModel.onDurationDeselected(item)
     }
 
     override fun onAccommodationDeselected(item: Tag) {
-        presenter.onAccommodationDeselected(item)
+        viewModel.onAccommodationDeselected(item)
     }
 
     override fun onWeatherDeselected(item: Tag) {
-        presenter.onWeatherDeselected(item)
+        viewModel.onWeatherDeselected(item)
     }
 
     override fun onPageChanged(position: Int) {
-        presenter.onPageChanged()
+        viewModel.onPageChanged()
     }
 
     override fun navigateBack() = selectorView.goBack()
 
-    private fun render(viewState: NewListPresenter.NewListViewState) {
+    private fun render(viewState: NewListViewModel.NewListViewState) {
         selectorView.enableFinish(viewState.enableFinish)
 
-        if (viewState.showPreogress) {
+        if (viewState.showProgress) {
             progress_bar.visibility = VISIBLE
             selectorView.visibility = GONE
             text.text = context?.getString(R.string.generating_list)
@@ -132,7 +132,7 @@ class NewListFragment : Fragment(), NewListCallback {
         }
     }
 
-    private fun showTransientState(transientState: NewListPresenter.TransientState) {
+    private fun showTransientState(transientState: NewListViewModel.TransientState) {
         transientState.genericError?.let {
             parent?.onError(it.message)
             selectorView.animateBackButton()

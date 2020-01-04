@@ -26,7 +26,7 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
         listId?.let { repo.saveLastVisitedList(it) }
     }
 
-    override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
+    override fun getLastVisitedList(failure: ((Throwable?) -> Unit)?, success: ((String?) -> Unit)?) {
         if (lastVisitedList == null) {
             repo.getLastVisitedList({
                 lastVisitedList = it

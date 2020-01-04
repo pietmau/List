@@ -13,9 +13,14 @@ import java.lang.UnsupportedOperationException
 class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     LinearLayout(context, attrs, defStyleAttr) {
 
+    internal lateinit var callback: (priority: Int) -> Unit
+
     var priority: Float
         get() = slider.value
         set(input) {
+            if (slider.value == input) {
+                return
+            }
             slider.value = input
         }
 
@@ -23,8 +28,10 @@ class SliderWithFlag @JvmOverloads constructor(context: Context, attrs: Attribut
         LayoutInflater.from(context).inflate(R.layout.view_slider_with_flag, this, true);
         slider.setOnChangeListener { _, value ->
             onValueChange(value.toInt())
+            callback(value.toInt())
         }
-        setLabelText(R.string.priority_none)
+        setText(0)
+        setFlag(0)
     }
 
     private fun setLabelText(priorityNone: Int) {

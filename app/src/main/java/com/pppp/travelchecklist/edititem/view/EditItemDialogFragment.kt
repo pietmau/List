@@ -66,6 +66,9 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
             emit(OnSaveClicked)
             dismiss()
         }
+        slider_with_flag.callback = {
+            emit(OnDataChanged(priority = it))
+        }
     }
 
     private fun onTransientEventReceived(transientEvent: EditItemTransientEvent) {

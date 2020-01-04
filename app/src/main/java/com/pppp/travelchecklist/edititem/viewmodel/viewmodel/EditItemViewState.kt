@@ -17,7 +17,7 @@ sealed class EditItemViewIntent : ViewIntent {
     data class OnAlertActivated(val activated: Boolean = false) : EditItemViewIntent()
     data class DateSet(val year: Int, val monthOfYear: Int, val dayOfMonth: Int) : EditItemViewIntent()
     data class OnTimeSet(val hourOfDay: Int, val minute: Int) : EditItemViewIntent()
-    data class OnDataChanged(val title: String? = null, val description: String? = null) : EditItemViewIntent()
+    data class OnDataChanged(val title: String? = null, val description: String? = null, val priority: Int? = null) : EditItemViewIntent()
     object OnDateClicked : EditItemViewIntent()
     object OnTimeClicked : EditItemViewIntent()
     object OnSaveClicked : EditItemViewIntent()

@@ -13,14 +13,22 @@ import kotlinx.android.synthetic.main.view_schedule_view.view.toggle
 class ScheduleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     LinearLayout(context, attrs, defStyleAttr) {
     internal var callback: Callback? = null
+
     internal var checked: Boolean = false
         set(value) {
+            if (value == checked) {
+                return
+            }
             container.visibility = if (value) VISIBLE else INVISIBLE
+            toggle.isChecked = value
+            field = value
         }
+
     internal var date: String? = null
         set(value) {
             dateText.text = value
         }
+
     internal var time: String? = null
         set(value) {
             timeText.text = value

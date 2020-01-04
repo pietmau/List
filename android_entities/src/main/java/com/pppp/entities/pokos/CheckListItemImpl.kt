@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class CheckListItemImpl @JvmOverloads constructor(
     override var title: String = "",
     override var checked: Boolean = false,
-    override var priority: Int = 5,
+    override var priority: Int = 0,
     override var description: String? = null,
     override var tags: List<TagImpl> = emptyList(),
     override var optional: Boolean = false,

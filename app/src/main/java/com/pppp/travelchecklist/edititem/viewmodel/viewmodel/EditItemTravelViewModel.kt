@@ -53,17 +53,17 @@ class EditItemTravelViewModel(
             EditItemViewIntent.OnDateClicked -> transientEventsInternal.postValue(SelectDate(requireNotNull(item.alertTimeInMills)))
             EditItemViewIntent.OnTimeClicked -> transientEventsInternal.postValue(SelectTime(requireNotNull(item.alertTimeInMills)))
             is EditItemViewIntent.OnTimeSet -> onTimeSet(intent.hourOfDay, intent.minute)
-            is EditItemViewIntent.OnDataChanged -> onDataChanged(intent.title, intent.description)
+            is EditItemViewIntent.OnDataChanged -> onDataChanged(intent.title, intent.description, intent.priority)
             EditItemViewIntent.OnSaveClicked -> onSaveClicked()
         }.exhaustive
     }
 
     private fun onSaveClicked() = model.updateItem(listId, categoryId, itemId, item as CheckListItemImpl)
 
-    private fun onDataChanged(title: String?, description: String?) {
+    private fun onDataChanged(title: String?, description: String?, priority: Int?) {
         val title = title ?: item.title
         val description = description ?: item.description
-        item = (item as CheckListItemImpl).copy(title = title, description = description)
+        val item = (item as CheckListItemImpl).copy(title = title, description = description, priority = priority ?: item.priority)
         emitItem(item)
     }
 

@@ -18,11 +18,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
             android:drawableEnd="@drawable/ic_flag_svgrepo_com"
             android:drawablePadding="@dimen/drawable_padding"
             android:gravity="start"
             android:text="@string/priority_none"
-            android:layout_marginStart="4dp"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="?android:textColorSecondary" />
     </LinearLayout>

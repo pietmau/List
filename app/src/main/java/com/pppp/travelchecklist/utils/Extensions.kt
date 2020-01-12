@@ -9,24 +9,22 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.IdRes
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.application.di.AppComponent
+import com.pppp.travelchecklist.application.di.AppComponentImpl
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import android.net.ConnectivityManager
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.application.di.AppComponent
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)

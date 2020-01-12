@@ -34,7 +34,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class MainModule(private val activity: FragmentActivity) {
+open class MainModule(private val activity: FragmentActivity) {
 
     @Singleton
     @Provides
@@ -49,13 +49,13 @@ class MainModule(private val activity: FragmentActivity) {
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
 
     @Provides
-    fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel
+    open fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel
 
     @Provides
-    fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewIntent> = viewModel
+    open fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewIntent> = viewModel
 
     @Provides
-    fun provideTransientEvdents(viewModel: MainViewModel): TransientEventsProducer<MainTransientEvent> = viewModel
+    open fun provideTransientEvdents(viewModel: MainViewModel): TransientEventsProducer<MainTransientEvent> = viewModel
 
     @Provides
     fun provideNavigationActionMapper(): Navigator = NavigatorImpl

@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @Module
-class AppModule(private val context: Context, private val firebaseAnalytics: FirebaseAnalytics) {
+open class AppModule(private val context: Context, private val firebaseAnalytics: FirebaseAnalytics) {
 
     @Provides
     fun provideTravelChecklistDatabase(firebaseDatabase: FirebaseDatabase): DestinationPresenter =
@@ -49,7 +49,6 @@ class AppModule(private val context: Context, private val firebaseAnalytics: Fir
 
     @Provides
     fun provideListGenarator(
-        db: InitialTagsRepository,
         client: Client,
         travelChecklistRepository: TravelChecklistRepository
     ): ListGenerator = ListGeneratorImpl(client, travelChecklistRepository, AndroidSchedulers.mainThread(), Schedulers.io())

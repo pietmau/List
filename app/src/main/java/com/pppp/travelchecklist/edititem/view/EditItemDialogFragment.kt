@@ -71,12 +71,11 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
         }
     }
 
-    private fun onTransientEventReceived(transientEvent: EditItemTransientEvent) {
+    private fun onTransientEventReceived(transientEvent: EditItemTransientEvent) =
         when (transientEvent) {
             is EditItemTransientEvent.SelectDate -> showDatePicker(transientEvent.timeInMills)
             is EditItemTransientEvent.SelectTime -> showTimePicker(transientEvent.timeInMills)
-        }.exhaustive
-    }
+        }
 
     private fun showTimePicker(timeInMills: Long) {
         TravelTimePickerDialog.newInstance(this, this, timeInMills).show(requireNotNull(fragmentManager), TravelDatePickerDialog.TAG);

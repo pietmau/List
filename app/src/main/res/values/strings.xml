@@ -83,5 +83,6 @@
     <string name="priority_high">Priority: high</string>
     <string name="title">Title</string>
     <string name="na">###</string>
+    <string name="notes">Notes</string>
 
 </resources>

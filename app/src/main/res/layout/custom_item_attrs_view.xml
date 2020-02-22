@@ -13,11 +13,19 @@
         android:visibility="gone" />
 
     <ImageView
-        android:tint="@color/gray"
         android:id="@+id/description"
         android:layout_width="@dimen/small_icon_size"
         android:layout_height="@dimen/small_icon_size"
-        android:src="@drawable/ic_short_text_24px"
+        android:src="@drawable/ic_message_24px"
+        android:tint="@color/gray"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/alarm"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:src="@drawable/ic_alarm_24px"
+        android:tint="@color/gray"
         android:visibility="gone" />
 
 </merge>

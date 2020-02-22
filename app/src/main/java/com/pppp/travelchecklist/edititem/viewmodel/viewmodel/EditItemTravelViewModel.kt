@@ -10,7 +10,6 @@ import com.pppp.travelchecklist.TravelViewModel
 import com.pppp.travelchecklist.edititem.model.EditItemModel
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectTime
-import com.pppp.travelchecklist.utils.exhaustive
 
 class EditItemTravelViewModel(
     private val model: EditItemModel,
@@ -20,9 +19,8 @@ class EditItemTravelViewModel(
 ) :
     TravelViewModel<EditItemViewState, EditItemViewIntent, EditItemTransientEvent>,
     ViewModel() {
-
-    override val transientEvents: LiveData<EditItemTransientEvent>
-        get() = transientEventsInternal
+    override val states: LiveData<EditItemViewState> = statesInternal
+    override val transientEvents: LiveData<EditItemTransientEvent> = transientEventsInternal
 
     private lateinit var item: CheckListItem
 
@@ -37,10 +35,7 @@ class EditItemTravelViewModel(
         statesInternal.postValue(mapper.map(item))
     }
 
-    override val states: LiveData<EditItemViewState>
-        get() = statesInternal
-
-    override fun accept(intent: EditItemViewIntent) {
+    override fun accept(intent: EditItemViewIntent) =
         when (intent) {
             is EditItemViewIntent.OnAlertActivated -> onAlertActivated(intent.activated)
             is EditItemViewIntent.DateSet -> onDateSet(intent.year, intent.monthOfYear, intent.dayOfMonth)
@@ -49,8 +44,7 @@ class EditItemTravelViewModel(
             is EditItemViewIntent.OnTimeSet -> onTimeSet(intent.hourOfDay, intent.minute)
             is EditItemViewIntent.OnDataChanged -> onDataChanged(intent.title, intent.description, intent.priority)
             EditItemViewIntent.OnSaveClicked -> onSaveClicked()
-        }.exhaustive
-    }
+        }
 
     private fun onSaveClicked() = model.updateItem(item as CheckListItemImpl)
 
@@ -62,16 +56,15 @@ class EditItemTravelViewModel(
         emitItem(item)
     }
 
-    private fun onTimeSet(hourOfDay: Int, minute: Int) = onDateOrTimeSet(mapper.onTimeSet(item.alertTimeInMills, hourOfDay, minute))
+    private fun onTimeSet(hourOfDay: Int, minute: Int) {
+        val alertTimeInMills = mapper.onTimeSet(item.alertTimeInMills, hourOfDay, minute)
+        onDateOrTimeSet(alertTimeInMills)
+    }
 
-    private fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) = onDateOrTimeSet(
-        mapper.onDateSet(
-            item.alertTimeInMills,
-            year,
-            monthOfYear,
-            dayOfMonth
-        )
-    )
+    private fun onDateSet(year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        val alertTimeInMills = mapper.onDateSet(item.alertTimeInMills, year, monthOfYear, dayOfMonth)
+        onDateOrTimeSet(alertTimeInMills)
+    }
 
     private fun onDateOrTimeSet(alertTimeInMills: Long) {
         val item = (item as CheckListItemImpl).copy(alertTimeInMills = alertTimeInMills)

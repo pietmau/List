@@ -7,6 +7,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
+import kotlinx.android.synthetic.main.custom_item_attrs_view.view.alarm
 import kotlinx.android.synthetic.main.custom_item_attrs_view.view.description
 import kotlinx.android.synthetic.main.custom_item_attrs_view.view.priority_flag
 
@@ -22,6 +23,11 @@ class ItemAttributesView @JvmOverloads constructor(context: Context, attrs: Attr
     fun setData(checkListItem: CheckListItem) {
         setUpPriority(checkListItem.priority)
         setUpDescription(checkListItem.description)
+        setAlarm(checkListItem.isAlertOn)
+    }
+
+    private fun setAlarm(isAlertOn: Boolean) {
+        alarm.visibility = if (!isAlertOn) GONE else VISIBLE
     }
 
     private fun setUpDescription(itemDescription: String?) {

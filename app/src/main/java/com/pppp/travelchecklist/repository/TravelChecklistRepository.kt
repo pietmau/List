@@ -7,6 +7,7 @@ import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.createlist.presenter.Model
+import com.pppp.travelchecklist.list.model.UserCheckListsRepository
 import io.reactivex.Single
 
 interface TravelChecklistRepository {
@@ -32,12 +33,6 @@ interface SingleCheckListRepository {
 
     fun updateCategories(listId: String, travelCheckList: TravelCheckList)
 
-    fun getUserCheckList(
-        listId: String,
-        failure: ((Throwable) -> Unit)? = null,
-        success: ((TravelCheckList) -> Unit)? = null
-    )
-
     fun addCategory(listId: String, name: String, callback: (() -> Unit)? = null)
 
     fun addNewItemFromTitle(listId: String, categoryId: String, name: String)
@@ -49,4 +44,10 @@ interface SingleCheckListRepository {
     fun getChecklistById(listId: String): DocumentReference
 
     fun getListById(listId: String, doStuffWithTheList: (list: TravelCheckListImpl, docReference: DocumentReference) -> Unit): Task<Unit>
+
+    fun getUserCheckList(
+        listId: String,
+        failure: ((Throwable) -> Unit)? = null,
+        success: ((TravelCheckList) -> Unit)? = null
+    )
 }

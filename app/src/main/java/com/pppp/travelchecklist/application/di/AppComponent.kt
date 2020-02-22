@@ -11,6 +11,8 @@ import com.pppp.travelchecklist.login.di.LoginComponent
 import com.pppp.travelchecklist.login.di.LoginModule
 import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.di.MainSubComponent
+import com.pppp.travelchecklist.notifications.di.NotificationModule
+import com.pppp.travelchecklist.notifications.di.NotificationSubComponent
 
 interface AppComponent {
     fun with(module: MainModule): MainSubComponent
@@ -18,5 +20,6 @@ interface AppComponent {
     fun with(module: LoginModule): LoginComponent
     fun with(module: ViewCheckListModule): ViewCheckListComponent
     fun with(module: EditItemModule): EditItemComponent
+    fun with(module: NotificationModule): NotificationSubComponent
     fun inject(app: App)
 }

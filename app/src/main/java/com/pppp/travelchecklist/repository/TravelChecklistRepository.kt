@@ -7,7 +7,6 @@ import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.createlist.presenter.Model
-import com.pppp.travelchecklist.list.model.UserCheckListsRepository
 import io.reactivex.Single
 
 interface TravelChecklistRepository {

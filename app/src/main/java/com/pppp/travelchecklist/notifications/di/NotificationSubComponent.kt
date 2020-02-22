@@ -1,6 +1,6 @@
 package com.pppp.travelchecklist.notifications.di
 
-import com.pppp.travelchecklist.notifications.BootReceiver
+import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
 import dagger.Subcomponent
 
 @Subcomponent(modules = [NotificationModule::class])

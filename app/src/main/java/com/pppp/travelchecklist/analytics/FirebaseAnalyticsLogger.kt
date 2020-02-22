@@ -11,6 +11,7 @@ private val LOGIN_FAILURE_REASON: String = "login_failure_reason"
 private val LOGIN_FLOW_START: String = "login_flow_start"
 private val LOGIN_FLOW_SUCCESS: String = "login_flow_success"
 private val USER_IS_ALREDY_LOGGED_IN: String = "user_already_loggedin"
+private val BOOT_RECEIVED: String = "boot_received"
 
 class FirebaseAnalyticsLogger(
     private val firebaseAnalytics: FirebaseAnalytics,
@@ -46,6 +47,8 @@ class FirebaseAnalyticsLogger(
     override fun onLoginFlowStart() = firebaseAnalytics.logEvent(LOGIN_FLOW_START, null)
 
     override fun onUserAlreadyLoggedIn() = firebaseAnalytics.logEvent(USER_IS_ALREDY_LOGGED_IN, null)
+
+    override fun onBootReceived() = firebaseAnalytics.logEvent(BOOT_RECEIVED, null)
 
     override fun onAppOnCreate() = customAnalytics.logFirstInstall()
 }

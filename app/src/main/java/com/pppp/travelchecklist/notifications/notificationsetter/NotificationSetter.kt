@@ -5,8 +5,9 @@ import android.app.AlarmManager.RTC
 import com.pppp.travelchecklist.notifications.notificationsetter.CheckListItemWithIndexes
 import com.pppp.travelchecklist.notifications.notificationsetter.intentmaker.IntentMaker
 import com.pppp.travelchecklist.notifications.notificationsetter.itemsprovider.ItemsProvider
+import javax.inject.Inject
 
-class NotificationSetter(private val itemsProvider: ItemsProvider, private val intentMaker: IntentMaker) {
+class NotificationSetter @Inject constructor(private val itemsProvider: ItemsProvider, private val intentMaker: IntentMaker) {
 
     fun setAllAlarms(alarmManager: AlarmManager) =
         itemsProvider.getUserItemsWithAlarm()

@@ -2,7 +2,7 @@ package com.pppp.travelchecklist.analytics
 
 import android.os.Bundle
 
-interface AnalyticsLogger : LoginAnalyticsLogger, MainAnalyticsLogger {
+interface AnalyticsLogger : LoginAnalyticsLogger, MainAnalyticsLogger, NotificationsAnalyticsLogger {
     fun logEvent(tag: String, bundle: Bundle?)
     fun logException(exception: Exception)
 }
@@ -21,5 +21,8 @@ interface MainAnalyticsLogger {
     fun goToList(listId: String)
     fun goToCreateNewList()
     fun getLatestListVisited()
+}
 
+interface NotificationsAnalyticsLogger {
+    fun onBootReceived()
 }

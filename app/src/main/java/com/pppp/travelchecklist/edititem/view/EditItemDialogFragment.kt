@@ -1,10 +1,10 @@
 package com.pppp.travelchecklist.edititem.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.R
@@ -13,28 +13,31 @@ import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.edititem.di.EditItemModule
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SaveClicked
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectTime
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent
-import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDateClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.DateSet
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnAlertActivated
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDataChanged
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDateClicked
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnSaveClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeSet
-import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnDataChanged
-import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnSaveClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
+import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
 import com.pppp.travelchecklist.utils.appComponent
-import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.requireStringArgument
 import com.pppp.travelchecklist.utils.setAfterChangeListener
 import com.pppp.travelchecklist.utils.textAsAString
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
+import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.schedule
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.slider_with_flag
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.title
 import javax.inject.Inject
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
 
 class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -73,8 +76,9 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
 
     private fun onTransientEventReceived(transientEvent: EditItemTransientEvent) =
         when (transientEvent) {
-            is EditItemTransientEvent.SelectDate -> showDatePicker(transientEvent.timeInMills)
-            is EditItemTransientEvent.SelectTime -> showTimePicker(transientEvent.timeInMills)
+            is SelectDate -> showDatePicker(transientEvent.timeInMills)
+            is SelectTime -> showTimePicker(transientEvent.timeInMills)
+            is SaveClicked -> onSaveClicked()
         }
 
     private fun showTimePicker(timeInMills: Long) {
@@ -111,6 +115,12 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
     private fun emit(intent: EditItemViewIntent) = viewActionsConsumer.accept(intent)
 
     override fun onTimeClicked() = emit(OnTimeClicked)
+
+    private fun onSaveClicked() {
+        requireContext().sendBroadcast(Intent(requireContext(), BootReceiver::class.java).apply {
+            action = "com.pppp.travelchecklist.pppp.SAVE"
+        })
+    }
 
     companion object {
         fun newInstance(listId: String, cardId: String, itemId: String) =

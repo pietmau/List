@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.edititem.di
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +16,6 @@ import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEv
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTravelViewModel
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
-import com.pppp.travelchecklist.list.model.FirebaseSingleCheckListRepository
 import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
 import dagger.Provides
@@ -40,7 +40,10 @@ class EditItemModule(
 
     @EditItemScope
     @Provides
-    fun provideEditItemViewModel(model: EditItemModel, resources: ResourcesWrapper): EditItemTravelViewModel = ViewModelProvider(
+    fun provideEditItemViewModel(
+        model: EditItemModel,
+        resources: ResourcesWrapper
+    ): EditItemTravelViewModel = ViewModelProvider(
         fragment,
         Factory(listId, categoryId, itemId, model, resources)
     ).get(EditItemTravelViewModel::class.java)

@@ -5,16 +5,16 @@ import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.content.Context
 import android.os.Build
-import androidx.core.app.NotificationCompat
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.notifications.alarmsetter.itemsprovider.UserCheckListsRepository
 import javax.inject.Inject
 
-private const val CHANNEL_ID = "pppp"
+const val CHANNEL_ID = "pppp"
 
-class NotificationIssuer @Inject constructor(private val repo: UserCheckListsRepository) {
+class NotificationIssuer @Inject constructor(
+    private val notificationIntentMaker: NotificationIntentMaker
+) {
 
-    fun issueNotification(context: Context, path: List<String>) {
+    suspend fun issueNotification(context: Context, path: List<String>) {
         if (path.size < 3) {
             return
         }
@@ -32,13 +32,12 @@ class NotificationIssuer @Inject constructor(private val repo: UserCheckListsRep
         getNotificationManager(context).createNotificationChannel(channel)
     }
 
-    private fun emitNotification(context: Context, path: List<String>) {
-        var builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_check_box_24px_notifcation)
-            .setContentTitle("Foo")
-            .setContentText("textContent")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        getNotificationManager(context).notify(path.hashCode(), builder.build())
+    private suspend fun emitNotification(context: Context, path: List<String>) {
+        val listId = path[0]
+        val categoryId = path[1]
+        val itemId = path[2]
+        val notification = notificationIntentMaker.makeNotificatinIntent(context, listId, categoryId, itemId)
+        getNotificationManager(context).notify(path.hashCode(), notification)
     }
 
     private fun getNotificationManager(context: Context) = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -26,5 +26,5 @@ sealed class EditItemViewIntent : ViewIntent {
 sealed class EditItemTransientEvent : TransientEvent {
     data class SelectDate(val timeInMills: Long) : EditItemTransientEvent()
     data class SelectTime(val timeInMills: Long) : EditItemTransientEvent()
-
+    object SaveClicked : EditItemTransientEvent()
 }

@@ -13,8 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val BOOT_COMPLTETED = "android.intent.action.BOOT_COMPLETED"
-
 class BootReceiver : BroadcastReceiver() {
     @Inject
     lateinit var analyticsLogger: NotificationsAnalyticsLogger
@@ -22,9 +20,6 @@ class BootReceiver : BroadcastReceiver() {
     lateinit var alarmSetter: AlarmSetter
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (intent?.action?.equals(BOOT_COMPLTETED) == false) {
-            return
-        }
         (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {

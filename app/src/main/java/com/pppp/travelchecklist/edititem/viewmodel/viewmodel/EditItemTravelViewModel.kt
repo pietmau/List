@@ -10,6 +10,7 @@ import com.pppp.travelchecklist.TravelViewModel
 import com.pppp.travelchecklist.edititem.model.EditItemModel
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectTime
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SaveClicked
 
 class EditItemTravelViewModel(
     private val model: EditItemModel,
@@ -46,7 +47,10 @@ class EditItemTravelViewModel(
             EditItemViewIntent.OnSaveClicked -> onSaveClicked()
         }
 
-    private fun onSaveClicked() = model.updateItem(item as CheckListItemImpl)
+    private fun onSaveClicked() {
+        model.updateItem(item as CheckListItemImpl)
+        transientEventsInternal.postValue(SaveClicked)
+    }
 
     private fun onDataChanged(title: String?, description: String?, priority: Int?) {
         val title = title ?: item.title

@@ -16,24 +16,18 @@ class FirebaseUserCheckListsRepository(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : UserCheckListsRepository {
 
-    override suspend fun getUserCheckLists(): List<TravelCheckList> {
-        return suspendCoroutine { continuation ->
-            db.getUserLists(auth.userId)
-                .addSnapshotListener { query, error ->
-                    if (error != null) {
-                        continuation.resumeWithException(error)
-                        return@addSnapshotListener
-                    }
-                    val result = query?.documents
-                        ?.mapNotNull {
-                            val travelCheckList = it.toObject(TravelCheckListImpl::class.java)
-                            travelCheckList?.copy(id = it.id)
-                        }
-                        ?: emptyList()
-                    continuation.resume(result)
-                }
+    override suspend fun getUserCheckLists(): List<TravelCheckList> =
+        suspendCoroutine { continuation ->
+            db.getUserLists(auth.userId).get().addOnSuccessListener { query ->
+                val value = query.documents.map { document ->
+                    val travelCheckList = document.toObject(TravelCheckListImpl::class.java)
+                    travelCheckList?.copy(id = document.id)
+                }.filterNotNull()
+                continuation.resume(value)
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
         }
-    }
 
     override suspend fun getListById(listId: String): TravelCheckList {
         return suspendCoroutine { continuation ->

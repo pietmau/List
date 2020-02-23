@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.pietrantuono.entities.CheckListItem
+import com.pppp.travelchecklist.utils.setDebouncingClickListener
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
 
 class CardItemView @JvmOverloads constructor(
@@ -33,7 +34,7 @@ class CardItemView @JvmOverloads constructor(
             check.setPaintFlags(getPaint(!checked));
             callback?.onItemChecked(requireNotNull(data?.id), !checked)
         }
-        setOnClickListener {
+        setDebouncingClickListener {
             callback?.onSettingsClicked(requireNotNull(data))
         }
     }

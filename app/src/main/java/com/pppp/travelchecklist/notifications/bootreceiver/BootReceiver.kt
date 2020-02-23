@@ -29,9 +29,7 @@ class BootReceiver : BroadcastReceiver() {
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             analyticsLogger.onBootReceived()
-            val alarmManager = getAlarmManager(context)
-            //alarmSetter.setAlarm(alarmManager)
-            alarmSetter.setAllAlarms(alarmManager)
+            alarmSetter.setAllAlarms(getAlarmManager(context))
             pendingResult.finish()
         }
     }

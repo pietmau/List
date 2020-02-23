@@ -16,24 +16,16 @@ import javax.inject.Named
 class AlarmSetter @Inject constructor(
     private val itemsProvider: ItemsProvider,
     private val intentMaker: IntentMaker
-    ) {
+) {
 
-    suspend fun setAllAlarms(alarmManager: AlarmManager) {
+    suspend fun setAllAlarms(alarmManager: AlarmManager) =
         itemsProvider.getUserItemsWithAlarm()
             .forEach {
                 setAlarm(it, alarmManager)
             }
-    }
 
     private fun setAlarm(checkListItemWithIndexes: CheckListItemWithIndexes, alarmManager: AlarmManager) {
         val alertTimeInMills = requireNotNull(checkListItemWithIndexes.checkListItem.alertTimeInMills)
         alarmManager.setExact(RTC, alertTimeInMills, intentMaker.makeIntent(checkListItemWithIndexes))
-    }
-
-    fun setAlarm(mgr: AlarmManager) {
-        var time = System.currentTimeMillis() + 1 * 10 * 1000
-        setAlarm(CheckListItemWithIndexes("foo", "bar", CheckListItemImpl(id = "fubar", isAlertOn = true, alertTimeInMills = time)), mgr)
-        time = System.currentTimeMillis() + 1 * 20 * 1000
-        setAlarm(CheckListItemWithIndexes("list", "category", CheckListItemImpl(id = "id", isAlertOn = true, alertTimeInMills = time)), mgr)
     }
 }

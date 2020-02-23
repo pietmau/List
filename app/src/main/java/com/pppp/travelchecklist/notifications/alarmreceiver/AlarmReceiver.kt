@@ -3,10 +3,26 @@ package com.pppp.travelchecklist.notifications.alarmreceiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.pppp.travelchecklist.application.App
+import com.pppp.travelchecklist.notifications.di.NotificationModule
+import com.pppp.travelchecklist.notifications.notificationissuer.NotificationIssuer
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AlarmReceiver:BroadcastReceiver() {
+class AlarmReceiver(private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO) : BroadcastReceiver() {
+    @Inject
+    lateinit var notificationIssuer: NotificationIssuer
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
+        val pendingResult = goAsync()
+        CoroutineScope(coroutineDispatcher).launch {
+            val path = intent?.data?.pathSegments?.toList() ?: emptyList()
+            notificationIssuer.issueNotification(context, path)
+            pendingResult.finish()
+        }
     }
 }

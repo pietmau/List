@@ -1,8 +1,8 @@
-package com.pppp.travelchecklist.notifications.notificationsetter.itemsprovider
+package com.pppp.travelchecklist.notifications.alarmsetter.itemsprovider
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.travelchecklist.notifications.notificationsetter.CheckListItemWithIndexes
+import com.pppp.travelchecklist.notifications.alarmsetter.CheckListItemWithIndexes
 import com.pppp.travelchecklist.utils.TimeProvider
 import com.pppp.travelchecklist.utils.TimeProviderImpl
 
@@ -12,7 +12,7 @@ class FirebaseItemsProvider(
 ) :
     ItemsProvider {
 
-    override fun getUserItemsWithAlarm(): List<CheckListItemWithIndexes> {
+    override suspend fun getUserItemsWithAlarm(): List<CheckListItemWithIndexes> {
         val now = timeProvider.getCurrentTimeInMills()
         return userCheckListsRepository.getUserCheckLists()
             .flatMap { travelCheckList ->

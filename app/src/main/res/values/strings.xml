@@ -84,5 +84,6 @@
     <string name="title">Title</string>
     <string name="na">###</string>
     <string name="notes">Notes</string>
+    <string name="channel_description">Reminders</string>
 
 </resources>

@@ -36,7 +36,7 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
     override fun getCheckedVisualizePreference(): MutableMap<Int, MenuViewState> {
         val showCheckedItems = preferences.getBoolean(VISUALIZE_CHECKED_ITEMS)
         val title = if (showCheckedItems) R.string.hide_checked else R.string.show_checked
-        val icon = if (showCheckedItems) R.drawable.ic_check_box_24px else R.drawable.ic_check_box_outline_blank_24px
+        val icon = if (showCheckedItems) R.drawable.ic_check_box_24px_notifcation else R.drawable.ic_check_box_outline_blank_24px
         return mutableMapOf(R.id.action_show_hide_checked to MenuViewState(title, icon))
     }
 

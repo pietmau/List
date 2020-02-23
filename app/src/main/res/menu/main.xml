@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/action_show_hide_checked"
-        android:icon="@drawable/ic_check_box_24px"
+        android:icon="@drawable/ic_check_box_24px_notifcation"
         android:title="@string/hide_checked"
         app:showAsAction="always" />
 

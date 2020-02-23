@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.notifications.notificationsetter
+package com.pppp.travelchecklist.notifications.alarmsetter
 
 import com.pietrantuono.entities.CheckListItem
 

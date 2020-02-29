@@ -19,7 +19,8 @@ class AlarmReceiver : BroadcastReceiver() {
         (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
-            val path = intent?.data?.pathSegments?.toList() ?: emptyList()
+            val uri = intent?.data ?: return@launch
+            val path = uri.pathSegments
             notificationIssuer.issueNotification(context, path)
             pendingResult.finish()
         }

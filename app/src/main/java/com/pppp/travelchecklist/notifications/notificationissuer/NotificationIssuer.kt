@@ -1,17 +1,18 @@
 package com.pppp.travelchecklist.notifications.notificationissuer
 
 import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.content.Context
 import android.os.Build
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.utils.notificationManager
 import javax.inject.Inject
 
 const val CHANNEL_ID = "pppp"
+const val SEPARATOR = "/"
 
 class NotificationIssuer @Inject constructor(
-    private val notificationIntentMaker: NotificationIntentMaker
+    private val notificationMaker: NotificationMaker
 ) {
 
     suspend fun issueNotification(context: Context, path: List<String>) {
@@ -19,7 +20,7 @@ class NotificationIssuer @Inject constructor(
             return
         }
         createNotificationChannel(context)
-        emitNotification(context, path)
+        emitNotification(context, path[0], path[1], path[2])
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -29,16 +30,12 @@ class NotificationIssuer @Inject constructor(
         val name = context.getString(R.string.app_name)
         val channel = NotificationChannel(CHANNEL_ID, name, IMPORTANCE_DEFAULT)
         channel.description = context.getString(R.string.channel_description)
-        getNotificationManager(context).createNotificationChannel(channel)
+        context.notificationManager?.createNotificationChannel(channel)
     }
 
-    private suspend fun emitNotification(context: Context, path: List<String>) {
-        val listId = path[0]
-        val categoryId = path[1]
-        val itemId = path[2]
-        val notification = notificationIntentMaker.makeNotificatinIntent(context, listId, categoryId, itemId)
-        getNotificationManager(context).notify(path.hashCode(), notification)
+    private suspend fun emitNotification(context: Context, listId: String, categoryId: String, itemId: String) {
+        val notification = notificationMaker.makeNotification(context, listId, categoryId, itemId) ?: return
+        val path = notificationMaker.getPath(listId, categoryId, itemId)
+        context.notificationManager?.notify(path.hashCode(), notification)
     }
-
-    private fun getNotificationManager(context: Context) = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 }

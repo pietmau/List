@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.utils
 
 import android.app.Activity
+import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.fragment.app.Fragment
@@ -139,3 +140,6 @@ fun EditText.setAfterChangeListener(listener: (String?) -> Unit) {
         }
     })
 }
+
+val Context.notificationManager
+    get() = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager

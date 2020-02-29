@@ -19,3 +19,6 @@ val FirebaseAuth.userId
 fun FirebaseFirestore.getUserLists(userId: String): CollectionReference = collection(USERS)
     .document(userId)
     .collection(USERS_CHECKLISTS)
+
+fun FirebaseFirestore.getUser(userId: String): DocumentReference = collection(USERS)
+    .document(userId)

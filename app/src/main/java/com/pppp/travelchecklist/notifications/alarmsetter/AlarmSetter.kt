@@ -2,29 +2,47 @@ package com.pppp.travelchecklist.notifications.alarmsetter
 
 import android.app.AlarmManager
 import android.app.AlarmManager.RTC
-import com.pppp.travelchecklist.notifications.alarmsetter.intentmaker.AlarmIntentMaker
-import com.pppp.travelchecklist.notifications.alarmsetter.itemsprovider.ItemsProvider
+import android.util.Log
+import com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository.Alarm
+import com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository.AlarmsRepository
+import com.pppp.travelchecklist.notifications.alarmsetter.intentmaker.IntentMaker
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class AlarmSetter @Inject constructor(
-    private val itemsProvider: ItemsProvider,
-    private val alarmIntentMaker: AlarmIntentMaker
+    private val intentMaker: IntentMaker,
+    private val alarmsRepository: AlarmsRepository
 ) {
 
     suspend fun setAllAlarms(alarmManager: AlarmManager) {
         cancelExistingAlarms(alarmManager)
+        saveAlarms()
         setAlarms(alarmManager)
     }
 
-    private fun cancelExistingAlarms(alarmManager: AlarmManager) = alarmManager.cancel(alarmIntentMaker.makeEmptyAlarmIntent())
-
-    private suspend fun setAlarms(alarmManager: AlarmManager) {
-        val itemsWithAlarm = itemsProvider.getUserItemsWithAlarm()
-        itemsWithAlarm.forEach { setAlarm(it, alarmManager) }
+    private suspend fun saveAlarms() {
+        alarmsRepository.deleteAllAlarms()
+        val alarms = alarmsRepository.getValidAlarmsFromItems()
+        alarmsRepository.saveAlarms(alarms)
     }
 
-    private fun setAlarm(checkListItemWithIndexes: CheckListItemWithIndexes, alarmManager: AlarmManager) {
-        val alertTimeInMills = requireNotNull(checkListItemWithIndexes.checkListItem.alertTimeInMills)
-        alarmManager.setExact(RTC, alertTimeInMills, alarmIntentMaker.makeAlarmIntent(checkListItemWithIndexes))
+    private suspend fun cancelExistingAlarms(alarmManager: AlarmManager) {
+        alarmsRepository.getAllAlarms().forEach { alarm ->
+            val intent = intentMaker.makeAlarmIntent(requireNotNull(alarm.listId), requireNotNull(alarm.catagoryId), requireNotNull(alarm.itemId))
+            alarmManager.cancel(intent)
+        }
+    }
+
+    private suspend fun setAlarms(alarmManager: AlarmManager) {
+        val itemsWithAlarm = alarmsRepository.getAllAlarms()
+        itemsWithAlarm.forEach {
+            setAlarm(it, alarmManager)
+        }
+    }
+
+    private fun setAlarm(alarm: Alarm, alarmManager: AlarmManager) {
+        val alertTimeInMills = alarm.time
+        val pendingIntent = intentMaker.makeAlarmIntent(requireNotNull(alarm.listId), requireNotNull(alarm.catagoryId), requireNotNull(alarm.itemId))
+        alarmManager.setExact(RTC, requireNotNull(alertTimeInMills), pendingIntent)
     }
 }

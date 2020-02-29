@@ -10,6 +10,7 @@ import com.pppp.travelchecklist.notifications.di.NotificationModule
 import com.pppp.travelchecklist.notifications.alarmsetter.AlarmSetter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,11 +19,12 @@ class BootReceiver : BroadcastReceiver() {
     lateinit var analyticsLogger: NotificationsAnalyticsLogger
     @Inject
     lateinit var alarmSetter: AlarmSetter
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onReceive(context: Context?, intent: Intent?) {
         (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
         val pendingResult = goAsync()
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             analyticsLogger.onBootReceived()
             alarmSetter.setAllAlarms(getAlarmManager(context))
             pendingResult.finish()

@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.card.recycler
+package com.pppp.travelchecklist.card.recycler
 
 import android.annotation.SuppressLint
 import android.content.Context

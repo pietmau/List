@@ -3,13 +3,15 @@ package com.pppp.travelchecklist.notifications.di
 import android.content.Context
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.analytics.NotificationsAnalyticsLogger
-import com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository.AlarmsRepository
-import com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository.FirebaseAlarmsRepository
+import com.pppp.travelchecklist.notifications.alarmsrepository.AlarmsRepository
+import com.pppp.travelchecklist.notifications.alarmsrepository.FirebaseAlarmsRepository
 import com.pppp.travelchecklist.notifications.alarmsetter.intentmaker.IntentMaker
 
 import com.pppp.travelchecklist.notifications.alarmsetter.intentmaker.IntentMakerImpl
 import com.pppp.travelchecklist.notifications.alarmsetter.itemsprovider.FirebaseUserCheckListsRepository
 import com.pppp.travelchecklist.notifications.alarmsetter.itemsprovider.UserCheckListsRepository
+import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiverModel
+import com.pppp.travelchecklist.notifications.bootreceiver.FirebaseBootReceiverModel
 import com.pppp.travelchecklist.notifications.notificationissuer.NotificationMaker
 import com.pppp.travelchecklist.notifications.notificationissuer.NotificationMakerImpl
 import dagger.Module
@@ -45,5 +47,9 @@ object NotificationModule {
     @JvmStatic
     @Provides
     fun provideAlarmsRepository(): AlarmsRepository = FirebaseAlarmsRepository()
+
+    @JvmStatic
+    @Provides
+    fun provideBootReceiverModel(repo: FirebaseBootReceiverModel): BootReceiverModel = repo
 
 }

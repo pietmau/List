@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.notifications.di.NotificationModule
-import com.pppp.travelchecklist.notifications.notificationissuer.NotificationIssuer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,15 +12,14 @@ import javax.inject.Inject
 
 class AlarmReceiver : BroadcastReceiver() {
     @Inject
-    lateinit var notificationIssuer: NotificationIssuer
+    lateinit var presenter: AlarmReceiverPresenter
 
     override fun onReceive(context: Context?, intent: Intent?) {
         (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
-            val uri = intent?.data ?: return@launch
-            val path = uri.pathSegments
-            notificationIssuer.issueNotification(context, path)
+            val path = intent?.data?.pathSegments ?: return@launch
+            presenter.onReceive(context, path)
             pendingResult.finish()
         }
     }

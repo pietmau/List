@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
 import com.pppp.travelchecklist.edititem.view.EditItemDialogFragment
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
-import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
+import com.pppp.travelchecklist.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_checlist.recycler

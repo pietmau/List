@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.card
+package com.pppp.travelchecklist.card
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.view.card.item.CardItemView
+import com.pppp.travelchecklist.item.CardItemView
 import kotlinx.android.synthetic.main.custom_check_list_card.view.cardItems
 import kotlinx.android.synthetic.main.header_layout.view.title
 import kotlin.properties.Delegates

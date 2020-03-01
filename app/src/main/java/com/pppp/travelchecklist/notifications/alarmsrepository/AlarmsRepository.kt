@@ -1,10 +1,6 @@
-package com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository
+package com.pppp.travelchecklist.notifications.alarmsrepository
 
-import com.google.android.gms.tasks.Task
-import com.pietrantuono.entities.Category
-import com.pietrantuono.entities.CheckListItem
 import com.pietrantuono.entities.TravelCheckList
-import java.text.SimpleDateFormat
 
 interface AlarmsRepository {
     suspend fun deleteAllAlarms()

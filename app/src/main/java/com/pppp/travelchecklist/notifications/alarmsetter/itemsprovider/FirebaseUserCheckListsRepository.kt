@@ -3,13 +3,15 @@ package com.pppp.travelchecklist.notifications.alarmsetter.itemsprovider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.travelchecklist.edititem.model.CATEGORIES
 import com.pppp.travelchecklist.list.model.getList
 import com.pppp.travelchecklist.list.model.getUserLists
 import com.pppp.travelchecklist.list.model.userId
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class FirebaseUserCheckListsRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
@@ -17,7 +19,7 @@ class FirebaseUserCheckListsRepository(
 ) : UserCheckListsRepository {
 
     override suspend fun getUserCheckLists(): List<TravelCheckList> =
-        suspendCoroutine { continuation ->
+        suspendCancellableCoroutine { continuation ->
             db.getUserLists(auth.userId).get().addOnSuccessListener { query ->
                 val value = query.documents.map { document ->
                     val travelCheckList = document.toObject(TravelCheckListImpl::class.java)
@@ -29,8 +31,8 @@ class FirebaseUserCheckListsRepository(
             }
         }
 
-    override suspend fun getListById(listId: String): TravelCheckList {
-        return suspendCoroutine { continuation ->
+    override suspend fun getListById(listId: String): TravelCheckList =
+        suspendCancellableCoroutine { continuation ->
             db.getList(auth.userId, listId)
                 .addSnapshotListener { document, error ->
                     if (error != null) {
@@ -44,6 +46,19 @@ class FirebaseUserCheckListsRepository(
                     }
                     continuation.resume(result)
                 }
+        }
+
+    override suspend fun updateItem(item: CheckListItemImpl, listId: String, categoryId: Any?) {
+        val documentReference = db.getList(auth.userId, listId)
+        documentReference.get().continueWith {
+            val checkList = requireNotNull(it.result?.toObject(TravelCheckListImpl::class.java))
+            val updated = checkList.categories.map { category ->
+                if (category.id == categoryId) {
+                    val items = category.items.map { if (it.id == item.id) item else it }
+                    category.copy(items = items)
+                } else category
+            }
+            documentReference.update(CATEGORIES, updated)
         }
     }
 }

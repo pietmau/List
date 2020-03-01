@@ -25,6 +25,7 @@ import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeSet
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
+import com.pppp.travelchecklist.main.MainActivity
 import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.utils.requireStringArgument
@@ -117,9 +118,7 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
     override fun onTimeClicked() = emit(OnTimeClicked)
 
     private fun onSaveClicked() {
-        requireContext().sendBroadcast(Intent(requireContext(), BootReceiver::class.java).apply {
-            action = "com.pppp.travelchecklist.pppp.SAVE"
-        })
+        (requireActivity() as MainActivity).sendBroadcast()
     }
 
     companion object {

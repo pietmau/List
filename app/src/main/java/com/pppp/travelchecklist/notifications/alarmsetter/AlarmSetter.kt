@@ -2,11 +2,9 @@ package com.pppp.travelchecklist.notifications.alarmsetter
 
 import android.app.AlarmManager
 import android.app.AlarmManager.RTC
-import android.util.Log
-import com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository.Alarm
-import com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository.AlarmsRepository
+import com.pppp.travelchecklist.notifications.alarmsrepository.Alarm
+import com.pppp.travelchecklist.notifications.alarmsrepository.AlarmsRepository
 import com.pppp.travelchecklist.notifications.alarmsetter.intentmaker.IntentMaker
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class AlarmSetter @Inject constructor(

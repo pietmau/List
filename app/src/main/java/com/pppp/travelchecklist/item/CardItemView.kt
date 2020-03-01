@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.card.item
+package com.pppp.travelchecklist.item
 
 import android.content.Context
 import android.graphics.Paint
@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.pietrantuono.entities.CheckListItem
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.utils.setDebouncingClickListener
 import kotlinx.android.synthetic.main.custom_check_list_card_item.view.*
 
@@ -20,7 +21,7 @@ class CardItemView @JvmOverloads constructor(
             field = value
             title.text = value?.title
             check.isChecked = value?.checked == true
-            attributes.setData(requireNotNull(data))
+            attributes.setData(requireNotNull(data as CheckListItemImpl))
         }
 
     var itemId: String? = null

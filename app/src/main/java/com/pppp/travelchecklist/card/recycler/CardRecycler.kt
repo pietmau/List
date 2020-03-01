@@ -1,11 +1,11 @@
-package com.pppp.travelchecklist.list.view.card.recycler
+package com.pppp.travelchecklist.card.recycler
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.pietrantuono.entities.CheckListItem
-import com.pppp.travelchecklist.list.view.card.item.CardItemView
+import com.pppp.travelchecklist.item.CardItemView
 
 class CardRecycler @JvmOverloads constructor(
     context: Context,

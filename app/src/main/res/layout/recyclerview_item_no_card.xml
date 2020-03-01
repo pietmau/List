@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.pppp.travelchecklist.list.view.card.NoCardCheckListCard
+<com.pppp.travelchecklist.card.NoCardCheckListCard
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
@@ -11,4 +11,4 @@
     app:margin="@dimen/medium_margin"
     >
 
-</com.pppp.travelchecklist.list.view.card.NoCardCheckListCard>
+</com.pppp.travelchecklist.card.NoCardCheckListCard>

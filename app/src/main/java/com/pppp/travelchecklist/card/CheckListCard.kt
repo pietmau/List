@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.card
+package com.pppp.travelchecklist.card
 
 import com.pietrantuono.entities.Category
 import com.pietrantuono.entities.CheckListItem

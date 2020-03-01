@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <com.pppp.travelchecklist.list.view.card.item.FlagImageView
+    <com.pppp.travelchecklist.item.FlagImageView
         android:id="@+id/priority_flag"
         android:layout_width="@dimen/small_icon_size"
         android:layout_height="@dimen/small_icon_size"

@@ -11,7 +11,7 @@ import com.pietrantuono.entities.Category
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
+import com.pppp.travelchecklist.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.view.list.ChecklistRecyclerDiffCallback.Companion.CATEGORY
 
 class CheckListAdapter(private val chackListCardCallback: ChackListCardCallback, private var showChecked: Boolean) : RecyclerView.Adapter<CheckListHolder>(),

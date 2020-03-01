@@ -24,6 +24,7 @@ import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CREATE_NEW_LIST
+import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
 import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -49,9 +50,16 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         viewStates.states.observe(this, Observer { render(it) })
         transientEventsProducer.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
         if (savedInstanceState == null) {
-            val path = intent.data?.pathSegments ?: emptyList()
+            val path = intent?.data?.pathSegments ?: emptyList()
             emit(MainViewIntent.GetLatest(path))
         }
+        sendBroadcast()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val path = intent?.data?.pathSegments ?: emptyList()
+        emit(MainViewIntent.GetLatest(path))
     }
 
     private fun setUpViews() {
@@ -148,4 +156,9 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun getCheckListFragment() = findAddedFragment<ViewCheckListFragment>(R.id.container)
 
+    fun sendBroadcast() {
+        sendBroadcast(Intent(this, BootReceiver::class.java).apply {
+            action = "com.pppp.travelchecklist.pppp.SAVE"
+        })
+    }
 }

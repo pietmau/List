@@ -1,6 +1,5 @@
 package com.pppp.travelchecklist.edititem.di
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -45,17 +44,15 @@ class EditItemModule(
         resources: ResourcesWrapper
     ): EditItemTravelViewModel = ViewModelProvider(
         fragment,
-        Factory(listId, categoryId, itemId, model, resources)
+        Factory(model, resources)
     ).get(EditItemTravelViewModel::class.java)
 
     @Provides
     fun provideEditItemModel(): EditItemModel = FireBaseEditItemModel(listId = listId, categoryId = categoryId, itemId = itemId)
+
 }
 
 class Factory(
-    private val listId: String,
-    private val categoryId: String,
-    private val itemId: String,
     val model: EditItemModel,
     val resources: ResourcesWrapper
 ) : ViewModelProvider.Factory {

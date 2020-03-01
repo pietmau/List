@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import com.pietrantuono.entities.Category
-import com.pppp.travelchecklist.list.view.card.ChackListCardCallback
+import com.pppp.travelchecklist.card.ChackListCardCallback
 
 class CheckListRecycler @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : RecyclerView(context, attrs) {
     lateinit var checkListCardCallback: ChackListCardCallback

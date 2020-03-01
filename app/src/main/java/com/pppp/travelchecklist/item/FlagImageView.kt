@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.list.view.card.item
+package com.pppp.travelchecklist.item
 
 import android.content.Context
 import android.content.res.ColorStateList

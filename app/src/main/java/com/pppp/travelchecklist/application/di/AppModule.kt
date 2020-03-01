@@ -20,6 +20,8 @@ import com.pppp.travelchecklist.listgenerator.ListGenerator
 import com.pppp.travelchecklist.listgenerator.ListGeneratorImpl
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
 import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepositoryImpl
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.DateAndTimeProvider
+import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.DateAndTimeProviderImpl
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.PreferencesWrapperImpl
 import dagger.Module
@@ -72,6 +74,9 @@ open class AppModule(private val context: Context, private val firebaseAnalytics
 
     @Provides
     fun providePreferences(): PreferencesWrapper = PreferencesWrapperImpl(PreferenceManager.getDefaultSharedPreferences(context))
+
+    @Provides
+    fun provideDateAndTimeProvider(provider: DateAndTimeProviderImpl): DateAndTimeProvider = provider
 
     companion object {
         private const val URL = "https://sj9qwuk05k.execute-api.eu-west-1.amazonaws.com/"

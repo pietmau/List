@@ -15,12 +15,9 @@ class NotificationIssuer @Inject constructor(
     private val notificationMaker: NotificationMaker
 ) {
 
-    suspend fun issueNotification(context: Context, path: List<String>) {
-        if (path.size < 3) {
-            return
-        }
+    suspend fun issueNotification(context: Context, listId: String, categoryId: String, itemId: String) {
         createNotificationChannel(context)
-        emitNotification(context, path[0], path[1], path[2])
+        emitNotification(context, listId, categoryId, itemId)
     }
 
     private fun createNotificationChannel(context: Context) {

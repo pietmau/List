@@ -16,20 +16,19 @@ import javax.inject.Inject
 
 class BootReceiver : BroadcastReceiver() {
     @Inject
-    lateinit var analyticsLogger: NotificationsAnalyticsLogger
-    @Inject
-    lateinit var alarmSetter: AlarmSetter
+    lateinit var presenter: BootReceiverPresenter
+
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onReceive(context: Context?, intent: Intent?) {
         (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
         val pendingResult = goAsync()
         scope.launch {
-            analyticsLogger.onBootReceived()
-            alarmSetter.setAllAlarms(getAlarmManager(context))
+            presenter.onReceive(getAlarmManager(context))
             pendingResult.finish()
         }
     }
 
     private fun getAlarmManager(context: Context) = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 }
+

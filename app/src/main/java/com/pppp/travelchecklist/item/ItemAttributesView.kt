@@ -1,11 +1,12 @@
-package com.pppp.travelchecklist.list.view.card.item
+package com.pppp.travelchecklist.item
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
-import com.pietrantuono.entities.CheckListItem
+import androidx.core.content.res.ResourcesCompat
+import com.pppp.entities.pokos.CheckListItemImpl
 import com.pppp.travelchecklist.R
 import kotlinx.android.synthetic.main.custom_item_attrs_view.view.alarm
 import kotlinx.android.synthetic.main.custom_item_attrs_view.view.description
@@ -20,15 +21,20 @@ class ItemAttributesView @JvmOverloads constructor(context: Context, attrs: Attr
         layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
     }
 
-    fun setData(checkListItem: CheckListItem) {
+    fun setData(checkListItem: CheckListItemImpl) {
         setUpPriority(checkListItem.priority)
         setUpDescription(checkListItem.description)
-        setAlarm(checkListItem.isAlertOn)
+        setAlarm(checkListItem.isAlertOn, checkListItem.isAlertExpired)
     }
 
-    private fun setAlarm(isAlertOn: Boolean) {
+    private fun setAlarm(isAlertOn: Boolean, alertExpired: Boolean) {
         alarm.visibility = if (!isAlertOn) GONE else VISIBLE
+        alarm.imageTintList = getColor(alertExpired)
     }
+
+    private fun getColor(alertExpired: Boolean) =
+        if (!alertExpired) ResourcesCompat.getColorStateList(resources, R.color.gray, context.theme) else
+            ResourcesCompat.getColorStateList(resources, android.R.color.holo_red_light, context.theme)
 
     private fun setUpDescription(itemDescription: String?) {
         description.visibility = if (itemDescription.isNullOrBlank()) GONE else VISIBLE

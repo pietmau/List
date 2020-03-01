@@ -1,6 +1,5 @@
-package com.pppp.travelchecklist.notifications.alarmsetter.alarmsrepository
+package com.pppp.travelchecklist.notifications.alarmsrepository
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pietrantuono.entities.Category
@@ -65,42 +64,9 @@ class FirebaseAlarmsRepository(
 
     override suspend fun getValidAlarmsFromItems(): List<Alarm> {
         val now = timeProvider.getCurrentTimeInMills()
-        return userCheckListsRepository.getUserCheckLists()
+        return userCheckListsRepository
+            .getUserCheckLists()
             .flatMap { it.getValidAlarms(now) }
     }
-}
 
-private fun TravelCheckList.getValidAlarms(currentTime: Long): List<Alarm> {
-    val dateFormat = SimpleDateFormat("MM-dd' 'HH:mm:ss.SSSXXX", Locale.UK)
-
-    fun toAlarm(travelCheckList: TravelCheckList, it: CheckListItem, category: Category): Alarm {
-        val listId = requireNotNull(travelCheckList.id)
-        val time = requireNotNull(it.alertTimeInMills)
-        val readableTime = dateFormat.format(Date(requireNotNull(it.alertTimeInMills)))
-        return Alarm(listId = listId, catagoryId = category.id, itemId = it.id, time = time, readableTime = readableTime, list = travelCheckList.name)
-    }
-
-    return categories.flatMap { category ->
-        category.items.getValidAlarms(currentTime).map { item -> toAlarm(this, item, category) }
-    }
-}
-
-private fun List<CheckListItem>.getValidAlarms(currentTime: Long) =
-    filter { it.isAlertOn }
-        .filterNot { it.alertTimeInMills == null }
-        .filterNot {
-            val
-                inThePast = it.isInThePast(currentTime)
-            inThePast
-        }
-
-internal fun CheckListItem.isInThePast(now: Long): Boolean {
-    val dateFormat = SimpleDateFormat("MM-dd' 'HH:mm:ss.SSSXXX", Locale.UK)
-    val savedDate = dateFormat.format(Date(requireNotNull(alertTimeInMills)))
-    Log.d("foo", "isInThePast ,alertTimeInMills " + savedDate)
-    val nowString = dateFormat.format(Date(requireNotNull(now)))
-    Log.d("foo", "isInThePast ,now " + nowString)
-    val b = alertTimeInMills ?: 0 < now
-    Log.d("foo", "isInThePast =" + b)
-    return b
 }

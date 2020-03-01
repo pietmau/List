@@ -3,24 +3,28 @@ package com.pppp.travelchecklist.main.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val mainUseCase: MainUseCase,
-    private val settingsUseCase: SettingsUseCase,
     private val analytics: MainAnalyticsLogger,
     override val transientEvents: LiveData<MainTransientEvent>,
-    private val internalStates: MutableLiveData<MainViewState>
+    private val internalStates: MutableLiveData<MainViewState>,
+    private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewStatesProducer<MainViewState>,
     ViewActionsConsumer<MainViewIntent>,
     TransientEventsProducer<MainTransientEvent>, ViewModel() {
 
     override val states: LiveData<MainViewState>
         get() {
-            settingsUseCase.subscribeToChanges {
+            mainUseCase.subscribeToChanges {
                 updateCurrentViewState(it)
             }
             return internalStates
@@ -30,9 +34,9 @@ class MainViewModel(
         MainViewIntent.NavMenuOpenSelected -> openNavMenu()
         is MainViewIntent.NavItemSelected -> goToList(mainViewAction.id)
         is MainViewIntent.NewListGenerated -> goToList(mainViewAction.listId)
-        MainViewIntent.GetLatestListVisited -> getLatestListVisited()
+        is MainViewIntent.GetLatest -> getLatestListVisited(mainViewAction.path)
         MainViewIntent.GoMakeNewList -> goToCreateNewList()
-        is MainViewIntent.OnSettingChanged -> settingsUseCase.onUserChangedSettings(mainViewAction.itemId)
+        is MainViewIntent.OnSettingChanged -> mainUseCase.onUserChangedSettings(mainViewAction.itemId)
         MainViewIntent.DeleteCurrentList -> deleteCurrentList()
         MainViewIntent.OnNoListFound -> emitNewViewState(MainViewState.Empty())
     }
@@ -61,15 +65,12 @@ class MainViewModel(
         })
     }
 
-    private fun getLatestListVisited() {
+    private fun getLatestListVisited(path: List<String>) {
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
-        mainUseCase.getLastVisitedList({
-            emitNewViewState(MainViewState.Empty())
-            onError(it)
-        }, { _, listId ->
-            listId?.let { goToList(listId) } ?: emitNewViewState(MainViewState.Empty())
-        })
+        viewModelScope.launch(backgroundDispatcher) {
+            mainUseCase.getLastVisitedListId(path)?.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
+        }
     }
 
     private fun onError(it: Throwable?) = emitTransientEvent(MainTransientEvent.Error(it?.message ?: ""))

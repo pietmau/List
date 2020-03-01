@@ -33,7 +33,7 @@ class FirebaseTravelChecklistRepository(
             .set(mapOf(LAST_VISITED_LIST to listId), SetOptions.merge())
     }
 
-    override fun getLastVisitedList(success: ((String?) -> Unit)?, failure: ((Throwable?) -> Unit)?) {
+    override fun getLastVisitedList(failure: ((Throwable) -> Unit)?, success: ((String?) -> Unit)?) {
         db.collection(USERS)
             .document(getUserId())
             .get().addOnSuccessListener {

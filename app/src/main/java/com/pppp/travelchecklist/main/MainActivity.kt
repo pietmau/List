@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         viewStates.states.observe(this, Observer { render(it) })
         transientEventsProducer.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
         if (savedInstanceState == null) {
-            emit(MainViewIntent.GetLatestListVisited)
+            val path = intent.data?.pathSegments ?: emptyList()
+            emit(MainViewIntent.GetLatest(path))
         }
     }
 

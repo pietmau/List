@@ -73,8 +73,7 @@ open class MainModule(private val activity: FragmentActivity) {
         activity: SavedStateRegistryOwner
     ) : AbstractSavedStateViewModelFactory(activity, null) {
         override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T = MainViewModel(
-            FirebaseMainUseCase(model),
-            settingsUseCase,
+            FirebaseMainUseCase(model, settingsUseCase),
             logger,
             TransientLiveData<MainTransientEvent>(),
             handle.getLiveData(MainViewModel.KEY)

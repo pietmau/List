@@ -3,12 +3,15 @@ package com.pppp.travelchecklist.main.viewmodel
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.main.model.MainModel
 
-class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
+class FirebaseMainUseCase(
+    private val model: MainModel,
+    private val settingsUseCase: SettingsUseCase
+) : MainUseCase, SettingsUseCase by settingsUseCase {
 
     override fun deleteCurrentList() = model.deleteCurrentList()
 
     @Suppress("UNCHECKED_CAST")
-    override fun  getLastVisitedList(
+    override fun getLastVisitedList(
         failure: (Throwable?) -> Unit,
         success: (userLists: List<TravelCheckListImpl>, lastListId: String?) -> Unit
     ) {
@@ -19,6 +22,12 @@ class FirebaseMainUseCase(private val model: MainModel) : MainUseCase {
             success(userChecklists as List<TravelCheckListImpl>, lastList)
         })
     }
+
+    @Suppress("UNCHECKED_CAST")
+    override suspend fun getLastVisitedListId(path: List<String>) =
+        if (path.size == 3) {
+            path[0]
+        } else model.getLastVisitedListId()
 
     override fun saveLastVisitedList(listId: String) {
         model.saveLastVisitedList(listId)

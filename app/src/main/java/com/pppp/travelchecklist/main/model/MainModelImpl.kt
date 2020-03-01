@@ -2,6 +2,9 @@ package com.pppp.travelchecklist.main.model
 
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.travelchecklist.repository.TravelChecklistRepository
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
 
@@ -28,10 +31,10 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
 
     override fun getLastVisitedList(failure: ((Throwable?) -> Unit)?, success: ((String?) -> Unit)?) {
         if (lastVisitedList == null) {
-            repo.getLastVisitedList({
+            repo.getLastVisitedList(failure, {
                 lastVisitedList = it
                 success?.invoke(it)
-            }, failure)
+            })
         } else {
             success?.invoke(lastVisitedList)
         }
@@ -45,5 +48,15 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
     }
 
     override fun isEmpty() = checkLists.isEmpty()
+
+    override suspend fun getLastVisitedListId(): String? {
+        return suspendCancellableCoroutine { continuation ->
+            repo.getLastVisitedList({
+                continuation.resumeWithException(it)
+            }, {
+                continuation.resume(it)
+            })
+        }
+    }
 
 }

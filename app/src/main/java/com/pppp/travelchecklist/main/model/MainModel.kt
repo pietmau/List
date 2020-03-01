@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.main.model
 
 import com.pietrantuono.entities.TravelCheckList
+import com.pppp.entities.pokos.TravelCheckListImpl
 
 interface MainModel {
 
@@ -15,4 +16,7 @@ interface MainModel {
     fun deleteCurrentList()
 
     fun isEmpty(): Boolean
+
+    suspend fun getLastVisitedListId(): String?
+
 }

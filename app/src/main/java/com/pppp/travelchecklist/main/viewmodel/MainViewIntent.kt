@@ -8,7 +8,7 @@ sealed class MainViewIntent : ViewIntent {
     data class NavItemSelected(val id: String) : MainViewIntent()
     data class NewListGenerated(val listId: String) : MainViewIntent()
     class OnSettingChanged(val itemId: Int) : MainViewIntent()
-    object GetLatestListVisited : MainViewIntent()
+    data class GetLatest(val path: List<String>) : MainViewIntent()
     object DeleteCurrentList : MainViewIntent()
     object OnNoListFound : MainViewIntent()
 

@@ -33,6 +33,7 @@ import com.pppp.travelchecklist.utils.setAfterChangeListener
 import com.pppp.travelchecklist.utils.textAsAString
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import kotlinx.android.synthetic.main.fragment_dialog_edit_item.cancel
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.description
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.save
 import kotlinx.android.synthetic.main.fragment_dialog_edit_item.schedule
@@ -73,6 +74,7 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
         slider_with_flag.callback = {
             emit(OnDataChanged(priority = it))
         }
+        cancel.setOnClickListener { dismiss() }
     }
 
     private fun onTransientEventReceived(transientEvent: EditItemTransientEvent) =

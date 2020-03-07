@@ -5,17 +5,12 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
-import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.application.di.AppComponent
-import com.pppp.travelchecklist.application.di.AppComponentImpl
 import com.pppp.travelchecklist.application.di.AppModule
 import com.pppp.travelchecklist.list.viewmodel.TitleUseCase
 import com.pppp.travelchecklist.main.di.MainSubComponent
 import com.pppp.travelchecklist.main.model.Navigator
-import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
-import com.pppp.travelchecklist.main.viewmodel.MainViewIntent
 import com.pppp.travelchecklist.main.viewmodel.MainViewModel
-import com.pppp.travelchecklist.main.viewmodel.MainViewState
 import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 import com.pppp.travelchecklist.navigation.MenuCreator
 import com.pppp.travelchecklist.utils.UtilsModule

@@ -22,9 +22,9 @@ import com.pppp.travelchecklist.main.model.NavigatorImpl
 import com.pppp.travelchecklist.navigation.MenuCreator
 import com.pppp.travelchecklist.navigation.MenuCreatorImpl
 import com.pppp.travelchecklist.main.viewmodel.FirebaseMainUseCase
-import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
-import com.pppp.travelchecklist.main.viewmodel.MainViewIntent
-import com.pppp.travelchecklist.main.viewmodel.MainViewState
+import com.pppp.travelchecklist.main.MainTransientEvent
+import com.pppp.travelchecklist.main.MainViewIntent
+import com.pppp.travelchecklist.main.MainViewState
 import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 import com.pppp.travelchecklist.main.viewmodel.SharedPreferencesSettingsUseCase
 import com.pppp.travelchecklist.preferences.PreferencesWrapper

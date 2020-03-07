@@ -7,11 +7,14 @@ import android.view.View.VISIBLE
 import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.utils.geColorFromTheme
 
 class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     private val title: CheckedTextView
@@ -28,7 +31,11 @@ class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             callback(adapterPosition)
         }
         setUpIcon(betterMenuItem)
+        title.setTextColor(getCofflor(betterMenuItem.selected))
     }
+
+    private fun getCofflor(selected: Boolean) =
+        if (selected) context.geColorFromTheme(android.R.attr.textColorPrimary) else context.geColorFromTheme(android.R.attr.textColorSecondary)
 
     private fun setUpIcon(betterMenuItem: BetterMenuItem) {
         betterMenuItem.icon?.let {

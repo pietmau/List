@@ -4,28 +4,30 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
-import androidx.appcompat.app.AppCompatActivity
+import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import androidx.annotation.IdRes
-import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.application.di.AppComponentImpl
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import android.provider.Settings
-import android.text.Editable
-import android.text.TextWatcher
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
+import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.application.di.AppComponent
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
 inline fun <T : View> View.findViewByIdLazy(@IdRes id: Int): Lazy<T> = lazy {
     findViewById<T>(id)
@@ -39,9 +41,6 @@ inline fun <reified T : Fragment> FragmentActivity.findAddedFragment(@IdRes id: 
         else -> fragment
     }
 }
-
-val AppCompatActivity.fragmentTransaction: FragmentTransaction
-    get() = supportFragmentManager.beginTransaction()
 
 fun View.getChildren(): List<View> {
     if (this !is ViewGroup) {
@@ -59,20 +58,6 @@ val Activity.appComponent: AppComponent?
 
 val Fragment.appComponent: AppComponent?
     get() = activity?.appComponent
-
-val View.isMarshmallowOrAbove
-    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-
-fun Activity.showConfirmationDialog(yes: (() -> Unit)?, title: Int, message: Int) {
-    MaterialAlertDialogBuilder(this)
-        .setTitle(title)
-        .setMessage(message)
-        .setPositiveButton(R.string.yes, { _, _ ->
-            yes?.invoke()
-        })
-        .setNegativeButton(android.R.string.cancel, { _, _ -> })
-        .create().show()
-}
 
 fun Activity.showDialog(
     @StringRes title: Int,
@@ -111,7 +96,7 @@ fun <K, V> Map<K, V>.replaceSameKeyItemsWith(newElements: Map<K, V>?): Map<K, V>
     return result.toMap()
 }
 
-fun Fragment.getColor(@ColorRes colour: Int) = ResourcesCompat.getColor(resources, android.R.color.white, context?.theme)
+fun Fragment.getColor(@ColorRes colour: Int) = ResourcesCompat.getColor(resources, colour, context?.theme)
 
 var EditText.textAsAString: String?
     get() = text?.toString() ?: ""
@@ -121,9 +106,6 @@ var EditText.textAsAString: String?
             setText(value, TextView.BufferType.EDITABLE)
         }
     }
-
-val <T> T.exhaustive: T
-    get() = this
 
 fun EditText.setAfterChangeListener(listener: (String?) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -143,3 +125,19 @@ fun EditText.setAfterChangeListener(listener: (String?) -> Unit) {
 
 val Context.notificationManager
     get() = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+
+fun Activity.setTitleAndSubtitle(title: String, subTitle: String) {
+    toolbar.title = title
+    toolbar.subtitle = subTitle
+}
+
+val View.isMarshmallowOrAbove
+    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+@ColorInt
+fun Context.geColorFromTheme(@AttrRes color: Int): Int {
+    val resolvedAttr = TypedValue()
+    theme.resolveAttribute(color, resolvedAttr, true)
+    val colorRes = resolvedAttr.run { if (resourceId != 0) resourceId else data }
+    return ContextCompat.getColor(this, colorRes)
+}

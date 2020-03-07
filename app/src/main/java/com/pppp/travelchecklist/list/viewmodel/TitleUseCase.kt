@@ -32,6 +32,6 @@ object TitleUseCaseImpl : TitleUseCase {
         if (getSubTitle(travelCheckList).isNullOrBlank()) {
             return travelCheckList.name ?: ""
         }
-        return travelCheckList.name + " (" + getSubTitle(travelCheckList) + " )"
+        return travelCheckList.name + " (" + getSubTitle(travelCheckList) + ")"
     }
 }

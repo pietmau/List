@@ -39,6 +39,5 @@ class AddItemBottomDialog : AddBottomDialog() {
 
         val TAG = AddItemBottomDialog::class.java.simpleName
         val CATEGORY_ID = "category"
-
     }
 }

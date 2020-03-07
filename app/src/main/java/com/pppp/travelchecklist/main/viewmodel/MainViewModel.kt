@@ -8,6 +8,9 @@ import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
+import com.pppp.travelchecklist.main.MainTransientEvent
+import com.pppp.travelchecklist.main.MainViewIntent
+import com.pppp.travelchecklist.main.MainViewState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,17 +41,21 @@ class MainViewModel(
         MainViewIntent.GoMakeNewList -> goToCreateNewList()
         is MainViewIntent.OnSettingChanged -> mainUseCase.onUserChangedSettings(mainViewAction.itemId)
         MainViewIntent.DeleteCurrentList -> deleteCurrentList()
-        MainViewIntent.OnNoListFound -> emitNewViewState(MainViewState.Empty())
+        MainViewIntent.OnNoListFound -> onCurrentListNotAvailable()
+    }
+
+    private fun onCurrentListNotAvailable() {
+        if (mainUseCase.isEmpty()) {
+            emitNewViewState(MainViewState.NoListsPresent())
+        } else {
+            emitNewViewState(MainViewState.LatestListNotAvailable())
+            openNavMenu()
+        }
     }
 
     private fun deleteCurrentList() {
         mainUseCase.deleteCurrentList()
-        if (mainUseCase.isEmpty()) {
-            emitNewViewState(MainViewState.Empty())
-        } else {
-            emitNewViewState(MainViewState.Content())
-            openNavMenu()
-        }
+        onCurrentListNotAvailable()
     }
 
     private fun updateCurrentViewState(settings: MainViewState.Settings) {
@@ -69,7 +76,7 @@ class MainViewModel(
         analytics.getLatestListVisited()
         emitNewViewState(MainViewState.Loading())
         viewModelScope.launch(backgroundDispatcher) {
-            mainUseCase.getLastVisitedListId(path)?.let { goToList(it) } ?: emitNewViewState(MainViewState.Empty())
+            mainUseCase.getLastVisitedListId(path)?.let { goToList(it) } ?: emitNewViewState(MainViewState.NoListsPresent())
         }
     }
 

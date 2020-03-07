@@ -14,7 +14,8 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/big_margin"
         android:paddingBottom="@dimen/big_margin"
-        android:text="@string/your_lists" />
+        android:text="@string/your_lists"
+        android:textAppearance="?textAppearanceSubtitle1" />
 
     <com.pppp.travelchecklist.menu.BetterMenu
         android:id="@+id/nav_view"

@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main.viewmodel
 
 import android.content.SharedPreferences
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.main.MainViewState
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.VISUALIZE_CHECKED_ITEMS
 import io.mockk.CapturingSlot
@@ -9,7 +10,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import org.junit.Before
 import org.junit.Test
 
 private const val SHOW_CHECKED = true

@@ -3,6 +3,9 @@ package com.pppp.travelchecklist.main.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.analytics.MainAnalyticsLogger
+import com.pppp.travelchecklist.main.MainTransientEvent
+import com.pppp.travelchecklist.main.MainViewIntent
+import com.pppp.travelchecklist.main.MainViewState
 import io.mockk.CapturingSlot
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -190,7 +193,7 @@ class MainViewModelTest {
         acceptDeleteCurrentList()
 
         // Then
-        verifyPostViewState<MainViewState.Empty>()
+        verifyPostViewState<MainViewState.NoListsPresent>()
     }
 
     @Test
@@ -210,7 +213,7 @@ class MainViewModelTest {
         model.accept(MainViewIntent.OnNoListFound)
 
         // Then
-        verifyPostViewState<MainViewState.Empty>()
+        verifyPostViewState<MainViewState.NoListsPresent>()
     }
 
     private fun acceptDeleteCurrentList() {

@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.main.viewmodel
 
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.main.MainViewState
 import com.pppp.travelchecklist.main.view.MenuViewState
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.VISUALIZE_CHECKED_ITEMS

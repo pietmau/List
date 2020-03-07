@@ -1,4 +1,4 @@
-package com.pppp.travelchecklist.main.viewmodel
+package com.pppp.travelchecklist.main
 
 import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.TransientEvent

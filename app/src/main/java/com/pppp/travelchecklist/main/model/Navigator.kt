@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
-import com.pppp.travelchecklist.main.viewmodel.MainViewIntent
+import com.pppp.travelchecklist.main.MainViewIntent
 import com.pppp.travelchecklist.createlist.NewListActivity
 
 object NavigatorImpl : Navigator {

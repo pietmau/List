@@ -1,13 +1,11 @@
 package com.pppp.travelchecklist.main.view
 
-import android.preference.PreferenceManager
 import android.view.Menu
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.main.MainActivity
-import com.pppp.travelchecklist.main.viewmodel.MainViewState
+import com.pppp.travelchecklist.main.MainViewState
 import com.pppp.travelchecklist.main.viewmodel.SettingsUseCase
 import javax.inject.Inject
 

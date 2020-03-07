@@ -13,11 +13,11 @@ import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.list.bottomdialog.AddCategoryBottomDialog
 import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
 import com.pppp.travelchecklist.edititem.view.EditItemDialogFragment
-import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.card.ChackListCardCallback
 import com.pppp.travelchecklist.list.di.CheckListFragmentModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.main.MainActivity
+import com.pppp.travelchecklist.utils.setTitleAndSubtitle
 import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
@@ -47,10 +47,9 @@ class CheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) {
-        Log.d("foo", state.toString())
         state.travelCheckList ?: return
         recycler.setItems(state.travelCheckList.categories, state.showChecked)
-        (activity as? MainActivity)?.setListTitle(state.title, state.subTitle)
+        (activity as? MainActivity)?.setTitleAndSubtitle(state.title, state.subTitle)
     }
 
     override fun onItemDeleteRequested(cardId: String, itemId: String, data: CheckListItem) {

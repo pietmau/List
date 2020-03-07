@@ -1,17 +1,15 @@
-package com.pppp.travelchecklist.main.viewmodel
+package com.pppp.travelchecklist.main
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.pppp.travelchecklist.ViewState
 import com.pppp.travelchecklist.main.view.MenuViewState
 import com.pppp.travelchecklist.utils.replaceSameKeyItemsWith
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 sealed class MainViewState(val settings: Settings = Settings()) : ViewState, Parcelable {
     @Parcelize
-    data class Empty(val prefs: Settings = Settings()) : MainViewState(prefs)
+    data class NoListsPresent(val prefs: Settings = Settings()) : MainViewState(prefs)
 
     @Parcelize
     data class Content(val prefs: Settings = Settings(), val expandNavigation: Boolean = false) : MainViewState(prefs)
@@ -22,6 +20,9 @@ sealed class MainViewState(val settings: Settings = Settings()) : ViewState, Par
     @Parcelize
     data class None(val prefs: Settings = Settings()) : MainViewState(prefs)
 
+    @Parcelize
+    data class LatestListNotAvailable(val prefs: Settings = Settings()) : MainViewState(prefs)
+
     fun makeCopyReplacingOldSettingsWithNew(oldSettings: Settings?): MainViewState {
         val values = oldSettings?.values?.replaceSameKeyItemsWith(newElements = settings.values) ?: mapOf()
         return withNewSettings(Settings(values))
@@ -29,10 +30,11 @@ sealed class MainViewState(val settings: Settings = Settings()) : ViewState, Par
 
     fun withNewSettings(newSettings: Settings): MainViewState {
         return when (this) {
-            is Empty -> this.copy(newSettings)
+            is NoListsPresent -> this.copy(newSettings)
             is Content -> this.copy(newSettings)
             is Loading -> this.copy(newSettings)
             is None -> this.copy(newSettings)
+            is LatestListNotAvailable -> this.copy(newSettings)
         }
     }
 

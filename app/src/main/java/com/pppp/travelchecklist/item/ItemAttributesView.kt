@@ -24,17 +24,22 @@ class ItemAttributesView @JvmOverloads constructor(context: Context, attrs: Attr
     fun setData(checkListItem: CheckListItemImpl) {
         setUpPriority(checkListItem.priority)
         setUpDescription(checkListItem.description)
-        setAlarm(checkListItem.isAlertOn, checkListItem.isAlertExpired)
+        setAlarm(checkListItem.isAlertOn, checkListItem.alertTimeInMills ?: 0)
     }
 
-    private fun setAlarm(isAlertOn: Boolean, alertExpired: Boolean) {
+    private fun setAlarm(isAlertOn: Boolean, alertTimeInMills: Long) {
         alarm.visibility = if (!isAlertOn) GONE else VISIBLE
-        alarm.imageTintList = getColor(alertExpired)
+        alarm.imageTintList = getColor(alertTimeInMills)
     }
 
-    private fun getColor(alertExpired: Boolean) =
-        if (!alertExpired) ResourcesCompat.getColorStateList(resources, R.color.gray, context.theme) else
-            ResourcesCompat.getColorStateList(resources, android.R.color.holo_red_light, context.theme)
+    private fun getColor(alertTimeInMills: Long) =
+        if (isAlertExpired(alertTimeInMills)) ResourcesCompat.getColorStateList(
+            resources,
+            android.R.color.holo_red_light,
+            context.theme
+        ) else ResourcesCompat.getColorStateList(resources, R.color.gray, context.theme)
+
+    private fun isAlertExpired(alertTimeInMills: Long) = alertTimeInMills < System.currentTimeMillis()
 
     private fun setUpDescription(itemDescription: String?) {
         description.visibility = if (itemDescription.isNullOrBlank()) GONE else VISIBLE

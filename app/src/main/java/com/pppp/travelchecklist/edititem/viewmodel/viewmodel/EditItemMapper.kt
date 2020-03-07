@@ -22,7 +22,7 @@ class EditItemMapper(
         dateAndTimeProvider.setTime(alertTimeInMills, hourOfDay, minute)
 
     fun onDateSet(alertTimeInMills: Long?, year: Int, monthOfYear: Int, dayOfMonth: Int) =
-        dateAndTimeProvider.setDate(alertTimeInMills, year, monthOfYear, monthOfYear)
+        dateAndTimeProvider.setDate(alertTimeInMills, year, monthOfYear, dayOfMonth)
 
     fun getDefaultAlertTime(alertTimeInMills: Long?) = dateAndTimeProvider.getDefaultAlertTime(alertTimeInMills)
 }

@@ -17,9 +17,7 @@ class DateAndTimeProviderImpl @Inject constructor() :
     DateAndTimeProvider {
 
     override fun setTime(alertTimeInMills: Long?, hourOfDay: Int, minute: Int): Long {
-        val mills = getDefaultAlertTime(alertTimeInMills)
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = mills
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
         calendar.set(Calendar.MINUTE, minute)
         return calendar.timeInMillis
@@ -28,9 +26,7 @@ class DateAndTimeProviderImpl @Inject constructor() :
     override fun getCurrentTimeInMills() = System.currentTimeMillis()
 
     override fun setDate(alertTimeInMills: Long?, year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
-        val mills = getDefaultAlertTime(alertTimeInMills)
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = mills
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, monthOfYear)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)

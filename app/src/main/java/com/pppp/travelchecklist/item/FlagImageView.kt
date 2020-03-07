@@ -3,14 +3,15 @@ package com.pppp.travelchecklist.item
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.widget.ImageView
+import android.util.Log
+import androidx.annotation.ColorRes
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import com.pppp.travelchecklist.R
-import java.lang.UnsupportedOperationException
 
-class FlagImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
-    ImageView(context, attrs, defStyleAttr, defStyleRes) {
+class FlagImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    AppCompatImageView(context, attrs, defStyleAttr) {
 
     init {
         setImageResource(R.drawable.ic_flag_svgrepo_com)
@@ -26,9 +27,9 @@ class FlagImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-    private fun getColor(holoBlueDark: Int) = ContextCompat.getColor(context, holoBlueDark)
+    private fun getColor(@ColorRes color: Int) = ContextCompat.getColor(context, color)
 
     private fun setFlagTint(color: Int) {
-        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(color))
+        setColorFilter(color)
     }
 }

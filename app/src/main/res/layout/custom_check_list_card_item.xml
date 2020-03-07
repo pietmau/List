@@ -5,15 +5,16 @@
     android:layout_height="wrap_content"
     android:background="?itemBackground">
 
+
     <CheckBox
         android:id="@+id/check"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/item_height"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="-10dp"
+        android:layout_marginEnd="-10dp"
         android:clickable="false"
-        android:paddingLeft="-10dp"
+        android:paddingStart="-10dp"
         android:text="" />
 
     <TextView

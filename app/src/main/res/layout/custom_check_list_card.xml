@@ -8,13 +8,13 @@
 
     <include layout="@layout/header_layout"/>
 
-    <com.pppp.travelchecklist.card.recycler.CardRecycler
+    <com.pppp.travelchecklist.card.ItemsCardImpl
         android:id="@+id/cardItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    </com.pppp.travelchecklist.card.recycler.CardRecycler>
+    </com.pppp.travelchecklist.card.ItemsCardImpl>
 
 
 </LinearLayout>

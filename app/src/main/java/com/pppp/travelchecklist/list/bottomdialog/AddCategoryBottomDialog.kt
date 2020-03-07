@@ -14,7 +14,7 @@ class AddCategoryBottomDialog : AddBottomDialog() {
     internal lateinit var categoryAdder: CategoryAdder
 
     override fun performInjection() {
-        appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this)
+        appComponent?.with(ViewCheckListModule())?.inject(this)
     }
 
     override fun setUpViews() {

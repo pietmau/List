@@ -18,16 +18,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ViewCheckListModule(private val activity: FragmentActivity) {
-
-    @Provides
-    fun provideSingleCheckListViewModel(
-        repo: SingleCheckListRepository,
-        settingsUseCase: ListSettingsUseCase
-    ): SingleCheckListViewModel = ViewModelProviders.of(
-        activity,
-        ViewCheckListViewModelFactory(repo, settingsUseCase)
-    ).get(FireBaseSingleCheckListViewModel::class.java)
+class ViewCheckListModule() {
 
     @Provides
     fun provideCategoryAdder(adder: CategoryAdderImpl): CategoryAdder = adder
@@ -37,13 +28,4 @@ class ViewCheckListModule(private val activity: FragmentActivity) {
 
     @Provides
     fun provideListSettingsUseCase(prefreneces: PreferencesWrapper): ListSettingsUseCase = ListSettingsUseCase(prefreneces)
-}
-
-class ViewCheckListViewModelFactory(
-    val repo: SingleCheckListRepository,
-    val settingsUseCase: ListSettingsUseCase
-) : ViewModelProvider.NewInstanceFactory() {
-
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        FireBaseSingleCheckListViewModel(model = FirebaseSingleCheckListModel(repo), settingsUseCase = settingsUseCase) as T
 }

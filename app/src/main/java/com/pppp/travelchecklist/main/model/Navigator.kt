@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.list.view.ViewCheckListFragment
+import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.main.viewmodel.MainViewIntent
 import com.pppp.travelchecklist.createlist.NewListActivity
@@ -13,7 +13,7 @@ object NavigatorImpl : Navigator {
 
     override fun removeListFragment(activity: AppCompatActivity) {
         activity.supportFragmentManager.apply {
-            findFragmentByTag(ViewCheckListFragment.TAG)?.let {
+            findFragmentByTag(CheckListFragment.TAG)?.let {
                 this.beginTransaction().remove(it).commitAllowingStateLoss()
             }
         }
@@ -22,7 +22,7 @@ object NavigatorImpl : Navigator {
     override fun goToList(activity: AppCompatActivity, listId: String) {
         activity.supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, ViewCheckListFragment.fromSelection(listId), ViewCheckListFragment.TAG)
+            .replace(R.id.container, CheckListFragment.fromSelection(listId), CheckListFragment.TAG)
             .commit()
     }
 

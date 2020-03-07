@@ -5,6 +5,8 @@ import com.pppp.travelchecklist.createlist.di.NewListComponent
 import com.pppp.travelchecklist.createlist.di.NewListModule
 import com.pppp.travelchecklist.edititem.di.EditItemComponent
 import com.pppp.travelchecklist.edititem.di.EditItemModule
+import com.pppp.travelchecklist.list.di.CheckListFragmentComponent
+import com.pppp.travelchecklist.list.di.CheckListFragmentModule
 import com.pppp.travelchecklist.list.di.ViewCheckListComponent
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.login.di.LoginComponent
@@ -21,5 +23,6 @@ interface AppComponent {
     fun with(module: ViewCheckListModule): ViewCheckListComponent
     fun with(module: EditItemModule): EditItemComponent
     fun with(module: NotificationModule): NotificationSubComponent
+    fun with(module: CheckListFragmentModule): CheckListFragmentComponent
     fun inject(app: App)
 }

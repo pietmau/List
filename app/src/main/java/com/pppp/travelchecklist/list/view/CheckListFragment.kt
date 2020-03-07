@@ -1,6 +1,7 @@
 package com.pppp.travelchecklist.list.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,13 @@ import com.pppp.travelchecklist.editcard.EditCategoryBottomDialog
 import com.pppp.travelchecklist.edititem.view.EditItemDialogFragment
 import com.pppp.travelchecklist.list.di.ViewCheckListModule
 import com.pppp.travelchecklist.card.ChackListCardCallback
+import com.pppp.travelchecklist.list.di.CheckListFragmentModule
 import com.pppp.travelchecklist.list.viewmodel.SingleCheckListViewModel
 import com.pppp.travelchecklist.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_checlist.recycler
 import javax.inject.Inject
 
-class ViewCheckListFragment : Fragment(), ChackListCardCallback {
-
+class CheckListFragment : Fragment(), ChackListCardCallback {
     @Inject
     internal lateinit var viewModel: SingleCheckListViewModel
 
@@ -32,7 +33,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this@ViewCheckListFragment)
+        appComponent?.with(CheckListFragmentModule(this))?.inject(this@CheckListFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     private fun render(state: SingleCheckListViewModel.ViewState) {
+        Log.d("foo", state.toString())
         state.travelCheckList ?: return
         recycler.setItems(state.travelCheckList.categories, state.showChecked)
         (activity as? MainActivity)?.setListTitle(state.title, state.subTitle)
@@ -80,11 +82,11 @@ class ViewCheckListFragment : Fragment(), ChackListCardCallback {
     }
 
     companion object {
-        val TAG: String? = ViewCheckListFragment::class.simpleName
+        val TAG: String? = CheckListFragment::class.simpleName
         val LIST_ID = "list_id"
 
         fun fromSelection(listId: String) =
-            ViewCheckListFragment().apply {
+            CheckListFragment().apply {
                 arguments = Bundle().apply {
                     putString(LIST_ID, listId)
                 }

@@ -32,7 +32,7 @@ class EditCategoryBottomDialog : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appComponent?.with(ViewCheckListModule(requireActivity()))?.inject(this@EditCategoryBottomDialog)
+        appComponent?.with(ViewCheckListModule())?.inject(this@EditCategoryBottomDialog)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

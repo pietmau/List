@@ -1,5 +1,6 @@
 package com.pppp.travelchecklist.list.model
 
+import android.util.Log
 import com.pietrantuono.entities.TravelCheckList
 import com.pppp.entities.pokos.CategoryImpl
 import com.pppp.entities.pokos.TravelCheckListImpl
@@ -24,6 +25,7 @@ class FirebaseSingleCheckListModel(private val repository: SingleCheckListReposi
 
     override fun getUserCheckListAndUpdates(listId: String, success: ((TravelCheckList) -> Unit)?, failure: ((Throwable) -> Unit)?) {
         repository.getUserCheckListAndUpdates(listId, success = {
+            Log.d("foo", "getUserCheckListAndUpdates " + listId)
             this@FirebaseSingleCheckListModel.travelCheckList = it as TravelCheckListImpl
             success?.invoke(it)
         }, failure = {

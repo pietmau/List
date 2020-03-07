@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
@@ -15,7 +16,7 @@ import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
-import com.pppp.travelchecklist.list.view.ViewCheckListFragment
+import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.main.model.Navigator
 import com.pppp.travelchecklist.main.view.MenuVisualizer
 import com.pppp.travelchecklist.main.viewmodel.MainTransientEvent
@@ -29,6 +30,8 @@ import com.pppp.travelchecklist.utils.findAddedFragment
 import com.pppp.travelchecklist.utils.showConfirmationDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+
+const val ACTION = "com.pppp.travelchecklist.pppp.SAVE"
 
 class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerFragment.BottomNavigationItemListener {
     @Inject
@@ -96,7 +99,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun onLoading() {
         removeListFragment()
-        loading_content_error.content()
+        loading_content_error.loading()
     }
 
     private fun onContentPresent() {
@@ -106,7 +109,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun onNoListPresent() {
         removeListFragment()
-        loading_content_error.content()
+        loading_content_error.empty()
         bottom_bar.navigationIcon = null
 
     }
@@ -146,6 +149,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     }
 
     fun setListTitle(name: String, subTitle: String) {
+        Log.d("foo", name)
         toolbar.title = name
         toolbar.subtitle = subTitle
     }
@@ -154,11 +158,11 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         emit(MainViewIntent.OnNoListFound)
     }
 
-    private fun getCheckListFragment() = findAddedFragment<ViewCheckListFragment>(R.id.container)
+    private fun getCheckListFragment() = findAddedFragment<CheckListFragment>(R.id.container)
 
     fun sendBroadcast() {
         sendBroadcast(Intent(this, BootReceiver::class.java).apply {
-            action = "com.pppp.travelchecklist.pppp.SAVE"
+            action = ACTION
         })
     }
 }

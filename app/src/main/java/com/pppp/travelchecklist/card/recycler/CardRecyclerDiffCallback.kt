@@ -11,7 +11,6 @@ class CardRecyclerDiffCallback(
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val areItemsTheSame = old.get(oldItemPosition).id == new.get(newItemPosition).id
-        Log.d("foo", "are the same " + areItemsTheSame + "( old " + oldItemPosition + ",  new " + newItemPosition)
         return areItemsTheSame
     }
 
@@ -21,7 +20,6 @@ class CardRecyclerDiffCallback(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val areContentsTheSame = old.get(oldItemPosition).equals(new.get(newItemPosition))
-        Log.d("foo", "are contents the same " + areContentsTheSame + "( old " + oldItemPosition + ",  new " + newItemPosition)
         return areContentsTheSame
     }
 

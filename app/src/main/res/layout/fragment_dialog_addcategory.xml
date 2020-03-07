@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/big_margin"
+        android:imeOptions="actionDone"
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 

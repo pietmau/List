@@ -33,19 +33,15 @@ class FirebaseUserCheckListsRepository(
 
     override suspend fun getListById(listId: String): TravelCheckList =
         suspendCancellableCoroutine { continuation ->
-            db.getList(auth.userId, listId)
-                .addSnapshotListener { document, error ->
-                    if (error != null) {
-                        continuation.resumeWithException(error)
-                        return@addSnapshotListener
-                    }
-                    val result = document?.toObject(TravelCheckListImpl::class.java)
-                    if (result == null) {
-                        continuation.resumeWithException(NullPointerException("Not fund"))
-                        return@addSnapshotListener
-                    }
-                    continuation.resume(result)
+            db.getList(auth.userId, listId).get().addOnSuccessListener { doc ->
+                val result = doc?.toObject(TravelCheckListImpl::class.java)
+                if (result == null) {
+                    continuation.resumeWithException(NullPointerException("Not fund"))
+                    return@addOnSuccessListener
                 }
+                continuation.resume(result)
+            }.addOnFailureListener { error -> continuation.resumeWithException(error) }
+
         }
 
     override suspend fun updateItem(item: CheckListItemImpl, listId: String, categoryId: Any?) {

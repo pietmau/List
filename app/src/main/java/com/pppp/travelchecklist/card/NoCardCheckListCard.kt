@@ -20,23 +20,23 @@ class NoCardCheckListCard @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), CheckListCard {
     private var cardId: String by Delegates.notNull()
-    override lateinit var checkListCardCallback: ChackListCardCallback
+    override var checkListCardCallback: ChackListCardCallback? = null
 
     private val cardItemCallback = object : CardItemView.Callback {
         override fun onSettingsClicked(data: CheckListItem) {
-            checkListCardCallback.onSettingsClicked(cardId, data.id)
+            checkListCardCallback?.onSettingsClicked(cardId, data.id)
         }
 
         override fun onItemMoved(fromPosition: Int, toPosition: Int) {
-            checkListCardCallback.onItemMoved(cardId, fromPosition, toPosition)
+            checkListCardCallback?.onItemMoved(cardId, fromPosition, toPosition)
         }
 
         override fun onItemChecked(itemId: String, checked: Boolean) {
-            checkListCardCallback.onItemChecked(cardId, itemId, checked)
+            checkListCardCallback?.onItemChecked(cardId, itemId, checked)
         }
 
         override fun onDeleteRequested(itemId: String, data: CheckListItem) {
-            checkListCardCallback.onItemDeleteRequested(cardId, itemId, data)
+            checkListCardCallback?.onItemDeleteRequested(cardId, itemId, data)
         }
     }
 
@@ -48,7 +48,7 @@ class NoCardCheckListCard @JvmOverloads constructor(
         setMargins(margin)
         typedArray.recycle()
         overflow.setOnClickListener {
-            checkListCardCallback.onCardOptionsClicked(cardId)
+            checkListCardCallback?.onCardOptionsClicked(cardId)
         }
     }
 
@@ -58,7 +58,7 @@ class NoCardCheckListCard @JvmOverloads constructor(
         setLayoutParams(params)
     }
 
-    override fun bind(category: Category, chackListCardCallback: ChackListCardCallback) {
+    override fun bind(category: Category, chackListCardCallback: ChackListCardCallback?) {
         this.cardId = category.id
         this.checkListCardCallback = chackListCardCallback
         cardItems.callback = cardItemCallback

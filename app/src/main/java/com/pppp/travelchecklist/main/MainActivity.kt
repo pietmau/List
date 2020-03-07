@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun onLoading() {
         removeListFragment()
-        loading_content_error.loading()
+        loading_content_error.content()
     }
 
     private fun onContentPresent() {
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun onNoListPresent() {
         removeListFragment()
-        loading_content_error.empty()
+        loading_content_error.content()
         bottom_bar.navigationIcon = null
 
     }

@@ -20,8 +20,10 @@ object NavigatorImpl : Navigator {
     }
 
     override fun goToList(activity: AppCompatActivity, listId: String) {
-        activity.supportFragmentManager.beginTransaction().replace(R.id.container, ViewCheckListFragment.fromSelection(listId), ViewCheckListFragment.TAG)
-            .commitAllowingStateLoss()
+        activity.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, ViewCheckListFragment.fromSelection(listId), ViewCheckListFragment.TAG)
+            .commit()
     }
 
     override fun startCreateChecklistActivity(activity: Activity) {

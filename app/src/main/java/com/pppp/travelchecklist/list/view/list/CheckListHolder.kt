@@ -8,7 +8,7 @@ import com.pppp.travelchecklist.card.CheckListCard
 
 class CheckListHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
-    fun bind(categoryItemData: Category, chackListCardCallback: ChackListCardCallback) {
+    fun bind(categoryItemData: Category, chackListCardCallback: ChackListCardCallback?) {
         (itemView as CheckListCard).bind(categoryItemData, chackListCardCallback)
     }
 

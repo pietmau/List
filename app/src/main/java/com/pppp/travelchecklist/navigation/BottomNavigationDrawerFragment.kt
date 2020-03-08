@@ -29,7 +29,8 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (requireActivity().applicationContext as App).appComponent.with(MainModule(requireActivity())).inject(this)
+        val appComponent = (requireActivity().applicationContext as App).appComponent
+        appComponent.mainSubComponentFactory().create(requireActivity()).inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

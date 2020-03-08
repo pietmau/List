@@ -34,4 +34,15 @@
         android:textColor="@color/done_textcolor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/cancel"
+        android:textColor="@color/done_textcolor"
+        app:layout_constraintEnd_toStartOf="@+id/done"
+        app:layout_constraintTop_toBottomOf="@+id/input" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,8 +15,8 @@ class PlannedActivitiesFragment : ItemSelectorFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        component.inject(this)
-        model = component.plannedActivitesModel()
+        subComponent.inject(this)
+        model = subComponent.plannedActivitesModel()
     }
 
     override fun setItems(group: List<Pair<Tag, Boolean>>) {

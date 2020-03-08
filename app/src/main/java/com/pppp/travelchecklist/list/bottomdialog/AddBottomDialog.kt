@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pppp.travelchecklist.R
+import kotlinx.android.synthetic.main.fragment_dialog_addcategory.cancel
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.done
 import kotlinx.android.synthetic.main.fragment_dialog_addcategory.input
 
@@ -30,6 +31,9 @@ abstract class AddBottomDialog : BottomSheetDialogFragment() {
             if (!text.isNullOrBlank() && !listId.isNullOrBlank()) {
                 add(listId, text)
             }
+            dismiss()
+        }
+        cancel.setOnClickListener {
             dismiss()
         }
     }

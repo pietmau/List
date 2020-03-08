@@ -11,7 +11,7 @@ class AccomodationFragment : ButtonsStripGroupListenerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model = component.accomodationModel()
+        model = subComponent.accomodationModel()
     }
 
     override fun onItemSelected(tag: TagImpl) {

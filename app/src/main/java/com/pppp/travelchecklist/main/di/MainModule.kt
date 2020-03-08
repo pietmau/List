@@ -34,35 +34,44 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-open class MainModule(private val activity: FragmentActivity) {
+object MainModule {
 
+    @JvmStatic
     @Singleton
     @Provides
     fun providePresenter(
         repo: TravelChecklistRepository,
         logger: AnalyticsLogger,
-        settingsUseCase: SettingsUseCase
+        settingsUseCase: SettingsUseCase,
+        activity: FragmentActivity
     ) =
         ViewModelProviders.of(activity, MainViewModelFactory(logger, MainModelImpl(repo), settingsUseCase, activity)).get(MainViewModel::class.java)
 
+    @JvmStatic
     @Provides
     fun provideMenuCreator(creator: MenuCreatorImpl): MenuCreator = creator
 
+    @JvmStatic
     @Provides
-    open fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel
+    fun provideProducer(viewModel: MainViewModel): ViewStatesProducer<MainViewState> = viewModel
 
+    @JvmStatic
     @Provides
-    open fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewIntent> = viewModel
+    fun provideConsumer(viewModel: MainViewModel): ViewActionsConsumer<MainViewIntent> = viewModel
 
+    @JvmStatic
     @Provides
-    open fun provideTransientEvdents(viewModel: MainViewModel): TransientEventsProducer<MainTransientEvent> = viewModel
+    fun provideTransientEvdents(viewModel: MainViewModel): TransientEventsProducer<MainTransientEvent> = viewModel
 
+    @JvmStatic
     @Provides
     fun provideNavigationActionMapper(): Navigator = NavigatorImpl
 
+    @JvmStatic
     @Provides
     fun provideTitleUseCase(): TitleUseCase = TitleUseCaseImpl
 
+    @JvmStatic
     @Provides
     fun provideSettingsUseCase(prefs: PreferencesWrapper): SettingsUseCase = SharedPreferencesSettingsUseCase(prefs)
 

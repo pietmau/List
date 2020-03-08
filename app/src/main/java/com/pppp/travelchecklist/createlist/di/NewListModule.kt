@@ -1,9 +1,9 @@
 package com.pppp.travelchecklist.createlist.di
 
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepository
 import com.pppp.travelchecklist.listgenerator.ListGenerator
-import com.pppp.travelchecklist.createlist.NewListActivity
 import com.pppp.travelchecklist.createlist.model.TagsCache
 import com.pppp.travelchecklist.createlist.model.TagsCacheFactory
 import com.pppp.travelchecklist.createlist.model.TagsCacheImpl
@@ -15,58 +15,71 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class NewListModule(private val newListActivity: NewListActivity) {
+object NewListModule {
 
+    @JvmStatic
     @Provides
-    fun provideSelectorPresenter(factory: SelectorPresenterFactory) =
+    fun provideSelectorPresenter(factory: SelectorPresenterFactory, newListActivity: FragmentActivity) =
         ViewModelProviders.of(newListActivity, factory).get(NewListViewModel::class.java)
 
+    @JvmStatic
     @Provides
-    fun providesWhoIsTravellingModel(factory: WhoIsTravellingModelFactory): WhoIsTravellingModel =
+    fun providesWhoIsTravellingModel(factory: WhoIsTravellingModelFactory, newListActivity: FragmentActivity): WhoIsTravellingModel =
         ViewModelProviders.of(newListActivity, factory).get(WhoIsTravellingModel::class.java)
 
+    @JvmStatic
     @Provides
     fun provideWhoIsTravellingModelFactory(db: TagsCache) =
         WhoIsTravellingModelFactory(db)
 
+    @JvmStatic
     @Provides
-    fun providesPlannedActivitesModel(factory: PlannedActivitesModelFactory): PlannedActivitesModel =
+    fun providesPlannedActivitesModel(factory: PlannedActivitesModelFactory, newListActivity: FragmentActivity): PlannedActivitesModel =
         ViewModelProviders.of(newListActivity, factory).get(PlannedActivitesModel::class.java)
 
+    @JvmStatic
     @Provides
     fun providePlannedActivitesModelFactory(db: TagsCache) =
         PlannedActivitesModelFactory(db)
 
+    @JvmStatic
     @Provides
     fun provideSelectorPresenterFactory(wrapper: ResourcesWrapper, listGenerator: ListGenerator) =
         SelectorPresenterFactory(wrapper, listGenerator)
 
+    @JvmStatic
     @Provides
-    fun providesExpectedWeatherModel(factory: ExpectedWeatherModelFactory): ExpectedWeatherModel =
+    fun providesExpectedWeatherModel(factory: ExpectedWeatherModelFactory, newListActivity: FragmentActivity): ExpectedWeatherModel =
         ViewModelProviders.of(newListActivity, factory).get(ExpectedWeatherModel::class.java)
 
+    @JvmStatic
     @Provides
     fun provideExpectedWeatherModelFactory(db: TagsCache) =
         ExpectedWeatherModelFactory(db)
 
+    @JvmStatic
     @Provides
-    fun providesAccomodationModel(factory: AccomodationModelFactory): AccomodationModel =
+    fun providesAccomodationModel(factory: AccomodationModelFactory, newListActivity: FragmentActivity): AccomodationModel =
         ViewModelProviders.of(newListActivity, factory).get(AccomodationModel::class.java)
 
+    @JvmStatic
     @Provides
     fun provideAccomodationModelFactory(db: TagsCache) =
         AccomodationModelFactory(db)
 
+    @JvmStatic
     @Provides
-    fun providesLongOrShortTripModel(factory: LongOrShortTripModelFactory): LongOrShortTripModel =
+    fun providesLongOrShortTripModel(factory: LongOrShortTripModelFactory, newListActivity: FragmentActivity): LongOrShortTripModel =
         ViewModelProviders.of(newListActivity, factory).get(LongOrShortTripModel::class.java)
 
+    @JvmStatic
     @Provides
     fun provideLongOrShortTripFragmentFactory(db: TagsCache) =
         LongOrShortTripModelFactory(db)
 
+    @JvmStatic
     @Provides
-    fun provideTagsCache(repository: InitialTagsRepository): TagsCache = ViewModelProviders.of(
+    fun provideTagsCache(repository: InitialTagsRepository, newListActivity: FragmentActivity): TagsCache = ViewModelProviders.of(
         newListActivity,
         TagsCacheFactory(repository)
     )[TagsCacheImpl::class.java]

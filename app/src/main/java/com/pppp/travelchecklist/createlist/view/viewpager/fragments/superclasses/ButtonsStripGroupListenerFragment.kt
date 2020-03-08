@@ -13,7 +13,7 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
 import com.pppp.travelchecklist.createlist.NewListActivity
-import com.pppp.travelchecklist.createlist.di.NewListComponent
+import com.pppp.travelchecklist.createlist.di.NewListSubComponent
 import com.pppp.travelchecklist.createlist.di.NewListModule
 import com.pppp.travelchecklist.createlist.model.models.TagSelectorModel
 import com.pppp.travelchecklist.createlist.view.custom.ButtonsStripGroup
@@ -23,7 +23,7 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     protected val callback
         get() = (requireActivity() as? CreateChecklistView)?.selectionCallback
     protected lateinit var model: TagSelectorModel
-    protected lateinit var component: NewListComponent
+    protected lateinit var subComponent: NewListSubComponent
     lateinit var strip: ButtonsStripGroup
 
     override fun onCreateView(
@@ -39,7 +39,7 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (requireActivity().applicationContext as App).appComponent
-        component = appComponent.with(NewListModule(requireActivity() as NewListActivity))
+        subComponent = appComponent.newListSubComponentFactory().create(requireActivity() as NewListActivity)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

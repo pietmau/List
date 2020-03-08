@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
+        (applicationContext as App).appComponent.mainSubComponentFactory().create(this).inject(this)
         setUpViews()
         viewStates.states.observe(this, Observer { render(it) })
         transientEventsProducer.transientEvents.observe(this, Observer { onTransientEventReceived(it) })

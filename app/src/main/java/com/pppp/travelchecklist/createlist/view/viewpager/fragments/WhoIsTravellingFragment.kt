@@ -14,8 +14,8 @@ class WhoIsTravellingFragment : ItemSelectorFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        component.inject(this)
-        model = component.whoIsTravellingModel()
+        subComponent.inject(this)
+        model = subComponent.whoIsTravellingModel()
     }
 
     override fun setItems(group: List<Pair<Tag, Boolean>>) {

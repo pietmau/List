@@ -19,7 +19,6 @@ import com.pppp.travelchecklist.utils.ResourcesWrapper
 import dagger.Module
 import dagger.Provides
 
-@EditItemScope
 @Module
 class EditItemModule(
     private val fragment: Fragment,

@@ -25,7 +25,7 @@ class NewListActivity : AppCompatActivity(), CreateChecklistView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_cheklist)
-        (applicationContext as App).appComponent.with(MainModule(this)).inject(this)
+        (applicationContext as App).appComponent.mainSubComponentFactory().create(this).inject(this)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(R.id.container, InitialDownloadFragment.newInstance()).commit()
         }

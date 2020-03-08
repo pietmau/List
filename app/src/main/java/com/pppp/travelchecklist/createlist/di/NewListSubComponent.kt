@@ -1,14 +1,16 @@
 package com.pppp.travelchecklist.createlist.di
 
+import androidx.fragment.app.FragmentActivity
 import com.pppp.travelchecklist.createlist.view.NewListFragment
 import com.pppp.travelchecklist.createlist.view.custom.SelectorView
 import com.pppp.travelchecklist.createlist.view.viewpager.fragments.*
 import com.pppp.travelchecklist.createlist.model.models.*
 import com.pppp.travelchecklist.createlist.initialdownload.InitialDownloadFragment
+import dagger.BindsInstance
 import dagger.Subcomponent
 
-@Subcomponent(modules = arrayOf(NewListModule::class))
-interface NewListComponent {
+@Subcomponent(modules = [NewListModule::class])
+interface NewListSubComponent {
 
     fun inject(selectorView: SelectorView)
 
@@ -38,4 +40,8 @@ interface NewListComponent {
 
     fun inject(initialDownloadFragment: InitialDownloadFragment)
 
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(@BindsInstance activity: FragmentActivity): NewListSubComponent
+    }
 }

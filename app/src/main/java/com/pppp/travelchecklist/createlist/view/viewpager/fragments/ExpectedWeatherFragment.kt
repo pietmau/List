@@ -10,7 +10,7 @@ class ExpectedWeatherFragment : ButtonsStripGroupListenerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model = component.expectedWeatherModel()
+        model = subComponent.expectedWeatherModel()
     }
 
     override fun onItemSelected(item: TagImpl) {

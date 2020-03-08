@@ -11,7 +11,7 @@ class LongOrShortTripFragment : ButtonsStripGroupListenerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model = component.longOrShortTripModel()
+        model = subComponent.longOrShortTripModel()
     }
 
     override fun onItemSelected(item: TagImpl) {

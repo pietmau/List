@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
@@ -27,9 +28,8 @@ class SelectorView(context: Context, attrs: AttributeSet) : LinearLayout(context
         if (context !is AppCompatActivity) throw UnsupportedOperationException("Must be used within an AppCompatActivity")
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.custom_view_selector, this, true)
-        val appComponent = (context.applicationContext as? App)?.appComponent
-        val selectorComponent = appComponent?.with(NewListModule(context as NewListActivity))
-        selectorComponent?.inject(this)
+        val appComponent = (context.applicationContext as App).appComponent
+        appComponent.newListSubComponentFactory().create(context as FragmentActivity).inject(this)
         setUp()
     }
 

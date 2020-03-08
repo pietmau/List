@@ -25,7 +25,7 @@ class InitialDownloadFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (requireActivity().applicationContext as App).appComponent
-        appComponent.with(NewListModule(requireActivity() as NewListActivity)).inject(this)
+        appComponent.newListSubComponentFactory().create(requireActivity() as NewListActivity).inject(this)
         viewModel.getTags.observe(requireActivity(), Observer { event ->
             when (event) {
                 is TagsCache.Event.Failure -> onError(event)

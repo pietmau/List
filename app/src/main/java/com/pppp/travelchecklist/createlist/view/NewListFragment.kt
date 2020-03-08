@@ -33,7 +33,7 @@ class NewListFragment : Fragment(), NewListCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as? App)?.appComponent
-        appComponent?.with(NewListModule(requireActivity() as NewListActivity))?.inject(this)
+        appComponent?.newListSubComponentFactory()?.create(requireActivity() as NewListActivity)?.inject(this)
         viewModel.states.observe(activity as AppCompatActivity, Observer { viewState: NewListViewModel.NewListViewState ->
             render(viewState)
         })

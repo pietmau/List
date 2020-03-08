@@ -45,9 +45,9 @@ class DestinationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val appComponent = (activity?.applicationContext as? App)?.appComponent
-        val selectorComponent = appComponent?.with(NewListModule(activity as NewListActivity))
-        selectorComponent?.inject(this)
+        val appComponent = (requireActivity().applicationContext as App).appComponent
+        val selectorComponent = appComponent.newListSubComponentFactory().create(requireActivity())
+        selectorComponent.inject(this)
     }
 
     override fun onResume() {

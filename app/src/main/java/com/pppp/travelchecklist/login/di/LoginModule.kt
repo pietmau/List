@@ -15,7 +15,6 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Singleton
 @Module
 class LoginModule(private val activity: FragmentActivity) {
 

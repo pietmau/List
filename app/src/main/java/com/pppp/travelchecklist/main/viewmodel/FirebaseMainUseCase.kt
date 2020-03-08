@@ -8,7 +8,7 @@ class FirebaseMainUseCase(
     private val settingsUseCase: SettingsUseCase
 ) : MainUseCase, SettingsUseCase by settingsUseCase {
 
-    override fun deleteCurrentList() = model.deleteCurrentList()
+    override suspend fun deleteCurrentList() = model.deleteCurrentList()
 
     @Suppress("UNCHECKED_CAST")
     override fun getLastVisitedList(

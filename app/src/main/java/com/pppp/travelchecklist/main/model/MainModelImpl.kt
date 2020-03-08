@@ -10,14 +10,13 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
 
     override var checkLists: Map<String, TravelCheckList> = mutableMapOf()
 
-    private var lastVisitedList: String? = null
-
     init {
         getUsersLists({
             checkLists = it.filter { checklist -> checklist.id != null }
                 .map { checklist -> requireNotNull(checklist.id) to checklist }
                 .toMap().toMutableMap()
-        }, { /*NoOp*/ })
+        })
+        getLastVisitedList()
     }
 
     override fun getUsersLists(success: ((List<TravelCheckList>) -> Unit)?, failure: ((Throwable) -> Unit)?) {
@@ -25,26 +24,19 @@ class MainModelImpl(private val repo: TravelChecklistRepository) : MainModel {
     }
 
     override fun saveLastVisitedList(listId: String?) {
-        lastVisitedList = listId
         listId?.let { repo.saveLastVisitedList(it) }
     }
 
     override fun getLastVisitedList(failure: ((Throwable?) -> Unit)?, success: ((String?) -> Unit)?) {
-        if (lastVisitedList == null) {
-            repo.getLastVisitedList(failure, {
-                lastVisitedList = it
-                success?.invoke(it)
-            })
-        } else {
-            success?.invoke(lastVisitedList)
-        }
+        repo.getLastVisitedList(failure, {
+            success?.invoke(it)
+        })
     }
 
-    override fun deleteCurrentList() {
-        val listId = requireNotNull(lastVisitedList)
-        repo.deleteChecklist(listId)
-        (checkLists as MutableMap).remove(listId)
-        lastVisitedList = null
+    override suspend fun deleteCurrentList() {
+        val id = getLastVisitedListId() ?: return
+        repo.deleteChecklist(id)
+        (checkLists as MutableMap).remove(id)
     }
 
     override fun isEmpty() = checkLists.isEmpty()

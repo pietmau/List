@@ -10,7 +10,7 @@ interface MainUseCase : SettingsUseCase {
 
     fun saveLastVisitedList(listId: String)
 
-    fun deleteCurrentList()
+    suspend fun deleteCurrentList()
 
     fun isEmpty(): Boolean
 

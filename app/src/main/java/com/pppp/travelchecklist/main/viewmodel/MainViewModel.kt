@@ -54,8 +54,10 @@ class MainViewModel(
     }
 
     private fun deleteCurrentList() {
-        mainUseCase.deleteCurrentList()
-        onCurrentListNotAvailable()
+        viewModelScope.launch(backgroundDispatcher) {
+            mainUseCase.deleteCurrentList()
+            onCurrentListNotAvailable()
+        }
     }
 
     private fun updateCurrentViewState(settings: MainViewState.Settings) {

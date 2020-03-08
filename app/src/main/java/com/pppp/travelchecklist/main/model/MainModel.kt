@@ -13,7 +13,7 @@ interface MainModel {
 
     var checkLists: Map<String, TravelCheckList>
 
-    fun deleteCurrentList()
+    suspend fun deleteCurrentList()
 
     fun isEmpty(): Boolean
 

@@ -20,8 +20,4 @@ class LoadingContentErrorView @JvmOverloads constructor(context: Context, attrs:
     fun content() {
         displayedChild = 2
     }
-
-    fun hide() {
-        visibility = View.GONE
-    }
 }

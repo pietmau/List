@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="fabColor" format="reference"/>
-    <attr name="fancyBackgroundColor" format="reference"/>
     <attr name="itemBackground" format="reference"/>
     <attr name="customDividerColor" format="reference"/>
     <attr name="customDividerHeight" format="reference"/>

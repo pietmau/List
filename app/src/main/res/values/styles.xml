@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="fabColor">@color/green_super_light</item>
         <item name="colorSecondary">@color/colorAccent</item>
-        <item name="shapeAppearanceLargeComponent">@style/RounddCorners</item>
+        <item name="shapeAppearanceLargeComponent">@style/RoundCorners</item>
         <item name="android:actionMenuTextColor">@color/orange</item>
         <item name="customDividerColor">@color/separatorLineColor</item>
         <item name="customDividerHeight">@dimen/very_small_margin</item>
@@ -80,7 +80,7 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="RounddCorners" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <style name="RoundCorners" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>

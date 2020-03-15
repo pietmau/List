@@ -2,6 +2,7 @@ package com.pppp.travelchecklist.createlist.view.custom
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ToggleButton
@@ -22,7 +23,7 @@ class ButtonsStripGroup @JvmOverloads constructor(
     var listener: Listener? = null
 
     override fun createButton(item: Tag) =
-        (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
+        (LayoutInflater.from(context).inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.title
                 textOff = item.title

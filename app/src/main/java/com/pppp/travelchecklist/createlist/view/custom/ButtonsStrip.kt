@@ -29,13 +29,12 @@ open class ButtonsStrip @JvmOverloads constructor(
         }
         get() = text.text?.toString()
 
-    protected val layoutInflater
-        get() = LayoutInflater.from(context)
-
     init {
-        layoutInflater.inflate(R.layout.button_strip, this, true);
+        LayoutInflater.from(this.context).inflate(R.layout.button_strip, this, true);
         gravity = Gravity.CENTER
         orientation = LinearLayout.VERTICAL
+        clipToPadding = false
+        clipChildren = false
     }
 
     fun setItems(items: List<Tag>) {
@@ -53,7 +52,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     }
 
     protected open fun createButton(item: Tag) =
-        (layoutInflater.inflate(R.layout.toggle_button, null) as ToggleButton)
+        (LayoutInflater.from(context).inflate(R.layout.toggle_button, null) as ToggleButton)
             .apply {
                 text = item.title
                 textOff = item.title

@@ -15,7 +15,7 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var presenter: AlarmReceiverPresenter
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
+        (context?.applicationContext as App).appComponent.notificationSubComponentFactory.create().inject(this)
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             val path = intent?.data?.pathSegments ?: return@launch

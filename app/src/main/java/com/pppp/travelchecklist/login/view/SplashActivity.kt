@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        (application as? App)?.appComponent?.with(LoginModule(this))?.inject(this)
+        (application as App).appComponent.loginLoginComponentFactory.create(this).inject(this)
         viewStates.states.observe(this, Observer<LoginViewModel.LoginViewState> { render(it) })
     }
 
@@ -58,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder()
                 .setLogo(R.drawable.web_hi_res_512)
-                .setTosAndPrivacyPolicyUrls("dfdsfds","dasdasdasdasda")
+                .setTosAndPrivacyPolicyUrls("dfdsfds", "dasdasdasdasda")
                 .setAvailableProviders(
                     listOf(
                         AuthUI.IdpConfig.GoogleBuilder().build(),

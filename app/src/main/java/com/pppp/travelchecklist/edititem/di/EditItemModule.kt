@@ -16,45 +16,44 @@ import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTravelViewModel
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
 import com.pppp.travelchecklist.utils.ResourcesWrapper
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 
 @Module
-class EditItemModule(
-    private val fragment: Fragment,
-    private val listId: String,
-    private val categoryId: String,
-    private val itemId: String
-) {
+abstract class EditItemModule() {
 
-    @Provides
-    fun provideViewStatesProducer(editItemViewModel: EditItemTravelViewModel): ViewStatesProducer<EditItemViewState> = editItemViewModel
+    @Binds
+    abstract fun provideViewStatesProducer(editItemViewModel: EditItemTravelViewModel): ViewStatesProducer<EditItemViewState>
 
-    @Provides
-    fun provideViewIntentConsumer(editItemViewModel: EditItemTravelViewModel): ViewActionsConsumer<EditItemViewIntent> = editItemViewModel
+    @Binds
+    abstract fun provideViewIntentConsumer(editItemViewModel: EditItemTravelViewModel): ViewActionsConsumer<EditItemViewIntent>
 
-    @Provides
-    fun provideViewTransientEventProducer(editItemViewModel: EditItemTravelViewModel): TransientEventsProducer<EditItemTransientEvent> = editItemViewModel
+    @Binds
+    abstract fun provideViewTransientEventProducer(editItemViewModel: EditItemTravelViewModel): TransientEventsProducer<EditItemTransientEvent>
 
-    @EditItemScope
-    @Provides
-    fun provideEditItemViewModel(
-        model: EditItemModel,
-        resources: ResourcesWrapper
-    ): EditItemTravelViewModel = ViewModelProvider(
-        fragment,
-        Factory(model, resources)
-    ).get(EditItemTravelViewModel::class.java)
+    companion object {
 
-    @Provides
-    fun provideEditItemModel(): EditItemModel = FireBaseEditItemModel(listId = listId, categoryId = categoryId, itemId = itemId)
+        @JvmStatic
+        @EditItemScope
+        @Provides
+        fun provideEditItemViewModel(
+            model: EditItemModel, resources: ResourcesWrapper,
+            fragment: Fragment
+        ): EditItemTravelViewModel = ViewModelProvider(
+            fragment,
+            Factory(model, resources)
+        ).get(EditItemTravelViewModel::class.java)
 
+        @JvmStatic
+        @Provides
+        fun provideEditItemModel(@Named(LIST_ID) listId: String, @Named(CATEGORY_ID) categoryId: String, @Named(ITEM_ID) itemId: String): EditItemModel =
+            FireBaseEditItemModel(listId = listId, categoryId = categoryId, itemId = itemId)
+    }
 }
 
-class Factory(
-    val model: EditItemModel,
-    val resources: ResourcesWrapper
-) : ViewModelProvider.Factory {
+class Factory(val model: EditItemModel, val resources: ResourcesWrapper) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return EditItemTravelViewModel(model, EditItemMapper(DateAndTimeFormatterImpl(resources), DateAndTimeProviderImpl())) as T

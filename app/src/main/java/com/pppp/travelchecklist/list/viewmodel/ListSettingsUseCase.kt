@@ -2,8 +2,9 @@ package com.pppp.travelchecklist.list.viewmodel
 
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.VISUALIZE_CHECKED_ITEMS
+import javax.inject.Inject
 
-class ListSettingsUseCase(private val preferenceManager: PreferencesWrapper) {
+class ListSettingsUseCase @Inject constructor(private val preferenceManager: PreferencesWrapper) {
 
     fun registerVisualizationPreferencesListener(callback: (showCheced: Boolean) -> Unit = {}) {
         preferenceManager.registerPreferenceChangeListener { prefs, key ->

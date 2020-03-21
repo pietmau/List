@@ -6,14 +6,13 @@ import android.provider.Settings
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.FirebaseDatabase
 import com.pppp.travelchecklist.BuildConfig
-import com.pppp.travelchecklist.application.di.AppComponentImpl
+import com.pppp.travelchecklist.application.di.AppComponent
 import com.pppp.travelchecklist.application.di.AppModule
 import com.squareup.leakcanary.LeakCanary
 import com.instabug.library.invocation.InstabugInvocationEvent
 import com.instabug.library.Instabug
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
-import com.pppp.travelchecklist.application.di.AppComponent
-import com.pppp.travelchecklist.application.di.DaggerAppComponentImpl
+import com.pppp.travelchecklist.application.di.DaggerAppComponent
 import javax.inject.Inject
 
 class App : Application() {
@@ -50,7 +49,7 @@ class App : Application() {
             )
         }
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        appComponent = DaggerAppComponentImpl.builder().appModule(AppModule(this, firebaseAnalytics)).build().also { it.inject(this) }
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(this, firebaseAnalytics)).build().also { it.inject(this) }
         analytics.onAppOnCreate()
     }
 

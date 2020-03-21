@@ -1,6 +1,5 @@
 package com.pppp.travelchecklist.edititem.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.ViewActionsConsumer
 import com.pppp.travelchecklist.ViewStatesProducer
-import com.pppp.travelchecklist.edititem.di.EditItemModule
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SaveClicked
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemTransientEvent.SelectDate
@@ -26,7 +24,6 @@ import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewIntent.OnTimeSet
 import com.pppp.travelchecklist.edititem.viewmodel.viewmodel.EditItemViewState
 import com.pppp.travelchecklist.main.MainActivity
-import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
 import com.pppp.travelchecklist.utils.appComponent
 import com.pppp.travelchecklist.utils.requireStringArgument
 import com.pppp.travelchecklist.utils.setAfterChangeListener
@@ -52,8 +49,9 @@ class EditItemDialogFragment : BottomSheetDialogFragment(), Callback, DatePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val module = EditItemModule(this, requireStringArgument(LIST_ID), requireStringArgument(CARD_ID), requireStringArgument(ITEM_ID))
-        appComponent?.with(module)?.inject(this)
+        appComponent.editItemComponentFactory
+            .create(this, listId = requireStringArgument(LIST_ID), categoryId = requireStringArgument(CARD_ID), itemId = requireStringArgument(ITEM_ID))
+            .inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

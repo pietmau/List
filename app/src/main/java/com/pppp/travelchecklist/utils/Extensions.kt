@@ -53,11 +53,11 @@ operator fun CompositeDisposable.plusAssign(disposable: Disposable) {
     add(disposable)
 }
 
-val Activity.appComponent: AppComponent?
+val Activity.appComponent: AppComponent
     get() = (this.application as App).appComponent
 
-val Fragment.appComponent: AppComponent?
-    get() = activity?.appComponent
+val Fragment.appComponent: AppComponent
+    get() = requireActivity().appComponent
 
 fun Activity.showDialog(
     @StringRes title: Int,

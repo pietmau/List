@@ -14,18 +14,18 @@ import com.pppp.travelchecklist.list.bottomdialog.CategoryAdderImpl
 import com.pppp.travelchecklist.list.viewmodel.ListSettingsUseCase
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.repository.SingleCheckListRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-class ViewCheckListModule() {
+abstract class ViewCheckListModule() {
 
-    @Provides
-    fun provideCategoryAdder(adder: CategoryAdderImpl): CategoryAdder = adder
+    @Binds
+    abstract fun provideCategoryAdder(adder: CategoryAdderImpl): CategoryAdder
 
-    @Provides
-    fun provideFirebaseSingleCheckListRepository(): SingleCheckListRepository = FirebaseSingleCheckListRepository()
-
-    @Provides
-    fun provideListSettingsUseCase(prefreneces: PreferencesWrapper): ListSettingsUseCase = ListSettingsUseCase(prefreneces)
+    companion object {
+        @Provides
+        fun provideFirebaseSingleCheckListRepository(): SingleCheckListRepository = FirebaseSingleCheckListRepository()
+    }
 }

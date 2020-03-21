@@ -7,11 +7,12 @@ import android.net.Uri
 import com.pppp.travelchecklist.main.MainActivity
 import com.pppp.travelchecklist.notifications.alarmreceiver.AlarmReceiver
 import com.pppp.travelchecklist.notifications.notificationissuer.SEPARATOR
+import javax.inject.Inject
 
 const val SCHEMA = "pppp://"
 const val AUTHORITY = "alarms"
 
-class IntentMakerImpl(private val context: Context) : IntentMaker {
+class IntentMakerImpl @Inject constructor(private val context: Context) : IntentMaker {
 
     override fun makeAlarmIntent(listId: String, catagoryId: String, itemId: String): PendingIntent {
         val intent = makeAlarmIntent()

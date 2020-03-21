@@ -14,6 +14,7 @@ import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiverModel
 import com.pppp.travelchecklist.notifications.bootreceiver.FirebaseBootReceiverModel
 import com.pppp.travelchecklist.notifications.notificationissuer.NotificationMaker
 import com.pppp.travelchecklist.notifications.notificationissuer.NotificationMakerImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,35 +22,33 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Named
 
 @Module
-object NotificationModule {
+abstract class NotificationModule {
 
-    @JvmStatic
-    @Provides
-    fun provideAnalytics(logger: AnalyticsLogger): NotificationsAnalyticsLogger = logger
+    @Binds
+    abstract fun provideAnalytics(logger: AnalyticsLogger): NotificationsAnalyticsLogger
 
-    @JvmStatic
-    @Provides
-    fun provideIntentMaker(context: Context): IntentMaker = IntentMakerImpl(context)
+    @Binds
+    abstract fun provideIntentMaker(maker: IntentMakerImpl): IntentMaker
 
-    @JvmStatic
-    @Provides
-    fun provideUserCheckListsRepository(): UserCheckListsRepository = FirebaseUserCheckListsRepository()
+    @Binds
+    abstract fun provideNotificationIntentMaker(notificationIntentMaker: NotificationMakerImpl): NotificationMaker
 
-    @JvmStatic
-    @Provides
-    @Named("IO")
-    fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    @Binds
+    abstract fun provideBootReceiverModel(repo: FirebaseBootReceiverModel): BootReceiverModel
 
-    @JvmStatic
-    @Provides
-    fun provideNotificationIntentMaker(notificationIntentMaker: NotificationMakerImpl): NotificationMaker = notificationIntentMaker
+    companion object {
 
-    @JvmStatic
-    @Provides
-    fun provideAlarmsRepository(): AlarmsRepository = FirebaseAlarmsRepository()
+        @JvmStatic
+        @Provides
+        fun provideUserCheckListsRepository(): UserCheckListsRepository = FirebaseUserCheckListsRepository()
 
-    @JvmStatic
-    @Provides
-    fun provideBootReceiverModel(repo: FirebaseBootReceiverModel): BootReceiverModel = repo
+        @JvmStatic
+        @Provides
+        @Named("IO")
+        fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
+        @JvmStatic
+        @Provides
+        fun provideAlarmsRepository(): AlarmsRepository = FirebaseAlarmsRepository()
+    }
 }

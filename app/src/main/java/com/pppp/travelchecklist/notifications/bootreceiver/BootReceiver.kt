@@ -21,7 +21,7 @@ class BootReceiver : BroadcastReceiver() {
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        (context?.applicationContext as App).appComponent.with(NotificationModule).inject(this)
+        (context?.applicationContext as App).appComponent.notificationSubComponentFactory.create().inject(this)
         val pendingResult = goAsync()
         scope.launch {
             presenter.onReceive(getAlarmManager(context))

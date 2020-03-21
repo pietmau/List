@@ -11,24 +11,29 @@ import com.pppp.travelchecklist.ViewStatesProducer
 import com.pppp.travelchecklist.analytics.AnalyticsLogger
 import com.pppp.travelchecklist.login.viewmodel.FirebaseKillSwitch
 import com.pppp.travelchecklist.login.viewmodel.LoginViewModel
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class LoginModule(private val activity: FragmentActivity) {
+abstract class LoginModule() {
 
-    @Provides
-    fun provideProducer(loginViewModel: LoginViewModel): ViewStatesProducer<LoginViewModel.LoginViewState> = loginViewModel
+    @Binds
+    abstract fun provideProducer(loginViewModel: LoginViewModel): ViewStatesProducer<LoginViewModel.LoginViewState>
 
-    @Provides
-    fun provideConsumer(loginViewModel: LoginViewModel): ViewActionsConsumer<LoginViewModel.LoginViewIntent> = loginViewModel
+    @Binds
+    abstract fun provideConsumer(loginViewModel: LoginViewModel): ViewActionsConsumer<LoginViewModel.LoginViewIntent>
 
-    @Singleton
-    @Provides
-    fun getLoginViewModel(analyticsLogger: AnalyticsLogger) = ViewModelProviders.of(
-        activity, LoginViewModelFactory(analyticsLogger, activity)
-    ).get(LoginViewModel::class.java)
+    companion object {
+
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun getLoginViewModel(analyticsLogger: AnalyticsLogger, activity: FragmentActivity) = ViewModelProviders.of(
+            activity, LoginViewModelFactory(analyticsLogger, activity)
+        ).get(LoginViewModel::class.java)
+    }
 }
 
 class LoginViewModelFactory(

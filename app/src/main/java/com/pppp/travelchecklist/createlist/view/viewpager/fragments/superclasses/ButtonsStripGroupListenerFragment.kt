@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.entities.pokos.TagImpl
 import com.pppp.travelchecklist.R
@@ -14,7 +15,6 @@ import com.pppp.travelchecklist.application.App
 import com.pppp.travelchecklist.main.viewmodel.CreateChecklistView
 import com.pppp.travelchecklist.createlist.NewListActivity
 import com.pppp.travelchecklist.createlist.di.NewListSubComponent
-import com.pppp.travelchecklist.createlist.di.NewListModule
 import com.pppp.travelchecklist.createlist.model.models.TagSelectorModel
 import com.pppp.travelchecklist.createlist.view.custom.ButtonsStripGroup
 import kotlinx.android.synthetic.main.button_strip_fragment.*
@@ -32,7 +32,6 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.button_strip_fragment, container, false)
-        strip = view.findViewById(R.id.strip)
         return view
     }
 
@@ -43,9 +42,15 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        strip = view.findViewById(R.id.strip)
         strip.title = getTitle()
         strip.listener = this
-        setItems(model.tags.toList())
+        if (savedInstanceState == null) {
+            model.tagsLivedata.observe(viewLifecycleOwner, Observer {
+                setItems(it.toList())
+            })
+        }
+
     }
 
     fun setItems(group: List<Pair<Tag, Boolean>>) {
@@ -63,8 +68,8 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     }
 
     fun showProgress(show: Boolean) {
-        progress_container.visibility = if (show) VISIBLE else GONE
-        strip.visibility = if (!show) View.VISIBLE else View.GONE
+       // progress_container.visibility = if (show) VISIBLE else GONE
+       // strip.visibility = if (!show) View.VISIBLE else View.GONE
     }
 
     abstract fun getTitle(): String?

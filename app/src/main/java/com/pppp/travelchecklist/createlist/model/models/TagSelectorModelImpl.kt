@@ -1,5 +1,7 @@
 package com.pppp.travelchecklist.createlist.model.models
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.createlist.model.TagsCache
@@ -10,23 +12,21 @@ abstract class TagSelectorModelImpl(
 ) :
     ViewModel(), TagSelectorModel {
 
+    override val tagsLivedata: LiveData<MutableMap<Tag, Boolean>>
     override var tags: MutableMap<Tag, Boolean> = mutableMapOf()
 
     init {
-        tagsCache.getTags.observeForever { event ->
-            when (event) {
-                is TagsCache.Event.Success -> {
-                    event.result ?: return@observeForever
-                    tags = event.result
-                        .filter { it.id == groupId }
-                        .flatMap { it.tags }
-                        .map { it to false }
-                        .toMap()
-                        .toMutableMap()
-                }
-                is TagsCache.Event.Failure -> throw Exception(event.exception)
+        tagsLivedata = tagsCache.getTags
+            .filterInstance<TagsCache.Event.Success>()
+            .map { it.result }
+            .filterNotNUll()
+            .map {
+                it.filter { it.id == groupId }
+                    .flatMap { it.tags }
+                    .map { it to false }
+                    .toMap()
+                    .toMutableMap()
             }
-        }
     }
 
     override fun onTagSelected(tag: Tag) {
@@ -42,5 +42,5 @@ abstract class TagSelectorModelImpl(
     override fun onTagDeSeleected(tag: Tag) {
         setSelected(tag, false)
     }
-
 }
+

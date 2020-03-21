@@ -16,6 +16,7 @@
         android:paddingBottom="5dp" />
 
     <ProgressBar
+        android:visibility="gone"
         android:id="@+id/progress_container"
         android:layout_width="50dp"
         android:layout_height="50dp"

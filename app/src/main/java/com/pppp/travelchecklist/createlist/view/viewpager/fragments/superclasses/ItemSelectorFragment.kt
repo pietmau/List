@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.pietrantuono.entities.Tag
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
@@ -41,7 +42,9 @@ abstract class ItemSelectorFragment : Fragment(), ButtonsStrip.Callback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setItems(model.tags.toList())
+        model.tagsLivedata?.observe(viewLifecycleOwner, Observer {
+            setItems(it.toList())
+        })
     }
 
     abstract fun setItems(group: List<Pair<Tag, Boolean>>)

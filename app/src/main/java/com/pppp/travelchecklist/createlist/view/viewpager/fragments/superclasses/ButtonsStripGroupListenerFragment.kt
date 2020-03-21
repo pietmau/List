@@ -45,12 +45,9 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
         strip = view.findViewById(R.id.strip)
         strip.title = getTitle()
         strip.listener = this
-        if (savedInstanceState == null) {
-            model.tagsLivedata.observe(viewLifecycleOwner, Observer {
-                setItems(it.toList())
-            })
-        }
-
+        model.tagsLivedata?.observe(viewLifecycleOwner, Observer {
+            setItems(it.toList())
+        })
     }
 
     fun setItems(group: List<Pair<Tag, Boolean>>) {
@@ -68,8 +65,8 @@ abstract class ButtonsStripGroupListenerFragment : Fragment(), ButtonsStripGroup
     }
 
     fun showProgress(show: Boolean) {
-       // progress_container.visibility = if (show) VISIBLE else GONE
-       // strip.visibility = if (!show) View.VISIBLE else View.GONE
+        progress_container.visibility = if (show) VISIBLE else GONE
+        strip.visibility = if (!show) View.VISIBLE else View.GONE
     }
 
     abstract fun getTitle(): String?

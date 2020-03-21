@@ -43,6 +43,18 @@ class ButtonsStripGroup @JvmOverloads constructor(
         }
     }
 
+    override fun setItemsSelected(tags: List<Pair<Tag, Boolean>>) {
+        val map = tags.toMap()
+        (0..box.childCount - 1)
+            .map { box.getChildAt(it) as CompoundButton }
+            .map {
+                val key = it.tag as? Tag
+                it.setOnCheckedChangeListener(null)
+                it.isChecked = map.get(key) ?: false
+                it.setOnCheckedChangeListener(this)
+            }
+    }
+
     private fun deselectAll() {
         box.getChildren()
             .map { it as? ToggleButton }

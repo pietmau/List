@@ -24,4 +24,7 @@ interface Api {
 
     @GET("prod/mock/tags-group")
     fun getTagsGroupCall(): Call<List<TagsGroupImpl>>
+
+    @GET("prod/mock/tags-group")
+    suspend fun getTags(): List<TagsGroupImpl>
 }

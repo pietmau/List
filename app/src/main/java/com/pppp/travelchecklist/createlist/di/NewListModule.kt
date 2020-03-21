@@ -29,8 +29,8 @@ object NewListModule {
 
     @JvmStatic
     @Provides
-    fun provideWhoIsTravellingModelFactory(db: TagsCache) =
-        WhoIsTravellingModelFactory(db)
+    fun provideWhoIsTravellingModelFactory(db: TagsCache, activity: FragmentActivity) =
+        WhoIsTravellingModelFactory(db, activity)
 
     @JvmStatic
     @Provides
@@ -39,8 +39,8 @@ object NewListModule {
 
     @JvmStatic
     @Provides
-    fun providePlannedActivitesModelFactory(db: TagsCache) =
-        PlannedActivitesModelFactory(db)
+    fun providePlannedActivitesModelFactory(db: TagsCache, activity: FragmentActivity) =
+        PlannedActivitesModelFactory(db, activity)
 
     @JvmStatic
     @Provides
@@ -54,8 +54,8 @@ object NewListModule {
 
     @JvmStatic
     @Provides
-    fun provideExpectedWeatherModelFactory(db: TagsCache) =
-        ExpectedWeatherModelFactory(db)
+    fun provideExpectedWeatherModelFactory(db: TagsCache, activity: FragmentActivity) =
+        ExpectedWeatherModelFactory(db, activity)
 
     @JvmStatic
     @Provides
@@ -64,8 +64,8 @@ object NewListModule {
 
     @JvmStatic
     @Provides
-    fun provideAccomodationModelFactory(db: TagsCache) =
-        AccomodationModelFactory(db)
+    fun provideAccomodationModelFactory(db: TagsCache, activity: FragmentActivity) =
+        AccomodationModelFactory(db, activity)
 
     @JvmStatic
     @Provides
@@ -74,8 +74,8 @@ object NewListModule {
 
     @JvmStatic
     @Provides
-    fun provideLongOrShortTripFragmentFactory(db: TagsCache) =
-        LongOrShortTripModelFactory(db)
+    fun provideLongOrShortTripFragmentFactory(db: TagsCache, activity: FragmentActivity) =
+        LongOrShortTripModelFactory(db, activity)
 
     @JvmStatic
     @Provides

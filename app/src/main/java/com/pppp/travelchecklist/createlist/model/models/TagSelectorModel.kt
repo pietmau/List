@@ -7,5 +7,5 @@ interface TagSelectorModel {
     fun onTagSelected(tag: Tag)
     fun onTagDeSeleected(tag: Tag)
     var tags: MutableMap<Tag, Boolean>
-    val tagsLivedata: LiveData<MutableMap<Tag, Boolean>>
+    val tagsLivedata: LiveData<MutableMap<Tag, Boolean>>?
 }

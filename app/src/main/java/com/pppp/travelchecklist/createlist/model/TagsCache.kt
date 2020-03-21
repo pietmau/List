@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.createlist.model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.pietrantuono.entities.Tag
 import com.pietrantuono.entities.TagsGroup
 import com.pppp.travelchecklist.createlist.model.models.InitialTagsRepository
 import retrofit2.Call
@@ -10,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TagsCacheImpl(
-    repository: InitialTagsRepository
+    private val repository: InitialTagsRepository
 ) : TagsCache, ViewModel() {
     override val getTags = MutableLiveData<TagsCache.Event>()
 
@@ -25,10 +26,17 @@ class TagsCacheImpl(
             }
         })
     }
+
+    override suspend fun getTags(groupId: String) =
+        repository.getTags()
+            .filter { it.id == groupId }
+            .flatMap { it.tags }
 }
 
 interface TagsCache {
     val getTags: MutableLiveData<Event>
+
+    suspend fun getTags(groupId: String): List<Tag>
 
     sealed class Event {
         data class Failure(val exception: Throwable) : Event()

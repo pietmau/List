@@ -18,7 +18,7 @@ open class ButtonsStrip @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
+) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), CompoundButton.OnCheckedChangeListener {
 
     private var items = mutableListOf<Tag>()
     var callback: Callback? = null
@@ -41,7 +41,7 @@ open class ButtonsStrip @JvmOverloads constructor(
         this.items.clear()
         this.items.addAll(items)
         box.removeAllViews()
-        items.forEachWithIndex { index, item -> addItem(item, index) }
+        items.sortedBy { it.title }.forEachWithIndex { index, item -> addItem(item, index) }
     }
 
     private fun addItem(item: Tag, index: Int) {
@@ -57,33 +57,33 @@ open class ButtonsStrip @JvmOverloads constructor(
                 text = item.title
                 textOff = item.title
                 textOn = item.title
-                setOnCheckedChangeListener { view, checked ->
-                    OnCheckedChange(view, checked)
-                }
+                setOnCheckedChangeListener(this@ButtonsStrip)
             }
 
-    private fun OnCheckedChange(view: CompoundButton?, checked: Boolean) {
-        val item = (view as ToggleButton).getTag() as? TagImpl
-        item ?: return
-        if (checked) {
-            callback?.onItemSelected(item)
-        } else {
-            callback?.onItemDeSelected(item)
-        }
-    }
-
-    fun setItemsSelected(tags: List<Pair<Tag, Boolean>>) {
+    open fun setItemsSelected(tags: List<Pair<Tag, Boolean>>) {
         val map = tags.toMap()
         (0..box.childCount - 1)
             .map { box.getChildAt(it) as CompoundButton }
             .map {
                 val key = it.tag as? Tag
+                it.setOnCheckedChangeListener(null)
                 it.isChecked = map.get(key) ?: false
+                it.setOnCheckedChangeListener(this)
             }
     }
 
     interface Callback {
         fun onItemSelected(item: Tag)
         fun onItemDeSelected(item: Tag)
+    }
+
+    override fun onCheckedChanged(view: CompoundButton?, isChecked: Boolean) {
+        val item = (view as ToggleButton).getTag() as? TagImpl
+        item ?: return
+        if (isChecked) {
+            callback?.onItemSelected(item)
+        } else {
+            callback?.onItemDeSelected(item)
+        }
     }
 }

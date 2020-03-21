@@ -39,6 +39,8 @@ class RetrofitClient(url: String) : Client {
 
     override fun getTagsGroupCall() = api.getTagsGroupCall()
 
+    override suspend fun getTags(): List<TagsGroupImpl> = api.getTags()
+
 }
 
 interface Client {
@@ -47,4 +49,6 @@ interface Client {
     fun getTagsGroup(): Single<out List<TagsGroup>>
 
     fun getTagsGroupCall(): Call<List<TagsGroupImpl>>
+
+    suspend fun getTags(): List<TagsGroupImpl>
 }

@@ -89,5 +89,6 @@
     <string name="key_theme">key_theme</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="choose_theme">Choose theme</string>
 
 </resources>

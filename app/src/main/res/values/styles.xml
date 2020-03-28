@@ -4,16 +4,12 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorAccent</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/green_light</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="fabColor">@color/green_super_light</item>
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="shapeAppearanceLargeComponent">@style/RoundCorners</item>
         <item name="android:actionMenuTextColor">@color/orange</item>
-        <item name="customDividerColor">@color/separatorLineColor</item>
-        <item name="customDividerHeight">@dimen/very_small_margin</item>
-        <item name="betterMenuDrawableTint">@color/lilla_dark</item>
-
     </style>
 
     <style name="CustomToggleButton">
@@ -63,7 +59,7 @@
     </style>
 
     <style name="FirebaseUI" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/firebaseColorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/FirebaseUI.Button</item>

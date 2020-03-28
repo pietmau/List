@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.pppp.travelchecklist.R
+import com.pppp.travelchecklist.confirmation.DeleteBottomConfirmationFragment
 import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.main.MainViewIntent
 import com.pppp.travelchecklist.createlist.NewListActivity
 import com.pppp.travelchecklist.settings.SettingsActivity
+import com.pppp.travelchecklist.settings.SettingsBottomDialogFragment
 
 object NavigatorImpl : Navigator {
 
@@ -20,9 +22,8 @@ object NavigatorImpl : Navigator {
         }
     }
 
-    override fun goToSettings(activity: Activity) {
-        activity.startActivity(Intent(activity, SettingsActivity::class.java))
-        activity.overridePendingTransition(R.anim.slide_up, R.anim.no_change);
+    override fun goToSettings(activity: AppCompatActivity) {
+        SettingsBottomDialogFragment().show(activity.supportFragmentManager, SettingsBottomDialogFragment.TAG)
     }
 
     override fun goToList(activity: AppCompatActivity, listId: String) {
@@ -54,7 +55,7 @@ interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, Ma
 
     fun removeListFragment(activity: AppCompatActivity)
 
-    fun goToSettings(context: Activity)
+    fun goToSettings(context: AppCompatActivity)
 }
 
 interface Mapper<IN, OUT> {

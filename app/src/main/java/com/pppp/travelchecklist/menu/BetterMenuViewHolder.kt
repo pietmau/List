@@ -10,12 +10,14 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.utils.geColorFromTheme
 
 class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    private var subtitle: TextView
     private val title: TextView
     private val context = itemView.context
     private val resources = context.resources
 
     init {
         title = view.findViewById(R.id.title)
+        subtitle = view.findViewById(R.id.subtitle)
     }
 
     fun bind(betterMenuItem: BetterMenuItem, callback: (Int) -> Unit) {
@@ -23,6 +25,7 @@ class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         itemView.setOnClickListener {
             callback(adapterPosition)
         }
+        subtitle.text = betterMenuItem.subtitle
         setUpIcon(betterMenuItem)
         title.setTextColor(getCofflor(betterMenuItem.selected))
     }

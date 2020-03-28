@@ -8,6 +8,8 @@ data class BetterMenuItem(
     val type: ViewType = ViewType.NORMAL,
     val id: String,
     val title: String,
-    @DrawableRes val icon: Int? = null,
+    val subtitle: String? = null,
+    @DrawableRes
+    val icon: Int? = null,
     val selected: Boolean = false
 )

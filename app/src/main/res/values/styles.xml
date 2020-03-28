@@ -11,6 +11,8 @@
         <item name="shapeAppearanceLargeComponent">@style/RoundCorners</item>
     </style>
 
+    <style name="BottomBarThemeOverlay" parent="ThemeOverlay.MaterialComponents.Light"></style>
+
     <style name="CustomToggleButton">
         <item name="android:background">@drawable/selector_bg_radio_button</item>
         <item name="android:textColor">@color/selector_text_radio_button</item>

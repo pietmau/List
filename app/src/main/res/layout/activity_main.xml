@@ -87,12 +87,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:backgroundTint="@color/green_super_light"
         app:fabAlignmentMode="center"
         app:fabAnimationMode="slide"
-        app:hideOnScroll="true" />
+        app:hideOnScroll="true"
+        app:popupTheme="@style/BottomBarThemeOverlay" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

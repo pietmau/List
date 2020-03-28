@@ -9,7 +9,6 @@ import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.main.MainViewIntent
 import com.pppp.travelchecklist.createlist.NewListActivity
-import com.pppp.travelchecklist.settings.SettingsActivity
 import com.pppp.travelchecklist.settings.SettingsBottomDialogFragment
 
 object NavigatorImpl : Navigator {

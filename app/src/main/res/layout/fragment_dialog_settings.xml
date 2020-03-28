@@ -2,6 +2,7 @@
 <com.pppp.travelchecklist.menu.BetterMenu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settings_menu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin">
 
 </com.pppp.travelchecklist.menu.BetterMenu>

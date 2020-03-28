@@ -8,6 +8,7 @@ import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.main.MainViewIntent
 import com.pppp.travelchecklist.createlist.NewListActivity
+import com.pppp.travelchecklist.settings.SettingsActivity
 
 object NavigatorImpl : Navigator {
 
@@ -17,6 +18,11 @@ object NavigatorImpl : Navigator {
                 this.beginTransaction().remove(it).commitAllowingStateLoss()
             }
         }
+    }
+
+    override fun goToSettings(activity: Activity) {
+        activity.startActivity(Intent(activity, SettingsActivity::class.java))
+        activity.overridePendingTransition(R.anim.slide_up, R.anim.no_change);
     }
 
     override fun goToList(activity: AppCompatActivity, listId: String) {
@@ -48,6 +54,7 @@ interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, Ma
 
     fun removeListFragment(activity: AppCompatActivity)
 
+    fun goToSettings(context: Activity)
 }
 
 interface Mapper<IN, OUT> {

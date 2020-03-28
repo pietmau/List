@@ -141,3 +141,6 @@ fun Context.geColorFromTheme(@AttrRes color: Int): Int {
     val colorRes = resolvedAttr.run { if (resourceId != 0) resourceId else data }
     return ContextCompat.getColor(this, colorRes)
 }
+
+val <T> T.exhaustive: T
+    get() = this

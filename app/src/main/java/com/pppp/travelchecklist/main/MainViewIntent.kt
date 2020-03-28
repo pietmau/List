@@ -11,5 +11,5 @@ sealed class MainViewIntent : ViewIntent {
     data class GetLatest(val path: List<String>) : MainViewIntent()
     object DeleteCurrentList : MainViewIntent()
     object OnNoListFound : MainViewIntent()
-
+    object SettingsSelected : MainViewIntent()
 }

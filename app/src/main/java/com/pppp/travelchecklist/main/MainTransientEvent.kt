@@ -8,4 +8,5 @@ sealed class MainTransientEvent : TransientEvent {
     object GoToCreateNewList : MainTransientEvent()
     data class GoToList(val listId: String) : MainTransientEvent()
     data class Error(val message: String) : MainTransientEvent()
+    object GoToSettings : MainTransientEvent()
 }

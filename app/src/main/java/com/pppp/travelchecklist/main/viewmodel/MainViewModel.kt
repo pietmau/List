@@ -42,6 +42,8 @@ class MainViewModel(
         is MainViewIntent.OnSettingChanged -> mainUseCase.onUserChangedSettings(mainViewAction.itemId)
         MainViewIntent.DeleteCurrentList -> deleteCurrentList()
         MainViewIntent.OnNoListFound -> onCurrentListNotAvailable()
+        is MainViewIntent.SettingsSelected -> emitTransientEvent(MainTransientEvent.GoToSettings)
+
     }
 
     private fun onCurrentListNotAvailable() {

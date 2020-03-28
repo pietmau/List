@@ -24,6 +24,7 @@ import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CREATE_NEW_LIST
 import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
+import com.pppp.travelchecklist.utils.exhaustive
 import com.pppp.travelchecklist.utils.findAddedFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.UnsupportedOperationException
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
             R.id.add -> AddNewListBottomConfirmationFragment().show(supportFragmentManager, AddNewListBottomConfirmationFragment.ADD_LIST)
             R.id.action_show_hide_checked -> emit(MainViewIntent.OnSettingChanged(item.itemId))
             R.id.delete -> DeleteBottomConfirmationFragment().show(supportFragmentManager, DeleteBottomConfirmationFragment.DELETE_LIST)
+            R.id.settings -> emit(MainViewIntent.SettingsSelected)
         }
         return true
     }
@@ -124,6 +126,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         is MainTransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
         is MainTransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
         is MainTransientEvent.Error -> onError(transientEvent.message)
+        is MainTransientEvent.GoToSettings -> navigator.goToSettings(this)
     }
 
     private fun emit(mainViewAction: MainViewIntent) {

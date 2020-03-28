@@ -8,7 +8,7 @@ import java.util.Date
 import java.util.Locale
 
 internal fun TravelCheckList.getValidAlarms(currentTime: Long): List<Alarm> {
-    val dateFormat = SimpleDateFormat("MM-dd' 'HH:mm:ss.SSSXXX", Locale.UK)
+    val dateFormat = SimpleDateFormat("MM-dd' 'HH:mm:ss.SSS", Locale.UK)
 
     fun toAlarm(travelCheckList: TravelCheckList, it: CheckListItem, category: Category): Alarm {
         val listId = requireNotNull(travelCheckList.id)

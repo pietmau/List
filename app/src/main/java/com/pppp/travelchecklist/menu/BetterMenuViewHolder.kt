@@ -1,15 +1,8 @@
 package com.pppp.travelchecklist.menu
 
-import android.graphics.drawable.Icon
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.CheckedTextView
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorRes
-import androidx.annotation.Dimension
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -17,12 +10,12 @@ import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.utils.geColorFromTheme
 
 class BetterMenuViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-    private val title: CheckedTextView
+    private val title: TextView
     private val context = itemView.context
     private val resources = context.resources
 
     init {
-        title = view.findViewById(R.id.design_menu_item_text)
+        title = view.findViewById(R.id.title)
     }
 
     fun bind(betterMenuItem: BetterMenuItem, callback: (Int) -> Unit) {

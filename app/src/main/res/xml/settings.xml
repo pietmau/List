@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
+        app:icon="@drawable/ic_color_lens_24px"
         app:key="@string/key_theme"
         app:title="@string/choose_theme" />
 

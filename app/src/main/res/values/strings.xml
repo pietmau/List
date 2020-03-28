@@ -90,5 +90,7 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="choose_theme">Choose theme</string>
+    <string name="foo">Foo</string>
+    <string name="default_theme">Default</string>
 
 </resources>

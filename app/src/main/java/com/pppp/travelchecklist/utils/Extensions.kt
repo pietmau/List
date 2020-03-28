@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
@@ -144,3 +145,6 @@ fun Context.geColorFromTheme(@AttrRes color: Int): Int {
 
 val <T> T.exhaustive: T
     get() = this
+
+val Fragment.sharedPreferences
+    get() = requireNotNull(PreferenceManager.getDefaultSharedPreferences(requireActivity()))

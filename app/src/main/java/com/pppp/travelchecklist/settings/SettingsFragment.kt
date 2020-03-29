@@ -10,31 +10,25 @@ import com.pppp.travelchecklist.settings.dialog.ThemeSettingDialogFragment.Compa
 import com.pppp.travelchecklist.utils.sharedPreferences
 import java.lang.UnsupportedOperationException
 
-class SettingsFragment : PreferenceFragmentCompat() {
-    private lateinit var listener: (SharedPreferences, String) -> Unit
+class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+    private lateinit var themePreference: Preference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-        val themePreference = requireNotNull(findPreference<Preference>(getString(R.string.key_theme)))
+        themePreference = requireNotNull(findPreference<Preference>(getString(R.string.key_theme)))
         themePreference.setOnPreferenceClickListener {
             showThemeDialog()
         }
         setSummary(themePreference)
-        listener = { _, key ->
-            when (key) {
-                THEME_KEY -> setSummary(themePreference)
-            }
-        }
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun setSummary(pref: Preference) {
         pref.summary = createSummary()
     }
 
-    private fun createSummary(): CharSequence? {
-        val theme = sharedPreferences.getInt(THEME_KEY, 0)
-        return when (theme) {
+    private fun createSummary(): String {
+        return when (sharedPreferences.getInt(THEME_KEY, 0)) {
             0 -> getString(R.string.dark_theme)
             1 -> getString(R.string.light_theme)
             2 -> getString(R.string.default_theme)
@@ -45,5 +39,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun showThemeDialog(): Boolean {
         ThemeSettingDialogFragment().show(childFragmentManager, ThemeSettingDialogFragment.TAG)
         return true
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            THEME_KEY -> setSummary(themePreference)
+        }
     }
 }

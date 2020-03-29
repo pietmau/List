@@ -15,15 +15,15 @@ class ThemeSettingDialogFragment : AppCompatDialogFragment() {
         return MaterialAlertDialogBuilder(context)
             .setTitle(R.string.choose_theme)
             .setSingleChoiceItems(listAdapter, index) { dialog, position ->
-                setPreference(requireNotNull(listAdapter.getItem(position)).theme)
+                setPreference(requireNotNull(listAdapter.getItem(position)).appTheme)
                 dialog.dismiss()
             }
             .create()
     }
 
-    private fun setPreference(theme: Theme) {
+    private fun setPreference(appTheme: AppTheme) {
         sharedPreferences.edit().run {
-            putInt(THEME_KEY, theme.intValue)
+            putInt(THEME_KEY, appTheme.intValue)
             commit()
         }
     }

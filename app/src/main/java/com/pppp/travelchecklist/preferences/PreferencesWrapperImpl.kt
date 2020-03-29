@@ -30,6 +30,8 @@ class PreferencesWrapperImpl(private val preferences: SharedPreferences) : Prefe
 
     override fun setBoolean(key: String, value: Boolean) = preferences.edit().putBoolean(key, value).apply()
 
+    override fun getInt(key: String, defaultValue: Int) = preferences.getInt(key, defaultValue)
+
 }
 
 interface PreferencesWrapper {
@@ -37,5 +39,5 @@ interface PreferencesWrapper {
     fun registerPreferenceChangeListener(callback: ((preferences: SharedPreferences, key: String) -> Unit) = { _, _ -> })
     fun getBoolean(key: String): Boolean
     fun setBoolean(key: String, value: Boolean)
-
+    fun getInt(themeKey: String, defaultValue: Int = 0): Int
 }

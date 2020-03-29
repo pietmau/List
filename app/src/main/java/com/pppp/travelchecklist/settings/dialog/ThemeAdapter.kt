@@ -13,15 +13,15 @@ class ThemeAdapter(ctx: Context) : ArrayAdapter<ThemeContainer>(ctx, android.R.l
     private fun themes(): List<ThemeContainer> {
         return listOf(
             ThemeContainer(
-                Theme.DARK,
+                AppTheme.DARK,
                 context.getString(R.string.dark_theme)
             ),
             ThemeContainer(
-                Theme.LIGHT,
+                AppTheme.LIGHT,
                 context.getString(R.string.light_theme)
             ),
             ThemeContainer(
-                Theme.DEFAULT,
+                AppTheme.DEFAULT,
                 context.getString(R.string.default_theme)
             )
         )

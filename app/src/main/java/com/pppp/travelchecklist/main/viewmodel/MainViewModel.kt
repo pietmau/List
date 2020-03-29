@@ -13,6 +13,7 @@ import com.pppp.travelchecklist.main.MainViewIntent
 import com.pppp.travelchecklist.main.MainViewState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -25,13 +26,13 @@ class MainViewModel(
     ViewActionsConsumer<MainViewIntent>,
     TransientEventsProducer<MainTransientEvent>, ViewModel() {
 
-    override val states: LiveData<MainViewState>
-        get() {
-            mainUseCase.subscribeToChanges {
-                updateCurrentViewState(it)
-            }
-            return internalStates
+    init {
+        viewModelScope.launch {
+            mainUseCase.settings().collect { updateSettings(it) }
         }
+    }
+
+    override val states: LiveData<MainViewState> by lazy { internalStates }
 
     override fun accept(mainViewAction: MainViewIntent) = when (mainViewAction) {
         MainViewIntent.NavMenuOpenSelected -> openNavMenu()
@@ -62,10 +63,15 @@ class MainViewModel(
         }
     }
 
-    private fun updateCurrentViewState(settings: MainViewState.Settings) {
-        val viewState = internalStates.value ?: MainViewState.None()
-        emitNewViewState(viewState.withNewSettings(settings))
+    private fun updateSettings(settings: Settings) {
+        val viewState = (internalStates.value ?: MainViewState.None()).withSettings(settings)
+        internalStates.postValue(viewState)
     }
+
+//    private fun updateCurrentViewState(settings: MainViewState.Settings) {
+//        val viewState = internalStates.value ?: MainViewState.None()
+//        emitNewViewState(viewState.withNewSettings(settings))
+//    }
 
     private fun openNavMenu() {
         analytics.onMainMenuOpen()
@@ -87,8 +93,8 @@ class MainViewModel(
     private fun onError(it: Throwable?) = emitTransientEvent(MainTransientEvent.Error(it?.message ?: ""))
 
     private fun emitNewViewState(newViewState: MainViewState) {
-        val oldSettings = internalStates.value?.settings
-        val viewState = newViewState.makeCopyReplacingOldSettingsWithNew(oldSettings = oldSettings)
+        val oldSettings = internalStates.value?.settings ?: Settings()
+        val viewState = newViewState.withSettings(oldSettings)
         internalStates.postValue(viewState)
     }
 

@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.pppp.travelchecklist.ViewState
 import com.pppp.travelchecklist.main.view.MenuViewState
+import com.pppp.travelchecklist.main.viewmodel.Settings
 import com.pppp.travelchecklist.utils.replaceSameKeyItemsWith
 import kotlinx.android.parcel.Parcelize
 
@@ -23,40 +24,13 @@ sealed class MainViewState(val settings: Settings = Settings()) : ViewState, Par
     @Parcelize
     data class LatestListNotAvailable(val prefs: Settings = Settings()) : MainViewState(prefs)
 
-    fun makeCopyReplacingOldSettingsWithNew(oldSettings: Settings?): MainViewState {
-        val values = oldSettings?.values?.replaceSameKeyItemsWith(newElements = settings.values) ?: mapOf()
-        return withNewSettings(Settings(values))
-    }
-
-    fun withNewSettings(newSettings: Settings): MainViewState {
+    fun withSettings(newSettings: Settings): MainViewState {
         return when (this) {
             is NoListsPresent -> this.copy(newSettings)
             is Content -> this.copy(newSettings)
             is Loading -> this.copy(newSettings)
             is None -> this.copy(newSettings)
             is LatestListNotAvailable -> this.copy(newSettings)
-        }
-    }
-
-    data class Settings(val values: Map<Int, MenuViewState> = mapOf()) : Parcelable {
-
-        constructor(parcel: Parcel) : this()
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) { /* NoOp */
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<Settings> {
-            override fun createFromParcel(parcel: Parcel): Settings {
-                return Settings(parcel)
-            }
-
-            override fun newArray(size: Int): Array<Settings?> {
-                return arrayOfNulls(size)
-            }
         }
     }
 }

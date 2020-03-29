@@ -1,16 +1,27 @@
 package com.pppp.travelchecklist.main.viewmodel
 
+import android.os.Parcelable
 import com.pppp.travelchecklist.R
-import com.pppp.travelchecklist.main.MainViewState
 import com.pppp.travelchecklist.main.view.MenuViewState
 import com.pppp.travelchecklist.preferences.PreferencesWrapper
 import com.pppp.travelchecklist.preferences.VISUALIZE_CHECKED_ITEMS
+import com.pppp.travelchecklist.settings.dialog.AppTheme
+import com.pppp.travelchecklist.settings.dialog.ThemeSettingDialogFragment.Companion.THEME_KEY
+import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 interface SettingsUseCase {
     fun onUserChangedSettings(itemId: Int)
-    fun subscribeToChanges(callback: (MainViewState.Settings) -> Unit = {})
+    fun subscribeToChanges(callback: (Settings) -> Unit = {})
     fun onVisualizeCheckedChanged()
     fun getCheckedVisualizePreference(): MutableMap<Int, MenuViewState>
+    @ExperimentalCoroutinesApi
+    fun settings(): Flow<Settings>
+    fun getCurrentSettings(): Settings
 }
 
 class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapper) : SettingsUseCase {
@@ -22,17 +33,31 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
         }
     }
 
-    override fun subscribeToChanges(callback: ((MainViewState.Settings) -> Unit)) {
-        preferences.registerPreferenceChangeListener { _, key ->
-            val map = when (key) {
-                VISUALIZE_CHECKED_ITEMS -> getCheckedVisualizePreference()
-                else -> emptyMap<Int, MenuViewState>()
-            }
-            if (!map.isEmpty()) {
-                callback(MainViewState.Settings(map))
-            }
-        }
+    override fun subscribeToChanges(callback: ((Settings) -> Unit)) {
+//        preferences.registerPreferenceChangeListener { _, key ->
+//            val map = when (key) {
+//                VISUALIZE_CHECKED_ITEMS -> getCheckedVisualizePreference()
+//                else -> emptyMap<Int, MenuViewState>()
+//            }
+//            if (!map.isEmpty()) {
+//                callback(MainViewState.Settings(map))
+//            }
+//        }
     }
+
+    @ExperimentalCoroutinesApi
+    override fun settings(): Flow<Settings> = callbackFlow {
+        offer(getCurrentSettings())
+        preferences.registerPreferenceChangeListener { _, key ->
+            offer(getCurrentSettings())
+        }
+        awaitClose { cancel() }
+    }
+
+    override fun getCurrentSettings() = Settings(
+        preferences.getBoolean(VISUALIZE_CHECKED_ITEMS),
+        AppTheme.fromInt(preferences.getInt(THEME_KEY, 0)) ?: AppTheme.DARK
+    )
 
     override fun getCheckedVisualizePreference(): MutableMap<Int, MenuViewState> {
         val showCheckedItems = preferences.getBoolean(VISUALIZE_CHECKED_ITEMS)
@@ -45,3 +70,6 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
         preferences.setBoolean(VISUALIZE_CHECKED_ITEMS, !preferences.getBoolean(VISUALIZE_CHECKED_ITEMS))
     }
 }
+
+@Parcelize
+data class Settings(val showCheckedItems: Boolean = true, val appTheme: AppTheme = AppTheme.DARK) : Parcelable

@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         button.setOnClickListener { emit(MainViewIntent.GoMakeNewList) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?) = menuVisualizer.onCreateOptionsMenu(menu, this)
+    override fun onCreateOptionsMenu(menu: Menu) = menuVisualizer.onCreateOptionsMenu(menu, this)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

@@ -3,6 +3,7 @@ package com.pppp.travelchecklist.main.model
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.pppp.entities.pokos.TravelCheckListImpl
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.list.view.CheckListFragment
 import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
@@ -41,6 +42,10 @@ object NavigatorImpl : Navigator {
             is BottomNavigationDrawerFragment.NavigationAction.NewList -> MainViewIntent.GoMakeNewList
             is BottomNavigationDrawerFragment.NavigationAction.NavigateToExistingList -> MainViewIntent.NavItemSelected(navigationAction.id)
         }
+
+    override fun openNavMenu(activity: AppCompatActivity, checkLists: List<TravelCheckListImpl>, lastList: String?) {
+        BottomNavigationDrawerFragment.newInstance(checkLists, lastList).show(activity.supportFragmentManager, BottomNavigationDrawerFragment.TAG)
+    }
 }
 
 interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, MainViewIntent> {
@@ -54,6 +59,7 @@ interface Navigator : Mapper<BottomNavigationDrawerFragment.NavigationAction, Ma
     fun removeListFragment(activity: AppCompatActivity)
 
     fun goToSettings(activity: Activity)
+    fun openNavMenu(activity: AppCompatActivity, checkLists: List<TravelCheckListImpl>, lastList: String?)
 }
 
 interface Mapper<IN, OUT> {

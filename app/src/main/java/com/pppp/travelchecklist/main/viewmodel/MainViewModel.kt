@@ -68,11 +68,6 @@ class MainViewModel(
         internalStates.postValue(viewState)
     }
 
-//    private fun updateCurrentViewState(settings: MainViewState.Settings) {
-//        val viewState = internalStates.value ?: MainViewState.None()
-//        emitNewViewState(viewState.withNewSettings(settings))
-//    }
-
     private fun openNavMenu() {
         analytics.onMainMenuOpen()
         mainUseCase.getLastVisitedList({

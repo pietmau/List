@@ -16,11 +16,11 @@ import kotlinx.coroutines.flow.callbackFlow
 
 interface SettingsUseCase {
     fun onUserChangedSettings(itemId: Int)
-    fun subscribeToChanges(callback: (Settings) -> Unit = {})
     fun onVisualizeCheckedChanged()
     fun getCheckedVisualizePreference(): MutableMap<Int, MenuViewState>
     @ExperimentalCoroutinesApi
     fun settings(): Flow<Settings>
+
     fun getCurrentSettings(): Settings
 }
 
@@ -31,18 +31,6 @@ class SharedPreferencesSettingsUseCase(private val preferences: PreferencesWrapp
             R.id.action_show_hide_checked -> onVisualizeCheckedChanged()
             else -> TODO()
         }
-    }
-
-    override fun subscribeToChanges(callback: ((Settings) -> Unit)) {
-//        preferences.registerPreferenceChangeListener { _, key ->
-//            val map = when (key) {
-//                VISUALIZE_CHECKED_ITEMS -> getCheckedVisualizePreference()
-//                else -> emptyMap<Int, MenuViewState>()
-//            }
-//            if (!map.isEmpty()) {
-//                callback(MainViewState.Settings(map))
-//            }
-//        }
     }
 
     @ExperimentalCoroutinesApi

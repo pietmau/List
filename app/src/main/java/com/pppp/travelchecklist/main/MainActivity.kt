@@ -6,11 +6,15 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.Observer
-import com.pppp.entities.pokos.TravelCheckListImpl
+import com.pppp.travelchecklist.BuildConfig
 import com.pppp.travelchecklist.R
 import com.pppp.travelchecklist.application.App
-import com.pppp.travelchecklist.main.di.MainModule
 import com.pppp.travelchecklist.main.viewmodel.ErrorCallback
 import com.pppp.travelchecklist.TransientEventsProducer
 import com.pppp.travelchecklist.ViewActionsConsumer
@@ -24,7 +28,7 @@ import com.pppp.travelchecklist.navigation.BottomNavigationDrawerFragment
 import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CHECKLIST_ID
 import com.pppp.travelchecklist.createlist.NewListActivity.Companion.CREATE_NEW_LIST
 import com.pppp.travelchecklist.notifications.bootreceiver.BootReceiver
-import com.pppp.travelchecklist.utils.exhaustive
+import com.pppp.travelchecklist.settings.dialog.AppTheme
 import com.pppp.travelchecklist.utils.findAddedFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.UnsupportedOperationException
@@ -52,8 +56,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         viewStates.states.observe(this, Observer { render(it) })
         transientEventsProducer.transientEvents.observe(this, Observer { onTransientEventReceived(it) })
         if (savedInstanceState == null) {
-            val path = intent?.data?.pathSegments ?: emptyList()
-            emit(MainViewIntent.GetLatest(path))
+            emit(MainViewIntent.GetLatest(intent?.data?.pathSegments ?: emptyList()))
         }
         sendBroadcast()
     }
@@ -65,7 +68,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun setUpViews() {
         fab.setOnClickListener {
-            getCheckListFragment()?.apply { addCategory() } ?: emit(MainViewIntent.GoMakeNewList)
+            findAddedFragment<CheckListFragment>(R.id.container)?.apply { addCategory() } ?: emit(MainViewIntent.GoMakeNewList)
         }
         setSupportActionBar(bottom_bar)
         button.setOnClickListener { emit(MainViewIntent.GoMakeNewList) }
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun render(viewState: MainViewState) {
         menuVisualizer.updateMenu(viewState.settings)
+        setAppTheme(viewState.settings.appTheme)
         return when (viewState) {
             is MainViewState.NoListsPresent -> onNoListsPresent()
             is MainViewState.Content -> onContentPresent()
@@ -93,6 +97,20 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
             is MainViewState.None -> Unit
             is MainViewState.LatestListNotAvailable -> onLatestListNotAvailable()
         }
+    }
+
+    private fun setAppTheme(appTheme: AppTheme) {
+//        when (appTheme) {
+//            AppTheme.DARK -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+//            AppTheme.LIGHT -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+//            AppTheme.DEFAULT -> {
+//                if (BuildConfig.VERSION_CODE > android.os.Build.VERSION_CODES.P) {
+//                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_AUTO_BATTERY)
+//                }
+//            }
+//        }
     }
 
     private fun onLatestListNotAvailable() {
@@ -117,12 +135,10 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         bottom_bar.navigationIcon = null
     }
 
-    private fun removeListFragment() {
-        navigator.removeListFragment(this)
-    }
+    private fun removeListFragment() = navigator.removeListFragment(this)
 
     private fun onTransientEventReceived(transientEvent: MainTransientEvent) = when (transientEvent) {
-        is MainTransientEvent.OpenNavMenu -> openNavMenu(transientEvent.userChecklists, transientEvent.lastList)
+        is MainTransientEvent.OpenNavMenu -> navigator.openNavMenu(this, transientEvent.userChecklists, transientEvent.lastList)
         is MainTransientEvent.GoToCreateNewList -> navigator.startCreateChecklistActivity(this)
         is MainTransientEvent.GoToList -> navigator.goToList(this, transientEvent.listId)
         is MainTransientEvent.Error -> onError(transientEvent.message)
@@ -131,10 +147,6 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
 
     private fun emit(mainViewAction: MainViewIntent) {
         actions.accept(mainViewAction)
-    }
-
-    private fun openNavMenu(checkLists: List<TravelCheckListImpl>, lastList: String?) {
-        BottomNavigationDrawerFragment.newInstance(checkLists, lastList).show(supportFragmentManager, BottomNavigationDrawerFragment.TAG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -157,8 +169,6 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         emit(MainViewIntent.OnNoListFound)
     }
 
-    private fun getCheckListFragment() = findAddedFragment<CheckListFragment>(R.id.container)
-
     fun sendBroadcast() {
         sendBroadcast(Intent(this, BootReceiver::class.java).apply {
             action = ACTION
@@ -170,5 +180,4 @@ class MainActivity : AppCompatActivity(), ErrorCallback, BottomNavigationDrawerF
         DeleteBottomConfirmationFragment.DELETE_LIST -> emit(MainViewIntent.DeleteCurrentList)
         else -> throw UnsupportedOperationException()
     }
-
 }

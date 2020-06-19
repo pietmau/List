@@ -5,7 +5,6 @@ import com.pppp.travelchecklist.createlist.view.NewListCallback
 interface ErrorCallback {
 
     fun onError(string: String)
-
 }
 
 interface CreateChecklistView : ErrorCallback {
